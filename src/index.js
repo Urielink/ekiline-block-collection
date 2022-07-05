@@ -7,6 +7,7 @@ import './collapse/index';
 import './popovers/index';
 import './progress/index';
 import './toast/index';
+import './tabs/index';
 
 /**
  * Incorporar bloques a coleccion.
