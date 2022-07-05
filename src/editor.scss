@@ -213,7 +213,7 @@
 	margin-right: 0px;
 }
 
-/** Estilos de grid **/
+
 .editor-styles-wrapper .tab-link {
 	border: 1px solid #cfcfcf;
 	background-color: #ffffff;
@@ -236,4 +236,47 @@
 	border-bottom: 1px solid #000000;
 	border-left: 1px solid #000000;
 	border-radius: 2px;
+}
+
+/** Modal **/
+
+
+.wp-block-ekiline-blocks-ekiline-modal {
+	border: 1px dashed #c8c8c8;
+	border-radius: 2px !important;
+}
+
+.wp-block-ekiline-blocks-ekiline-modal.is-selected,
+.wp-block-ekiline-blocks-ekiline-modal.has-child-selected {
+	border: 1px solid #000000;
+}
+
+.editor-modal-header{
+	border-bottom: 1px solid #c8c8c8;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.editor-modal-body{
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.editor-modal-footer{
+	border-top: 1px solid #c8c8c8;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.editor-modal-route:not(.has-anchor){
+	background-color:#000;
+	color: #fff;
+	padding: 5px;
+	margin: 0px;
+}
+
+.editor-modal-route.has-anchor{
+	background-color: #efefef;
+}
+.editor-modal-route pre{
+	margin-bottom: 0px !important;
+	padding: 10px;
 }
