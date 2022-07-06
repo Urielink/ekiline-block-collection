@@ -29,8 +29,8 @@ function ekiline_collection_ekiline_collection_block_init() {
 add_action( 'init', 'ekiline_collection_ekiline_collection_block_init' );
 
 // Funciones complementarias.
-define( 'EKILINE_COLLECTION_PATH', plugin_dir_path( __FILE__ ) . 'src/' );
-require EKILINE_COLLECTION_PATH . 'carousel/ekiline-carousel.php';
-require EKILINE_COLLECTION_PATH . 'carousel/shortcode-ekiline-carousel.php';
-require EKILINE_COLLECTION_PATH . 'toast/ekiline-toast.php';
-require EKILINE_COLLECTION_PATH . 'modal/ekiline-modal.php';
+define( 'EKILINE_COLLECTION_PATH', plugin_dir_path( __FILE__ ) . 'includes/' );
+require EKILINE_COLLECTION_PATH . 'ekiline-carousel.php';
+require EKILINE_COLLECTION_PATH . 'shortcode-ekiline-carousel.php';
+require EKILINE_COLLECTION_PATH . 'ekiline-toast.php';
+require EKILINE_COLLECTION_PATH . 'ekiline-modal.php';
