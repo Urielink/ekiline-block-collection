@@ -9,6 +9,7 @@ import './progress/index';
 import './toast/index';
 import './tabs/index';
 import './modal/index';
+import './carousel/index';
 
 /**
  * Incorporar bloques a coleccion.
