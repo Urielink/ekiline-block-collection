@@ -15,7 +15,7 @@ import './carousel/index';
  * Incorporar bloques a coleccion.
  */
 import { registerBlockCollection } from '@wordpress/blocks';
-registerBlockCollection( 'ekiline-blocks', {
-    title: 'Ekiline Blocks',
+registerBlockCollection( 'ekiline-collection', {
+    title: 'Ekiline Collection',
     icon: 'layout',
 } );

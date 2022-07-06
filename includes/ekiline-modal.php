@@ -27,7 +27,7 @@ function ekiline_block_modal_find_and_move() {
 		$blocks = parse_blocks( get_the_content() );
 		// print_r($blocks);
 		foreach ( $blocks as $block ) {
-			if ( 'ekiline-blocks/ekiline-modal' === $block['blockName'] ) {
+			if ( 'ekiline-collection/ekiline-modal' === $block['blockName'] ) {
 				echo apply_filters( 'the_content', render_block( $block ) );
 				// break; // imprime solo uno y continua.
 			}
@@ -46,7 +46,7 @@ function remove_blocks() {
 		$blocks = parse_blocks( get_the_content() );
 		foreach ( $blocks as $block ) {
 			//look to see if your block is in the post content -> if yes continue past it if no then render block as normal
-			if ( 'ekiline-blocks/ekiline-modal' === $block['blockName'] ) {
+			if ( 'ekiline-collection/ekiline-modal' === $block['blockName'] ) {
 				continue;
 			} else {
 				echo render_block( $block );
@@ -65,11 +65,11 @@ add_filter( 'the_content', 'remove_blocks');
 
 function ekiline_block_modal_inline_script() {
 	// Condición para mostrar js en front.
-	if ( !is_admin() && is_singular() && ! has_block( 'ekiline-blocks/ekiline-modal' ) ) {
+	if ( !is_admin() && is_singular() && ! has_block( 'ekiline-collection/ekiline-modal' ) ) {
 		return;
 	}
 	// Si existe Ekiline Theme, apoyar de su manejador, o ocupar nuevo manejador.
-	$script_handle = ( wp_script_is( 'ekiline-layout', 'enqueued' ) ) ? 'ekiline-layout' : 'ekiline-blocks-inline' ;
+	$script_handle = ( wp_script_is( 'ekiline-layout', 'enqueued' ) ) ? 'ekiline-layout' : 'ekiline-collection-inline' ;
 	wp_add_inline_script( $script_handle, ekiline_block_modal_scripts_code(), 'after' );
 }
 add_action( 'wp_enqueue_scripts', 'ekiline_block_modal_inline_script', 100 );

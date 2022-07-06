@@ -32,7 +32,7 @@ import Edit from './edit';
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
-registerBlockType( 'ekiline-blocks/ekiline-carousel', {
+registerBlockType( 'ekiline-collection/ekiline-carousel', {
 	/**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */

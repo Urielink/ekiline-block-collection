@@ -43,7 +43,7 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-registerBlockType('ekiline-blocks/ekiline-accordion', {
+registerBlockType('ekiline-collection/ekiline-accordion', {
 
 	/**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
@@ -84,11 +84,11 @@ registerBlockType('ekiline-blocks/ekiline-accordion', {
 		const { attributes, setAttributes } = props;
 
 		// Restringir los bloques, Cargar un preset.
-		const PARENT_ALLOWED_BLOCKS = [ 'ekiline-blocks/ekiline-accordion-item' ];
+		const PARENT_ALLOWED_BLOCKS = [ 'ekiline-collection/ekiline-accordion-item' ];
 		const CHILD_TEMPLATE = [
-			[ 'ekiline-blocks/ekiline-accordion-item' ],
-			[ 'ekiline-blocks/ekiline-accordion-item' ],
-			[ 'ekiline-blocks/ekiline-accordion-item' ]
+			[ 'ekiline-collection/ekiline-accordion-item' ],
+			[ 'ekiline-collection/ekiline-accordion-item' ],
+			[ 'ekiline-collection/ekiline-accordion-item' ]
 		];
 
 		// Personalizar clase.
@@ -154,10 +154,10 @@ registerBlockType('ekiline-blocks/ekiline-accordion', {
  * Bloque interno
  */
 
-registerBlockType('ekiline-blocks/ekiline-accordion-item', {
+registerBlockType('ekiline-collection/ekiline-accordion-item', {
 
 	title: __( 'Accordion item', 'ekiline-collection' ),
-	parent: ['ekiline-blocks/ekiline-accordion'],
+	parent: ['ekiline-collection/ekiline-accordion'],
 	icon: 'menu-alt',
 	description: __( 'Set tittle and content in your accordion container', 'ekiline-collection' ),
 	category: 'design',

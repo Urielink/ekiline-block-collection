@@ -24,7 +24,7 @@ function ekiline_collection_ekiline_collection_block_init() {
 	// Script de coleccion.
 	register_block_type( __DIR__ . '/build' );
 	// Bloque carrusel (ekiline-carousel.php).
-	ekiline_blocks_ekiline_carousel_block_init();
+	ekiline_carousel_block_init();
 }
 add_action( 'init', 'ekiline_collection_ekiline_collection_block_init' );
 

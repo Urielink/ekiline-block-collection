@@ -43,7 +43,7 @@ import { __ } from '@wordpress/i18n';
  * - collapse, #id
  * - div:{width:opcional}
  */
-registerBlockType('ekiline-blocks/ekiline-collapse', {
+registerBlockType('ekiline-collection/ekiline-collapse', {
 	/**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */

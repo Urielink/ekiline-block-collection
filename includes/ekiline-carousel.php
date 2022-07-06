@@ -5,9 +5,9 @@
  *
  * @see https://developer.wordpress.org/block-editor/tutorials/block-tutorial/applying-styles-with-stylesheets/
  */
-function ekiline_blocks_ekiline_carousel_block_init() {
+function ekiline_carousel_block_init() {
 	register_block_type(
-		'ekiline-blocks/ekiline-carousel',
+		'ekiline-collection/ekiline-carousel',
 		array(
 			'api_version'      => 2,
 			// Render dinamico con php.
@@ -81,7 +81,7 @@ function ekiline_blocks_ekiline_carousel_block_init() {
 		)
 	);
 }
-// add_action( 'init', 'ekiline_blocks_ekiline_carousel_block_init' );
+// add_action( 'init', 'ekiline_carousel_block_init' );
 
 /**
  * Argumentos de personalizacion.
@@ -138,7 +138,7 @@ function ekiline_carousel_dynamic_render_callback( $block_attributes, $content )
 	}
 
 	$defaultClassName = '';
-	$defaultClassName = 'wp-block-ekiline-blocks-ekiline-carousel';
+	$defaultClassName = 'wp-block-ekiline-collection-ekiline-carousel';
 	$defaultClassName .= ( ! $block_attributes['className'] ) ? '' : ' ' . $block_attributes['className'];
 	$defaultClassName .= ( ! $block_attributes['align'] ) ? '' : ' align' . $block_attributes['align'];
 	$defaultClassName = ' class="' . $defaultClassName . '"';

@@ -271,7 +271,7 @@ export default function Edit(props) {
 			<div className={ boxClass }>
 				<div>
 					<ServerSideRender
-						block="ekiline-blocks/ekiline-carousel"
+						block="ekiline-collection/ekiline-carousel"
 						attributes={ props.attributes }
 					/>
 				</div>

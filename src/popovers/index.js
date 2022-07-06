@@ -36,7 +36,7 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-registerBlockType('ekiline-blocks/ekiline-popovers', {
+registerBlockType('ekiline-collection/ekiline-popovers', {
 	apiVersion: 2,
 	title: __( 'Pop overs, full control', 'ekiline-collection' ),
 	icon: 'admin-comments',

@@ -35,7 +35,7 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-registerBlockType( 'ekiline-blocks/ekiline-toast', {
+registerBlockType( 'ekiline-collection/ekiline-toast', {
 
 	/**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
@@ -78,9 +78,9 @@ registerBlockType( 'ekiline-blocks/ekiline-toast', {
 		} );
 
 		// Restringir los bloques, Cargar un preset.
-		const PARENT_ALLOWED_BLOCKS = [ 'ekiline-blocks/ekiline-toast-item' ];
+		const PARENT_ALLOWED_BLOCKS = [ 'ekiline-collection/ekiline-toast-item' ];
 		const CHILD_TEMPLATE = [
-			[ 'ekiline-blocks/ekiline-toast-item', {
+			[ 'ekiline-collection/ekiline-toast-item', {
 				lock: {
 					remove: false,
 					move: true,
@@ -139,9 +139,9 @@ registerBlockType( 'ekiline-blocks/ekiline-toast', {
 /**
  * Toast Item.
  */
-registerBlockType( 'ekiline-blocks/ekiline-toast-item', {
+registerBlockType( 'ekiline-collection/ekiline-toast-item', {
 	title: __( 'Ekiline toast item.', 'ekiline-collection' ),
-	parent: ['ekiline-blocks/ekiline-toast'],
+	parent: ['ekiline-collection/ekiline-toast'],
 	icon: 'lightbulb',
 	description: __( 'Each toast can be executed by time, at the end of scrolling, or with the cursor outside the window. You can stack as many as you need.', 'ekiline-collection' ),
 	category: 'design',
