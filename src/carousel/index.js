@@ -42,13 +42,13 @@ registerBlockType( 'ekiline-blocks/ekiline-carousel', {
 	 * This is the display title for your block, which can be translated with `i18n` functions.
 	 * The block inserter will show this name.
 	 */
-	title: __( 'Ekiline Carousel', 'ekiline-carousel' ),
+	title: __( 'Ekiline Carousel', 'ekiline-collection' ),
 
 	/**
 	 * This is a short description for your block, can be translated with `i18n` functions.
 	 * It will be shown in the Block Tab in the Settings Sidebar.
 	 */
-	description: __( 'Add a carousel to your posts, choose between posts or images, colmuns and more.', 'ekiline-carousel' ),
+	description: __( 'Add a carousel to your posts, choose between posts or images, colmuns and more.', 'ekiline-collection' ),
 
 	/**
 	 * Blocks are grouped into categories to help users browse and discover them.

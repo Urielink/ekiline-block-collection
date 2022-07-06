@@ -3,16 +3,16 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
- import { registerBlockType } from '@wordpress/blocks';
- import { useBlockProps, InnerBlocks, InspectorControls, RichText } from '@wordpress/block-editor';
- import { PanelBody, SelectControl, ToggleControl, TextControl } from '@wordpress/components';
+import { registerBlockType } from '@wordpress/blocks';
+import { useBlockProps, InnerBlocks, InspectorControls, RichText } from '@wordpress/block-editor';
+import { PanelBody, SelectControl, ToggleControl, TextControl } from '@wordpress/components';
 
 /**
  * Retrieves the translation of text.
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
- import { __ } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -40,36 +40,36 @@ registerBlockType( 'ekiline-blocks/ekiline-toast', {
 	/**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */
-	 apiVersion: 2,
+	apiVersion: 2,
 
-	 /**
-	  * Parametros de alta.
-	  * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
-	  */
-	 title: __( 'Ekiline toast, full control', 'ekiline-toast' ),
-	 icon: 'lightbulb',
-	 description: __( 'Show small bootstrap-style notices.', 'ekiline-toast' ),
-	 category: 'design',
-	 supports: {
-		 anchor: true,
-		 html: false,
-	 },
+	/**
+	 * Parametros de alta.
+	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
+	 */
+	title: __( 'Ekiline toast, full control', 'ekiline-collection' ),
+	icon: 'lightbulb',
+	description: __( 'Show small bootstrap-style notices.', 'ekiline-collection' ),
+	category: 'design',
+	supports: {
+		anchor: true,
+		html: false,
+	},
 
-	 /**
-	  * Argumentos para personalizacion.
-	  */
-	 attributes:{
-		 toastPosition: {
-			 type: 'string',
-			 default: ' bottom-0 end-0',
-		 },
-	 },
+	/**
+	 * Argumentos para personalizacion.
+	 */
+	attributes:{
+		toastPosition: {
+			type: 'string',
+			default: ' bottom-0 end-0',
+		},
+	},
 
-	 /**
-	  * @see ./edit.js
-	  */
-	 // edit: Edit,
-	 edit:(props)=>{
+	/**
+	 * @see ./edit.js
+	 */
+	// edit: Edit,
+	edit:(props)=>{
 
 		const { attributes, setAttributes } = props;
 
@@ -92,15 +92,15 @@ registerBlockType( 'ekiline-blocks/ekiline-toast', {
 			<div {...blockProps}>
 				{/* Inspector controles */}
 				<InspectorControls>
-					<PanelBody title={ __( 'Toast group options', 'ekiline-toast' ) } initialOpen={ true }>
+					<PanelBody title={ __( 'Toast group options', 'ekiline-collection' ) } initialOpen={ true }>
 					<SelectControl
-						label={ __( 'Display position', 'ekiline-toast' ) }
+						label={ __( 'Display position', 'ekiline-collection' ) }
 						value={ attributes.toastPosition }
 						options={ [
-							{ label: __( 'Bottom right', 'ekiline-toast' ), value: ' bottom-0 end-0' },
-							{ label: __( 'Bottom left', 'ekiline-toast' ), value: ' bottom-0 start-0' },
-							{ label: __( 'Top right', 'ekiline-toast' ), value: ' top-0 end-0' },
-							{ label: __( 'Top left', 'ekiline-toast' ), value: ' top-0 start-0' },
+							{ label: __( 'Bottom right', 'ekiline-collection' ), value: ' bottom-0 end-0' },
+							{ label: __( 'Bottom left', 'ekiline-collection' ), value: ' bottom-0 start-0' },
+							{ label: __( 'Top right', 'ekiline-collection' ), value: ' top-0 end-0' },
+							{ label: __( 'Top left', 'ekiline-collection' ), value: ' top-0 start-0' },
 						] }
 						onChange={ ( toastPosition ) =>
 							setAttributes( { toastPosition } )
@@ -115,13 +115,13 @@ registerBlockType( 'ekiline-blocks/ekiline-toast', {
 				/>
 			</div>
 		);
-	 },
+	},
 
 	/**
 	 * @see ./save.js
 	 */
 	// save,
-	 save:( { attributes } )=>{
+	save:( { attributes } )=>{
 
 		const blockProps = useBlockProps.save( {
 			className: 'toast-container position-fixed p-md-1 p-md-3' + attributes.toastPosition,
@@ -132,30 +132,30 @@ registerBlockType( 'ekiline-blocks/ekiline-toast', {
 			<InnerBlocks.Content/>
 		</div>
 		);
-	 },
+	},
 
 } );
 
 /**
  * Toast Item.
  */
- registerBlockType( 'ekiline-blocks/ekiline-toast-item', {
-	 title: __( 'Ekiline toast item.', 'ekiline-toast' ),
-	 parent: ['ekiline-blocks/ekiline-toast'],
-	 icon: 'lightbulb',
-	 description: __( 'Each toast can be executed by time, at the end of scrolling, or with the cursor outside the window. You can stack as many as you need.', 'ekiline-toast' ),
-	 category: 'design',
-	 supports: {
+registerBlockType( 'ekiline-blocks/ekiline-toast-item', {
+	title: __( 'Ekiline toast item.', 'ekiline-collection' ),
+	parent: ['ekiline-blocks/ekiline-toast'],
+	icon: 'lightbulb',
+	description: __( 'Each toast can be executed by time, at the end of scrolling, or with the cursor outside the window. You can stack as many as you need.', 'ekiline-collection' ),
+	category: 'design',
+	supports: {
 		anchor: true,
 		html: false,
 		multiple: false,
 		reusable: true,
 		// inserter: false,
 	},
-	 /**
-	  * Argumentos para personalizacion.
-	  */
-	 attributes:{
+	/**
+	 * Argumentos para personalizacion.
+	 */
+	attributes:{
 		content: {
 			type: 'string',
 			source: 'html',
@@ -169,13 +169,13 @@ registerBlockType( 'ekiline-blocks/ekiline-toast', {
 			type: 'boolean',
 			default: false,
 		}
-	 },
+	},
 
-	 /**
-	  * @see ./edit.js
-	  */
-	 // edit: Edit,
-	 edit:(props)=>{
+	/**
+	 * @see ./edit.js
+	 */
+	// edit: Edit,
+	edit:(props)=>{
 
 		const { attributes, setAttributes } = props;
 
@@ -195,9 +195,9 @@ registerBlockType( 'ekiline-blocks/ekiline-toast', {
 
 				{/* Inspector controles */}
 				<InspectorControls>
-					<PanelBody title={ __( 'Toast Params', 'ekiline-toast' ) } initialOpen={ true }>
+					<PanelBody title={ __( 'Toast Params', 'ekiline-collection' ) } initialOpen={ true }>
 					<TextControl
-						label={ __( 'Run by time', 'ekiline-toast' ) }
+						label={ __( 'Run by time', 'ekiline-collection' ) }
 						type="number"
 						value={ attributes.toastTime }
 						onChange={ ( newval ) =>
@@ -205,12 +205,12 @@ registerBlockType( 'ekiline-blocks/ekiline-toast', {
 						}
 						help={
 							( attributes.toastTime > 0 )
-							? __( 'Run after page load "' + attributes.toastTime + '" milliseconds.', 'ekiline-toast' )
-							: __( '"' + attributes.toastTime + '" run immediately on page load.', 'ekiline-toast' )
+							? __( 'Run after page load "' + attributes.toastTime + '" milliseconds.', 'ekiline-collection' )
+							: __( '"' + attributes.toastTime + '" run immediately on page load.', 'ekiline-collection' )
 						}
 					/>
 					<ToggleControl
-						label={ __( 'Run at end of page scroll.', 'ekiline-toast' ) }
+						label={ __( 'Run at end of page scroll.', 'ekiline-collection' ) }
 						checked={ attributes.toastScroll }
 						onChange={ ( toastScroll ) =>
 							setAttributes( { toastScroll } )
@@ -225,7 +225,7 @@ registerBlockType( 'ekiline-blocks/ekiline-toast', {
 					value={ attributes.content }
 					allowedFormats={ [ 'core/bold', 'core/italic' ] }
 					onChange={ ( content ) => setAttributes( { content } ) }
-					placeholder={ __( 'Add toast title', 'ekiline-toast' ) }
+					placeholder={ __( 'Add toast title', 'ekiline-collection' ) }
 					className={'item-title'}
 				/>
 				<InnerBlocks
@@ -234,13 +234,13 @@ registerBlockType( 'ekiline-blocks/ekiline-toast', {
 
 			</div>
 		);
-	 },
+	},
 
 	/**
 	 * @see ./save.js
 	 */
 	// save,
-	 save:( { attributes } )=>{
+	save:( { attributes } )=>{
 
 		const blockProps = useBlockProps.save( {
 			className: 'toast-item toast'
@@ -260,6 +260,6 @@ registerBlockType( 'ekiline-blocks/ekiline-toast', {
 			</div>
 		</div>
 		);
-	 },
+	},
 
 } );

@@ -3,16 +3,16 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
- import { registerBlockType } from '@wordpress/blocks';
- import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor';
- import { PanelBody, ToggleControl, TextControl } from '@wordpress/components';
+import { registerBlockType } from '@wordpress/blocks';
+import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor';
+import { PanelBody, ToggleControl, TextControl } from '@wordpress/components';
 
 /**
  * Retrieves the translation of text.
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
- import { __ } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -47,39 +47,39 @@ registerBlockType('ekiline-blocks/ekiline-collapse', {
 	/**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */
-	 apiVersion: 2,
+	apiVersion: 2,
 
-	 /**
-	  * Parametros de alta.
-	  * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
-	  */
-	 title: __( 'Collapse, full control', 'ekiline-collapse' ),
-	 icon: 'arrow-down',
-	 description: __( 'Set a collapse behavior block. You can activate from any button.', 'ekiline-collapse' ),
-	 category: 'design',
-	 supports: {
-		 anchor: true,
-	 },
- 
-	 /**
-	  * Argumentos para personalizacion.
-	  */
-	 attributes:{
-		 horizontal: {
-			 type: 'boolean',
-			 default: false, // set horizontal (.collapse-horizontal).
-		 },
-	 },
+	/**
+	 * Parametros de alta.
+	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
+	 */
+	title: __( 'Collapse, full control', 'ekiline-collection' ),
+	icon: 'arrow-down',
+	description: __( 'Set a collapse behavior block. You can activate from any button.', 'ekiline-collection' ),
+	category: 'design',
+	supports: {
+		anchor: true,
+	},
 
-	 /**
-	  * @see ./edit.js
-	  */
-	 // edit: Edit,
-	 edit:(props)=>{
+	/**
+	 * Argumentos para personalizacion.
+	 */
+	attributes:{
+		horizontal: {
+			type: 'boolean',
+			default: false, // set horizontal (.collapse-horizontal).
+		},
+	},
+
+	/**
+	 * @see ./edit.js
+	 */
+	// edit: Edit,
+	edit:(props)=>{
 
 		const { attributes, setAttributes } = props;
 		// const PARENT_ALLOWED_BLOCKS = [ 'core/buttons' ];
-		const CHILD_TEMPLATE = [ [ 'core/paragraph', { content: __( 'Add your content', 'ekiline-collapse' ) } ] ];
+		const CHILD_TEMPLATE = [ [ 'core/paragraph', { content: __( 'Add your content', 'ekiline-collection' ) } ] ];
 
 		const blockProps = useBlockProps( {
 			className: 'group-collapse',
@@ -88,7 +88,7 @@ registerBlockType('ekiline-blocks/ekiline-collapse', {
 		/**
 		 * Control personalizado: recordatorio
 		 */
-		 function CollapseUserRemind(){
+		function CollapseUserRemind(){
 
 			if ( attributes.anchor ){
 				return(
@@ -96,7 +96,7 @@ registerBlockType('ekiline-blocks/ekiline-collapse', {
 						<pre>
 						{ '#' + attributes.anchor }
 						<br></br>
-						{ __( 'Add this #anchor to a button and its advanced options.', 'ekiline-collapse' ) }
+						{ __( 'Add this #anchor to a button and its advanced options.', 'ekiline-collection' ) }
 						</pre>
 					</div>
 					)
@@ -104,7 +104,7 @@ registerBlockType('ekiline-blocks/ekiline-collapse', {
 
 			return(
 				<div class="editor-collapse-route">
-					{ __( 'Do not forget to add an anchor. ', 'ekiline-collapse' )}
+					{ __( 'Do not forget to add an anchor. ', 'ekiline-collection' )}
 				</div>
 			)
 		}
@@ -113,9 +113,9 @@ registerBlockType('ekiline-blocks/ekiline-collapse', {
 			<div {...blockProps}>
 				{/* Inspector controles */}
 				<InspectorControls>
-					<PanelBody title={ __( 'Collapse Params', 'ekiline-collapse' ) } initialOpen={ true }>
+					<PanelBody title={ __( 'Collapse Params', 'ekiline-collection' ) } initialOpen={ true }>
 					<ToggleControl
-						label={ __( 'Horizontal collapse', 'ekiline-collapse' ) }
+						label={ __( 'Horizontal collapse', 'ekiline-collection' ) }
 						checked={ attributes.horizontal }
 						onChange={ ( horizontal ) =>
 							setAttributes( { horizontal } )
@@ -130,13 +130,13 @@ registerBlockType('ekiline-blocks/ekiline-collapse', {
 				<CollapseUserRemind/>
 			</div>
 		);
-	 },
+	},
 
 	/**
 	 * @see ./save.js
 	 */
 	// save,
-	 save:( { attributes } )=>{
+	save:( { attributes } )=>{
 
 		const blockProps = useBlockProps.save( {
 			className: 'collapse' + ( ( attributes.horizontal ) ? ' collapse-horizontal' : '' ),
@@ -168,13 +168,13 @@ registerBlockType('ekiline-blocks/ekiline-collapse', {
 					<CollapseWrapper/>
 				</div>
 		);
-	 },
+	},
 });
 
 
- /**
-  * Importar otras dependencias de WP.
-  */
+/**
+ * Importar otras dependencias de WP.
+ */
 import { addFilter } from '@wordpress/hooks'; // este permite crear filtros.
 import { Fragment } from '@wordpress/element'; // UI.
 import { InspectorAdvancedControls } from '@wordpress/block-editor'; // UI.
@@ -223,7 +223,7 @@ const withAdvancedControlsBtnCollapse = createHigherOrderComponent( ( BlockEdit 
 					{props.attributes.url && (
 						<InspectorAdvancedControls>
 							<TextControl
-								label={ __( 'Collapse anchor for execute it.', 'ekiline-collapse'  ) }
+								label={ __( 'Collapse anchor for execute it.', 'ekiline-collection'  ) }
 								value={props.attributes.addDataBtnCollapse}
 								onChange={newData => props.setAttributes({addDataBtnCollapse: newData})}
 							/>
