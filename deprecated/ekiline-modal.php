@@ -1,39 +1,5 @@
 <?php
 /**
- * Buscar un bloque y eliminarlo del loop de bloques en el contenido.
- *
- * @return array $content contenido del loop.
- *
- * @link https://developer.wordpress.org/reference/functions/serialize_blocks/.
- * @link https://developer.wordpress.org/reference/functions/parse_blocks/.
- */
-function remove_blocks( $content ) {
-
-	// Idetificador de bloque.
-	$find_block = 'ekiline-collection/ekiline-modal';
-
-	// Aplicar en publicacion en frontend y solo que tenga el bloque.
-	if ( !is_admin() && is_singular() && has_block( $find_block ) ){
-		// Analizar bloques existentes.
-		$blocks = parse_blocks( get_the_content() );
-		$output = '';
-
-		foreach ( $blocks as $block ) {
-			// Ignorar del loop el bloque deseado.
-			if ( $find_block === $block['blockName'] ) {
-				continue;
-			} else {
-				$output .= render_block( $block );
-			}
-		}
-		$content = $output;
-	}
-	return $content;
-}
-add_filter( 'the_content', 'remove_blocks');
-
-
-/**
  * Modal.
  * Prueba, intentar mover el contenido de un bloque al final de la pagina con PHP.
  * https://developer.wordpress.org/reference/functions/parse_blocks/
@@ -45,29 +11,59 @@ add_filter( 'the_content', 'remove_blocks');
  */
 function ekiline_block_modal_find_and_move() {
 
-	// Idetificador de bloque.
-	$find_block = 'ekiline-collection/ekiline-modal';
+	// global $post;
+	// print_r($post);
 
-	// Aplicar en publicacion en frontend y solo que tenga el bloque.
-	if ( !is_admin() && is_singular() && has_block( $find_block ) ){
+	// necesita ser definido si el bloque esta en una publicacion, le afecta en el admin.
+	// if ( is_singular() && in_the_loop() && is_main_query() ) {
+	if ( !is_admin() && is_singular() ){
 
-		// Remover filtro (remove_blocks) para leer y rescatar dato.
 		if ( has_filter( 'the_content', 'remove_blocks' ) ){
+			// echo 'remove_blocks() is active<br>';
 			remove_filter( 'the_content', 'remove_blocks');
 		}
 
-		// Analizar bloques existentes.
+		// $blocks = parse_blocks( $post->post_content );
 		$blocks = parse_blocks( get_the_content() );
+		// print_r($blocks);
 
-		// Enviar al pie del portal el bloque deseado.
 		foreach ( $blocks as $block ) {
-			if ( $find_block === $block['blockName'] ) {
-				echo render_block( $block );
+			if ( 'ekiline-collection/ekiline-modal' === $block['blockName'] ) {
+				echo apply_filters( 'the_content', render_block( $block ) );
+				// break; // imprime solo uno y continua.
 			}
 		}
+
 	}
 }
 add_action( 'wp_footer', 'ekiline_block_modal_find_and_move', 0 );
+
+
+//If single block exists on page or post don't show it with the other blocks
+function remove_blocks() {
+
+	// Revisar si el bloque esta en el contenido. le afecta en el admin.
+	//   if ( is_singular() && in_the_loop() && is_main_query() ) {
+	if ( !is_admin() && is_singular() ){
+
+		//parse the blocks so they can be run through the foreach loop
+		$blocks = parse_blocks( get_the_content() );
+		foreach ( $blocks as $block ) {
+
+			//look to see if your block is in the post content -> if yes continue past it if no then render block as normal
+			if ( 'ekiline-collection/ekiline-modal' === $block['blockName'] ) {
+				continue;
+			} else {
+				echo render_block( $block );
+			}
+		}
+
+	}
+}
+add_filter( 'the_content', 'remove_blocks');
+
+
+
 
 /**
  * Javascript en linea para modal.
