@@ -66,6 +66,7 @@ require EKILINE_COLLECTION_PATH . 'ekiline-carousel.php';
 require EKILINE_COLLECTION_PATH . 'shortcode-ekiline-carousel.php';
 require EKILINE_COLLECTION_PATH . 'ekiline-toast.php';
 require EKILINE_COLLECTION_PATH . 'ekiline-modal.php';
+require EKILINE_COLLECTION_PATH . 'ekiline-tabs.php';
 
 
 /*
