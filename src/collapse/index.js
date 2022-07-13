@@ -15,6 +15,23 @@ import { PanelBody, ToggleControl, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
+ * Crear un icono.
+ * Import the element creator function (React abstraction layer)
+ * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-element/
+ */
+ import { createElement } from '@wordpress/element';
+const customIcon = createElement(
+	'svg',
+	{ width: 20, height: 20 },
+	createElement(
+		'path',
+		{
+			d: '15.55,11.31h-1.74v1.08h1.74v-1.08Zm-3.12,0h-1.74v1.08h1.74v-1.08ZM1,1V19H19V1H1Zm16.19,1.8l-1.17,1.44-1.17-1.44h2.34Zm.73,8.51h-.98v1.08h.98v5.53H2.08v-5.53h.97v-1.08h-.97V6.04h15.84v5.27Zm-11.74,0h-1.74v1.08h1.74v-1.08Zm3.12,0h-1.74v1.08h1.74v-1.08Z'
+		}
+	)
+);
+
+/**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * All files containing `style` keyword are bundled together. The code used
  * gets applied both to the front of your site and to the editor.
@@ -54,7 +71,7 @@ registerBlockType('ekiline-collection/ekiline-collapse', {
 	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
 	 */
 	title: __( 'Collapse, full control', 'ekiline-collection' ),
-	icon: 'arrow-down',
+	icon: customIcon,
 	description: __( 'Set a collapse behavior block. You can activate from any button.', 'ekiline-collection' ),
 	category: 'design',
 	supports: {

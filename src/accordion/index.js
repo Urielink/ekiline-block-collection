@@ -15,6 +15,23 @@ import { PanelBody, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
+ * Crear un icono.
+ * Import the element creator function (React abstraction layer)
+ * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-element/
+ */
+ import { createElement } from '@wordpress/element';
+const customIcon = createElement(
+	'svg', 
+	{ width: 20, height: 20 }, 
+	createElement(
+		'path', 
+		{ 
+			d: 'M1,1V6.04H19V1H1ZM18.1,5.14H1.9V1.9H18.1v3.24Zm-2.8,12.51l1.44-1.17-1.44-1.17v2.34Zm-14.3,1.35H19v-5.04H1v5.04Zm.9-4.14H18.1v3.24H1.9v-3.24Zm-.9-2.34H19V7.48H1v5.04Zm16.19-3.24l-1.17,1.44-1.17-1.44h2.34Zm-1.89-6.93v2.34l1.44-1.17-1.44-1.17Z' 
+		}
+	)
+);
+
+/**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * All files containing `style` keyword are bundled together. The code used
  * gets applied both to the front of your site and to the editor.
@@ -55,7 +72,7 @@ registerBlockType('ekiline-collection/ekiline-accordion', {
 	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
 	 */
 	title: __( 'Ekiline Accordion, full control', 'ekiline-collection' ),
-	icon: 'menu-alt',
+	icon: customIcon,
 	description: __( 'Show your content as an accordion.', 'ekiline-collection' ),
 	category: 'design',
 	supports: {

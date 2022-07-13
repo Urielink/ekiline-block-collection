@@ -15,6 +15,23 @@ import { PanelBody, SelectControl, ToggleControl, TextControl } from '@wordpress
 import { __ } from '@wordpress/i18n';
 
 /**
+ * Crear un icono.
+ * Import the element creator function (React abstraction layer)
+ * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-element/
+ */
+ import { createElement } from '@wordpress/element';
+const customIcon = createElement(
+	'svg',
+	{ width: 20, height: 20 },
+	createElement(
+		'path',
+		{
+			d: '15.32,5.14l.64-.64,.64,.64,.76-.76-.64-.64,.63-.63-.76-.76-.63,.63-.63-.63-.76,.76,.63,.63-.64,.64,.76,.76Zm2.78-4.14H1.9c-.5,0-.9,.4-.9,.9V18.1c0,.5,.4,.9,.9,.9H18.1c.5,0,.9-.4,.9-.9V1.9c0-.5-.4-.9-.9-.9Zm-.18,16.92H2.08v-3.36h15.84v3.36Zm0-4.44H2.08V6.52h15.84v6.97Zm0-8.05H2.08V2.08h15.84v3.36Z'
+		}
+	)
+);
+
+/**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * All files containing `style` keyword are bundled together. The code used
  * gets applied both to the front of your site and to the editor.
@@ -73,7 +90,7 @@ registerBlockType('ekiline-collection/ekiline-modal', {
 	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
 	 */
 	title: __( 'Modal group, full control', 'ekiline-collection' ),
-	icon: 'editor-kitchensink',
+	icon: customIcon,
 	description: __( 'Add your content here, then invoque with a link anchor #anchor.', 'ekiline-collection' ),
 	category: 'design',
 	supports: {

@@ -15,6 +15,23 @@ import { PanelBody, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
+ * Crear un icono.
+ * Import the element creator function (React abstraction layer)
+ * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-element/
+ */
+ import { createElement } from '@wordpress/element';
+const customIcon = createElement(
+	'svg',
+	{ width: 20, height: 20 },
+	createElement(
+		'path',
+		{
+			d: 'M10,1H1V19H19V1H10Zm-3.33,1.8l-1.17,1.44-1.17-1.44h2.34Zm11.25,15.12H2.08V6.04h15.84v11.88Zm0-13.23h-7.92V2.08h7.92v2.61Z'
+		}
+	)
+);
+
+/**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * All files containing `style` keyword are bundled together. The code used
  * gets applied both to the front of your site and to the editor.
@@ -59,7 +76,7 @@ registerBlockType( 'ekiline-collection/ekiline-tabs', {
 	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
 	 */
 	title: __( 'Ekiline Tabs', 'ekiline-collection' ),
-	icon: 'table-row-after',
+	icon: customIcon,
 	description: __( 'Add a tabs for your posts, full control.', 'ekiline-collection' ),
 	category: 'design',
 	supports: {

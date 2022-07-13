@@ -15,6 +15,23 @@ import { useBlockProps } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 
 /**
+ * Crear un icono.
+ * Import the element creator function (React abstraction layer)
+ * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-element/
+ */
+ import { createElement } from '@wordpress/element';
+const customIcon = createElement(
+	'svg',
+	{ width: 20, height: 20 },
+	createElement(
+		'path',
+		{
+			d: '10.57,13.14l1.15-2.18h5.48c.99,0,1.8-.81,1.8-1.8V1.78c0-.99-.81-1.8-1.8-1.8H2.8c-.99,0-1.8,.81-1.8,1.8v7.38c0,.99,.81,1.8,1.8,1.8h5.48l1.15,2.18H1v4.88H19v-4.88H10.57Zm-1.33-2.68l-.3-.57H2.8c-.4,0-.72-.32-.72-.72V1.78c0-.4,.32-.72,.72-.72h14.4c.4,0,.72,.32,.72,.72v7.38c0,.4-.32,.72-.72,.72h-6.13l-.3,.57-.77,1.45-.77-1.45Z'
+		}
+	)
+);
+
+/**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * All files containing `style` keyword are bundled together. The code used
  * gets applied both to the front of your site and to the editor.
@@ -39,7 +56,7 @@ import { __ } from '@wordpress/i18n';
 registerBlockType('ekiline-collection/ekiline-popovers', {
 	apiVersion: 2,
 	title: __( 'Pop overs, full control', 'ekiline-collection' ),
-	icon: 'admin-comments',
+	icon: customIcon,
 	description: __( 'Add popovers to your links or buttons.', 'ekiline-collection' ),
 	category: 'design',
 
