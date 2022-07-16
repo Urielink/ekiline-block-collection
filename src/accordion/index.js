@@ -71,7 +71,7 @@ registerBlockType('ekiline-collection/ekiline-accordion', {
 	 * Parametros de alta.
 	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
 	 */
-	title: __( 'Ekiline Accordion, full control', 'ekiline-collection' ),
+	title: __( 'Accordion', 'ekiline-collection' ),
 	icon: customIcon,
 	description: __( 'Show your content as an accordion.', 'ekiline-collection' ),
 	category: 'design',

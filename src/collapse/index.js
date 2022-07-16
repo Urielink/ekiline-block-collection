@@ -70,7 +70,7 @@ registerBlockType('ekiline-collection/ekiline-collapse', {
 	 * Parametros de alta.
 	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
 	 */
-	title: __( 'Collapse, full control', 'ekiline-collection' ),
+	title: __( 'Collapse', 'ekiline-collection' ),
 	icon: customIcon,
 	description: __( 'Set a collapse behavior block. You can activate from any button.', 'ekiline-collection' ),
 	category: 'design',

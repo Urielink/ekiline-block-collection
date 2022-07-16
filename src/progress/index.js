@@ -68,7 +68,7 @@ registerBlockType('ekiline-collection/ekiline-progress', {
 	 * Parametros de alta.
 	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
 	 */
-	title: __( 'Ekiline progress, full control', 'ekiline-collection' ),
+	title: __( 'Progress', 'ekiline-collection' ),
 	icon: customIcon,
 	description: __( 'Show a bootstrap progress bar for your data.', 'ekiline-collection' ),
 	category: 'design',

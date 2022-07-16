@@ -55,7 +55,7 @@ const customIcon = createElement(
  */
 registerBlockType('ekiline-collection/ekiline-popovers', {
 	apiVersion: 2,
-	title: __( 'Pop overs, full control', 'ekiline-collection' ),
+	title: __( 'Popover', 'ekiline-collection' ),
 	icon: customIcon,
 	description: __( 'Add popovers to your links or buttons.', 'ekiline-collection' ),
 	category: 'design',

@@ -89,7 +89,7 @@ registerBlockType('ekiline-collection/ekiline-modal', {
 	 * Parametros de alta.
 	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
 	 */
-	title: __( 'Modal group, full control', 'ekiline-collection' ),
+	title: __( 'Modal', 'ekiline-collection' ),
 	icon: customIcon,
 	description: __( 'Add your content here, then invoque with a link anchor #anchor.', 'ekiline-collection' ),
 	category: 'design',

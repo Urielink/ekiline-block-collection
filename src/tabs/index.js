@@ -75,7 +75,7 @@ registerBlockType( 'ekiline-collection/ekiline-tabs', {
 	 * Parametros de alta.
 	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
 	 */
-	title: __( 'Ekiline Tabs', 'ekiline-collection' ),
+	title: __( 'Tabs', 'ekiline-collection' ),
 	icon: customIcon,
 	description: __( 'Add a tabs for your posts, full control.', 'ekiline-collection' ),
 	category: 'design',

@@ -19,24 +19,49 @@
  * through the block editor in the corresponding context.
  *
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
- *
- * Para incorporar el idioma se requiere una serie de pasos, y crear POT manual.
- * @link https://developer.wordpress.org/block-editor/how-to-guides/internationalization/
- * @link https://developer.wordpress.org/cli/commands/i18n/make-json/
- * El manual indica que hagas un registro del script con dependencias.
- * Pero, también es posible abstraerlo, se requiere saber el handler del script.
  */
 function ekiline_collection_ekiline_collection_block_init() {
 	// Script de coleccion.
-	register_block_type( __DIR__ . '/build' );
+	// register_block_type( __DIR__ . '/build' );
 	// Bloque carrusel (ekiline-carousel.php).
 	ekiline_carousel_block_init();
+
+	/**
+	 * Para incorporar el idioma se requiere una serie de pasos, y crear POT manual.
+	 * @link https://developer.wordpress.org/block-editor/how-to-guides/internationalization/
+	 * @link https://developer.wordpress.org/cli/commands/i18n/make-json/
+	 * El manual indica que hagas un registro del script con dependencias.
+	 * Pero, también es posible abstraerlo, se requiere saber el handler del script.
+	 */
+
 	// Idioma plugin para PHP.
-	load_plugin_textdomain( 'ekiline-collection', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
-	// Idioma plugin para Bloques JS.
-	wp_set_script_translations( 'ekiline-collection-ekiline-collection-editor-script', 'ekiline-collection', plugin_dir_path( __FILE__ ) . 'languages' );
+	// load_plugin_textdomain( 'ekiline-collection', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
+
+	// Idioma plugin para JS.
+	wp_register_script(
+		'ekiline-collection-script',
+		plugins_url( '/build/index.js', __FILE__ ),
+		// '',
+		array( 'wp-blocks', 'wp-element', 'wp-i18n', 'wp-block-editor' )
+	);
+	wp_register_style(
+		'ekiline-collection-style',
+		plugins_url( '/build/index.css', __FILE__ ),
+		array()
+	);
+	register_block_type(
+		'ekiline-collection/ekiline-collection',
+			array(
+			'api_version' => 2,
+			'editor_script' => 'ekiline-collection-script',
+			'editor_style' => 'ekiline-collection-style',
+		)
+	);
+	wp_set_script_translations( 'ekiline-collection-script', 'ekiline-collection', plugin_dir_path( __FILE__ ) . 'languages' );
+	// wp_set_script_translations( 'ekiline-collection-ekiline-collection-editor-script', 'ekiline-collection', plugin_dir_path( __FILE__ ) . 'languages' );
 }
 add_action( 'init', 'ekiline_collection_ekiline_collection_block_init' );
+
 
 // Funciones complementarias.
 define( 'EKILINE_COLLECTION_PATH', plugin_dir_path( __FILE__ ) . 'includes/' );
@@ -45,6 +70,33 @@ require EKILINE_COLLECTION_PATH . 'shortcode-ekiline-carousel.php';
 require EKILINE_COLLECTION_PATH . 'ekiline-toast.php';
 require EKILINE_COLLECTION_PATH . 'ekiline-modal.php';
 require EKILINE_COLLECTION_PATH . 'ekiline-tabs.php';
+
+
+/**
+ * Scripts y estilos en el front.
+ * @link https://developer.wordpress.org/reference/functions/wp_script_is/
+ */
+function ekiline_collection_required_scripts() {
+	// Condicion: Si Ekiline no es su tema, habilitar complementos bootstrap.
+	$theme       = wp_get_theme();
+	$text_domain = 'ekiline-collection';
+
+	if ( 'Ekiline' !== $theme->name || 'Ekiline' !== $theme->parent_theme ) {
+		wp_enqueue_style( $text_domain . '-bootstrap-style', plugin_dir_url( __FILE__ ) . 'assets/css/bootstrap.min.css', array(), '5', 'all' );
+		wp_enqueue_script( $text_domain . '-bootstrap-script', plugin_dir_url( __FILE__ ) . 'assets/js/bootstrap.bundle.min.js', array(), '5', true );
+		// Si no existe el manejador 'ekiline-layout' de Ekiline Theme, crear uno nuevo.
+		wp_register_script( $text_domain . '-inline', '', array(), '', true );
+		wp_enqueue_script( $text_domain . '-inline' );
+	}
+	if ( 'Ekiline' === $theme->name || 'Ekiline' === $theme->parent_theme ) {
+		wp_dequeue_style( $text_domain . '-bootstrap-style' );
+		wp_dequeue_script( $text_domain . '-bootstrap-script' );
+		wp_dequeue_script( $text_domain . '-inline' );
+	}
+}
+// add_action( 'wp_enqueue_scripts', 'ekiline_collection_required_scripts', 1 );
+
+
 
 
 /*
@@ -92,30 +144,3 @@ function show_registered_blocks(){
 		}
 	}
 	// add_action( 'wp_footer', 'detectar_widget', 0 );
-
-
-
-/**
- * Scripts y estilos en el front.
- * @link https://developer.wordpress.org/reference/functions/wp_script_is/
- */
-function ekiline_collection_required_scripts() {
-	// Condicion: Si Ekiline no es su tema, habilitar complementos bootstrap.
-	$theme       = wp_get_theme();
-	$text_domain = 'ekiline-collection';
-
-	if ( 'Ekiline' !== $theme->name || 'Ekiline' !== $theme->parent_theme ) {
-		wp_enqueue_style( $text_domain . '-bootstrap-style', plugin_dir_url( __FILE__ ) . 'assets/css/bootstrap.min.css', array(), '5', 'all' );
-		wp_enqueue_script( $text_domain . '-bootstrap-script', plugin_dir_url( __FILE__ ) . 'assets/js/bootstrap.bundle.min.js', array(), '5', true );
-		// Si no existe el manejador 'ekiline-layout' de Ekiline Theme, crear uno nuevo.
-		wp_register_script( $text_domain . '-inline', '', array(), '', true );
-		wp_enqueue_script( $text_domain . '-inline' );
-	}
-	if ( 'Ekiline' === $theme->name || 'Ekiline' === $theme->parent_theme ) {
-		wp_dequeue_style( $text_domain . '-bootstrap-style' );
-		wp_dequeue_script( $text_domain . '-bootstrap-script' );
-		wp_dequeue_script( $text_domain . '-inline' );
-	}
-}
-// add_action( 'wp_enqueue_scripts', 'ekiline_collection_required_scripts', 1 );
-

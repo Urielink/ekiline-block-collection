@@ -63,7 +63,7 @@ registerBlockType( 'ekiline-collection/ekiline-toast', {
 	 * Parametros de alta.
 	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
 	 */
-	title: __( 'Ekiline toast, full control', 'ekiline-collection' ),
+	title: __( 'Toast', 'ekiline-collection' ),
 	icon: customIcon,
 	description: __( 'Show small bootstrap-style notices.', 'ekiline-collection' ),
 	category: 'design',
