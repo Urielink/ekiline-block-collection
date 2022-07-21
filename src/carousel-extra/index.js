@@ -113,24 +113,12 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 
 		const TokenCategoriesSelect = () => {
 			// el dato.
-			// const continents2 = [
-			// 	{ title: 'Africa', value: '0' },
-			// 	{ title: 'America', value: '1' },
-			// 	{ title: 'Antarctica', value: '2' },
-			// 	{ title: 'Asia', value: '3' },
-			// 	{ title: 'Europe', value: '4' },
-			// 	{ title: 'Oceania', value: '5' },
-			// ];
-
 			const categories = useSelect(
 				select =>
 					select( 'core' ).getEntityRecords( 'taxonomy', 'category' ),
 				[]
 			);
-
-			console.log('hayDato')
-			console.log(attributes.SetIds)
-			console.log('hayDatoEnd')
+			console.log('hayDato? ' + attributes.SetIds + ' hayDatoEnd.');
 			// Recursos.
 			const [ selectedContinents, setSelectedContinents ] = useState( [] );
 			// Componente.
@@ -138,21 +126,48 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 				<FormTokenField
 					value={ (!attributes.SetIds) ? selectedContinents : attributes.SetIds }
 					suggestions={
-						// continents
-						// continents2?.map( ( el ) => el.title )
 						// Solicitar por id, name, slug.
 						categories?.map( ( el ) => el.slug )
 					}
 					onChange={ ( tokens ) => {
-							console.log('onChange')
-							console.log(tokens)
-							console.log('onChangeEnd')
+						// console.log('haytokens? ' + tokens + ' haytokensEnd.');
 						setAttributes( { SetIds:tokens } )
 						setSelectedContinents( tokens )
 					} }
 				/>
 			);
 		};
+
+		/**
+		 * Control personalizado: recordatorio
+		 */
+		 function UserRemind(){
+
+			if ( attributes.SetIds.length != 0){
+
+				const element = attributes.SetIds?.map(
+					// ( el ) => ( '<span>' + el + '</span>, ' )
+					// ( el ) => ( `<span>${el}</span>, ` )
+					( el ) => ( el + ', ' )
+				);
+
+				return(
+					<div class="editor-modal-route has-anchor">
+						<pre>
+						{ element }
+						<br></br>
+						{ __( 'Selecciones', 'ekiline-collection' ) }
+						</pre>
+					</div>
+					)
+			}
+
+			return(
+				<div class="editor-modal-route">
+					{ __( 'Sin selecciones. ', 'ekiline-collection' )}
+				</div>
+			)
+		}
 
 		return (
 			<div { ...blockProps }>
@@ -165,6 +180,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 				</InspectorControls>
 				{/* El bloque */}
 				{__( 'Carousel extra editor.', 'ekiline-collection' )}
+				<UserRemind/>
 			</div>
 		)
 	},
