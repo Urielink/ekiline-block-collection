@@ -19,6 +19,8 @@ import { useState } from '@wordpress/element';
  *  @link https://developer.wordpress.org/block-editor/how-to-guides/data-basics/2-building-a-list-of-pages/
  */
 import { useSelect } from '@wordpress/data';
+import { store as coreDataStore } from '@wordpress/core-data';
+import { decodeEntities } from '@wordpress/html-entities';
 
 /**
  * Retrieves the translation of text.
@@ -111,6 +113,10 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 			className: 'group-carousel-extra',
 		} );
 
+		/**
+		 * Selector de categorias.
+		 * @returns Custom component: FormTokenField.
+		 */
 		const TokenCategoriesSelect = () => {
 			// el dato.
 			const categories = useSelect(
@@ -118,7 +124,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 					select( 'core' ).getEntityRecords( 'taxonomy', 'category' ),
 				[]
 			);
-			console.log('hayDato? ' + attributes.SetIds + ' hayDatoEnd.');
+			// console.log('hayDato? ' + attributes.SetIds + ' hayDatoEnd.');
 			// Recursos.
 			const [ selectedContinents, setSelectedContinents ] = useState( [] );
 			// Componente.
@@ -139,7 +145,42 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		};
 
 		/**
-		 * Control personalizado: recordatorio
+		 * Bloque de entradas por categoría.
+		 * @link https://developer.wordpress.org/block-editor/how-to-guides/data-basics/2-building-a-list-of-pages/
+		 * @link https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/creating-dynamic-blocks/
+		 * @returns Custom component: EntriesList.
+		 */
+		function EntriesList() {
+			// const pages = [{ id: 'mock', title: 'Sample page' }]
+			// Ocupar Page o Post.
+			const pages = useSelect(
+				select =>
+					select( coreDataStore ).getEntityRecords( 'postType', 'post' ),
+				[]
+			);
+			
+			return <PagesList pages={ pages }/>;
+		}
+		 
+		function PagesList( { pages } ) {
+			return (
+				<ul>
+					{ pages?.map( page => (
+						<li key={ page.id }>
+							<a href={ page.link }>
+								{/* { page.title } */}
+								{ decodeEntities( page.title.rendered ) }
+							</a>
+						</li>
+					) ) }
+				</ul>
+			);
+		}
+
+
+
+		/**
+		 * Control personalizado: recordatorio.
 		 */
 		 function UserRemind(){
 
@@ -154,9 +195,9 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 				return(
 					<div class="editor-modal-route has-anchor">
 						<pre>
-						{ element }
+						{ __( 'Selecciones:', 'ekiline-collection' ) }
 						<br></br>
-						{ __( 'Selecciones', 'ekiline-collection' ) }
+						{ element }
 						</pre>
 					</div>
 					)
@@ -179,6 +220,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 					</PanelBody>
 				</InspectorControls>
 				{/* El bloque */}
+				<EntriesList/>
 				{__( 'Carousel extra editor.', 'ekiline-collection' )}
 				<UserRemind/>
 			</div>
@@ -199,6 +241,8 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		return (
 			<div {...blockProps}>
 				{__( 'Carousel extra front.', 'ekiline-collection' )}
+				<hr></hr>
+				{/* El bloque */}
 			</div>
 		)
 	},
