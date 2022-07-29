@@ -64,6 +64,31 @@ const customIcon = createElement(
 // import save from './save';
 
 /**
+ * Funciones personalizadas
+ */
+/**
+ * Crear nuevo array de categorias por ID.
+ * @param {*} nombres slugs (url) de cada categoria.
+ * @param {*} matriz grupo de categorias existentes.
+ * @param {*} devolucion nombre de dato que buscas obtener, en este caso IDs.
+ * @returns array de IDs por cada categoria.
+ */
+function cambiarNombrePorIds(nombres,matriz,devolucion){
+	const agrupoIds = [];
+	nombres.forEach(
+		(nombre) => {
+			// Encontrar objeto por value
+			const encontrado = matriz.find((objeto) => (objeto.slug || objeto.id) === nombre);
+			agrupoIds.push(encontrado);
+		}
+	);
+	return agrupoIds.map(
+		(itm) => itm[devolucion]
+	);
+}
+
+
+/**
  * Every block starts by registering a new block type definition.
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
@@ -87,7 +112,11 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 			type: 'string',
 			default: '',
 		},
-		SetIds: {
+		SetCatSlug: {
+			type: 'array',
+			default: '',
+		},
+		SetCatIds: {
 			type: 'array',
 			default: '',
 		},
@@ -124,20 +153,21 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 					select( 'core' ).getEntityRecords( 'taxonomy', 'category' ),
 				[]
 			);
-			// console.log('hayDato? ' + attributes.SetIds + ' hayDatoEnd.');
+			// console.log('hayDato? ' + attributes.SetCatSlug + ' hayDatoEnd.');
 			// Recursos.
 			const [ selectedContinents, setSelectedContinents ] = useState( [] );
 			// Componente.
 			return(
 				<FormTokenField
-					value={ (!attributes.SetIds) ? selectedContinents : attributes.SetIds }
+					value={ (!attributes.SetCatSlug) ? selectedContinents : attributes.SetCatSlug }
 					suggestions={
 						// Solicitar por id, name, slug.
 						categories?.map( ( el ) => el.slug )
 					}
 					onChange={ ( tokens ) => {
 						// console.log('haytokens? ' + tokens + ' haytokensEnd.');
-						setAttributes( { SetIds:tokens } )
+						setAttributes( { SetCatSlug:tokens } )
+						setAttributes( { SetCatIds: cambiarNombrePorIds(tokens,categories,'id') } )
 						setSelectedContinents( tokens )
 					} }
 				/>
@@ -148,20 +178,26 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		 * Bloque de entradas por categoría.
 		 * @link https://developer.wordpress.org/block-editor/how-to-guides/data-basics/2-building-a-list-of-pages/
 		 * @link https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/creating-dynamic-blocks/
+		 * @link https://wordpress.stackexchange.com/questions/352323/how-to-return-a-list-of-custom-taxonomy-terms-via-the-gutenberg-getentityrecords 
 		 * @returns Custom component: EntriesList.
 		 */
 		function EntriesList() {
 			// const pages = [{ id: 'mock', title: 'Sample page' }]
 			// Ocupar Page o Post.
+			// el dato.
+			const selCats = (attributes.SetCatIds>0)?attributes.SetCatIds:[];
 			const pages = useSelect(
 				select =>
-					select( coreDataStore ).getEntityRecords( 'postType', 'post' ),
+					// select( coreDataStore ).getEntityRecords( 'postType', 'post', {per_page: 1, categories: [1] } ),
+					select( coreDataStore ).getEntityRecords( 'postType', 'post', { per_page: -1, categories: selCats } ),
 				[]
 			);
-			
+
+			// console.log(pages)
+
 			return <PagesList pages={ pages }/>;
 		}
-		 
+
 		function PagesList( { pages } ) {
 			return (
 				<ul>
@@ -171,22 +207,22 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 								{/* { page.title } */}
 								{ decodeEntities( page.title.rendered ) }
 							</a>
+							{/* Traer imagenes de cada entrada */}
+							{ (page.featured_media)?page.featured_media:null }
 						</li>
 					) ) }
 				</ul>
 			);
 		}
 
-
-
 		/**
 		 * Control personalizado: recordatorio.
 		 */
 		 function UserRemind(){
 
-			if ( attributes.SetIds.length != 0){
+			if ( attributes.SetCatSlug.length != 0){
 
-				const element = attributes.SetIds?.map(
+				const element = attributes.SetCatSlug?.map(
 					// ( el ) => ( '<span>' + el + '</span>, ' )
 					// ( el ) => ( `<span>${el}</span>, ` )
 					( el ) => ( el + ', ' )

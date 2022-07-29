@@ -401,10 +401,32 @@ const customIcon = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElem
 // import save from './save';
 
 /**
+ * Funciones personalizadas
+ */
+
+/**
+ * Crear nuevo array de categorias por ID.
+ * @param {*} nombres slugs (url) de cada categoria.
+ * @param {*} matriz grupo de categorias existentes.
+ * @param {*} devolucion nombre de dato que buscas obtener, en este caso IDs.
+ * @returns array de IDs por cada categoria.
+ */
+
+function cambiarNombrePorIds(nombres, matriz, devolucion) {
+  const agrupoIds = [];
+  nombres.forEach(nombre => {
+    // Encontrar objeto por value
+    const encontrado = matriz.find(objeto => (objeto.slug || objeto.id) === nombre);
+    agrupoIds.push(encontrado);
+  });
+  return agrupoIds.map(itm => itm[devolucion]);
+}
+/**
  * Every block starts by registering a new block type definition.
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
+
 
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)('ekiline-collection/ekiline-carousel-extra', {
   apiVersion: 2,
@@ -426,7 +448,11 @@ const customIcon = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElem
       type: 'string',
       default: ''
     },
-    SetIds: {
+    SetCatSlug: {
+      type: 'array',
+      default: ''
+    },
+    SetCatIds: {
       type: 'array',
       default: ''
     },
@@ -460,19 +486,22 @@ const customIcon = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElem
 
     const TokenCategoriesSelect = () => {
       // el dato.
-      const categories = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => select('core').getEntityRecords('taxonomy', 'category'), []); // console.log('hayDato? ' + attributes.SetIds + ' hayDatoEnd.');
+      const categories = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => select('core').getEntityRecords('taxonomy', 'category'), []); // console.log('hayDato? ' + attributes.SetCatSlug + ' hayDatoEnd.');
       // Recursos.
 
       const [selectedContinents, setSelectedContinents] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)([]); // Componente.
 
       return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.FormTokenField, {
-        value: !attributes.SetIds ? selectedContinents : attributes.SetIds,
+        value: !attributes.SetCatSlug ? selectedContinents : attributes.SetCatSlug,
         suggestions: // Solicitar por id, name, slug.
         categories?.map(el => el.slug),
         onChange: tokens => {
           // console.log('haytokens? ' + tokens + ' haytokensEnd.');
           setAttributes({
-            SetIds: tokens
+            SetCatSlug: tokens
+          });
+          setAttributes({
+            SetCatIds: cambiarNombrePorIds(tokens, categories, 'id')
           });
           setSelectedContinents(tokens);
         }
@@ -482,6 +511,7 @@ const customIcon = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElem
      * Bloque de entradas por categoría.
      * @link https://developer.wordpress.org/block-editor/how-to-guides/data-basics/2-building-a-list-of-pages/
      * @link https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/creating-dynamic-blocks/
+     * @link https://wordpress.stackexchange.com/questions/352323/how-to-return-a-list-of-custom-taxonomy-terms-via-the-gutenberg-getentityrecords 
      * @returns Custom component: EntriesList.
      */
 
@@ -489,7 +519,14 @@ const customIcon = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElem
     function EntriesList() {
       // const pages = [{ id: 'mock', title: 'Sample page' }]
       // Ocupar Page o Post.
-      const pages = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__.store).getEntityRecords('postType', 'post'), []);
+      // el dato.
+      const selCats = attributes.SetCatIds > 0 ? attributes.SetCatIds : [];
+      const pages = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => // select( coreDataStore ).getEntityRecords( 'postType', 'post', {per_page: 1, categories: [1] } ),
+      select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__.store).getEntityRecords('postType', 'post', {
+        per_page: -1,
+        categories: selCats
+      }), []); // console.log(pages)
+
       return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(PagesList, {
         pages: pages
       });
@@ -503,7 +540,7 @@ const customIcon = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElem
         key: page.id
       }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("a", {
         href: page.link
-      }, (0,_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_6__.decodeEntities)(page.title.rendered)))));
+      }, (0,_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_6__.decodeEntities)(page.title.rendered)), page.featured_media ? page.featured_media : null)));
     }
     /**
      * Control personalizado: recordatorio.
@@ -511,8 +548,8 @@ const customIcon = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElem
 
 
     function UserRemind() {
-      if (attributes.SetIds.length != 0) {
-        const element = attributes.SetIds?.map( // ( el ) => ( '<span>' + el + '</span>, ' )
+      if (attributes.SetCatSlug.length != 0) {
+        const element = attributes.SetCatSlug?.map( // ( el ) => ( '<span>' + el + '</span>, ' )
         // ( el ) => ( `<span>${el}</span>, ` )
         el => el + ', ');
         return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("div", {
