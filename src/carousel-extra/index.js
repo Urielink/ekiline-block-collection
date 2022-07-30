@@ -186,15 +186,15 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 			// Ocupar Page o Post.
 			// el dato.
 			const selCats = (attributes.SetCatIds>0)?attributes.SetCatIds:[];
+			const selAmount = (0===attributes.SetAmount)?'-1':attributes.SetAmount;
 			const pages = useSelect(
 				select =>
 					// select( coreDataStore ).getEntityRecords( 'postType', 'post', {per_page: 1, categories: [1] } ),
-					select( coreDataStore ).getEntityRecords( 'postType', 'post', { per_page: -1, categories: selCats } ),
+					select( coreDataStore ).getEntityRecords( 'postType', 'post', { per_page: selAmount, categories: selCats } ),
 				[]
 			);
 
 			// console.log(pages)
-
 			return <PagesList pages={ pages }/>;
 		}
 
