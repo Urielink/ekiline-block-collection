@@ -198,32 +198,33 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 			return <PagesList pages={ pages }/>;
 		}
 
-		/**
-		 * Medios
-		 * @link https://wholesomecode.ltd/wpquery-wordpress-block-editor-gutenberg-equivalent-is-getentityrecords
-		 * @param {*} item objeto pagina.
-		 * @returns objeto imagen.
-		 */
-		function imagenEntrada( item ){
-			const media = {};
-			media[ item.id ] = useSelect(select => select( coreDataStore ).getMedia( item.featured_media ));
-			if ( media[ item.id ]  ){
-				let imageThumbnailSrc = media[ item.id ].media_details.sizes.thumbnail.source_url;
-				return <img src={ imageThumbnailSrc } />;
-			}
-		}
-		/**
-		 * Contenido con: dangerouslySetInnerHTML
-		 * https://blog.logrocket.com/using-dangerouslysetinnerhtml-in-a-react-application/
-		 * O reformateando el string, es para fines de muestra.
-		 * https://github.com/WordPress/gutenberg/blob/trunk/packages/block-library/src/post-excerpt/edit.js
-		 */
-		function entradaExtracto(extracto){
-			const document = new window.DOMParser().parseFromString(extracto,'text/html');
-			return document.body.textContent || document.body.innerText || '';
-		}
-
 		function PagesList( { pages } ) {
+
+			// const media = {};
+			// let imageThumbnailSrc = '';
+			// pages?.map( post => {
+			// 	media[ post.id ] = useSelect(
+			// 		select => select( coreDataStore ).getMedia( post.featured_media )
+			// 	)
+			// 	if ( media[ post.id ]  ){
+			// 		imageThumbnailSrc = media[ post.id ].media_details.sizes.thumbnail.source_url;
+			// 	}
+			// })
+			// console.log(media)
+			// console.log(imageThumbnailSrc)
+
+			function getUrlMedia(item){
+				const media = {};
+				let imageThumbnailSrc = '';
+				media[ item.id ] = useSelect(
+					select => select( coreDataStore ).getMedia( item.featured_media )
+				)
+				if ( media[ item.id ]  ){
+					imageThumbnailSrc = media[ item.id ].media_details.sizes.thumbnail.source_url;
+				}
+				return <p><img src={ imageThumbnailSrc } /></p>;
+			}
+
 
 			return (
 				<ul>
@@ -234,10 +235,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 								{ decodeEntities( page.title.rendered ) }
 							</a>
 							{/* Traer imagenes de cada entrada */}
-							{ (page.featured_media) ? imagenEntrada(page) : null }
-							{/* Traer extracto de cada entrada */}
-							{/* { decodeEntities( page.excerpt.rendered ) } */}
-							<p>{ entradaExtracto( page.excerpt.rendered ) }</p>
+							{ (page.featured_media) ? getUrlMedia(page) : null }
 						</li>
 					) ) }
 				</ul>
@@ -313,4 +311,3 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 	},
 
 });
-
