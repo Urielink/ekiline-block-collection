@@ -155,11 +155,12 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 			);
 			// console.log('hayDato? ' + attributes.SetCatSlug + ' hayDatoEnd.');
 			// Recursos.
-			const [ selectedContinents, setSelectedContinents ] = useState( [] );
+			const [ selectedCategories, setSelectedCategories ] = useState( [] );
 			// Componente.
 			return(
 				<FormTokenField
-					value={ (!attributes.SetCatSlug) ? selectedContinents : attributes.SetCatSlug }
+					label={ __( 'Find and select categories:', 'ekiline-collection' ) }
+					value={ (!attributes.SetCatSlug) ? selectedCategories : attributes.SetCatSlug }
 					suggestions={
 						// Solicitar por id, name, slug.
 						categories?.map( ( el ) => el.slug )
@@ -168,7 +169,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 						// console.log('haytokens? ' + tokens + ' haytokensEnd.');
 						setAttributes( { SetCatSlug:tokens } )
 						setAttributes( { SetCatIds: cambiarNombrePorIds(tokens,categories,'id') } )
-						setSelectedContinents( tokens )
+						setSelectedCategories( tokens )
 					} }
 				/>
 			);
@@ -176,38 +177,42 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 
 		/**
 		 * Bloque de entradas por categoría.
+		 * Dato, elegir segun el postType: page/post.
+		 * Atributos de query:
+		 * per_page, categories = numero entero
+		 *
 		 * @link https://developer.wordpress.org/block-editor/how-to-guides/data-basics/2-building-a-list-of-pages/
 		 * @link https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/creating-dynamic-blocks/
 		 * @link https://wordpress.stackexchange.com/questions/352323/how-to-return-a-list-of-custom-taxonomy-terms-via-the-gutenberg-getentityrecords 
+		 *
 		 * @returns Custom component: EntriesList.
 		 */
 		function EntriesList() {
-			// const pages = [{ id: 'mock', title: 'Sample page' }]
-			// Ocupar Page o Post.
-			// el dato.
+			// Categoria default: todas.
 			const selCats = (attributes.SetCatIds>0)?attributes.SetCatIds:[];
+			// Cantidad de entradas: 3.
 			const selAmount = (0===attributes.SetAmount)?'-1':attributes.SetAmount;
-			const pages = useSelect(
+			const posts = useSelect(
 				select =>
-					// select( coreDataStore ).getEntityRecords( 'postType', 'post', {per_page: 1, categories: [1] } ),
 					select( coreDataStore ).getEntityRecords( 'postType', 'post', { per_page: selAmount, categories: selCats } ),
 				[]
 			);
-
-			// console.log(pages)
-			return <PagesList pages={ pages }/>;
+			return <PostsList posts={ posts }/>;
 		}
 
 		/**
 		 * Medios
 		 * @link https://wholesomecode.ltd/wpquery-wordpress-block-editor-gutenberg-equivalent-is-getentityrecords
-		 * @param {*} item objeto pagina.
-		 * @returns objeto imagen.
+		 * @param {*} item pagina como objeto.
+		 * @returns HTML imagen.
 		 */
-		function imagenEntrada( item ){
+		function entradaImagen( item ){
+			// Construir nuevo objeto: media.
 			const media = {};
 			media[ item.id ] = useSelect(select => select( coreDataStore ).getMedia( item.featured_media ));
+			// Leer nuevo objeto y extraer atributos.
 			if ( media[ item.id ]  ){
+				// Url de medio, aún por definir mas atributos.
 				let imageThumbnailSrc = media[ item.id ].media_details.sizes.thumbnail.source_url;
 				return <img src={ imageThumbnailSrc } />;
 			}
@@ -223,21 +228,21 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 			return document.body.textContent || document.body.innerText || '';
 		}
 
-		function PagesList( { pages } ) {
+		function PostsList( { posts } ) {
 
 			return (
 				<ul>
-					{ pages?.map( page => (
-						<li key={ page.id }>
-							<a href={ page.link }>
-								{/* { page.title } */}
-								{ decodeEntities( page.title.rendered ) }
+					{ posts?.map( post => (
+						<li key={ post.id }>
+							<a href={ post.link }>
+								{/* { post.title } */}
+								{ decodeEntities( post.title.rendered ) }
 							</a>
 							{/* Traer imagenes de cada entrada */}
-							{ (page.featured_media) ? imagenEntrada(page) : null }
+							{ (post.featured_media) ? entradaImagen(post) : null }
 							{/* Traer extracto de cada entrada */}
-							{/* { decodeEntities( page.excerpt.rendered ) } */}
-							<p>{ entradaExtracto( page.excerpt.rendered ) }</p>
+							{/* { decodeEntities( post.excerpt.rendered ) } */}
+							<p>{ entradaExtracto( post.excerpt.rendered ) }</p>
 						</li>
 					) ) }
 				</ul>
@@ -279,7 +284,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 			<div { ...blockProps }>
 				{/* Inspector controles */}
 				<InspectorControls>
-					<PanelBody title={ __( 'Accordion Settings', 'ekiline-collection' ) } initialOpen={ true }>
+					<PanelBody title={ __( 'Carousel extra settings', 'ekiline-collection' ) } initialOpen={ true }>
 						{/* Elegir categorias */}
 						<TokenCategoriesSelect/>
 					</PanelBody>
@@ -305,7 +310,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 
 		return (
 			<div {...blockProps}>
-				{__( 'Carousel extra front.', 'ekiline-collection' )}
+				{__( 'Bloque frente.', 'ekiline-collection' )}
 				<hr></hr>
 				{/* El bloque */}
 			</div>
