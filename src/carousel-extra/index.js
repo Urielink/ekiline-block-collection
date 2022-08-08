@@ -34,7 +34,7 @@ import { __ } from '@wordpress/i18n';
  * Import the element creator function (React abstraction layer)
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-element/
  */
- import { createElement } from '@wordpress/element';
+ import { createElement, renderToString } from '@wordpress/element';
 const customIcon = createElement(
 	'svg',
 	{ width: 20, height: 20 },
@@ -128,6 +128,11 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 			type: 'boolean',
 			default: true,
 		},
+		content: {
+			type: 'string',
+			source: 'html',
+			selector: 'div',
+		},
 	},
 
 	/**
@@ -136,7 +141,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 	// edit: Edit,
 	edit: ( props ) => {
 
-		const { attributes, setAttributes } = props;
+		const { attributes, setAttributes, isSelected } = props;
 		// Personalizar clase.
 		const blockProps = useBlockProps( {
 			className: 'group-carousel-extra',
@@ -146,7 +151,8 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		 * Selector de categorias.
 		 * @returns Custom component: FormTokenField.
 		 */
-		const TokenCategoriesSelect = () => {
+		//  const TokenCategoriesSelect = () => {
+		function TokenCategoriesSelect (){
 			// el dato.
 			const categories = useSelect(
 				select =>
@@ -229,7 +235,6 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		}
 
 		function PostsList( { posts } ) {
-
 			return (
 				<ul>
 					{ posts?.map( post => (
@@ -253,32 +258,24 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		 * Control personalizado: recordatorio.
 		 */
 		 function UserRemind(){
-
+			let message = __( 'Sin selecciones. ', 'ekiline-collection' );
+			let classname = 'editor-modal-route';
 			if ( attributes.SetCatSlug.length != 0){
-
-				const element = attributes.SetCatSlug?.map(
-					// ( el ) => ( '<span>' + el + '</span>, ' )
-					// ( el ) => ( `<span>${el}</span>, ` )
-					( el ) => ( el + ', ' )
-				);
-
-				return(
-					<div class="editor-modal-route has-anchor">
-						<pre>
-						{ __( 'Selecciones:', 'ekiline-collection' ) }
-						<br></br>
-						{ element }
-						</pre>
-					</div>
-					)
+				let element = attributes.SetCatSlug?.map(( el ) => ( el ));
+				message = __( 'Selecciones: ', 'ekiline-collection' ) + element ;
+				classname = classname + ' has-anchor';
 			}
-
 			return(
-				<div class="editor-modal-route">
-					{ __( 'Sin selecciones. ', 'ekiline-collection' )}
-				</div>
+				<div class={classname}>{ message }</div>
 			)
 		}
+
+/**
+ * nueva prueba: renderToString
+ * https://developer.wordpress.org/block-editor/reference-guides/packages/packages-element/#rendertostring
+ */
+		// let lacosa = renderToString(<EntriesList/>);
+		// console.log(lacosa);
 
 		return (
 			<div { ...blockProps }>
@@ -291,8 +288,8 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 				</InspectorControls>
 				{/* El bloque */}
 				<EntriesList/>
-				{__( 'Carousel extra editor.', 'ekiline-collection' )}
-				<UserRemind/>
+				{/* El recordatorio */}
+				{ isSelected && ( <UserRemind/> ) }
 			</div>
 		)
 	},
@@ -310,8 +307,6 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 
 		return (
 			<div {...blockProps}>
-				{__( 'Bloque frente.', 'ekiline-collection' )}
-				<hr></hr>
 				{/* El bloque */}
 			</div>
 		)

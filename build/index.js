@@ -463,6 +463,11 @@ function cambiarNombrePorIds(nombres, matriz, devolucion) {
     AddControls: {
       type: 'boolean',
       default: true
+    },
+    content: {
+      type: 'string',
+      source: 'html',
+      selector: 'div'
     }
   },
 
@@ -473,7 +478,8 @@ function cambiarNombrePorIds(nombres, matriz, devolucion) {
   edit: props => {
     const {
       attributes,
-      setAttributes
+      setAttributes,
+      isSelected
     } = props; // Personalizar clase.
 
     const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)({
@@ -483,8 +489,9 @@ function cambiarNombrePorIds(nombres, matriz, devolucion) {
      * Selector de categorias.
      * @returns Custom component: FormTokenField.
      */
+    //  const TokenCategoriesSelect = () => {
 
-    const TokenCategoriesSelect = () => {
+    function TokenCategoriesSelect() {
       // el dato.
       const categories = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => select('core').getEntityRecords('taxonomy', 'category'), []); // console.log('hayDato? ' + attributes.SetCatSlug + ' hayDatoEnd.');
       // Recursos.
@@ -507,7 +514,9 @@ function cambiarNombrePorIds(nombres, matriz, devolucion) {
           setSelectedCategories(tokens);
         }
       });
-    };
+    }
+
+    ;
     /**
      * Bloque de entradas por categoría.
      * Dato, elegir segun el postType: page/post.
@@ -520,7 +529,6 @@ function cambiarNombrePorIds(nombres, matriz, devolucion) {
      *
      * @returns Custom component: EntriesList.
      */
-
 
     function EntriesList() {
       // Categoria default: todas.
@@ -585,24 +593,32 @@ function cambiarNombrePorIds(nombres, matriz, devolucion) {
 
 
     function UserRemind() {
+      let message = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Sin selecciones. ', 'ekiline-collection');
+
+      let classname = 'editor-modal-route';
+
       if (attributes.SetCatSlug.length != 0) {
-        const element = attributes.SetCatSlug?.map( // ( el ) => ( '<span>' + el + '</span>, ' )
-        // ( el ) => ( `<span>${el}</span>, ` )
-        el => el + ', ');
-        return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("div", {
-          class: "editor-modal-route has-anchor"
-        }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("pre", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Selecciones:', 'ekiline-collection'), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("br", null), element));
+        let element = attributes.SetCatSlug?.map(el => el);
+        message = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Selecciones: ', 'ekiline-collection') + element;
+        classname = classname + ' has-anchor';
       }
 
       return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("div", {
-        class: "editor-modal-route"
-      }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Sin selecciones. ', 'ekiline-collection'));
+        class: classname
+      }, message);
     }
+    /**
+     * nueva prueba: renderToString
+     * https://developer.wordpress.org/block-editor/reference-guides/packages/packages-element/#rendertostring
+     */
+    // let lacosa = renderToString(<EntriesList/>);
+    // console.log(lacosa);
+
 
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("div", blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
       title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Carousel extra settings', 'ekiline-collection'),
       initialOpen: true
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(TokenCategoriesSelect, null))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(EntriesList, null), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Carousel extra editor.', 'ekiline-collection'), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(UserRemind, null));
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(TokenCategoriesSelect, null))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(EntriesList, null), isSelected && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(UserRemind, null));
   },
 
   /**
@@ -617,7 +633,7 @@ function cambiarNombrePorIds(nombres, matriz, devolucion) {
     const blockProps = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps.save({
       className: 'group-carousel-extra-front'
     });
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("div", blockProps, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Bloque frente.', 'ekiline-collection'), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("hr", null));
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("div", blockProps);
   }
 });
 
