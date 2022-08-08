@@ -4,7 +4,7 @@
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 import { registerBlockType } from '@wordpress/blocks';
-import { TextControl,SelectControl,PanelBody, ToggleControl } from '@wordpress/components';
+import { TextControl,SelectControl,PanelBody, ToggleControl, Button } from '@wordpress/components';
 import { useBlockProps, InnerBlocks, InspectorControls, RichText } from '@wordpress/block-editor';
 /**
  * Funciones personalizadas.
