@@ -14,8 +14,8 @@ import { useBlockProps, InnerBlocks, InspectorControls, RichText } from '@wordpr
 import { FormTokenField } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 
-/** 
- * tutorial 
+/**
+ * tutorial
  *  @link https://developer.wordpress.org/block-editor/how-to-guides/data-basics/2-building-a-list-of-pages/
  */
 import { useSelect } from '@wordpress/data';
@@ -85,6 +85,33 @@ function cambiarNombrePorIds(nombres,matriz,devolucion){
 	return agrupoIds.map(
 		(itm) => itm[devolucion]
 	);
+}
+
+/** 
+ * Prueba para exportar
+ * nueva prueba: renderToString
+ * https://developer.wordpress.org/block-editor/reference-guides/packages/packages-element/#rendertostring
+ * // let lacosa = renderToString(<EntriesList/>);
+ * // console.log(lacosa);
+ * Control personalizado: recordatorio.
+ */
+
+/**
+ * Mensaje de categorias seleccionadas.
+ * @param {*} addSlug incorpora la categoria en un aviso.
+ * @returns HTML code with message.
+ */
+export function UserRemind( {slugname} ){
+	let message = __( 'Sin selecciones. ', 'ekiline-collection' );
+	let classname = 'editor-modal-route';
+	if ( slugname.length != 0){
+		let element = slugname?.map(( el ) => ( el ));
+		message = __( 'Selecciones: ', 'ekiline-collection' ) + element ;
+		classname = classname + ' has-anchor';
+	}
+	return(
+		<div class={classname}>{ message }</div>
+	)
 }
 
 
@@ -197,7 +224,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 			// Categoria default: todas.
 			const selCats = (attributes.SetCatIds>0)?attributes.SetCatIds:[];
 			// Cantidad de entradas: 3.
-			const selAmount = (0===attributes.SetAmount)?'-1':attributes.SetAmount;
+			const selAmount = (attributes.SetAmount<=0)?'-1':attributes.SetAmount;
 			const posts = useSelect(
 				select =>
 					select( coreDataStore ).getEntityRecords( 'postType', 'post', { per_page: selAmount, categories: selCats } ),
@@ -212,7 +239,8 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		 * @param {*} item pagina como objeto.
 		 * @returns HTML imagen.
 		 */
-		function entradaImagen( item ){
+		// function entradaImagen( item ){
+		function EntradaImagen({item}){
 			// Construir nuevo objeto: media.
 			const media = {};
 			media[ item.id ] = useSelect(select => select( coreDataStore ).getMedia( item.featured_media ));
@@ -222,6 +250,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 				let imageThumbnailSrc = media[ item.id ].media_details.sizes.thumbnail.source_url;
 				return <img src={ imageThumbnailSrc } />;
 			}
+			return null;
 		}
 		/**
 		 * Contenido con: dangerouslySetInnerHTML
@@ -229,53 +258,34 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		 * O reformateando el string, es para fines de muestra.
 		 * https://github.com/WordPress/gutenberg/blob/trunk/packages/block-library/src/post-excerpt/edit.js
 		 */
-		function entradaExtracto(extracto){
+		// function entradaExtracto(extracto){
+		function EntradaExtracto({extracto}){
 			const document = new window.DOMParser().parseFromString(extracto,'text/html');
-			return document.body.textContent || document.body.innerText || '';
+			let texto = document.body.textContent || document.body.innerText || '';
+			return texto;
 		}
 
 		function PostsList( { posts } ) {
 			return (
-				<ul>
+				<div>
 					{ posts?.map( post => (
-						<li key={ post.id }>
+						<div key={ post.id }>
 							<a href={ post.link }>
 								{/* { post.title } */}
 								{ decodeEntities( post.title.rendered ) }
 							</a>
 							{/* Traer imagenes de cada entrada */}
-							{ (post.featured_media) ? entradaImagen(post) : null }
+							{/* { (post.featured_media) ? entradaImagen(post) : null } */}
+							{ (post.featured_media) ? <EntradaImagen item={post} /> : null }
 							{/* Traer extracto de cada entrada */}
-							{/* { decodeEntities( post.excerpt.rendered ) } */}
-							<p>{ entradaExtracto( post.excerpt.rendered ) }</p>
-						</li>
+							{/* <p><EntradaExtracto extracto={post.excerpt.rendered} /></p> */}
+							{/* <div dangerouslySetInnerHTML={ {__html: post.excerpt.rendered} } /> */}
+							<p className={'hola'}> <EntradaExtracto extracto={post.excerpt.rendered}/> </p>
+						</div>
 					) ) }
-				</ul>
+				</div>
 			);
 		}
-
-		/**
-		 * Control personalizado: recordatorio.
-		 */
-		 function UserRemind(){
-			let message = __( 'Sin selecciones. ', 'ekiline-collection' );
-			let classname = 'editor-modal-route';
-			if ( attributes.SetCatSlug.length != 0){
-				let element = attributes.SetCatSlug?.map(( el ) => ( el ));
-				message = __( 'Selecciones: ', 'ekiline-collection' ) + element ;
-				classname = classname + ' has-anchor';
-			}
-			return(
-				<div class={classname}>{ message }</div>
-			)
-		}
-
-/**
- * nueva prueba: renderToString
- * https://developer.wordpress.org/block-editor/reference-guides/packages/packages-element/#rendertostring
- */
-		// let lacosa = renderToString(<EntriesList/>);
-		// console.log(lacosa);
 
 		return (
 			<div { ...blockProps }>
@@ -284,12 +294,21 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 					<PanelBody title={ __( 'Carousel extra settings', 'ekiline-collection' ) } initialOpen={ true }>
 						{/* Elegir categorias */}
 						<TokenCategoriesSelect/>
+						{/* Numero de entradas */}
+						<TextControl
+							 label={ __( 'Number of items', 'ekiline-collection' ) }
+							 type="number"
+							 min="0"
+							 value={ attributes.SetAmount }
+							 onChange={ (newval)=>setAttributes({SetAmount:parseInt(newval)}) }
+							 help={ ( 0 === attributes.SetAmount ) ? __( 'Danger! 0 shows all.', 'ekiline-collection'  ) : '' }
+						 />
 					</PanelBody>
 				</InspectorControls>
 				{/* El bloque */}
 				<EntriesList/>
 				{/* El recordatorio */}
-				{ isSelected && ( <UserRemind/> ) }
+				{ isSelected && ( <UserRemind slugname={attributes.SetCatSlug}/> ) }
 			</div>
 		)
 	},
@@ -308,6 +327,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		return (
 			<div {...blockProps}>
 				{/* El bloque */}
+				<UserRemind slugname={attributes.SetCatSlug}/>
 			</div>
 		)
 	},
