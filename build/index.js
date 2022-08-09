@@ -567,11 +567,15 @@ function UserRemind(_ref) {
      * @returns Custom component: EntriesList.
      */
 
-    function EntriesList() {
+    function EntriesList(_ref2) {
+      let {
+        categorias,
+        cantidad
+      } = _ref2;
       // Categoria default: todas.
-      const selCats = attributes.SetCatIds > 0 ? attributes.SetCatIds : []; // Cantidad de entradas: 3.
+      const selCats = categorias > 0 ? categorias : []; // Cantidad de entradas: 3.
 
-      const selAmount = attributes.SetAmount <= 0 ? '-1' : attributes.SetAmount;
+      const selAmount = cantidad <= 0 ? '-1' : cantidad;
       const posts = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__.store).getEntityRecords('postType', 'post', {
         per_page: selAmount,
         categories: selCats
@@ -589,57 +593,63 @@ function UserRemind(_ref) {
     // function entradaImagen( item ){
 
 
-    function EntradaImagen(_ref2) {
+    function EntradaImagen(_ref3) {
       let {
         item
-      } = _ref2;
-      // Construir nuevo objeto: media.
+      } = _ref3;
+      if (!item) return null;
+      let imageThumbnailSrc; // Construir nuevo objeto: media.
+
       const media = {};
       media[item.id] = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__.store).getMedia(item.featured_media)); // Leer nuevo objeto y extraer atributos.
 
       if (media[item.id]) {
         // Url de medio, aún por definir mas atributos.
-        let imageThumbnailSrc = media[item.id].media_details.sizes.thumbnail.source_url;
-        return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("img", {
-          src: imageThumbnailSrc
-        });
-      }
+        imageThumbnailSrc = media[item.id].media_details.sizes.thumbnail.source_url;
+      } // return <img src={ imageThumbnailSrc } />;
 
-      return null;
+
+      return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)('img', {
+        src: imageThumbnailSrc,
+        alt: 'hola'
+      }, null);
     }
     /**
      * Contenido con: dangerouslySetInnerHTML
+     * dangerouslySetInnerHTML={ {__html: post.excerpt.rendered} }
      * https://blog.logrocket.com/using-dangerouslysetinnerhtml-in-a-react-application/
      * O reformateando el string, es para fines de muestra.
      * https://github.com/WordPress/gutenberg/blob/trunk/packages/block-library/src/post-excerpt/edit.js
      */
-    // function entradaExtracto(extracto){
 
 
-    function EntradaExtracto(_ref3) {
+    function EntradaExtracto(_ref4) {
       let {
-        extracto
-      } = _ref3;
+        extracto,
+        etiqueta
+      } = _ref4;
+      if (!extracto || !etiqueta) return null;
       const document = new window.DOMParser().parseFromString(extracto, 'text/html');
-      let texto = document.body.textContent || document.body.innerText || '';
-      return texto;
+      let texto = document.body.textContent || document.body.innerText || ''; // return <p>{texto}</p>;
+
+      return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(etiqueta, {}, texto);
     }
 
-    function PostsList(_ref4) {
+    function PostsList(_ref5) {
       let {
         posts
-      } = _ref4;
-      return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("div", null, posts?.map(post => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("div", {
+      } = _ref5;
+      return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("ul", null, posts?.map(post => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("li", {
         key: post.id
       }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("a", {
-        href: post.link
-      }, (0,_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_6__.decodeEntities)(post.title.rendered)), post.featured_media ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(EntradaImagen, {
-        item: post
-      }) : null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("p", {
-        className: 'hola'
-      }, " ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(EntradaExtracto, {
-        extracto: post.excerpt.rendered
-      }), " "))));
+        href: post.link,
+        title: (0,_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_6__.decodeEntities)(post.title.rendered)
+      }, (0,_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_6__.decodeEntities)(post.title.rendered)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(EntradaImagen, {
+        item: post.featured_media ? post : null
+      }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(EntradaExtracto, {
+        extracto: post.excerpt.rendered,
+        etiqueta: "p"
+      }))));
     }
 
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("div", blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
@@ -654,7 +664,10 @@ function UserRemind(_ref) {
         SetAmount: parseInt(newval)
       }),
       help: 0 === attributes.SetAmount ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Danger! 0 shows all.', 'ekiline-collection') : ''
-    }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(EntriesList, null), isSelected && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(UserRemind, {
+    }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(EntriesList, {
+      categorias: attributes.SetCatIds,
+      cantidad: attributes.SetAmount
+    }), isSelected && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(UserRemind, {
       slugname: attributes.SetCatSlug
     }));
   },
@@ -663,10 +676,10 @@ function UserRemind(_ref) {
    * @see ./save.js
    */
   // save,
-  save: _ref5 => {
+  save: _ref6 => {
     let {
       attributes
-    } = _ref5;
+    } = _ref6;
     // Personalizar clase.
     const blockProps = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps.save({
       className: 'group-carousel-extra-front'

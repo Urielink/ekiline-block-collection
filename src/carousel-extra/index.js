@@ -220,11 +220,11 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		 *
 		 * @returns Custom component: EntriesList.
 		 */
-		function EntriesList() {
+		function EntriesList({categorias, cantidad}) {
 			// Categoria default: todas.
-			const selCats = (attributes.SetCatIds>0)?attributes.SetCatIds:[];
+			const selCats = (categorias>0)?categorias:[];
 			// Cantidad de entradas: 3.
-			const selAmount = (attributes.SetAmount<=0)?'-1':attributes.SetAmount;
+			const selAmount = (cantidad<=0)?'-1':cantidad;
 			const posts = useSelect(
 				select =>
 					select( coreDataStore ).getEntityRecords( 'postType', 'post', { per_page: selAmount, categories: selCats } ),
@@ -241,49 +241,49 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		 */
 		// function entradaImagen( item ){
 		function EntradaImagen({item}){
+			if (!item) return null;
+			let imageThumbnailSrc;
 			// Construir nuevo objeto: media.
 			const media = {};
 			media[ item.id ] = useSelect(select => select( coreDataStore ).getMedia( item.featured_media ));
 			// Leer nuevo objeto y extraer atributos.
 			if ( media[ item.id ]  ){
 				// Url de medio, aún por definir mas atributos.
-				let imageThumbnailSrc = media[ item.id ].media_details.sizes.thumbnail.source_url;
-				return <img src={ imageThumbnailSrc } />;
+				imageThumbnailSrc = media[ item.id ].media_details.sizes.thumbnail.source_url;
 			}
-			return null;
+			// return <img src={ imageThumbnailSrc } />;
+			return createElement('img', {src:imageThumbnailSrc,alt:'hola'}, null);
 		}
 		/**
 		 * Contenido con: dangerouslySetInnerHTML
+		 * dangerouslySetInnerHTML={ {__html: post.excerpt.rendered} }
 		 * https://blog.logrocket.com/using-dangerouslysetinnerhtml-in-a-react-application/
 		 * O reformateando el string, es para fines de muestra.
 		 * https://github.com/WordPress/gutenberg/blob/trunk/packages/block-library/src/post-excerpt/edit.js
 		 */
-		// function entradaExtracto(extracto){
-		function EntradaExtracto({extracto}){
+		function EntradaExtracto({extracto, etiqueta}){
+			if (!extracto||!etiqueta) return null;
 			const document = new window.DOMParser().parseFromString(extracto,'text/html');
 			let texto = document.body.textContent || document.body.innerText || '';
-			return texto;
+			// return <p>{texto}</p>;
+			return createElement(etiqueta, {}, texto);
 		}
 
 		function PostsList( { posts } ) {
 			return (
-				<div>
+				<ul>
 					{ posts?.map( post => (
-						<div key={ post.id }>
-							<a href={ post.link }>
-								{/* { post.title } */}
+						<li key={ post.id }>
+							<a href={ post.link } title={ decodeEntities( post.title.rendered ) }>
 								{ decodeEntities( post.title.rendered ) }
 							</a>
 							{/* Traer imagenes de cada entrada */}
-							{/* { (post.featured_media) ? entradaImagen(post) : null } */}
-							{ (post.featured_media) ? <EntradaImagen item={post} /> : null }
+							<EntradaImagen item={(post.featured_media) ? post : null } />
 							{/* Traer extracto de cada entrada */}
-							{/* <p><EntradaExtracto extracto={post.excerpt.rendered} /></p> */}
-							{/* <div dangerouslySetInnerHTML={ {__html: post.excerpt.rendered} } /> */}
-							<p className={'hola'}> <EntradaExtracto extracto={post.excerpt.rendered}/> </p>
-						</div>
+							<EntradaExtracto extracto={post.excerpt.rendered} etiqueta="p"/>
+						</li>
 					) ) }
-				</div>
+				</ul>
 			);
 		}
 
@@ -306,7 +306,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 					</PanelBody>
 				</InspectorControls>
 				{/* El bloque */}
-				<EntriesList/>
+				<EntriesList categorias={attributes.SetCatIds} cantidad={attributes.SetAmount}/>
 				{/* El recordatorio */}
 				{ isSelected && ( <UserRemind slugname={attributes.SetCatSlug}/> ) }
 			</div>
