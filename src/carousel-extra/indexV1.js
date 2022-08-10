@@ -233,24 +233,6 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 			return <PostsList posts={ posts }/>;
 		}
 
-		function PostsList( { posts } ) {
-			return (
-				<ul>
-					{ posts?.map( post => (
-						<li key={ post.id }>
-							<a href={ post.link } title={ decodeEntities( post.title.rendered ) }>
-								{ decodeEntities( post.title.rendered ) }
-							</a>
-							{/* Traer imagenes de cada entrada */}
-							<EntradaImagen item={(post.featured_media) ? post : null } />
-							{/* Traer extracto de cada entrada */}
-							<EntradaExtracto extracto={post.excerpt.rendered} etiqueta="p"/>
-						</li>
-					) ) }
-				</ul>
-			);
-		}
-
 		/**
 		 * Medios
 		 * @link https://wholesomecode.ltd/wpquery-wordpress-block-editor-gutenberg-equivalent-is-getentityrecords
@@ -287,11 +269,23 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 			return createElement(etiqueta, {}, texto);
 		}
 
-		const experimento = puraUrl(attributes.SetCatIds,attributes.SetAmount);
-		console.log(experimento);
-		//1339.
-		// const experimento = urldeimagen(1339);
-		// console.log(experimento);
+		function PostsList( { posts } ) {
+			return (
+				<ul>
+					{ posts?.map( post => (
+						<li key={ post.id }>
+							<a href={ post.link } title={ decodeEntities( post.title.rendered ) }>
+								{ decodeEntities( post.title.rendered ) }
+							</a>
+							{/* Traer imagenes de cada entrada */}
+							<EntradaImagen item={(post.featured_media) ? post : null } />
+							{/* Traer extracto de cada entrada */}
+							<EntradaExtracto extracto={post.excerpt.rendered} etiqueta="p"/>
+						</li>
+					) ) }
+				</ul>
+			);
+		}
 
 		return (
 			<div { ...blockProps }>
@@ -340,49 +334,3 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 
 });
 
-/**
- * Experimento
- */
- function puraUrl(categorias, cantidad) {
-	// Categoria default: todas.
-	const selCats = (categorias>0)?categorias:[];
-	// Cantidad de entradas: 3.
-	const selAmount = (cantidad<=0)?'-1':cantidad;
-	const posts = useSelect(
-		select =>
-			select( coreDataStore ).getEntityRecords( 'postType', 'post', { per_page: selAmount, categories: selCats } ),
-		[]
-	);
-	// console.log(posts)
-
-	/**
-	 * probar agregar un nuevo valor a un array.
-	 * esto permitiria guardar el dato como content y luego generarlo con JS.
-	 * Con foreach.
-	 */
-	// posts?.forEach(object => {
-	// 	object.featured_media_url = 'red';
-	// });
-	// console.log(posts)
-	/**
-	 * Con map
-	 */
-	const addUrlObject = posts?.map(object => {
-		const value = (object.featured_media)? object.featured_media : 0 ;
-		// const value = (object.featured_media)? urldeimagen( object.featured_media ) : 0 ;
-		// const value = 0 ;
-		return {...object, featured_media_url: value };
-	});
-	return addUrlObject;
-}
-
-function urldeimagen(item){
-	// Construir nuevo objeto: media.
-	const media = {};
-	media[ item.id ] = useSelect(select => select( coreDataStore ).getMedia( item ));
-	// Leer nuevo objeto y extraer atributos.
-	if ( media[ item.id ]  ){
-		// Url de medio, aún por definir mas atributos.
-		return media[ item.id ].media_details.sizes.thumbnail.source_url;
-	}
-}
