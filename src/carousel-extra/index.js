@@ -364,8 +364,9 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 	// 	object.featured_media_url = 'red';
 	// });
 	// console.log(posts)
+
 	/**
-	 * Con map
+	 * Con map v1
 	 */
 	const addUrlObject = posts?.map(object => {
 		const value = (object.featured_media)? object.featured_media : 0 ;
@@ -386,3 +387,54 @@ function urldeimagen(item){
 		return media[ item.id ].media_details.sizes.thumbnail.source_url;
 	}
 }
+
+
+/**
+ * Ejercicio consulta de Eduardo.OK!.
+ */
+ function prueba1(){
+
+	const array1 = [
+		{
+			articulo: "el articulo",
+			image: 1,
+			description: "la descripción",
+		},
+		{
+			articulo: "el articulo",
+			image: 2,
+			description: "la descripción",
+		},
+	];
+
+	const images = [
+		{
+			id: 1,
+			url: "x",
+		},
+		{
+			id: 2,
+			url: "x",
+		},
+	];
+
+	// con foreach ok.
+	// array1?.forEach((item) => {
+	// 	let imageData;
+	// 	images.forEach((image) => {
+	// 		if (item.image === image.id) {
+	// 			imageData = image;
+	// 		}
+	// 	});
+	// 	item.image = imageData;
+	// });
+
+	// con map ok.
+	array1?.map((item) => {
+		const imageData = images.find( (image) => image["id"] == item["image"] );
+		item.image = imageData;
+	});
+
+	console.log(array1)
+}
+
