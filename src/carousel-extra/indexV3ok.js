@@ -289,6 +289,9 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 
 		const experimento = puraUrl(attributes.SetCatIds,attributes.SetAmount);
 		console.log(experimento);
+		//1339.
+		// const experimento = urldeimagen(1339);
+		// console.log(experimento);
 
 		return (
 			<div { ...blockProps }>
@@ -340,41 +343,94 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 /**
  * Experimento
  */
- function puraUrl(categorias, cantidad){
+
+function puraUrl(categorias, cantidad){
 
 	// Categoria default: todas.
 	const selCats = (categorias>0)?categorias:[];
 	// Cantidad de entradas: 3.
 	const selAmount = (cantidad<=0)?'-1':cantidad;
 
-	const newArray = useSelect((select) => {
-		// // Parametros de loop.
-		const query = { per_page:selAmount, categories:selCats };
-		const posts = select(coreDataStore).getEntityRecords('postType', 'post', {query});
 
-		// Preparar nuevo array de imagenes.
+	return useSelect( (select) => {
+		var query = {
+		  per_page: selAmount,
+		  categories: selCats,
+		  _embed: true,
+		};
+		// const posts = select("core").getEntityRecords("postType", "post", {query});
+		const posts = useSelect(
+			select =>
+				select(coreDataStore).getEntityRecords('postType', 'post', { query }),
+			[]
+		);
+
 		let media = {};
+
 		posts?.forEach((post) => {
-			media[post.id] = select(coreDataStore).getMedia(post.featured_media);
-		});
-
-		// Verificar que existan ambas cosas.
-		if (!posts || !media) {
-			return;
-		}
-
-		// Combinar datos.
-		posts?.map(post => {
-			post.featured_media_url = 0;
 			if(post.featured_media)
-				media[post.id] = select(coreDataStore).getMedia(post.featured_media);
+			media[post.id] = select(coreDataStore).getMedia(post.featured_media)
 			// Url de medio, aún por definir mas atributos.
-			if ( media[ post.id ]  )
-				media[post.id] = media[ post.id ].media_details.sizes.thumbnail.source_url;
-			post.featured_media_url = media[post.id];
+			// if ( media[ post.id ]  ){
+			// 	media[post.id] = media[ post.id ].media_details.sizes.thumbnail.source_url;
+			// }
 		});
 
-		return posts;
+		// Esta funcion si regresa 2 arrays.
+		// Seguir explorando.
+		return{posts,media}
+
 	})
-	console.log(newArray)
+
 }
+
+
+// withSelect((select) => {
+// 	var query = {
+// 	  per_page: -1, // set -1 to display ALL
+// 	  exclude: 50, // or pass multiple values in an array, e.g. [ 1, 9098 ]
+// 	  parent_exclude: 43, // or [ 43, 44, 98 ]
+// 	  orderby: "date",
+// 	  order: "asc",
+// 	  status: "publish", // or [ 'publish', 'draft', 'future' ]
+// 	  categories: [5, 10, 15], // category ID or IDs
+// 	  tags: 4, // tag ID, you can pass multiple too [ 4, 7 ]
+// 	  search: "search query",
+// 	  _embed: true,
+// 	};
+// 	const posts = select("core").getEntityRecords("postType", "post", {query});
+
+// 	let media = {};
+
+// 	posts?.forEach((post) => {
+// 	  media[post.id] = select("core").getMedia(post.featured_media);
+// 	});
+
+// 	return{posts,media}
+
+//   })((props) => {
+// 	const { media, posts } = props;
+
+// 	if (!posts || !media) {
+// 	  return <p>Loading...'</p>;
+// 	}
+
+// 	return (
+// 	  <ul>
+// 		{posts.map((post) => {
+// 		  if (media[post.id]) {
+// 			const imageThumbnailSrc =
+// 			  post &&
+// 			  post._embedded &&
+// 			  post._embedded["wp:featuredmedia"].size.thumbnail.source_url;
+// 			return (
+// 			  <li>
+// 				<img src={imageThumbnailSrc} />
+// 				<a href={post.link}>{post.title.raw}</a>
+// 			  </li>
+// 			);
+// 		  }
+// 		})}
+// 	  </ul>
+// 	);
+//   })

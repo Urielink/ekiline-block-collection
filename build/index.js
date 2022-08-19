@@ -653,10 +653,7 @@ function UserRemind(_ref) {
     }
 
     const experimento = puraUrl(attributes.SetCatIds, attributes.SetAmount);
-    console.log(experimento); //1339.
-    // const experimento = urldeimagen(1339);
-    // console.log(experimento);
-
+    console.log(experimento);
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("div", blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
       title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Carousel extra settings', 'ekiline-collection'),
       initialOpen: true
@@ -703,84 +700,36 @@ function puraUrl(categorias, cantidad) {
   const selCats = categorias > 0 ? categorias : []; // Cantidad de entradas: 3.
 
   const selAmount = cantidad <= 0 ? '-1' : cantidad;
-  const posts = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__.store).getEntityRecords('postType', 'post', {
-    per_page: selAmount,
-    categories: selCats
-  }), []); // console.log(posts)
-
-  /**
-   * probar agregar un nuevo valor a un array.
-   * esto permitiria guardar el dato como content y luego generarlo con JS.
-   * Con foreach.
-   */
-  // posts?.forEach(object => {
-  // 	object.featured_media_url = 'red';
-  // });
-  // console.log(posts)
-
-  /**
-   * Con map v1
-   */
-
-  const addUrlObject = posts?.map(object => {
-    const value = object.featured_media ? object.featured_media : 0; // const value = (object.featured_media)? urldeimagen( object.featured_media ) : 0 ;
-    // const value = 0 ;
-
-    return { ...object,
-      featured_media_url: value
+  const newArray = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => {
+    // // Parametros de loop.
+    const query = {
+      per_page: selAmount,
+      categories: selCats
     };
+    const posts = select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__.store).getEntityRecords('postType', 'post', {
+      query
+    }); // Preparar nuevo array de imagenes.
+
+    let media = {};
+    posts?.forEach(post => {
+      media[post.id] = select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__.store).getMedia(post.featured_media);
+    }); // Verificar que existan ambas cosas.
+
+    if (!posts || !media) {
+      return;
+    } // Combinar datos.
+
+
+    posts?.map(post => {
+      post.featured_media_url = 0;
+      if (post.featured_media) media[post.id] = select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__.store).getMedia(post.featured_media); // Url de medio, aún por definir mas atributos.
+
+      if (media[post.id]) media[post.id] = media[post.id].media_details.sizes.thumbnail.source_url;
+      post.featured_media_url = media[post.id];
+    });
+    return posts;
   });
-  return addUrlObject;
-}
-
-function urldeimagen(item) {
-  // Construir nuevo objeto: media.
-  const media = {};
-  media[item.id] = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__.store).getMedia(item)); // Leer nuevo objeto y extraer atributos.
-
-  if (media[item.id]) {
-    // Url de medio, aún por definir mas atributos.
-    return media[item.id].media_details.sizes.thumbnail.source_url;
-  }
-}
-/**
- * Ejercicio consulta de Eduardo.OK!.
- */
-
-
-function prueba1() {
-  const array1 = [{
-    articulo: "el articulo",
-    image: 1,
-    description: "la descripción"
-  }, {
-    articulo: "el articulo",
-    image: 2,
-    description: "la descripción"
-  }];
-  const images = [{
-    id: 1,
-    url: "x"
-  }, {
-    id: 2,
-    url: "x"
-  }]; // con foreach ok.
-  // array1?.forEach((item) => {
-  // 	let imageData;
-  // 	images.forEach((image) => {
-  // 		if (item.image === image.id) {
-  // 			imageData = image;
-  // 		}
-  // 	});
-  // 	item.image = imageData;
-  // });
-  // con map ok.
-
-  array1?.map(item => {
-    const imageData = images.find(image => image["id"] == item["image"]);
-    item.image = imageData;
-  });
-  console.log(array1);
+  console.log(newArray);
 }
 
 /***/ }),

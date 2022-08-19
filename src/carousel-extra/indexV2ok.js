@@ -289,6 +289,9 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 
 		const experimento = puraUrl(attributes.SetCatIds,attributes.SetAmount);
 		console.log(experimento);
+		//1339.
+		// const experimento = urldeimagen(1339);
+		// console.log(experimento);
 
 		return (
 			<div { ...blockProps }>
@@ -340,41 +343,98 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 /**
  * Experimento
  */
- function puraUrl(categorias, cantidad){
-
+ function puraUrl(categorias, cantidad) {
 	// Categoria default: todas.
 	const selCats = (categorias>0)?categorias:[];
 	// Cantidad de entradas: 3.
 	const selAmount = (cantidad<=0)?'-1':cantidad;
+	const posts = useSelect(
+		select =>
+			select( coreDataStore ).getEntityRecords( 'postType', 'post', { per_page: selAmount, categories: selCats } ),
+		[]
+	);
+	// console.log(posts)
 
-	const newArray = useSelect((select) => {
-		// // Parametros de loop.
-		const query = { per_page:selAmount, categories:selCats };
-		const posts = select(coreDataStore).getEntityRecords('postType', 'post', {query});
+	/**
+	 * probar agregar un nuevo valor a un array.
+	 * esto permitiria guardar el dato como content y luego generarlo con JS.
+	 * Con foreach.
+	 */
+	// posts?.forEach(object => {
+	// 	object.featured_media_url = 'red';
+	// });
+	// console.log(posts)
 
-		// Preparar nuevo array de imagenes.
-		let media = {};
-		posts?.forEach((post) => {
-			media[post.id] = select(coreDataStore).getMedia(post.featured_media);
-		});
-
-		// Verificar que existan ambas cosas.
-		if (!posts || !media) {
-			return;
-		}
-
-		// Combinar datos.
-		posts?.map(post => {
-			post.featured_media_url = 0;
-			if(post.featured_media)
-				media[post.id] = select(coreDataStore).getMedia(post.featured_media);
-			// Url de medio, aún por definir mas atributos.
-			if ( media[ post.id ]  )
-				media[post.id] = media[ post.id ].media_details.sizes.thumbnail.source_url;
-			post.featured_media_url = media[post.id];
-		});
-
-		return posts;
-	})
-	console.log(newArray)
+	/**
+	 * Con map v1
+	 */
+	const addUrlObject = posts?.map(object => {
+		const value = (object.featured_media)? object.featured_media : 0 ;
+		// const value = (object.featured_media)? urldeimagen( object.featured_media ) : 0 ;
+		// const value = 0 ;
+		return {...object, featured_media_url: value };
+	});
+	return addUrlObject;
 }
+
+function urldeimagen(item){
+	// Construir nuevo objeto: media.
+	const media = {};
+	media[ item.id ] = useSelect(select => select( coreDataStore ).getMedia( item ));
+	// Leer nuevo objeto y extraer atributos.
+	if ( media[ item.id ]  ){
+		// Url de medio, aún por definir mas atributos.
+		return media[ item.id ].media_details.sizes.thumbnail.source_url;
+	}
+}
+
+
+/**
+ * Ejercicio consulta de Eduardo.OK!.
+ */
+ function prueba1(){
+
+	const array1 = [
+		{
+			articulo: "el articulo",
+			image: 1,
+			description: "la descripción",
+		},
+		{
+			articulo: "el articulo",
+			image: 2,
+			description: "la descripción",
+		},
+	];
+
+	const images = [
+		{
+			id: 1,
+			url: "x",
+		},
+		{
+			id: 2,
+			url: "x",
+		},
+	];
+
+	// con foreach ok.
+	// array1?.forEach((item) => {
+	// 	let imageData;
+	// 	images.forEach((image) => {
+	// 		if (item.image === image.id) {
+	// 			imageData = image;
+	// 		}
+	// 	});
+	// 	item.image = imageData;
+	// });
+
+	// con map ok.
+	array1?.map((item) => {
+		const imageData = images.find( (image) => image["id"] == item["image"] );
+		item.image = imageData;
+	});
+
+	console.log(array1)
+}
+
