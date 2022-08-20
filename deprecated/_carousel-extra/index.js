@@ -155,10 +155,6 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 			type: 'boolean',
 			default: true,
 		},
-		SavePosts:{
-			type: 'array',
-			default: '',
-		},
 		content: {
 			type: 'string',
 			source: 'html',
@@ -238,9 +234,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		}
 
 		function PostsList( { posts } ) {
-			// Modificar array de posts.
 			const nposts = filtrarEntriesList(posts);
-			// Revisar estados, para confirmar que existe un cambio en la informacion.
 			return (
 				<ul>
 					{ nposts?.map( post => (
@@ -253,10 +247,9 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 							{/* Traer extracto de cada entrada */}
 							<p>{post.post_excerpt}</p>
 						</li>
-					)) }
+					) ) }
 				</ul>
 			);
-
 		}
 
 		/**
@@ -275,6 +268,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 					post_thumbnail_alt: ( (post.featured_media) ? datoEntradaImagen(post,'alt') : 0 ),
 				}
 			) )
+			console.log(thePostsArray)
 			return thePostsArray;
 		}
 

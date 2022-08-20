@@ -501,6 +501,10 @@ function UserRemind(_ref) {
       type: 'boolean',
       default: true
     },
+    SavePosts: {
+      type: 'array',
+      default: ''
+    },
     content: {
       type: 'string',
       source: 'html',
@@ -589,17 +593,35 @@ function UserRemind(_ref) {
       let {
         posts
       } = _ref3;
-      return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("ul", null, posts?.map(post => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("li", {
-        key: post.id
+      // Modificar array de posts.
+      const nposts = filtrarEntriesList(posts); // Revisar estados, para confirmar que existe un cambio en la informacion.
+
+      return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("ul", null, nposts?.map(post => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("li", {
+        key: post.post_id
       }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("a", {
-        href: post.link,
-        title: (0,_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_6__.decodeEntities)(post.title.rendered)
-      }, (0,_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_6__.decodeEntities)(post.title.rendered)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(EntradaImagen, {
-        item: post.featured_media ? post : null
-      }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(EntradaExtracto, {
-        extracto: post.excerpt.rendered,
-        etiqueta: "p"
-      }))));
+        href: post.post_permalink,
+        title: (0,_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_6__.decodeEntities)(post.post_title)
+      }, (0,_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_6__.decodeEntities)(post.post_title)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("img", {
+        src: post.post_thumbnail_url ? post.post_thumbnail_url : null
+      }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("p", null, post.post_excerpt))));
+    }
+    /**
+     * Filtrar los resultados para crear un arreglo con lo neceesario.
+     * @param {*} posts Arreglo, selección de informacion.
+     * @returns thePostsArray nuevo arreglo con la informacion procesada.
+     */
+
+
+    function filtrarEntriesList(posts) {
+      const thePostsArray = posts?.map(post => ({
+        post_id: post.id,
+        post_permalink: post.link,
+        post_title: post.title.rendered,
+        post_excerpt: datoEntradaExtracto(post.excerpt.rendered),
+        post_thumbnail_url: post.featured_media ? datoEntradaImagen(post, 'url') : 0,
+        post_thumbnail_alt: post.featured_media ? datoEntradaImagen(post, 'alt') : 0
+      }));
+      return thePostsArray;
     }
     /**
      * Medios
@@ -607,29 +629,28 @@ function UserRemind(_ref) {
      * @param {*} item pagina como objeto.
      * @returns HTML imagen.
      */
-    // function entradaImagen( item ){
 
 
-    function EntradaImagen(_ref4) {
-      let {
-        item
-      } = _ref4;
-      if (!item) return null;
+    function datoEntradaImagen(item, src) {
+      if (!item || !src) return null;
       let imageThumbnailSrc; // Construir nuevo objeto: media.
 
       const media = {};
       media[item.id] = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__.store).getMedia(item.featured_media)); // Leer nuevo objeto y extraer atributos.
 
       if (media[item.id]) {
-        // Url de medio, aún por definir mas atributos.
-        imageThumbnailSrc = media[item.id].media_details.sizes.thumbnail.source_url;
-      } // return <img src={ imageThumbnailSrc } />;
+        if ('url' === src) {
+          // Url de medio, aún por definir mas atributos.
+          imageThumbnailSrc = media[item.id].media_details.sizes.thumbnail.source_url;
+        }
 
+        if ('alt' === src) {
+          // Url de medio, aún por definir mas atributos.
+          imageThumbnailSrc = media[item.id].alt_text;
+        }
+      }
 
-      return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)('img', {
-        src: imageThumbnailSrc,
-        alt: 'hola'
-      }, null);
+      return imageThumbnailSrc;
     }
     /**
      * Contenido con: dangerouslySetInnerHTML
@@ -640,20 +661,13 @@ function UserRemind(_ref) {
      */
 
 
-    function EntradaExtracto(_ref5) {
-      let {
-        extracto,
-        etiqueta
-      } = _ref5;
-      if (!extracto || !etiqueta) return null;
+    function datoEntradaExtracto(extracto) {
+      if (!extracto) return null;
       const document = new window.DOMParser().parseFromString(extracto, 'text/html');
-      let texto = document.body.textContent || document.body.innerText || ''; // return <p>{texto}</p>;
-
-      return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(etiqueta, {}, texto);
+      let texto = document.body.textContent || document.body.innerText || '';
+      return texto;
     }
 
-    const experimento = puraUrl(attributes.SetCatIds, attributes.SetAmount);
-    console.log(experimento);
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)("div", blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
       title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Carousel extra settings', 'ekiline-collection'),
       initialOpen: true
@@ -678,10 +692,10 @@ function UserRemind(_ref) {
    * @see ./save.js
    */
   // save,
-  save: _ref6 => {
+  save: _ref4 => {
     let {
       attributes
-    } = _ref6;
+    } = _ref4;
     // Personalizar clase.
     const blockProps = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps.save({
       className: 'group-carousel-extra-front'
@@ -691,46 +705,6 @@ function UserRemind(_ref) {
     }));
   }
 });
-/**
- * Experimento
- */
-
-function puraUrl(categorias, cantidad) {
-  // Categoria default: todas.
-  const selCats = categorias > 0 ? categorias : []; // Cantidad de entradas: 3.
-
-  const selAmount = cantidad <= 0 ? '-1' : cantidad;
-  const newArray = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => {
-    // // Parametros de loop.
-    const query = {
-      per_page: selAmount,
-      categories: selCats
-    };
-    const posts = select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__.store).getEntityRecords('postType', 'post', {
-      query
-    }); // Preparar nuevo array de imagenes.
-
-    let media = {};
-    posts?.forEach(post => {
-      media[post.id] = select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__.store).getMedia(post.featured_media);
-    }); // Verificar que existan ambas cosas.
-
-    if (!posts || !media) {
-      return;
-    } // Combinar datos.
-
-
-    posts?.map(post => {
-      post.featured_media_url = 0;
-      if (post.featured_media) media[post.id] = select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__.store).getMedia(post.featured_media); // Url de medio, aún por definir mas atributos.
-
-      if (media[post.id]) media[post.id] = media[post.id].media_details.sizes.thumbnail.source_url;
-      post.featured_media_url = media[post.id];
-    });
-    return posts;
-  });
-  console.log(newArray);
-}
 
 /***/ }),
 
