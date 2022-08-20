@@ -249,7 +249,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 								{ decodeEntities( post.post_title ) }
 							</a>
 							{/* Traer imagenes de cada entrada */}
-							<img src={(post.post_thumbnail_url) ? post.post_thumbnail_url : null } />
+							{ (post.post_thumbnail_url) ? <img src={ post.post_thumbnail_url } alt={ (post.post_thumbnail_alt) ? post.post_thumbnail_alt:null } /> : null }
 							{/* Traer extracto de cada entrada */}
 							<p>{post.post_excerpt}</p>
 						</li>
