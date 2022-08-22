@@ -87,6 +87,34 @@ function cambiarNombrePorIds(nombres,matriz,devolucion){
 	);
 }
 
+/** 
+ * Prueba para exportar
+ * nueva prueba: renderToString
+ * https://developer.wordpress.org/block-editor/reference-guides/packages/packages-element/#rendertostring
+ * // let lacosa = renderToString(<EntriesList/>);
+ * // console.log(lacosa);
+ * Control personalizado: recordatorio.
+ */
+
+/**
+ * Mensaje de categorias seleccionadas.
+ * @param {*} addSlug incorpora la categoria en un aviso.
+ * @returns HTML code with message.
+ */
+export function UserRemind( {slugname} ){
+	let message = __( 'Sin selecciones. ', 'ekiline-collection' );
+	let classname = 'editor-modal-route';
+	if ( slugname.length != 0){
+		let element = slugname?.map(( el ) => ( el ));
+		message = __( 'Selecciones: ', 'ekiline-collection' ) + element ;
+		classname = classname + ' has-anchor';
+	}
+	return(
+		<div class={classname}>{ message }</div>
+	)
+}
+
+
 /**
  * Every block starts by registering a new block type definition.
  *
@@ -129,7 +157,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		},
 		SavePosts:{
 			type: 'array',
-			default: [],
+			default: '',
 		},
 		content: {
 			type: 'string',
@@ -144,7 +172,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 	// edit: Edit,
 	edit: ( props ) => {
 
-		const { attributes, setAttributes } = props;
+		const { attributes, setAttributes, isSelected } = props;
 		// Personalizar clase.
 		const blockProps = useBlockProps( {
 			className: 'group-carousel-extra',
@@ -154,13 +182,15 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		 * Selector de categorias.
 		 * @returns Custom component: FormTokenField.
 		 */
-		 const TokenCategoriesSelect = () => {
+		//  const TokenCategoriesSelect = () => {
+		function TokenCategoriesSelect (){
 			// el dato.
 			const categories = useSelect(
 				select =>
 					select( 'core' ).getEntityRecords( 'taxonomy', 'category' ),
 				[]
 			);
+			// console.log('hayDato? ' + attributes.SetCatSlug + ' hayDatoEnd.');
 			// Recursos.
 			const [ selectedCategories, setSelectedCategories ] = useState( [] );
 			// Componente.
@@ -177,8 +207,6 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 						setAttributes( { SetCatSlug:tokens } )
 						setAttributes( { SetCatIds: cambiarNombrePorIds(tokens,categories,'id') } )
 						setSelectedCategories( tokens )
-						//reset saved posts.
-						setAttributes({ SavePosts: null })
 					} }
 				/>
 			);
@@ -206,56 +234,88 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 					select( coreDataStore ).getEntityRecords( 'postType', 'post', { per_page: selAmount, categories: selCats } ),
 				[]
 			);
-			// Array de posts.
-			console.log('original');
-			// console.log(posts)
-
-			if( posts?.length > 0 ){
-
-				console.log(posts) 
-
-				// No requiero todos los valores solo 5.
-				const smallArray = (theArray)=>{
-					return theArray?.map( post => (
-						{
-							id: post.id,
-							link: post.link,
-							title: post.title.rendered,
-							excerpt: post.excerpt.rendered,
-							thumbnail: post.featured_media,
-						}
-					) )
-				}
-				const nuevoArray = smallArray(posts);
-				console.log('reduccion');
-				console.log(nuevoArray);
-
-
-				// Guardar array en propiedades de bloque.
-				const savethis = (newval)=>setAttributes({SavePosts:newval});
-				// savethis(posts);
-
-				console.log('copia en bloque');
-				console.log(attributes.SavePosts);
-
-				if( !attributes.SavePosts || ! attributes.SavePosts?.length > 0){
-					savethis(nuevoArray);
-				}
-
-			}
-
-			// posible MarkUp.
-			const doLoop = (
-				<div>
-					<pre>{JSON.stringify(attributes.SavePosts)}</pre>
-				</div>
-			)
-
-			return doLoop;
-
-
+			return <PostsList posts={ posts }/>;
 		}
 
+		function PostsList( { posts } ) {
+			// Modificar array de posts.
+			const nposts = filtrarEntriesList(posts);
+			// Revisar estados, para confirmar que existe un cambio en la informacion.
+			return (
+				<ul>
+					{ nposts?.map( post => (
+						<li key={ post.post_id }>
+							<a href={ post.post_permalink } title={ decodeEntities( post.post_title ) }>
+								{ decodeEntities( post.post_title ) }
+							</a>
+							{/* Traer imagenes de cada entrada */}
+							{ (post.post_thumbnail_url) ? <img src={ post.post_thumbnail_url } alt={ (post.post_thumbnail_alt) ? post.post_thumbnail_alt:null } /> : null }
+							{/* Traer extracto de cada entrada */}
+							<p>{post.post_excerpt}</p>
+						</li>
+					)) }
+				</ul>
+			);
+		}
+
+		/**
+		 * Filtrar los resultados para crear un arreglo con lo neceesario.
+		 * @param {*} posts Arreglo, selección de informacion.
+		 * @returns thePostsArray nuevo arreglo con la informacion procesada.
+		 */
+		function filtrarEntriesList(posts){
+			const thePostsArray = posts?.map( post => (
+				{
+					post_id: post.id,
+					post_permalink: post.link,
+					post_title: post.title.rendered,
+					post_excerpt: ( datoEntradaExtracto(post.excerpt.rendered) ),
+					post_thumbnail_url: ( (post.featured_media) ? datoEntradaImagen(post,'url') : 0 ),
+					post_thumbnail_alt: ( (post.featured_media) ? datoEntradaImagen(post,'alt') : 0 ),
+				}
+			) )
+			return thePostsArray;
+		}
+
+		/**
+		 * Medios
+		 * @link https://wholesomecode.ltd/wpquery-wordpress-block-editor-gutenberg-equivalent-is-getentityrecords
+		 * @param {*} item pagina como objeto.
+		 * @returns HTML imagen.
+		 */
+		function datoEntradaImagen(item, src){
+			if (!item || !src) return null;
+			let imageThumbnailSrc;
+			// Construir nuevo objeto: media.
+			const media = {};
+			media[ item.id ] = useSelect(select => select( coreDataStore ).getMedia( item.featured_media ));
+			// Leer nuevo objeto y extraer atributos.
+			if ( media[ item.id ]  ){
+				if ('url'===src){
+					// Url de medio, aún por definir mas atributos.
+					imageThumbnailSrc = media[ item.id ].media_details.sizes.thumbnail.source_url;
+				}
+				if ('alt'===src){
+					// Url de medio, aún por definir mas atributos.
+					imageThumbnailSrc = media[ item.id ].alt_text;
+				}
+			}
+			return imageThumbnailSrc;
+		}
+
+		/**
+		 * Contenido con: dangerouslySetInnerHTML
+		 * dangerouslySetInnerHTML={ {__html: post.excerpt.rendered} }
+		 * https://blog.logrocket.com/using-dangerouslysetinnerhtml-in-a-react-application/
+		 * O reformateando el string, es para fines de muestra.
+		 * https://github.com/WordPress/gutenberg/blob/trunk/packages/block-library/src/post-excerpt/edit.js
+		 */
+		function datoEntradaExtracto(extracto){
+			if (!extracto) return null;
+			const document = new window.DOMParser().parseFromString(extracto,'text/html');
+			let texto = document.body.textContent || document.body.innerText || '';
+			return texto;
+		}
 
 		return (
 			<div { ...blockProps }>
@@ -270,17 +330,15 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 							 type="number"
 							 min="0"
 							 value={ attributes.SetAmount }
-							 onChange={ (newval)=>{
-								setAttributes({ SetAmount: parseInt(newval) })
-								//reset saved posts.
-								setAttributes({ SavePosts: null })
-							 } }
+							 onChange={ (newval)=>setAttributes({SetAmount:parseInt(newval)}) }
 							 help={ ( 0 === attributes.SetAmount ) ? __( 'Danger! 0 shows all.', 'ekiline-collection'  ) : '' }
 						 />
 					</PanelBody>
 				</InspectorControls>
 				{/* El bloque */}
 				<EntriesList categorias={attributes.SetCatIds} cantidad={attributes.SetAmount}/>
+				{/* El recordatorio */}
+				{ isSelected && ( <UserRemind slugname={attributes.SetCatSlug}/> ) }
 			</div>
 		)
 	},
@@ -299,22 +357,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		return (
 			<div {...blockProps}>
 				{/* El bloque */}
-				<div>
-					{/* <pre>{JSON.stringify(attributes.SavePosts)}</pre> */}
-					<ul>
-						{ attributes.SavePosts?.map( post => (
-							<li key={ post.id }>
-								<a href={ post.link } title={ decodeEntities( post.title ) }>
-									{ decodeEntities( post.title ) }
-								</a>
-								{/* Traer imagenes de cada entrada */}
-								{ (post.thumbnail) ? <img src={ post.thumbnail } /> : null }
-								{/* Traer extracto de cada entrada */}
-								{decodeEntities( post.excerpt )}
-							</li>
-						)) }
-					</ul>
-				</div>
+				<UserRemind slugname={attributes.SetCatSlug}/>
 			</div>
 		)
 	},
