@@ -64,58 +64,6 @@ const customIcon = createElement(
 // import save from './save';
 
 /**
- * Funciones personalizadas
- */
-/**
- * Crear nuevo array de categorias por ID.
- * @param {*} nombres slugs (url) de cada categoria.
- * @param {*} matriz grupo de categorias existentes.
- * @param {*} devolucion nombre de dato que buscas obtener, en este caso IDs.
- * @returns array de IDs por cada categoria.
- */
-function cambiarNombrePorIds(nombres,matriz,devolucion){
-	const agrupoIds = [];
-	nombres.forEach(
-		(nombre) => {
-			// Encontrar objeto por value
-			const encontrado = matriz.find((objeto) => (objeto.slug || objeto.id) === nombre);
-			agrupoIds.push(encontrado);
-		}
-	);
-	return agrupoIds.map(
-		(itm) => itm[devolucion]
-	);
-}
-
-/** 
- * Prueba para exportar
- * nueva prueba: renderToString
- * https://developer.wordpress.org/block-editor/reference-guides/packages/packages-element/#rendertostring
- * // let lacosa = renderToString(<EntriesList/>);
- * // console.log(lacosa);
- * Control personalizado: recordatorio.
- */
-
-/**
- * Mensaje de categorias seleccionadas.
- * @param {*} addSlug incorpora la categoria en un aviso.
- * @returns HTML code with message.
- */
-export function UserRemind( {slugname} ){
-	let message = __( 'Sin selecciones. ', 'ekiline-collection' );
-	let classname = 'editor-modal-route';
-	if ( slugname.length != 0){
-		let element = slugname?.map(( el ) => ( el ));
-		message = __( 'Selecciones: ', 'ekiline-collection' ) + element ;
-		classname = classname + ' has-anchor';
-	}
-	return(
-		<div class={classname}>{ message }</div>
-	)
-}
-
-
-/**
  * Every block starts by registering a new block type definition.
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
@@ -159,11 +107,11 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 			type: 'array',
 			default: '',
 		},
-		content: {
-			type: 'string',
-			source: 'html',
-			selector: 'div',
-		},
+		// content: {
+		// 	type: 'string',
+		// 	source: 'html',
+		// 	selector: 'div',
+		// },
 	},
 
 	/**
@@ -178,44 +126,48 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 			className: 'group-carousel-extra',
 		} );
 
+
 		/**
-		 * Selector de categorias.
+		 * Selector de categorias, maneja la informacion que se guarda en el bloque.
+		 * @param {*} attributes Accede a los registros en el bloque.
+		 * @param {*} setAttributes Actualiza los registros en el bloque.
 		 * @returns Custom component: FormTokenField.
 		 */
-		//  const TokenCategoriesSelect = () => {
-		function TokenCategoriesSelect (){
-			// el dato.
+		const TokenCategoriesSelect = ()=>{
+			// Array de categorias existentes.
 			const categories = useSelect(
 				select =>
 					select( 'core' ).getEntityRecords( 'taxonomy', 'category' ),
 				[]
 			);
-			// console.log('hayDato? ' + attributes.SetCatSlug + ' hayDatoEnd.');
-			// Recursos.
+			// Actualizacion de categorias seleccionadas.
 			const [ selectedCategories, setSelectedCategories ] = useState( [] );
-			// Componente.
+			// Componente, necesita de cambiarNombrePorIds.
 			return(
 				<FormTokenField
 					label={ __( 'Find and select categories:', 'ekiline-collection' ) }
-					value={ (!attributes.SetCatSlug) ? selectedCategories : attributes.SetCatSlug }
+					value={
+						(!attributes.SetCatSlug) ? selectedCategories : attributes.SetCatSlug
+					}
+					// Mostrar sugerencias por nombre de url. (id, name, slug).
 					suggestions={
-						// Solicitar por id, name, slug.
 						categories?.map( ( el ) => el.slug )
 					}
+					// Varias operaciones: mostrar categorias seleccionadas, actualizar/guardar datos.
 					onChange={ ( tokens ) => {
-						// console.log('haytokens? ' + tokens + ' haytokensEnd.');
-						setAttributes( { SetCatSlug:tokens } )
-						setAttributes( { SetCatIds: cambiarNombrePorIds(tokens,categories,'id') } )
-						setSelectedCategories( tokens )
-						//reset saved posts.
-						setAttributes({ SavePosts: null })
+						setSelectedCategories( tokens );
+						setAttributes( {
+							SetCatSlug:tokens,
+							SetCatIds: (cambiarNombrePorIds(tokens,categories,'id')),
+							SavePosts: null,
+						} );
 					} }
 				/>
 			);
 		};
 
 		/**
-		 * Bloque de entradas por categoría.
+		 * Bloque principal de entradas por categoría.
 		 * Dato, elegir segun el postType: page/post.
 		 * Atributos de query:
 		 * per_page, categories = numero entero
@@ -241,28 +193,30 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 
 		function PostsList( { posts } ) {
 
-			// Modificar array de posts.
+			/**
+			 * Nota: Revisar estados, para confirmar que existe un cambio en la informacion.
+			 * Si eran los estados, repercuten en los arrays.
+			 */
+			const postsStored = attributes.SavePosts;
+
+			// Reducir array de posts.
 			if( posts?.length > 0 || posts !== null ){
 				// No requiero todos los valores solo 5.
 				const nuevoArray = filtrarEntriesList(posts);
 				// Guardar array en propiedades de bloque.
 				const savethis = (newval)=>setAttributes({SavePosts:newval});
-				if( !attributes.SavePosts || ! attributes.SavePosts?.length > 0){
+				if( !postsStored || ! postsStored?.length > 0){
 					savethis(nuevoArray);
 				}
 			}
 
-			/**
-			 * Revisar estados, para confirmar que existe un cambio en la informacion.
-			 * Si eran los estados, repercuten en los arrays.
-			 */
-			if(!attributes.SavePosts){
+			if(!postsStored){
 				return (<></>)
 			}
 
 			return (
 				<ul>
-					{ attributes.SavePosts?.map( post => (
+					{ postsStored?.map( post => (
 						<li key={ post.post_id }>
 							<a href={ post.post_permalink } title={ decodeEntities( post.post_title ) }>
 								{ decodeEntities( post.post_title ) }
@@ -275,66 +229,6 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 					)) }
 				</ul>
 			);
-
-		}
-
-		/**
-		 * Filtrar los resultados para crear un arreglo con lo neceesario.
-		 * @param {*} posts Arreglo, selección de informacion.
-		 * @returns thePostsArray nuevo arreglo con la informacion procesada.
-		 */
-		function filtrarEntriesList(posts){
-			const thePostsArray = posts?.map( post => (
-				{
-					post_id: post.id,
-					post_permalink: post.link,
-					post_title: post.title.rendered,
-					post_excerpt: ( datoEntradaExtracto(post.excerpt.rendered) ),
-					post_thumbnail_url: ( (post.featured_media) ? datoEntradaImagen(post,'url') : 0 ),
-					post_thumbnail_alt: ( (post.featured_media) ? datoEntradaImagen(post,'alt') : 0 ),
-				}
-			) )
-			return thePostsArray;
-		}
-
-		/**
-		 * Medios
-		 * @link https://wholesomecode.ltd/wpquery-wordpress-block-editor-gutenberg-equivalent-is-getentityrecords
-		 * @param {*} item pagina como objeto.
-		 * @returns HTML imagen.
-		 */
-		function datoEntradaImagen(item, src){
-			if (!item || !src) return null;
-			let imageThumbnailSrc;
-			// Construir nuevo objeto: media.
-			const media = {};
-			media[ item.id ] = useSelect(select => select( coreDataStore ).getMedia( item.featured_media ));
-			// Leer nuevo objeto y extraer atributos.
-			if ( media[ item.id ]  ){
-				if ('url'===src){
-					// Url de medio, aún por definir mas atributos.
-					imageThumbnailSrc = media[ item.id ].media_details.sizes.thumbnail.source_url;
-				}
-				if ('alt'===src){
-					// Url de medio, aún por definir mas atributos.
-					imageThumbnailSrc = media[ item.id ].alt_text;
-				}
-			}
-			return imageThumbnailSrc;
-		}
-
-		/**
-		 * Contenido con: dangerouslySetInnerHTML
-		 * dangerouslySetInnerHTML={ {__html: post.excerpt.rendered} }
-		 * https://blog.logrocket.com/using-dangerouslysetinnerhtml-in-a-react-application/
-		 * O reformateando el string, es para fines de muestra.
-		 * https://github.com/WordPress/gutenberg/blob/trunk/packages/block-library/src/post-excerpt/edit.js
-		 */
-		function datoEntradaExtracto(extracto){
-			if (!extracto) return null;
-			const document = new window.DOMParser().parseFromString(extracto,'text/html');
-			let texto = document.body.textContent || document.body.innerText || '';
-			return texto;
 		}
 
 		return (
@@ -377,7 +271,6 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		const blockProps = useBlockProps.save( {
 			className: 'group-carousel-extra-front',
 		} );
-
 		return (
 			<div {...blockProps}>
 				{/* El bloque */}
@@ -400,3 +293,117 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 	},
 
 });
+
+/**
+ * Mis funciones y componentes.
+ */
+
+/**
+ * Prueba para exportar
+ * nueva prueba: renderToString
+ * https://developer.wordpress.org/block-editor/reference-guides/packages/packages-element/#rendertostring
+ * // let lacosa = renderToString(<EntriesList/>);
+ * // console.log(lacosa);
+ * Control personalizado: recordatorio.
+ */
+
+/**
+ * Mensaje de categorias seleccionadas.
+ * @param {*} addSlug incorpora la categoria en un aviso.
+ * @returns HTML code with message.
+ */
+export function UserRemind( {slugname} ){
+	let message = __( 'Sin selecciones. ', 'ekiline-collection' );
+	let classname = 'editor-modal-route';
+	if ( slugname.length != 0){
+		let element = slugname?.map(( el ) => ( el ));
+		message = __( 'Selecciones: ', 'ekiline-collection' ) + element ;
+		classname = classname + ' has-anchor';
+	}
+	return(
+		<div class={classname}>{ message }</div>
+	)
+}
+
+
+/**
+ * Transformo una cadena id por nombre.
+ * Crear nuevo array de categorias por ID. 
+ * @param {*} nombres slugs (url) de cada categoria.
+ * @param {*} matriz grupo de categorias existentes.
+ * @param {*} devolucion nombre de dato que buscas obtener, en este caso IDs.
+ * @returns array de IDs por cada categoria.
+ */
+function cambiarNombrePorIds(nombres,matriz,devolucion){
+	const agrupoIds = [];
+	nombres.forEach(
+		(nombre) => {
+			// Encontrar objeto por value
+			const encontrado = matriz.find((objeto) => (objeto.slug || objeto.id) === nombre);
+			agrupoIds.push(encontrado);
+		}
+	);
+	return agrupoIds.map(
+		(itm) => itm[devolucion]
+	);
+}
+
+
+/**
+ * Filtrar los resultados para crear un arreglo con lo neceesario.
+ * @param {*} posts Arreglo, selección de informacion.
+ * @returns thePostsArray nuevo arreglo con la informacion procesada.
+ */
+	function filtrarEntriesList(posts){
+	const thePostsArray = posts?.map( post => (
+		{
+			post_id: post.id,
+			post_permalink: post.link,
+			post_title: post.title.rendered,
+			post_excerpt: ( datoEntradaExtracto(post.excerpt.rendered) ),
+			post_thumbnail_url: ( (post.featured_media) ? datoEntradaImagen(post,'url') : 0 ),
+			post_thumbnail_alt: ( (post.featured_media) ? datoEntradaImagen(post,'alt') : 0 ),
+		}
+	) )
+	return thePostsArray;
+}
+
+/**
+ * Medios
+ * @link https://wholesomecode.ltd/wpquery-wordpress-block-editor-gutenberg-equivalent-is-getentityrecords
+ * @param {*} item pagina como objeto.
+ * @returns HTML imagen.
+ */
+function datoEntradaImagen(item, src){
+	if (!item || !src) return null;
+	let imageThumbnailSrc;
+	// Construir nuevo objeto: media.
+	const media = {};
+	media[ item.id ] = useSelect(select => select( coreDataStore ).getMedia( item.featured_media ));
+	// Leer nuevo objeto y extraer atributos.
+	if ( media[ item.id ]  ){
+		if ('url'===src){
+			// Url de medio, aún por definir mas atributos.
+			imageThumbnailSrc = media[ item.id ].media_details.sizes.thumbnail.source_url;
+		}
+		if ('alt'===src){
+			// Url de medio, aún por definir mas atributos.
+			imageThumbnailSrc = media[ item.id ].alt_text;
+		}
+	}
+	return imageThumbnailSrc;
+}
+
+/**
+ * Contenido con: dangerouslySetInnerHTML
+ * dangerouslySetInnerHTML={ {__html: post.excerpt.rendered} }
+ * https://blog.logrocket.com/using-dangerouslysetinnerhtml-in-a-react-application/
+ * O reformateando el string, es para fines de muestra.
+ * https://github.com/WordPress/gutenberg/blob/trunk/packages/block-library/src/post-excerpt/edit.js
+ */
+function datoEntradaExtracto(extracto){
+	if (!extracto) return null;
+	const document = new window.DOMParser().parseFromString(extracto,'text/html');
+	let texto = document.body.textContent || document.body.innerText || '';
+	return texto;
+}
