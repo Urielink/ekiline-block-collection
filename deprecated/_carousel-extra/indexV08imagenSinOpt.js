@@ -256,7 +256,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 					</PanelBody>
 				</InspectorControls>
 				{/* El bloque */}
-				<EntriesList categorias={attributes.SetCatIds} cantidad={attributes.SetAmount} />
+				<EntriesList categorias={attributes.SetCatIds} cantidad={attributes.SetAmount}/>
 				{/* El recordatorio */}
 				{ isSelected && ( <UserRemind slugname={attributes.SetCatSlug}/> ) }
 			</div>
@@ -356,15 +356,15 @@ function cambiarNombrePorIds(nombres,matriz,devolucion){
  * @param {*} posts Arreglo, selección de informacion.
  * @returns thePostsArray nuevo arreglo con la informacion procesada.
  */
-function filtrarEntriesList(posts){
+	function filtrarEntriesList(posts){
 	const thePostsArray = posts?.map( post => (
 		{
 			post_id: post.id,
 			post_permalink: post.link,
 			post_title: post.title.rendered,
 			post_excerpt: ( datoEntradaExtracto(post.excerpt.rendered) ),
-			post_thumbnail_url: ( (post.featured_media) ? datoEntradaImagen(post.featured_media,'url') : 0 ),
-			post_thumbnail_alt: ( (post.featured_media) ? datoEntradaImagen(post.featured_media,'alt') : 0 ),
+			post_thumbnail_url: ( (post.featured_media) ? datoEntradaImagen(post,'url') : 0 ),
+			post_thumbnail_alt: ( (post.featured_media) ? datoEntradaImagen(post,'alt') : 0 ),
 		}
 	) )
 	return thePostsArray;
@@ -378,20 +378,22 @@ function filtrarEntriesList(posts){
  */
 function datoEntradaImagen(item, src){
 	if (!item || !src) return null;
+	let imageThumbnailSrc;
 	// Construir nuevo objeto: media.
-	let media = useSelect(select => select( coreDataStore ).getMedia( item ));
-	if ( media ){
-		// Leer nuevo objeto y extraer atributos.
-		if ( 'url'===src){
+	const media = {};
+	media[ item.id ] = useSelect(select => select( coreDataStore ).getMedia( item.featured_media ));
+	// Leer nuevo objeto y extraer atributos.
+	if ( media[ item.id ]  ){
+		if ('url'===src){
 			// Url de medio, aún por definir mas atributos.
-			media = media.media_details.sizes.thumbnail.source_url;
+			imageThumbnailSrc = media[ item.id ].media_details.sizes.thumbnail.source_url;
 		}
-		if ( 'alt'===src){
+		if ('alt'===src){
 			// Url de medio, aún por definir mas atributos.
-			media = media.alt_text;
+			imageThumbnailSrc = media[ item.id ].alt_text;
 		}
-		return media;
 	}
+	return imageThumbnailSrc;
 }
 
 /**
