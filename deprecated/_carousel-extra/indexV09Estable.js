@@ -78,7 +78,6 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		// Removes support for an HTML mode.
 		html: false,
 		align: [ 'wide', 'full' ],
-		anchor: true,
 	},
 	/**
 	 * Argumentos para personalizacion.
@@ -217,7 +216,21 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 				return (<></>)
 			}
 
-			return <CarosuelMarkupHtml attributes={attributes} postsStored={postsStored}/>
+			return (
+				<ul>
+					{ postsStored?.map( post => (
+						<li key={ post.post_id }>
+							<a href={ post.post_permalink } title={ decodeEntities( post.post_title ) }>
+								{ decodeEntities( post.post_title ) }
+							</a>
+							{/* Traer imagenes de cada entrada */}
+							{ (post.post_thumbnail_url) ? <img src={ post.post_thumbnail_url } alt={ (post.post_thumbnail_alt) ? post.post_thumbnail_alt:null } /> : null }
+							{/* Traer extracto de cada entrada */}
+							<p>{post.post_excerpt}</p>
+						</li>
+					)) }
+				</ul>
+			);
 		}
 
 		return (
@@ -230,8 +243,8 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 						{/* Numero de entradas */}
 						<TextControl
 							 label={ __( 'Number of items', 'ekiline-collection' ) }
-							 type='number'
-							 min='0'
+							 type="number"
+							 min="0"
 							 value={ attributes.SetAmount }
 							 onChange={ (newval)=>{
 								setAttributes({ SetAmount: parseInt(newval) })
@@ -263,7 +276,20 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		return (
 			<div {...blockProps}>
 				{/* El bloque */}
-				<CarosuelMarkupHtml attributes={attributes} postsStored={attributes.SavePosts}/>
+				<UserRemind slugname={attributes.SetCatSlug}/>
+				<ul>
+					{ attributes.SavePosts?.map( post => (
+						<li key={ post.post_id }>
+							<a href={ post.post_permalink } title={ decodeEntities( post.post_title ) }>
+								{ decodeEntities( post.post_title ) }
+							</a>
+							{/* Traer imagenes de cada entrada */}
+							{ (post.post_thumbnail_url) ? <img src={ post.post_thumbnail_url } alt={ (post.post_thumbnail_alt) ? post.post_thumbnail_alt:null } /> : null }
+							{/* Traer extracto de cada entrada */}
+							<p>{post.post_excerpt}</p>
+						</li>
+					)) }
+				</ul>
 			</div>
 		)
 	},
@@ -380,53 +406,4 @@ function datoEntradaExtracto(extracto){
 	const document = new window.DOMParser().parseFromString(extracto,'text/html');
 	let texto = document.body.textContent || document.body.innerText || '';
 	return texto;
-}
-
-/**
- * Marcado de carrusel, editor + front.
- */
-export function CarosuelMarkupHtml({postsStored, attributes}){
-	const setCarouselId = attributes.anchor + 'block';
-	return (
-		<div id={setCarouselId} className='carousel slide' data-bs-ride='false'>
-			<div class='carousel-indicators'>
-				{ postsStored?.map( (post,index) => (
-						<button
-							key={post.id}
-							type='button'
-							data-bs-target={'#'+setCarouselId}
-							data-bs-slide-to={index}
-							className={(index === 0)?'active':null}
-							aria-current={(index === 0)?true:null}
-							aria-label={'Slide '+(index + 1)}
-						></button>
-				) ) }
-			</div>
-			<div className={'carousel-inner'}>
-				{ postsStored?.map( (post, index) => (
-					<div className={(index===0?'carousel-item active':'carousel-item')} key={ post.post_id }>
-						{/* Traer imagenes de cada entrada */}
-						{ (post.post_thumbnail_url) 
-							? <img className='d-block w-100' src={ post.post_thumbnail_url } alt={ (post.post_thumbnail_alt) ? post.post_thumbnail_alt:null } /> 
-							: null }
-						<div class='carousel-caption d-none d-md-block'>
-							<a className='h5' href={ post.post_permalink } title={ decodeEntities( post.post_title ) }>
-								{ decodeEntities( post.post_title ) }
-							</a>
-							{/* Traer extracto de cada entrada */}
-							<p>{post.post_excerpt}</p>
-						</div>
-					</div>
-				)) }
-			</div>
-			<button class='carousel-control-prev' type='button' data-bs-target={(setCarouselId)?'#'+setCarouselId:null} data-bs-slide='prev'>
-				<span class='carousel-control-prev-icon' aria-hidden='true'></span>
-				<span class='visually-hidden'>Previous</span>
-			</button>
-			<button class='carousel-control-next' type='button' data-bs-target={(setCarouselId)?'#'+setCarouselId:null} data-bs-slide='next'>
-				<span class='carousel-control-next-icon' aria-hidden='true'></span>
-				<span class='visually-hidden'>Next</span>
-			</button>
-		</div>
-	);
 }
