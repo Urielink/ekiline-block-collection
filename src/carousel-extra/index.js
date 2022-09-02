@@ -357,8 +357,8 @@ function datoEntradaImagen(item, src){
 	if ( media ){
 		// Leer nuevo objeto y extraer atributos.
 		if ( 'url'===src){
-			// Url de medio, aún por definir mas atributos.
-			media = media.media_details.sizes.thumbnail.source_url;
+			// Url de medio, aún por definir mas atributos. Opciones: full, large, medium, medium_large, thumbnail
+			media = media.media_details.sizes.full.source_url;
 		}
 		if ( 'alt'===src){
 			// Url de medio, aún por definir mas atributos.
