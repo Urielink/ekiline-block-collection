@@ -3,16 +3,24 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
- import { registerBlockType } from '@wordpress/blocks';
- import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor';
- import { PanelBody, ToggleControl, TextControl } from '@wordpress/components';
+import { registerBlockType } from '@wordpress/blocks'
+import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor'
+import { PanelBody, ToggleControl, TextControl } from '@wordpress/components'
 
 /**
  * Retrieves the translation of text.
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
- import { __ } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n'
+
+/**
+  * Importar otras dependencias de WP.
+  */
+import { addFilter } from '@wordpress/hooks' // este permite crear filtros.
+import { Fragment } from '@wordpress/element' // UI.
+import { InspectorAdvancedControls } from '@wordpress/block-editor' // UI.
+import { createHigherOrderComponent } from '@wordpress/compose'
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -44,165 +52,149 @@
  * - div:{width:opcional}
  */
 registerBlockType('ekiline-blocks/ekiline-collapse', {
-	/**
+  /**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */
 	 apiVersion: 2,
 
 	 /**
 	  * Parametros de alta.
-	  * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
+	  * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/
 	  */
-	 title: __( 'Collapse, full control', 'ekiline-collapse' ),
+	 title: __('Collapse, full control', 'ekiline-collapse'),
 	 icon: 'arrow-down',
-	 description: __( 'Set a collapse behavior block. You can activate from any button.', 'ekiline-collapse' ),
+	 description: __('Set a collapse behavior block. You can activate from any button.', 'ekiline-collapse'),
 	 category: 'design',
 	 supports: {
-		 anchor: true,
+		 anchor: true
 	 },
- 
+
 	 /**
 	  * Argumentos para personalizacion.
 	  */
-	 attributes:{
+	 attributes: {
 		 horizontal: {
 			 type: 'boolean',
-			 default: false, // set horizontal (.collapse-horizontal).
-		 },
+			 default: false // set horizontal (.collapse-horizontal).
+		 }
 	 },
 
 	 /**
 	  * @see ./edit.js
 	  */
 	 // edit: Edit,
-	 edit:(props)=>{
+	 edit: (props) => {
+    const { attributes, setAttributes } = props
+    // const PARENT_ALLOWED_BLOCKS = [ 'core/buttons' ];
+    const CHILD_TEMPLATE = [['core/paragraph', { content: __('Add your content', 'ekiline-collapse') }]]
 
-		const { attributes, setAttributes } = props;
-		// const PARENT_ALLOWED_BLOCKS = [ 'core/buttons' ];
-		const CHILD_TEMPLATE = [ [ 'core/paragraph', { content: __( 'Add your content', 'ekiline-collapse' ) } ] ];
+    const blockProps = useBlockProps({
+      className: 'group-collapse'
+    })
 
-		const blockProps = useBlockProps( {
-			className: 'group-collapse',
-		} );
-
-		/**
+    /**
 		 * Control personalizado: recordatorio
 		 */
-		 function CollapseUserRemind(){
+		 function CollapseUserRemind () {
+      if (attributes.anchor) {
+        return (
+          <div class='editor-collapse-route has-anchor'>
+            <pre>
+              {'#' + attributes.anchor}
+              <br />
+              {__('Add this #anchor to a button and its advanced options.', 'ekiline-collapse')}
+            </pre>
+          </div>
+        )
+      }
 
-			if ( attributes.anchor ){
-				return(
-					<div class="editor-collapse-route has-anchor">
-						<pre>
-						{ '#' + attributes.anchor }
-						<br></br>
-						{ __( 'Add this #anchor to a button and its advanced options.', 'ekiline-collapse' ) }
-						</pre>
-					</div>
-					)
-			}
+      return (
+        <div class='editor-collapse-route'>
+          {__('Do not forget to add an anchor. ', 'ekiline-collapse')}
+        </div>
+      )
+    }
 
-			return(
-				<div class="editor-collapse-route">
-					{ __( 'Do not forget to add an anchor. ', 'ekiline-collapse' )}
-				</div>
-			)
-		}
-
-		return (
-			<div {...blockProps}>
-				{/* Inspector controles */}
-				<InspectorControls>
-					<PanelBody title={ __( 'Collapse Params', 'ekiline-collapse' ) } initialOpen={ true }>
-					<ToggleControl
-						label={ __( 'Horizontal collapse', 'ekiline-collapse' ) }
-						checked={ attributes.horizontal }
-						onChange={ ( horizontal ) =>
-							setAttributes( { horizontal } )
-						}
-					/>
-					</PanelBody>
-				</InspectorControls>
-				{/* Contenido */}
-				<InnerBlocks
-					template={ CHILD_TEMPLATE }
-				/>
-				<CollapseUserRemind/>
-			</div>
-		);
+    return (
+      <div {...blockProps}>
+        {/* Inspector controles */}
+        <InspectorControls>
+          <PanelBody title={__('Collapse Params', 'ekiline-collapse')} initialOpen>
+            <ToggleControl
+              label={__('Horizontal collapse', 'ekiline-collapse')}
+              checked={attributes.horizontal}
+              onChange={(horizontal) =>
+						  setAttributes({ horizontal })}
+            />
+          </PanelBody>
+        </InspectorControls>
+        {/* Contenido */}
+        <InnerBlocks
+          template={CHILD_TEMPLATE}
+        />
+        <CollapseUserRemind />
+      </div>
+    )
 	 },
 
-	/**
+  /**
 	 * @see ./save.js
 	 */
-	// save,
-	 save:( { attributes } )=>{
+  // save,
+	 save: ({ attributes }) => {
+    const blockProps = useBlockProps.save({
+      className: 'collapse' + ((attributes.horizontal) ? ' collapse-horizontal' : ''),
+      style: {
+        'min-height': ((attributes.horizontal) ? '120px' : null)
+      },
+      contentStyle: {
+        'min-width': ((attributes.horizontal) ? '300px' : null)
+      }
+    })
 
-		const blockProps = useBlockProps.save( {
-			className: 'collapse' + ( ( attributes.horizontal ) ? ' collapse-horizontal' : '' ),
-			style: {
-				'min-height': ( ( attributes.horizontal ) ? '120px' : null ),
-			},
-			contentStyle: {
-				'min-width':  ( ( attributes.horizontal ) ? '300px' : null ),
-			}
-		} );
+    // Condicion para crear envoltorio.
+    function CollapseWrapper () {
+      if (attributes.horizontal) {
+        return (
+          <div style={(attributes.horizontal) ? blockProps.contentStyle : null}>
+            <InnerBlocks.Content />
+          </div>
+        )
+      } else {
+        return (
+          <InnerBlocks.Content />
+        )
+      }
+    }
 
-		// Condicion para crear envoltorio.
-		function CollapseWrapper(){
-			if (attributes.horizontal){
-				return (
-					<div style={ (attributes.horizontal)?blockProps.contentStyle:null }>
-						<InnerBlocks.Content/>
-					</div>
-				);
-			} else {
-				return(
-					<InnerBlocks.Content/>
-				)
-			}
-		}
-
-		return (
-				<div { ...blockProps }>
-					<CollapseWrapper/>
-				</div>
-		);
-	 },
-});
-
-
- /**
-  * Importar otras dependencias de WP.
-  */
-import { addFilter } from '@wordpress/hooks'; // este permite crear filtros.
-import { Fragment } from '@wordpress/element'; // UI.
-import { InspectorAdvancedControls } from '@wordpress/block-editor'; // UI.
-import { createHigherOrderComponent } from '@wordpress/compose'; // UI.
+    return (
+      <div {...blockProps}>
+        <CollapseWrapper />
+      </div>
+    )
+	 }
+}) // UI.
 
 // Restringir el uso a botones.
-const allowedBlocks = [ 'core/button', 'core/buttons' ];
+const allowedBlocks = ['core/button', 'core/buttons']
 
 /**
  * Asignar nuevos valores.
  * @param {*} settings Valores nuevos a incluir
  * @returns Deveulve los valores modificados.
  */
-function addAttributesBtnCollpase( settings ) {
+function addAttributesBtnCollpase (settings) {
+  // Restriccion
+  if (allowedBlocks.includes(settings.name)) {
+    settings.attributes = Object.assign(settings.attributes, {
+      addDataBtnCollapse: {
+        type: 'string',
+        default: ''
+      }
+    })
+  }
 
-	//Restriccion
-	if( allowedBlocks.includes( settings.name ) ){
-
-		settings.attributes = Object.assign( settings.attributes, {
-			addDataBtnCollapse: {
-				type: 'string',
-				default: '',
-			},
-		});
-
-	}
-
-	return settings;
+  return settings
 }
 /**
  * Control para los nuevos valore del boton.
@@ -211,31 +203,28 @@ function addAttributesBtnCollpase( settings ) {
  *
  * @return {function} Devuelve el BlockEdit modificado.
  */
-const withAdvancedControlsBtnCollapse = createHigherOrderComponent( ( BlockEdit ) => {
-	return ( props ) => {
+const withAdvancedControlsBtnCollapse = createHigherOrderComponent((BlockEdit) => {
+  return (props) => {
+    if (allowedBlocks.includes(props.name)) {
+      return (
 
-		if( allowedBlocks.includes( props.name ) ){
-
-			return (
-
-				<Fragment>
-				<BlockEdit {...props} />
-					{props.attributes.url && (
-						<InspectorAdvancedControls>
-							<TextControl
-								label={ __( 'Collapse anchor for execute it.', 'ekiline-collapse'  ) }
-								value={props.attributes.addDataBtnCollapse}
-								onChange={newData => props.setAttributes({addDataBtnCollapse: newData})}
-							/>
-						</InspectorAdvancedControls>
-					)}
-				</Fragment>
-			);
-
-		}
-		return <BlockEdit {...props} />;
-	};
-}, 'withAdvancedControlsBtnCollapse');
+        <Fragment>
+          <BlockEdit {...props} />
+          {props.attributes.url && (
+            <InspectorAdvancedControls>
+              <TextControl
+                label={__('Collapse anchor for execute it.', 'ekiline-collapse')}
+                value={props.attributes.addDataBtnCollapse}
+                onChange={newData => props.setAttributes({ addDataBtnCollapse: newData })}
+              />
+            </InspectorAdvancedControls>
+          )}
+        </Fragment>
+      )
+    }
+    return <BlockEdit {...props} />
+  }
+}, 'withAdvancedControlsBtnCollapse')
 
 /**
  * Guardar el nuevo valor, en este caso como atributo.
@@ -246,44 +235,40 @@ const withAdvancedControlsBtnCollapse = createHigherOrderComponent( ( BlockEdit 
  *
  * @return {Object} Devuelve los nuevos atributos al bloque.
  */
-function applyExtraClassBtnCollpase( element, block, attributes ) {
-
-	if( allowedBlocks.includes( block.name ) ){
-
-		if( attributes.addDataBtnCollapse && attributes.url ) {
-
-			return wp.element.cloneElement(
-				element,
-				{},
-				wp.element.cloneElement(
-					element.props.children,
-					{
-						'data-bs-target': attributes.addDataBtnCollapse,
-						'data-bs-toggle': 'collapse',
-						// 'type': 'button',
-					}
-				)
-			);
-		}
-
-	}
-	return element;
+function applyExtraClassBtnCollpase (element, block, attributes) {
+  if (allowedBlocks.includes(block.name)) {
+    if (attributes.addDataBtnCollapse && attributes.url) {
+      return wp.element.cloneElement(
+        element,
+        {},
+        wp.element.cloneElement(
+          element.props.children,
+          {
+            'data-bs-target': attributes.addDataBtnCollapse,
+            'data-bs-toggle': 'collapse'
+            // 'type': 'button',
+          }
+        )
+      )
+    }
+  }
+  return element
 }
 
 addFilter(
-	'blocks.registerBlockType',
-	'ekilineCollapseBtnData/dataAttribute',
-	addAttributesBtnCollpase
-);
+  'blocks.registerBlockType',
+  'ekilineCollapseBtnData/dataAttribute',
+  addAttributesBtnCollpase
+)
 
 addFilter(
-	'editor.BlockEdit',
-	'ekilineCollapseBtnData/dataInput',
-	withAdvancedControlsBtnCollapse
-);
+  'editor.BlockEdit',
+  'ekilineCollapseBtnData/dataInput',
+  withAdvancedControlsBtnCollapse
+)
 
 addFilter(
-	'blocks.getSaveElement',
-	'ekilineCollapseBtnData/dataModified',
-	applyExtraClassBtnCollpase
-);
+  'blocks.getSaveElement',
+  'ekilineCollapseBtnData/dataModified',
+  applyExtraClassBtnCollpase
+)

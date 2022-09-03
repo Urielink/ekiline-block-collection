@@ -3,7 +3,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n'
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -11,7 +11,7 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps } from '@wordpress/block-editor'
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -29,13 +29,13 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit() {
-	return (
-		<p {...useBlockProps()}>
-			{__( 'Popovers have rules added to the core buttons.', 'ekiline-popovers' )}
-			{__( 'You need to create a button. And then text an anchor (#name) link.', 'ekiline-popovers' )}
-			{__( 'This will allow you to use the advanced options for the button.', 'ekiline-popovers' )}
-			{__( 'You can remove this notice, it won\'t be published in your content.', 'ekiline-popovers' )}
-		</p>
-	);
+export default function Edit () {
+  return (
+    <p {...useBlockProps()}>
+      {__('Popovers have rules added to the core buttons.', 'ekiline-popovers')}
+      {__('You need to create a button. And then text an anchor (#name) link.', 'ekiline-popovers')}
+      {__('This will allow you to use the advanced options for the button.', 'ekiline-popovers')}
+      {__('You can remove this notice, it won\'t be published in your content.', 'ekiline-popovers')}
+    </p>
+  )
 }

@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 /**
  * TOAST.
  * Javascript en linea para toast.
@@ -6,22 +7,24 @@
  * @link https://developer.wordpress.org/reference/functions/wp_script_is/
  */
 
-function ekiline_block_toast_inline_script() {
-	// Condición para mostrar js en front.
-	if ( !is_admin() && is_singular() && ! has_block( 'ekiline-blocks/ekiline-toast' ) ) {
-		return;
-	}
-	// Si existe Ekiline Theme, apoyar de su manejador, o ocupar nuevo manejador.
-	$script_handle = ( wp_script_is( 'ekiline-layout', 'enqueued' ) ) ? 'ekiline-layout' : 'ekiline-blocks-inline' ;
-	wp_add_inline_script( $script_handle, ekiline_block_toast_scripts_code(), 'after' );
+function ekiline_block_toast_inline_script()
+{
+    // Condición para mostrar js en front.
+    if (!is_admin() && is_singular() && ! has_block('ekiline-blocks/ekiline-toast')) {
+        return;
+    }
+    // Si existe Ekiline Theme, apoyar de su manejador, o ocupar nuevo manejador.
+    $script_handle = (wp_script_is('ekiline-layout', 'enqueued')) ? 'ekiline-layout' : 'ekiline-blocks-inline' ;
+    wp_add_inline_script($script_handle, ekiline_block_toast_scripts_code(), 'after');
 }
-add_action( 'wp_enqueue_scripts', 'ekiline_block_toast_inline_script', 100 );
+add_action('wp_enqueue_scripts', 'ekiline_block_toast_inline_script', 100);
 
 /**
  * Código JS complementario.
  */
-function ekiline_block_toast_scripts_code() {
-$code = '
+function ekiline_block_toast_scripts_code()
+{
+    $code = '
 // Abrir un toast programado.
 function ekiline_launch_toast(){
 	// Bucar un toast programado.
@@ -73,5 +76,5 @@ function ekiline_scroll_toast(){
 }
 ekiline_scroll_toast();
 ';
-return $code;
+    return $code;
 }
