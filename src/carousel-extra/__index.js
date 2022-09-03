@@ -4,8 +4,8 @@
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 import { registerBlockType } from '@wordpress/blocks';
-import { TextControl,SelectControl,PanelBody, ToggleControl, Button, RangeControl } from '@wordpress/components';
-import { useBlockProps, InspectorControls, MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
+import { TextControl,SelectControl,PanelBody, ToggleControl, Button } from '@wordpress/components';
+import { useBlockProps, InnerBlocks, InspectorControls, RichText } from '@wordpress/block-editor';
 /**
  * Funciones personalizadas.
  * withSelect se ocupara para obtener datos del core.
@@ -100,59 +100,19 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 			type: 'number',
 			default: 3,
 		},
-		SavePosts:{
-			type: 'array',
-			default: [],
-		},
-		// Nuevos controles.
-		ChooseType: {
-			type: 'string',
-			default: 'posts',
-		},
-		SetIds: {
-			type: 'array',
-			default: '',
-		},
-		SetOrderBy: {
-			type: 'string',
-			default: 'date',
-		},
-		SetColumns: {
-			type: 'number',
-			default: 1,
-		},
-		FindBlock: {
-			type: 'string',
-			default: 'none',
-		},
-		AllowMixed: {
-			type: 'boolean',
-			default: false,
-		},
 		AddControls: {
 			type: 'boolean',
 			default: true,
 		},
-		AddIndicators: {
-			type: 'boolean',
-			default: true,
+		SavePosts:{
+			type: 'array',
+			default: [],
 		},
-		SetAuto: {
-			type: 'boolean',
-			default: true,
-		},
-		SetTime: {
-			type: 'number',
-			default: '5000',
-		},
-		SetAnimation: {
-			type: 'string',
-			default: '',
-		},
-		SetHeight: {
-			type: 'number',
-			default: '480',
-		},
+		// content: {
+		// 	type: 'string',
+		// 	source: 'html',
+		// 	selector: 'div',
+		// },
 	},
 
 	/**
@@ -264,182 +224,23 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 			<div { ...blockProps }>
 				{/* Inspector controles */}
 				<InspectorControls>
-					{/* Selector de tipo de contenido, posts o imagenes */}
-					<PanelBody title={ __( 'Carousel content', 'ekiline-collection' ) } initialOpen={ true }>
-
-						<SelectControl
-							label={ __( 'Content type', 'ekiline-collection' ) }
-							value={ attributes.ChooseType }
-							options={ [
-								{ label: __( 'Posts', 'ekiline-collection' ), value: 'posts' },
-								{ label: __( 'Images / Video', 'ekiline-collection' ), value: 'images' },
-							] }
-							onChange={ ( ChooseType ) =>
-								setAttributes( { ChooseType } )
-							}
-						/>
-
-						{ 'posts' === attributes.ChooseType && (
-							<TokenCategoriesSelect/>
-						)}
-
-						{ 'images' === attributes.ChooseType && (
-							<MediaUploadCheck>
-								<MediaUpload
-									title={ __( 'Carousel Images', 'ekiline-collection' ) }
-									onSelect={ ( media ) => {
-										const img_ids = [];
-										for (
-											let i = 0, max = media.length;
-											i < max;
-											i += 1
-										) {
-											img_ids.push( media[ i ].id );
-										}
-										setAttributes( { SetIds: img_ids } );
-									} }
-									// ref: https://github.com/WordPress/gutenberg/blob/HEAD/packages/block-editor/src/components/media-upload/README.md.
-									allowedTypes={ [ 'image', 'video' ] }
-									multiple={ true }
-									value={ attributes.SetIds }
-									render={ ( { open } ) => (
-										<Button isSecondary onClick={ open }>
-											{ __( 'Add images', 'ekiline-collection' ) }
-										</Button>
-									) }
-									gallery={ false }
-									addToGallery={ false }
-								/>
-							</MediaUploadCheck>
-						) }
-
-						{ 'posts' === attributes.ChooseType && (
-								<TextControl
-								label={ __( 'Number of items', 'ekiline-collection' ) }
-								type='number'
-								min='0'
-								value={ attributes.SetAmount }
-								onChange={ (newval)=>{
-									setAttributes({ SetAmount: parseInt(newval) })
-									//reset saved posts.
-									setAttributes({ SavePosts: [] })
-								} }
-								help={ ( 0 === attributes.SetAmount ) ? __( 'Danger! 0 shows all.', 'ekiline-collection'  ) : '' }
-							/>
-						) }
-
-						{ 'posts' === attributes.ChooseType && (
-							<SelectControl
-								label={ __( 'Sort by', 'ekiline-collection' ) }
-								value={ attributes.SetOrderBy }
-								options={ [
-									{ label: __( 'Date', 'ekiline-collection' ), value: 'date' },
-									{ label: __( 'Modified', 'ekiline-collection' ), value: 'modified' },
-									{ label: __( 'Title', 'ekiline-collection' ), value: 'title' },
-									{ label: __( 'Name', 'ekiline-collection' ), value: 'name' },
-									{ label: __( 'Author', 'ekiline-collection' ), value: 'author' },
-									{ label: __( 'Random', 'ekiline-collection' ), value: 'rand' },
-								] }
-								onChange={ ( SetOrderBy ) =>
-									setAttributes( { SetOrderBy } )
-								}
-							/>
-						) }
-
-						{ 'posts' === attributes.ChooseType && (
-							<SelectControl
-								label={ __( 'Find a block in content', 'ekiline-collection' ) }
-								value={ attributes.FindBlock }
-								options={ [
-									{ label: __( 'None', 'ekiline-collection' ), value: 'none' },
-									{ label: __( 'Cover', 'ekiline-collection' ), value: 'core/cover' },
-									{ label: __( 'Image', 'ekiline-collection' ), value: 'core/image' },
-									{ label: __( 'Media and text', 'ekiline-collection' ), value: 'core/media-text' },
-									{ label: __( 'Video', 'ekiline-collection' ), value: 'core/video' },
-								] }
-								onChange={ ( FindBlock ) =>
-									setAttributes( { FindBlock } )
-								}
-							/>
-						) }
-
-						{ 'none' !== attributes.FindBlock && (
-							<ToggleControl
-								label={ __( 'Show post if there is no block', 'ekiline-collection' ) }
-								checked={ attributes.AllowMixed }
-								onChange={ ( AllowMixed ) =>
-									setAttributes( { AllowMixed } )
-								}
-							/>
-						) }
+					<PanelBody title={ __( 'Carousel extra settings', 'ekiline-collection' ) } initialOpen={ true }>
+						{/* Elegir categorias */}
+						<TokenCategoriesSelect/>
+						{/* Numero de entradas */}
+						<TextControl
+							 label={ __( 'Number of items', 'ekiline-collection' ) }
+							 type='number'
+							 min='0'
+							 value={ attributes.SetAmount }
+							 onChange={ (newval)=>{
+								setAttributes({ SetAmount: parseInt(newval) })
+								//reset saved posts.
+								setAttributes({ SavePosts: [] })
+							 } }
+							 help={ ( 0 === attributes.SetAmount ) ? __( 'Danger! 0 shows all.', 'ekiline-collection'  ) : '' }
+						 />
 					</PanelBody>
-
-					<PanelBody title={ __( 'Carousel Look', 'ekiline-collection' ) } initialOpen={ false }>
-							<RangeControl
-								label={ __( 'Columns', 'ekiline-collection' ) }
-								value={ attributes.SetColumns }
-								onChange={ ( newval ) =>
-									setAttributes( { SetColumns: parseInt( newval ) } )
-								}
-								min={ 1 }
-								max={ 4 }
-							/>
-
-							<ToggleControl
-								label={ __( 'Show controls', 'ekiline-collection' ) }
-								checked={ attributes.AddControls }
-								onChange={ ( AddControls ) =>
-									setAttributes( { AddControls } )
-								}
-							/>
-
-							<ToggleControl
-								label={ __( 'Show indicators', 'ekiline-collection' ) }
-								checked={ attributes.AddIndicators }
-								onChange={ ( AddIndicators ) =>
-									setAttributes( { AddIndicators } )
-								}
-							/>
-
-							<ToggleControl
-								label={ __( 'Auto start', 'ekiline-collection' ) }
-								checked={ attributes.SetAuto }
-								onChange={ ( SetAuto ) => setAttributes( { SetAuto } ) }
-							/>
-
-							<TextControl
-								label={ __( 'Transition in milliseconds', 'ekiline-collection' ) }
-								type="number"
-								value={ attributes.SetTime }
-								onChange={ ( newval ) =>
-									setAttributes( { SetTime: parseInt( newval ) } )
-								}
-							/>
-
-							<SelectControl
-								label={ __( 'Animation type', 'ekiline-collection' ) }
-								value={ attributes.SetAnimation }
-								options={ [
-									{ label: __( 'Default', 'ekiline-collection' ), value: '' },
-									{ label: __( 'Fade', 'ekiline-collection' ), value: 'fade' },
-									{ label: __( 'Vertical', 'ekiline-collection' ), value: 'vertical' },
-								] }
-								onChange={ ( SetAnimation ) =>
-									setAttributes( { SetAnimation } )
-								}
-							/>
-
-							<TextControl
-								label={ __( 'Height in pixels, set zero to see full display height.', 'ekiline-collection' ) }
-								type="number"
-								value={ attributes.SetHeight }
-								onChange={ ( newval ) =>
-									setAttributes( { SetHeight: parseInt( newval ) } )
-								}
-							/>
-						</PanelBody>
-					{/* fin nuevos controles  */}
-
 				</InspectorControls>
 				{/* El bloque */}
 				<EntriesList categorias={attributes.SetCatIds} cantidad={attributes.SetAmount} />
