@@ -4,8 +4,8 @@
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 import { registerBlockType } from '@wordpress/blocks';
-import { TextControl,SelectControl,PanelBody, ToggleControl, Button } from '@wordpress/components';
-import { useBlockProps, InnerBlocks, InspectorControls, RichText } from '@wordpress/block-editor';
+import { TextControl,SelectControl,PanelBody, ToggleControl, Button, RangeControl } from '@wordpress/components';
+import { useBlockProps, InspectorControls, MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 /**
  * Funciones personalizadas.
  * withSelect se ocupara para obtener datos del core.
@@ -100,19 +100,57 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 			type: 'number',
 			default: 3,
 		},
-		AddControls: {
-			type: 'boolean',
-			default: true,
-		},
 		SavePosts:{
 			type: 'array',
 			default: [],
 		},
-		// content: {
-		// 	type: 'string',
-		// 	source: 'html',
-		// 	selector: 'div',
-		// },
+		// Opciones de posts.
+		ChooseType: {
+			type: 'string',
+			default: 'posts',
+		},
+		ShowPostsBy: {
+			type: 'string',
+			default: 'date',
+		},
+		SortPosts: {
+			type: 'string',
+			default: 'desc',
+		},
+		// Opciones de imagen.
+		SetImgIds: {
+			type: 'array',
+			default: '',
+		},
+		// Controles de carrusel.
+		SetColumns: {
+			type: 'number',
+			default: 1,
+		},
+		AddControls: {
+			type: 'boolean',
+			default: true,
+		},
+		AddIndicators: {
+			type: 'boolean',
+			default: true,
+		},
+		SetAuto: {
+			type: 'boolean',
+			default: true,
+		},
+		SetTime: {
+			type: 'number',
+			default: '5000',
+		},
+		SetAnimation: {
+			type: 'string',
+			default: '',
+		},
+		SetHeight: {
+			type: 'number',
+			default: '480',
+		},
 	},
 
 	/**
@@ -179,16 +217,35 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		 *
 		 * @returns Custom component: EntriesList.
 		 */
-		function EntriesList({categorias, cantidad}) {
+		function EntriesList({categories, amount, showby, sort}) {
 			// Categoria default: todas.
-			const selCats = (categorias>0)?categorias:[];
+			const setCats = (categories>0)?categories:[];
 			// Cantidad de entradas: 3.
-			const selAmount = (cantidad<=0)?'-1':cantidad;
+			const setAmount = (amount<=0)?'-1':amount;
+			// Orden: Ascendente.
+			const queryPosts = {
+				categories: setCats,
+				per_page: setAmount,
+				orderby: showby,
+				order: sort,
+			}
 			const posts = useSelect(
 				select =>
-					select( coreDataStore ).getEntityRecords( 'postType', 'post', { per_page: selAmount, categories: selCats } ),
+					select( coreDataStore ).getEntityRecords( 'postType', 'post', queryPosts ),
 				[]
 			);
+
+			/**
+			 * Hay una cuestion con el computo.
+			 * Si ocupas el editor muy rapido, no permites que concluya la organizacion del array.
+			 * Esto genera un error. Por ello esta solucion provisional podria ser necesaria.
+			 * Nota: queda pendiente averiguar como restablecer el bloque cuando falle.
+			 */
+			// Orden invertido a posts.
+			// if (sort === 'asc'){
+			// 	posts?.reverse();
+			// }
+
 			return <PostsList posts={ posts }/>;
 		}
 
@@ -224,26 +281,178 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 			<div { ...blockProps }>
 				{/* Inspector controles */}
 				<InspectorControls>
-					<PanelBody title={ __( 'Carousel extra settings', 'ekiline-collection' ) } initialOpen={ true }>
-						{/* Elegir categorias */}
-						<TokenCategoriesSelect/>
-						{/* Numero de entradas */}
-						<TextControl
-							 label={ __( 'Number of items', 'ekiline-collection' ) }
-							 type='number'
-							 min='0'
-							 value={ attributes.SetAmount }
-							 onChange={ (newval)=>{
-								setAttributes({ SetAmount: parseInt(newval) })
-								//reset saved posts.
-								setAttributes({ SavePosts: [] })
-							 } }
-							 help={ ( 0 === attributes.SetAmount ) ? __( 'Danger! 0 shows all.', 'ekiline-collection'  ) : '' }
-						 />
+					{/* Selector de tipo de contenido, posts o imagenes */}
+					<PanelBody title={ __( 'Carousel content', 'ekiline-collection' ) } initialOpen={ true }>
+
+						<SelectControl
+							label={ __( 'Content type', 'ekiline-collection' ) }
+							value={ attributes.ChooseType }
+							options={ [
+								{ label: __( 'Posts', 'ekiline-collection' ), value: 'posts' },
+								{ label: __( 'Images / Video', 'ekiline-collection' ), value: 'images' },
+							] }
+							onChange={ ( ChooseType ) =>
+								setAttributes( { ChooseType } )
+							}
+						/>
+
+						{ 'posts' === attributes.ChooseType && (
+							<TokenCategoriesSelect/>
+						)}
+
+						{ 'images' === attributes.ChooseType && (
+							<MediaUploadCheck>
+								<MediaUpload
+									title={ __( 'Carousel Images', 'ekiline-collection' ) }
+									onSelect={ ( media ) => {
+										const img_ids = [];
+										for (
+											let i = 0, max = media.length;
+											i < max;
+											i += 1
+										) {
+											img_ids.push( media[ i ].id );
+										}
+										setAttributes( { SetImgIds: img_ids } );
+									} }
+									// ref: https://github.com/WordPress/gutenberg/blob/HEAD/packages/block-editor/src/components/media-upload/README.md.
+									allowedTypes={ [ 'image', 'video' ] }
+									multiple={ true }
+									value={ attributes.SetImgIds }
+									render={ ( { open } ) => (
+										<Button isSecondary onClick={ open }>
+											{ __( 'Add images', 'ekiline-collection' ) }
+										</Button>
+									) }
+									gallery={ false }
+									addToGallery={ false }
+								/>
+							</MediaUploadCheck>
+						) }
+
+						{ 'posts' === attributes.ChooseType && (
+							<SelectControl
+								label={ __( 'Show posts by', 'ekiline-collection' ) }
+								value={ attributes.ShowPostsBy }
+								options={ [
+									{ label: __( 'Date', 'ekiline-collection' ), value: 'date' },
+									{ label: __( 'Title', 'ekiline-collection' ), value: 'title' },
+								] }
+								onChange={ ( ShowPostsBy ) =>{
+									setAttributes( { ShowPostsBy } )
+									//reset saved posts.
+									setAttributes({ SavePosts: [] })
+								}}
+							/>
+						) }
+
+						{ 'posts' === attributes.ChooseType && (
+								<TextControl
+								label={ __( 'Items to show', 'ekiline-collection' ) }
+								type='number'
+								min='0'
+								value={ attributes.SetAmount }
+								onChange={ (newval)=>{
+									setAttributes({ SetAmount: parseInt(newval) })
+									//reset saved posts.
+									setAttributes({ SavePosts: [] })
+								} }
+								help={ ( 0 === attributes.SetAmount ) ? __( 'Danger! 0 shows all.', 'ekiline-collection'  ) : '' }
+							/>
+						) }
+
+						{ 'posts' === attributes.ChooseType && (
+							<SelectControl
+								label={ __( 'Sort items', 'ekiline-collection' ) }
+								value={ attributes.SortPosts }
+								options={ [
+									{ label: __( 'Descend', 'ekiline-collection' ), value: 'desc' },
+									{ label: __( 'Ascend', 'ekiline-collection' ), value: 'asc' },
+								] }
+								onChange={ ( SortPosts ) =>{
+									setAttributes( { SortPosts } )
+									//reset saved posts.
+									setAttributes({ SavePosts: [] })
+								}}
+							/>
+						) }
+
 					</PanelBody>
+
+					<PanelBody title={ __( 'Carousel Look', 'ekiline-collection' ) } initialOpen={ false }>
+							<RangeControl
+								label={ __( 'Columns', 'ekiline-collection' ) }
+								value={ attributes.SetColumns }
+								onChange={ ( newval ) =>
+									setAttributes( { SetColumns: parseInt( newval ) } )
+								}
+								min={ 1 }
+								max={ 4 }
+							/>
+
+							<ToggleControl
+								label={ __( 'Show controls', 'ekiline-collection' ) }
+								checked={ attributes.AddControls }
+								onChange={ ( AddControls ) =>
+									setAttributes( { AddControls } )
+								}
+							/>
+
+							<ToggleControl
+								label={ __( 'Show indicators', 'ekiline-collection' ) }
+								checked={ attributes.AddIndicators }
+								onChange={ ( AddIndicators ) =>
+									setAttributes( { AddIndicators } )
+								}
+							/>
+
+							<ToggleControl
+								label={ __( 'Auto start', 'ekiline-collection' ) }
+								checked={ attributes.SetAuto }
+								onChange={ ( SetAuto ) => setAttributes( { SetAuto } ) }
+							/>
+
+							<TextControl
+								label={ __( 'Transition in milliseconds', 'ekiline-collection' ) }
+								type="number"
+								value={ attributes.SetTime }
+								onChange={ ( newval ) =>
+									setAttributes( { SetTime: parseInt( newval ) } )
+								}
+							/>
+
+							<SelectControl
+								label={ __( 'Animation type', 'ekiline-collection' ) }
+								value={ attributes.SetAnimation }
+								options={ [
+									{ label: __( 'Default', 'ekiline-collection' ), value: '' },
+									{ label: __( 'Fade', 'ekiline-collection' ), value: 'fade' },
+									{ label: __( 'Vertical', 'ekiline-collection' ), value: 'vertical' },
+								] }
+								onChange={ ( SetAnimation ) =>
+									setAttributes( { SetAnimation } )
+								}
+							/>
+
+							<TextControl
+								label={ __( 'Height in pixels, set zero to see full display height.', 'ekiline-collection' ) }
+								type="number"
+								value={ attributes.SetHeight }
+								onChange={ ( newval ) =>
+									setAttributes( { SetHeight: parseInt( newval ) } )
+								}
+							/>
+						</PanelBody>
+					{/* fin nuevos controles  */}
+
 				</InspectorControls>
 				{/* El bloque */}
-				<EntriesList categorias={attributes.SetCatIds} cantidad={attributes.SetAmount} />
+				<EntriesList
+					categories={attributes.SetCatIds}
+					amount={attributes.SetAmount}
+					showby={attributes.ShowPostsBy}
+					sort={attributes.SortPosts}
+				/>
 				{/* El recordatorio */}
 				{ isSelected && ( <UserRemind slugname={attributes.SetCatSlug}/> ) }
 			</div>

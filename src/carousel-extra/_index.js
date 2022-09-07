@@ -7,18 +7,6 @@ import { registerBlockType } from '@wordpress/blocks';
 import { TextControl,SelectControl,PanelBody, ToggleControl, Button, RangeControl } from '@wordpress/components';
 import { useBlockProps, InspectorControls, MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 /**
- * Componente MediaUpload inicializacion.
- * @link https://github.com/WordPress/gutenberg/blob/trunk/packages/block-editor/src/components/media-upload/README.md
- */
-import { addFilter } from '@wordpress/hooks';
-const replaceMediaUpload = () => MediaUpload;
-addFilter(
-	'editor.MediaUpload',
-	'core/edit-post/components/media-upload/replace-media-upload',
-	replaceMediaUpload
-);
-
-/**
  * Funciones personalizadas.
  * withSelect se ocupara para obtener datos del core.
  * Classname dinamica para el envoltorio del carrusel.
@@ -130,9 +118,9 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 			default: 'desc',
 		},
 		// Opciones de imagen.
-		SaveImages: {
+		SetImgIds: {
 			type: 'array',
-			default: [],
+			default: '',
 		},
 		// Controles de carrusel.
 		SetColumns: {
@@ -289,27 +277,6 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 			return <CarosuelMarkupHtml attributes={attributes} postsStored={postsStored}/>
 		}
 
-		/**
-		 * Callback para los medios.
-		 * @param {*} media arreglo de imagenes.
-		 */
-
-		const onSelectMedia = (media) => {
-			const theImagesArray = media?.map( media => (
-				// console.log(media)
-				{
-					post_id: media.id,
-					post_permalink: media.link,
-					post_title: media.caption,
-					post_excerpt: media.alt,
-					post_thumbnail_url: media.url,
-					post_thumbnail_alt: media.alt,
-				}
-			) )
-			setAttributes({ SaveImages: theImagesArray });
-		};
-		// console.log(attributes.SaveImages);
-
 		return (
 			<div { ...blockProps }>
 				{/* Inspector controles */}
@@ -325,7 +292,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 								{ label: __( 'Images / Video', 'ekiline-collection' ), value: 'images' },
 							] }
 							onChange={ ( ChooseType ) =>
-								{ setAttributes( { ChooseType, SavePosts: [], SaveImages: [] } ) }
+								setAttributes( { ChooseType } )
 							}
 						/>
 
@@ -337,17 +304,28 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 							<MediaUploadCheck>
 								<MediaUpload
 									title={ __( 'Carousel Images', 'ekiline-collection' ) }
-									onSelect={ (media) => onSelectMedia(media) }
+									onSelect={ ( media ) => {
+										const img_ids = [];
+										for (
+											let i = 0, max = media.length;
+											i < max;
+											i += 1
+										) {
+											img_ids.push( media[ i ].id );
+										}
+										setAttributes( { SetImgIds: img_ids } );
+									} }
+									// ref: https://github.com/WordPress/gutenberg/blob/HEAD/packages/block-editor/src/components/media-upload/README.md.
 									allowedTypes={ [ 'image', 'video' ] }
 									multiple={ true }
-									value={ attributes.SaveImages?.map(item => item.id) }
+									value={ attributes.SetImgIds }
 									render={ ( { open } ) => (
 										<Button isSecondary onClick={ open }>
 											{ __( 'Add images', 'ekiline-collection' ) }
 										</Button>
 									) }
-									gallery={ true }
-									addToGallery={ true }
+									gallery={ false }
+									addToGallery={ false }
 								/>
 							</MediaUploadCheck>
 						) }
@@ -361,7 +339,9 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 									{ label: __( 'Title', 'ekiline-collection' ), value: 'title' },
 								] }
 								onChange={ ( ShowPostsBy ) =>{
-									setAttributes( { ShowPostsBy, SavePosts: [] } )
+									setAttributes( { ShowPostsBy } )
+									//reset saved posts.
+									setAttributes({ SavePosts: [] })
 								}}
 							/>
 						) }
@@ -373,7 +353,9 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 								min='0'
 								value={ attributes.SetAmount }
 								onChange={ (newval)=>{
-									setAttributes({ SetAmount: parseInt(newval), SavePosts: [] })
+									setAttributes({ SetAmount: parseInt(newval) })
+									//reset saved posts.
+									setAttributes({ SavePosts: [] })
 								} }
 								help={ ( 0 === attributes.SetAmount ) ? __( 'Danger! 0 shows all.', 'ekiline-collection'  ) : '' }
 							/>
@@ -388,7 +370,9 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 									{ label: __( 'Ascend', 'ekiline-collection' ), value: 'asc' },
 								] }
 								onChange={ ( SortPosts ) =>{
-									setAttributes( { SortPosts, SavePosts: [] } )
+									setAttributes( { SortPosts } )
+									//reset saved posts.
+									setAttributes({ SavePosts: [] })
 								}}
 							/>
 						) }
@@ -463,26 +447,14 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 
 				</InspectorControls>
 				{/* El bloque */}
-				{ 'posts' === attributes.ChooseType
-					&& attributes.SavePosts
-					&& (<EntriesList
-							categories={attributes.SetCatIds}
-							amount={attributes.SetAmount}
-							showby={attributes.ShowPostsBy}
-							sort={attributes.SortPosts}
-						/>)
-				}
+				<EntriesList
+					categories={attributes.SetCatIds}
+					amount={attributes.SetAmount}
+					showby={attributes.ShowPostsBy}
+					sort={attributes.SortPosts}
+				/>
 				{/* El recordatorio */}
-				{ 'posts' === attributes.ChooseType 
-					&& isSelected && ( <UserRemind slugname={attributes.SetCatSlug}/> )
-				}
-				{/* En caso de imagenes */}
-				{ 'images' === attributes.ChooseType 
-					&& attributes.SaveImages 
-					&& ( <CarosuelMarkupHtml attributes={attributes} postsStored={attributes.SaveImages}/> )
-				}
-				{/* las imagenes en un arreglo */}
-				{/* <code>{JSON.stringify(attributes.SaveImages)}</code> */}
+				{ isSelected && ( <UserRemind slugname={attributes.SetCatSlug}/> ) }
 			</div>
 		)
 	},
@@ -497,19 +469,10 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		const blockProps = useBlockProps.save( {
 			className: 'group-carousel-extra-front',
 		} );
-
 		return (
 			<div {...blockProps}>
 				{/* El bloque */}
-				{ 'posts' === attributes.ChooseType 
-					&& attributes.SavePosts 
-					&& ( <CarosuelMarkupHtml attributes={attributes} postsStored={attributes.SavePosts}/> )
-				}
-				{/* En caso de imagenes */}
-				{ 'images' === attributes.ChooseType 
-					&& attributes.SaveImages 
-					&& ( <CarosuelMarkupHtml attributes={attributes} postsStored={attributes.SaveImages}/> )
-				}
+				<CarosuelMarkupHtml attributes={attributes} postsStored={attributes.SavePosts}/>
 			</div>
 		)
 	},
