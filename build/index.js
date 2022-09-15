@@ -447,11 +447,11 @@ const customIcon = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElem
     },
     SetCatSlug: {
       type: 'array',
-      default: ''
+      default: []
     },
     SetCatIds: {
       type: 'array',
-      default: ''
+      default: []
     },
     SetAmount: {
       type: 'number',
@@ -561,7 +561,7 @@ const customIcon = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElem
      *
      * @link https://developer.wordpress.org/block-editor/how-to-guides/data-basics/2-building-a-list-of-pages/
      * @link https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/creating-dynamic-blocks/
-     * @link https://wordpress.stackexchange.com/questions/352323/how-to-return-a-list-of-custom-taxonomy-terms-via-the-gutenberg-getentityrecords 
+     * @link https://wordpress.stackexchange.com/questions/352323/how-to-return-a-list-of-custom-taxonomy-terms-via-the-gutenberg-getentityrecords
      *
      * @returns Custom component: EntriesList.
      */
@@ -569,21 +569,22 @@ const customIcon = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElem
 
     function EntriesList(_ref) {
       let {
-        categories,
-        amount,
-        showby,
-        sort
+        attributes
       } = _ref;
+      // categories={attributes.SetCatIds}
+      // amount={attributes.SetAmount}
+      // showby={attributes.ShowPostsBy}
+      // sort={attributes.SortPosts}
       // Categoria default: todas.
-      const setCats = categories > 0 ? categories : []; // Cantidad de entradas: 3.
+      const setCats = attributes.SetCatIds > 0 ? attributes.SetCatIds : []; // Cantidad de entradas: 3.
 
-      const setAmount = amount <= 0 ? '-1' : amount; // Orden: Ascendente.
+      const setAmount = attributes.SetAmount <= 0 ? '-1' : attributes.SetAmount; // Orden: Ascendente.
 
       const queryPosts = {
         categories: setCats,
         per_page: setAmount,
-        orderby: showby,
-        order: sort
+        orderby: attributes.ShowPostsBy,
+        order: attributes.SortPosts
       };
       const posts = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_6__.store).getEntityRecords('postType', 'post', queryPosts), []);
       /**
@@ -799,11 +800,12 @@ const customIcon = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElem
       onChange: newval => setAttributes({
         SetHeight: parseInt(newval)
       })
-    }))), 'posts' === attributes.ChooseType && attributes.SavePosts && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(EntriesList, {
-      categories: attributes.SetCatIds,
-      amount: attributes.SetAmount,
-      showby: attributes.ShowPostsBy,
-      sort: attributes.SortPosts
+    }))), 'posts' === attributes.ChooseType && attributes.SavePosts && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(EntriesList // categories={attributes.SetCatIds}
+    // amount={attributes.SetAmount}
+    // showby={attributes.ShowPostsBy}
+    // sort={attributes.SortPosts}
+    , {
+      attributes: attributes
     }), 'posts' === attributes.ChooseType && isSelected && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(UserRemind, {
       slugname: attributes.SetCatSlug
     }), 'images' === attributes.ChooseType && attributes.SaveImages && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(CarosuelMarkupHtml, {
@@ -873,7 +875,7 @@ function UserRemind(_ref5) {
 }
 /**
  * Transformo una cadena id por nombre.
- * Crear nuevo array de categorias por ID. 
+ * Crear nuevo array de categorias por ID.
  * @param {*} nombres slugs (url) de cada categoria.
  * @param {*} matriz grupo de categorias existentes.
  * @param {*} devolucion nombre de dato que buscas obtener, en este caso IDs.
