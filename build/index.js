@@ -571,10 +571,6 @@ const customIcon = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElem
       let {
         attributes
       } = _ref;
-      // categories={attributes.SetCatIds}
-      // amount={attributes.SetAmount}
-      // showby={attributes.ShowPostsBy}
-      // sort={attributes.SortPosts}
       // Categoria default: todas.
       const setCats = attributes.SetCatIds > 0 ? attributes.SetCatIds : []; // Cantidad de entradas: 3.
 
@@ -800,11 +796,7 @@ const customIcon = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElem
       onChange: newval => setAttributes({
         SetHeight: parseInt(newval)
       })
-    }))), 'posts' === attributes.ChooseType && attributes.SavePosts && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(EntriesList // categories={attributes.SetCatIds}
-    // amount={attributes.SetAmount}
-    // showby={attributes.ShowPostsBy}
-    // sort={attributes.SortPosts}
-    , {
+    }))), 'posts' === attributes.ChooseType && attributes.SavePosts && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(EntriesList, {
       attributes: attributes
     }), 'posts' === attributes.ChooseType && isSelected && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(UserRemind, {
       slugname: attributes.SetCatSlug

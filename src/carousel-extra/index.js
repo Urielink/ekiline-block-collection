@@ -230,11 +230,6 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		 * @returns Custom component: EntriesList.
 		 */
 		function EntriesList({attributes}) {
-							// categories={attributes.SetCatIds}
-							// amount={attributes.SetAmount}
-							// showby={attributes.ShowPostsBy}
-							// sort={attributes.SortPosts}
-
 			// Categoria default: todas.
 			const setCats = (attributes.SetCatIds>0)?attributes.SetCatIds:[];
 			// Cantidad de entradas: 3.
@@ -470,13 +465,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 				{/* El bloque */}
 				{ 'posts' === attributes.ChooseType
 					&& attributes.SavePosts
-					&& (<EntriesList
-							// categories={attributes.SetCatIds}
-							// amount={attributes.SetAmount}
-							// showby={attributes.ShowPostsBy}
-							// sort={attributes.SortPosts}
-							attributes={attributes}
-						/>)
+					&& ( <EntriesList attributes={attributes}/> )
 				}
 				{/* El recordatorio */}
 				{ 'posts' === attributes.ChooseType
