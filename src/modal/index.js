@@ -15,6 +15,23 @@ import { PanelBody, SelectControl, ToggleControl, TextControl } from '@wordpress
 import { __ } from '@wordpress/i18n';
 
 /**
+ * Crear un icono.
+ * Import the element creator function (React abstraction layer)
+ * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-element/
+ */
+ import { createElement } from '@wordpress/element';
+const customIcon = createElement(
+	'svg',
+	{ width: 20, height: 20 },
+	createElement(
+		'path',
+		{
+			d: 'M15.32,5.14l.64-.64,.64,.64,.76-.76-.64-.64,.63-.63-.76-.76-.63,.63-.63-.63-.76,.76,.63,.63-.64,.64,.76,.76Zm2.78-4.14H1.9c-.5,0-.9,.4-.9,.9V18.1c0,.5,.4,.9,.9,.9H18.1c.5,0,.9-.4,.9-.9V1.9c0-.5-.4-.9-.9-.9Zm-.18,16.92H2.08v-3.36h15.84v3.36Zm0-4.44H2.08V6.52h15.84v6.97Zm0-8.05H2.08V2.08h15.84v3.36Z'
+		}
+	)
+);
+
+/**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * All files containing `style` keyword are bundled together. The code used
  * gets applied both to the front of your site and to the editor.
@@ -62,7 +79,7 @@ import { __ } from '@wordpress/i18n';
  * @ref https://github.com/WordPress/gutenberg/blob/17baf6f33c391daa44daf8b3465f27aba8cf200d/packages/block-editor/src/components/inner-blocks/README.md#templatelock
  *
  */
-registerBlockType('ekiline-blocks/ekiline-modal', {
+registerBlockType('ekiline-collection/ekiline-modal', {
 	/**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */
@@ -72,9 +89,9 @@ registerBlockType('ekiline-blocks/ekiline-modal', {
 	 * Parametros de alta.
 	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
 	 */
-	title: __( 'Modal group, full control', 'ekiline-modal' ),
-	icon: 'editor-kitchensink',
-	description: __( 'Add your content here, then invoque with a link anchor #anchor.', 'ekiline-modal' ),
+	title: __( 'Modal', 'ekiline-collection' ),
+	icon: customIcon,
+	description: __( 'Add your content here, then invoque with a link anchor #anchor.', 'ekiline-collection' ),
 	category: 'design',
 	supports: {
 		anchor: true,
@@ -123,27 +140,31 @@ registerBlockType('ekiline-blocks/ekiline-modal', {
 		const { attributes, setAttributes } = props;
 
 		// Restringir los bloques, Cargar un preset.
-		const PARENT_ALLOWED_BLOCKS = [ 'ekiline-blocks/ekiline-modal-header', 'ekiline-blocks/ekiline-modal-body', 'ekiline-blocks/ekiline-modal-footer' ];
-		const CHILD_TEMPLATE = [
-			[ 'ekiline-blocks/ekiline-modal-header', {
-				lock: {
-					remove: false,
-					move: true,
-				}
-			} ],
-			[ 'ekiline-blocks/ekiline-modal-body', {
-				lock: {
-					remove: false,
-					move: true,
-				}
-			} ],
-			[ 'ekiline-blocks/ekiline-modal-footer', {
-				lock: {
-					remove: false,
-					move: true,
-				}
-			} ],
+		const PARENT_ALLOWED_BLOCKS = [
+			'ekiline-collection/ekiline-modal-header',
+			'ekiline-collection/ekiline-modal-body',
+			'ekiline-collection/ekiline-modal-footer'
+		];
 
+		const CHILD_TEMPLATE = [
+			[ 'ekiline-collection/ekiline-modal-header', {
+				lock: {
+					remove: false,
+					move: true,
+				}
+			} ],
+			[ 'ekiline-collection/ekiline-modal-body', {
+				lock: {
+					remove: false,
+					move: true,
+				}
+			} ],
+			[ 'ekiline-collection/ekiline-modal-footer', {
+				lock: {
+					remove: false,
+					move: true,
+				}
+			} ],
 		];
 
 		// personalizar clase
@@ -162,7 +183,7 @@ registerBlockType('ekiline-blocks/ekiline-modal', {
 						<pre>
 						{ '#' + attributes.anchor }
 						<br></br>
-						{ __( 'Add this #anchor to a button and its advanced options.', 'ekiline-modal' ) }
+						{ __( 'Add this #anchor to a button and its advanced options.', 'ekiline-collection' ) }
 						</pre>
 					</div>
 					)
@@ -170,7 +191,7 @@ registerBlockType('ekiline-blocks/ekiline-modal', {
 
 			return(
 				<div class="editor-modal-route">
-					{ __( 'Do not forget to add an anchor. ', 'ekiline-modal' )}
+					{ __( 'Do not forget to add an anchor. ', 'ekiline-collection' )}
 				</div>
 			)
 		}
@@ -179,16 +200,16 @@ registerBlockType('ekiline-blocks/ekiline-modal', {
 			<div { ...blockProps }>
 				{/* Inspector controles */}
 				<InspectorControls>
-					<PanelBody title={ __( 'Modal Params', 'ekiline-modal' ) } initialOpen={ true }>
+					<PanelBody title={ __( 'Modal Params', 'ekiline-collection' ) } initialOpen={ true }>
 
 					<SelectControl
-						label={ __( 'Rise modal', 'ekiline-modal' ) }
+						label={ __( 'Rise modal', 'ekiline-collection' ) }
 						value={ attributes.modalShow }
 						options={ [
-							{ label: __( 'Default', 'ekiline-modal' ), value: '' },
-							{ label: __( 'Right', 'ekiline-modal' ), value: ' right-aside' },
-							{ label: __( 'Bottom', 'ekiline-modal' ), value: ' move-from-bottom' },
-							{ label: __( 'Left', 'ekiline-modal' ), value: ' left-aside' },
+							{ label: __( 'Default', 'ekiline-collection' ), value: '' },
+							{ label: __( 'Right', 'ekiline-collection' ), value: ' right-aside' },
+							{ label: __( 'Bottom', 'ekiline-collection' ), value: ' move-from-bottom' },
+							{ label: __( 'Left', 'ekiline-collection' ), value: ' left-aside' },
 						] }
 						onChange={ ( modalShow ) =>
 							setAttributes( { modalShow } )
@@ -196,14 +217,14 @@ registerBlockType('ekiline-blocks/ekiline-modal', {
 					/>
 
 					<SelectControl
-						label={ __( 'Size modal', 'ekiline-modal' ) }
+						label={ __( 'Size modal', 'ekiline-collection' ) }
 						value={ attributes.modalSize }
 						options={ [
-							{ label: __( 'Default', 'ekiline-modal' ), value: '' },
-							{ label: __( 'Small', 'ekiline-modal' ), value: ' modal-sm' },
-							{ label: __( 'Large', 'ekiline-modal' ), value: ' modal-lg' },
-							{ label: __( 'Extra Large', 'ekiline-modal' ), value: ' modal-xl' },
-							{ label: __( 'Full window', 'ekiline-modal' ), value: ' modal-fullscreen' },
+							{ label: __( 'Default', 'ekiline-collection' ), value: '' },
+							{ label: __( 'Small', 'ekiline-collection' ), value: ' modal-sm' },
+							{ label: __( 'Large', 'ekiline-collection' ), value: ' modal-lg' },
+							{ label: __( 'Extra Large', 'ekiline-collection' ), value: ' modal-xl' },
+							{ label: __( 'Full window', 'ekiline-collection' ), value: ' modal-fullscreen' },
 						] }
 						onChange={ ( modalSize ) =>
 							setAttributes( { modalSize } )
@@ -211,35 +232,35 @@ registerBlockType('ekiline-blocks/ekiline-modal', {
 					/>
 
 					<ToggleControl
-						label={ __( 'Center in window', 'ekiline-modal' ) }
+						label={ __( 'Center in window', 'ekiline-collection' ) }
 						checked={ attributes.modalAlign }
 						onChange={ ( modalAlign ) =>
 							setAttributes( { modalAlign } )
 						}
 					/>
 					<ToggleControl
-						label={ __( 'Enable background click to close', 'ekiline-modal' ) }
+						label={ __( 'Enable background click to close', 'ekiline-collection' ) }
 						checked={ attributes.modalBackdrop }
 						onChange={ ( modalBackdrop ) =>
 							setAttributes( { modalBackdrop } )
 						}
 					/>
 					<ToggleControl
-						label={ __( 'Enable ESC key to close', 'ekiline-modal' ) }
+						label={ __( 'Enable ESC key to close', 'ekiline-collection' ) }
 						checked={ attributes.modalKeyboard }
 						onChange={ ( modalKeyboard ) =>
 							setAttributes( { modalKeyboard } )
 						}
 					/>
 					<ToggleControl
-						label={ __( 'Show resize modal button', 'ekiline-modal' ) }
+						label={ __( 'Show resize modal button', 'ekiline-collection' ) }
 						checked={ attributes.modalGrow }
 						onChange={ ( modalGrow ) =>
 							setAttributes( { modalGrow } )
 						}
 					/>
 					<TextControl
-						label={ __( 'Show with timer', 'ekiline-modal' ) }
+						label={ __( 'Show with timer', 'ekiline-collection' ) }
 						type="number"
 						value={ attributes.modalTime }
 						onChange={ ( newval ) =>
@@ -247,8 +268,8 @@ registerBlockType('ekiline-blocks/ekiline-modal', {
 						}
 						help={
 							( attributes.modalTime > 0 )
-							? __( 'Run after page load "' + attributes.modalTime + '" milliseconds.', 'ekiline-modal' )
-							: __( '"' + attributes.modalTime + '" do nothing.', 'ekiline-modal' )
+							? __( 'Run after page load "' + attributes.modalTime + '" milliseconds.', 'ekiline-collection' )
+							: __( '"' + attributes.modalTime + '" do nothing.', 'ekiline-collection' )
 						}
 					/>
 
@@ -299,7 +320,7 @@ registerBlockType('ekiline-blocks/ekiline-modal', {
 					<button
 						type="button"
 						class="modal-resize btn btn-sm btn-outline-secondary"
-						aria-label={__( 'play btn', 'ekiline-modal' )}>
+						aria-label={__( 'play btn', 'ekiline-collection' )}>
 							<span class="dashicons dashicons-editor-expand"></span>
 					</button>
 				)
@@ -332,11 +353,11 @@ registerBlockType('ekiline-blocks/ekiline-modal', {
  * - ekiline-modal-header
  */
 
-registerBlockType( 'ekiline-blocks/ekiline-modal-header', {
-	title: __( 'Modal header', 'ekiline-modal' ),
-	parent: ['ekiline-blocks/ekiline-modal'],
+registerBlockType( 'ekiline-collection/ekiline-modal-header', {
+	title: __( 'Modal header', 'ekiline-collection' ),
+	parent: ['ekiline-collection/ekiline-modal'],
 	icon: 'feedback',
-	description:__( 'Modal header content. ', 'ekiline-modal' ),
+	description:__( 'Modal header content. ', 'ekiline-collection' ),
 	category: 'design',
 	supports: {
 		html: false,
@@ -351,7 +372,7 @@ registerBlockType( 'ekiline-blocks/ekiline-modal-header', {
 		// Cargar un preset.
 		const CHILD_TEMPLATE = [
 			[ 'core/heading', {
-				content: __( 'Add modal title', 'ekiline-modal' ),
+				content: __( 'Add modal title', 'ekiline-collection' ),
 				level: 4,
 			} ],
 		];
@@ -393,11 +414,11 @@ registerBlockType( 'ekiline-blocks/ekiline-modal-header', {
  * - ekiline-modal-body
  */
 
-registerBlockType( 'ekiline-blocks/ekiline-modal-body', {
-	title: __( 'Modal body content', 'ekiline-modal' ),
-	parent: ['ekiline-blocks/ekiline-modal'],
+registerBlockType( 'ekiline-collection/ekiline-modal-body', {
+	title: __( 'Modal body content', 'ekiline-collection' ),
+	parent: ['ekiline-collection/ekiline-modal'],
 	icon: 'feedback',
-	description:__( 'Modal body content. ', 'ekiline-modal' ),
+	description:__( 'Modal body content. ', 'ekiline-collection' ),
 	category: 'design',
 	supports: {
 		html: false,
@@ -409,7 +430,7 @@ registerBlockType( 'ekiline-blocks/ekiline-modal-body', {
 
 		// Cargar un preset.
 		const CHILD_TEMPLATE = [
-			[ 'core/paragraph', { content: __( 'Add modal content blocks', 'ekiline-modal' ) } ],
+			[ 'core/paragraph', { content: __( 'Add modal content blocks', 'ekiline-collection' ) } ],
 		];
 
 		// personalizar clase
@@ -447,11 +468,11 @@ registerBlockType( 'ekiline-blocks/ekiline-modal-body', {
  * - ekiline-modal-footer
  */
 
- registerBlockType( 'ekiline-blocks/ekiline-modal-footer', {
-	title: __( 'Modal footer', 'ekiline-modal' ),
-	parent: ['ekiline-blocks/ekiline-modal'],
+registerBlockType( 'ekiline-collection/ekiline-modal-footer', {
+	title: __( 'Modal footer', 'ekiline-collection' ),
+	parent: ['ekiline-collection/ekiline-modal'],
 	icon: 'feedback',
-	description:__( 'Inner footer content. ', 'ekiline-modal' ),
+	description:__( 'Inner footer content. ', 'ekiline-collection' ),
 	category: 'design',
 	supports: {
 		html: false,
@@ -465,7 +486,7 @@ registerBlockType( 'ekiline-blocks/ekiline-modal-body', {
 		const PARENT_ALLOWED_BLOCKS = [ 'core/paragraph', 'core/buttons', 'core/button' ];
 		// Cargar un preset.
 		const CHILD_TEMPLATE = [
-			[ 'core/paragraph', { content: __( 'Add modal footer text', 'ekiline-modal' ) } ],
+			[ 'core/paragraph', { content: __( 'Add modal footer text', 'ekiline-collection' ) } ],
 		];
 
 		// personalizar clase
@@ -525,9 +546,9 @@ registerBlockType( 'ekiline-blocks/ekiline-modal-body', {
  */
 
 
- /**
-  * Importar otras dependencias de WP.
-  */
+/**
+ * Importar otras dependencias de WP.
+ */
 import { addFilter } from '@wordpress/hooks'; // este permite crear filtros.
 import { Fragment } from '@wordpress/element'; // UI.
 import { InspectorAdvancedControls } from '@wordpress/block-editor'; // UI.
@@ -585,16 +606,16 @@ const withAdvancedControlsBtn = createHigherOrderComponent( ( BlockEdit ) => {
 					{props.attributes.url && (
 						<InspectorAdvancedControls>
 							<TextControl
-								label={ __( 'Modal anchor for execute it.', 'ekiline-modal'  ) }
+								label={ __( 'Modal anchor for execute it.', 'ekiline-collection'  ) }
 								value={props.attributes.addDataBtn}
 								onChange={newData => props.setAttributes({addDataBtn: newData})}
 							/>
 							{/* Nuevo: Cerrar modal */}
 							<ToggleControl
-								label={ __( 'Close modal button.', 'ekiline-modal'  ) }
+								label={ __( 'Close modal button.', 'ekiline-collection'  ) }
 								checked={ ! closeModal }
 								onChange={ () => setAttributes( {  closeModal: ! closeModal } ) }
-								help={ ! closeModal ? __( 'Yes.', 'ekiline-modal'  ) : __( 'No.', 'ekiline-modal'  ) }
+								help={ ! closeModal ? __( 'Yes.', 'ekiline-collection'  ) : __( 'No.', 'ekiline-collection'  ) }
 							/>
 						</InspectorAdvancedControls>
 					)}

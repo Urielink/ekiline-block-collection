@@ -15,6 +15,23 @@ import { PanelBody, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
+ * Crear un icono.
+ * Import the element creator function (React abstraction layer)
+ * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-element/
+ */
+ import { createElement } from '@wordpress/element';
+const customIcon = createElement(
+	'svg',
+	{ width: 20, height: 20 },
+	createElement(
+		'path',
+		{
+			d: 'M10,1H1V19H19V1H10Zm-3.33,1.8l-1.17,1.44-1.17-1.44h2.34Zm11.25,15.12H2.08V6.04h15.84v11.88Zm0-13.23h-7.92V2.08h7.92v2.61Z'
+		}
+	)
+);
+
+/**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * All files containing `style` keyword are bundled together. The code used
  * gets applied both to the front of your site and to the editor.
@@ -48,7 +65,7 @@ import { __ } from '@wordpress/i18n';
  * No mostrar en inspector.
  * @ref https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/
  */
-registerBlockType( 'ekiline-blocks/ekiline-tabs', {
+registerBlockType( 'ekiline-collection/ekiline-tabs', {
 	/**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */
@@ -58,9 +75,9 @@ registerBlockType( 'ekiline-blocks/ekiline-tabs', {
 	 * Parametros de alta.
 	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
 	 */
-	title: __( 'Ekiline Tabs', 'ekiline-tabs' ),
-	icon: 'table-row-after',
-	description: __( 'Add a tabs for your posts, full control.', 'ekiline-tabs' ),
+	title: __( 'Tabs', 'ekiline-collection' ),
+	icon: customIcon,
+	description: __( 'Add a tabs for your posts, full control.', 'ekiline-collection' ),
 	category: 'design',
 	supports: {
 		inserter: true,
@@ -79,12 +96,12 @@ registerBlockType( 'ekiline-blocks/ekiline-tabs', {
 	edit: () => {
 
 		// Restringir los bloques, Cargar un preset.
-		const PARENT_ALLOWED_BLOCKS = [ 'ekiline-blocks/ekiline-tabs-navbar', 'ekiline-blocks/ekiline-tabs-container' ];
+		const PARENT_ALLOWED_BLOCKS = [ 'ekiline-collection/ekiline-tabs-navbar', 'ekiline-collection/ekiline-tabs-container' ];
 		const CHILD_TEMPLATE = [
-			[ 'ekiline-blocks/ekiline-tabs-navbar',{
+			[ 'ekiline-collection/ekiline-tabs-navbar',{
 				className: 'is-style-nav-tabs',
 			} ],
-			[ 'ekiline-blocks/ekiline-tabs-container' ]
+			[ 'ekiline-collection/ekiline-tabs-container' ]
 		];
 		// personalizar clase
 		const blockProps = useBlockProps( {
@@ -123,11 +140,11 @@ registerBlockType( 'ekiline-blocks/ekiline-tabs', {
  * tabs-navbar
  */
 
- registerBlockType( 'ekiline-blocks/ekiline-tabs-navbar', {
-	title: __( 'Tabs Nav Bar', 'ekiline-tabs' ),
-	parent: ['ekiline-blocks/ekiline-tabs'],
+registerBlockType( 'ekiline-collection/ekiline-tabs-navbar', {
+	title: __( 'Tabs Nav Bar', 'ekiline-collection' ),
+	parent: ['ekiline-collection/ekiline-tabs'],
 	icon: 'editor-kitchensink',
-	description: __( 'Tab navigation, add your links.', 'ekiline-tabs' ),
+	description: __( 'Tab navigation, add your links.', 'ekiline-collection' ),
 	category: 'design',
 	supports: {
 		html: false,
@@ -155,13 +172,13 @@ registerBlockType( 'ekiline-blocks/ekiline-tabs', {
 		const { attributes, setAttributes } = props;
 
 		// Restringir los bloques, Cargar un preset.
-		const PARENT_ALLOWED_BLOCKS = [ 'ekiline-blocks/ekiline-tab-link' ];
+		const PARENT_ALLOWED_BLOCKS = [ 'ekiline-collection/ekiline-tab-link' ];
 		const CHILD_TEMPLATE = [
-			[ 'ekiline-blocks/ekiline-tab-link', {
-				content: __( 'Tab link 1', 'ekiline-tabs' ),
+			[ 'ekiline-collection/ekiline-tab-link', {
+				content: __( 'Tab link 1', 'ekiline-collection' ),
 				className: 'active',
 			} ],
-			[ 'ekiline-blocks/ekiline-tab-link', { content: __( 'Tab link 2', 'ekiline-tabs' ) } ],
+			[ 'ekiline-collection/ekiline-tab-link', { content: __( 'Tab link 2', 'ekiline-collection' ) } ],
 		];
 
 		const blockProps = useBlockProps( {
@@ -225,11 +242,11 @@ registerBlockType( 'ekiline-blocks/ekiline-tabs', {
  */
 import { RichText } from '@wordpress/block-editor';
 
-registerBlockType( 'ekiline-blocks/ekiline-tab-link', {
-	title: __( 'Tab Link', 'ekiline-tabs' ),
-	parent: ['ekiline-blocks/ekiline-tabs-navbar'],
+registerBlockType( 'ekiline-collection/ekiline-tab-link', {
+	title: __( 'Tab Link', 'ekiline-collection' ),
+	parent: ['ekiline-collection/ekiline-tabs-navbar'],
 	icon: 'button',
-	description: __( 'Tab button link. Copy Anchor text and paste on Tab Content Anchor field.', 'ekiline-tabs' ),
+	description: __( 'Tab button link. Copy Anchor text and paste on Tab Content Anchor field.', 'ekiline-collection' ),
 	category: 'design',
 	supports: {
 		html: false,
@@ -244,7 +261,7 @@ registerBlockType( 'ekiline-blocks/ekiline-tab-link', {
 			type: 'string',
 			source: 'html',
 			selector: 'button',
-			default: __( 'Tab link', 'ekiline-tabs' ),
+			default: __( 'Tab link', 'ekiline-collection' ),
 		},
 		dataBsTarget: {
 			type: 'string',
@@ -276,9 +293,9 @@ registerBlockType( 'ekiline-blocks/ekiline-tab-link', {
 			<div>
 				{/* Inspector controles */}
 				<InspectorControls>
-					<PanelBody title={ __( 'Tab Link Params', 'ekiline-tabs' ) } initialOpen={ true }>
+					<PanelBody title={ __( 'Tab Link Params', 'ekiline-collection' ) } initialOpen={ true }>
 					<TextControl
-						label={ __( 'Copy this value in a Content Tab HTML anchor field.', 'ekiline-tabs' ) }
+						label={ __( 'Copy this value in a Content Tab HTML anchor field.', 'ekiline-collection' ) }
 						type="string"
 						value={ attributes.dataBsTarget = replaceSpecialChars( attributes.content ) }
 						onChange={ (dataBsTarget) =>
@@ -354,7 +371,7 @@ const findAnchorButton = ( props ) => {
 				}
 				const linkToTab = replaceSpecialChars( props.value.text );
 
-				alert( __( 'Tab-Content Anchor: ' + linkToTab , 'ekiline-tabs' ) )
+				alert( __( 'Tab-Content Anchor: ' + linkToTab , 'ekiline-collection' ) )
 			} }
 		/>
 	);
@@ -370,7 +387,7 @@ const ConditionalButton = compose(
 	ifCondition( function ( props ) {
 		return (
 			// props.selectedBlock && props.selectedBlock.name === 'core/paragraph'
-			props.selectedBlock && props.selectedBlock.name === 'ekiline-blocks/ekiline-tab-link'
+			props.selectedBlock && props.selectedBlock.name === 'ekiline-collection/ekiline-tab-link'
 		);
 	} )
 )( findAnchorButton );
@@ -388,11 +405,11 @@ registerFormatType( 'ekiline-format/find-anchor', {
  * - tabs-container
  */
 
-registerBlockType( 'ekiline-blocks/ekiline-tabs-container', {
-	title: __( 'Tabs container', 'ekiline-tabs' ),
-	parent: ['ekiline-blocks/ekiline-tabs'],
+registerBlockType( 'ekiline-collection/ekiline-tabs-container', {
+	title: __( 'Tabs container', 'ekiline-collection' ),
+	parent: ['ekiline-collection/ekiline-tabs'],
 	icon: 'editor-kitchensink',
-	description: __( 'All tabs add here.', 'ekiline-tabs' ),
+	description: __( 'All tabs add here.', 'ekiline-collection' ),
 	category: 'design',
 	supports: {
 		html: false,
@@ -404,13 +421,13 @@ registerBlockType( 'ekiline-blocks/ekiline-tabs-container', {
 	edit: () => {
 
 		// Restringir los bloques, Cargar un preset.
-		const PARENT_ALLOWED_BLOCKS = [ 'ekiline-blocks/ekiline-tab-content' ];
+		const PARENT_ALLOWED_BLOCKS = [ 'ekiline-collection/ekiline-tab-content' ];
 		const CHILD_TEMPLATE = [
-			[ 'ekiline-blocks/ekiline-tab-content', {
+			[ 'ekiline-collection/ekiline-tab-content', {
 				className: 'active show',
 				anchor: 'tab-link-1'
 			} ],
-			[ 'ekiline-blocks/ekiline-tab-content', {
+			[ 'ekiline-collection/ekiline-tab-content', {
 				anchor: 'tab-link-2'
 			} ],
 		];
@@ -446,11 +463,11 @@ registerBlockType( 'ekiline-blocks/ekiline-tabs-container', {
  * - - tab-content
  */
 
-registerBlockType( 'ekiline-blocks/ekiline-tab-content', {
-	title: __( 'Tab Content', 'ekiline-tabs' ),
-	parent: ['ekiline-blocks/ekiline-tabs-container'],
+registerBlockType( 'ekiline-collection/ekiline-tab-content', {
+	title: __( 'Tab Content', 'ekiline-collection' ),
+	parent: ['ekiline-collection/ekiline-tabs-container'],
 	icon: 'feedback',
-	description:__( 'Inner tab content. Find Tab Link anchor text, and paste on Anchor field.', 'ekiline-tabs' ),
+	description:__( 'Inner tab content. Find Tab Link anchor text, and paste on Anchor field.', 'ekiline-collection' ),
 	category: 'design',
 	supports: {
 		anchor: true,
@@ -462,7 +479,7 @@ registerBlockType( 'ekiline-blocks/ekiline-tab-content', {
 	edit: () => {
 		// Cargar un preset.
 		const CHILD_TEMPLATE = [
-			[ 'core/paragraph', { content: __( 'Add your content and blocks, then copy anchor name to tab content block', 'ekiline-tabs' ) } ],
+			[ 'core/paragraph', { content: __( 'Add your content and blocks, then copy anchor name to tab content block', 'ekiline-collection' ) } ],
 		];
 
 		// personalizar clase

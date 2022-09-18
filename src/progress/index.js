@@ -12,7 +12,24 @@ import { PanelBody, ToggleControl, TextControl } from '@wordpress/components';
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
- import { __ } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
+
+/**
+ * Crear un icono.
+ * Import the element creator function (React abstraction layer)
+ * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-element/
+ */
+ import { createElement } from '@wordpress/element';
+const customIcon = createElement(
+	'svg',
+	{ width: 20, height: 20 },
+	createElement(
+		'path',
+		{
+			d: 'M12.16,5.26l-.76-.76-3.56,3.56,.76,.76,3.56-3.56Zm-2.99,.57c.28-.28,.28-.74,0-1.02s-.74-.28-1.02,0c-.28,.28-.28,.74,0,1.02,.28,.28,.74,.28,1.02,0Zm1.65,1.65c-.28,.28-.28,.74,0,1.02s.74,.28,1.02,0c.28-.28,.28-.74,0-1.02-.28-.28-.74-.28-1.02,0Zm3.46,3.13H1v5.04H19v-5.04h-4.72Zm-7.16,4.14h-1.08v-3.24h1.08v3.24Zm2.47,0h-1.15v-3.24h1.15v3.24Zm3.38,0h-2.07v-3.24h2.07v3.24Zm5.13,0h-3.82v-3.24h3.82v3.24Z'
+		}
+	)
+);
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -40,35 +57,35 @@ import { PanelBody, ToggleControl, TextControl } from '@wordpress/components';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-registerBlockType('ekiline-blocks/ekiline-progress', {
+registerBlockType('ekiline-collection/ekiline-progress', {
 
 	/**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */
-	 apiVersion: 2,
+	apiVersion: 2,
 
-	 /**
-	  * Parametros de alta.
-	  * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
-	  */
-	  title: __( 'Ekiline progress, full control', 'ekiline-progress' ),
-	  icon: 'ellipsis',
-	  description: __( 'Show a bootstrap progress bar for your data.', 'ekiline-progress' ),
-	  category: 'design',
-	  supports: {
+	/**
+	 * Parametros de alta.
+	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
+	 */
+	title: __( 'Progress', 'ekiline-collection' ),
+	icon: customIcon,
+	description: __( 'Show a bootstrap progress bar for your data.', 'ekiline-collection' ),
+	category: 'design',
+	supports: {
 			anchor: true,
 			color: { // Text UI control is enabled.
 				background: true, // Disable background UI control.
 				gradients: true, // Enable gradients UI control.
 				text: false // Enable gradients UI control.
 			},
-	  },
-	  attributes:{
+	},
+	attributes:{
 		progHeight: {
 			type: 'number',
 			default: 50, // Alto de barra, 0 a 100px.
 		},
-	 },
+	},
 
 	/**
 	 * @see ./edit.js
@@ -79,8 +96,8 @@ registerBlockType('ekiline-blocks/ekiline-progress', {
 		const { attributes, setAttributes } = props;
 
 		// Restringir los bloques, Cargar un preset.
-		const PARENT_ALLOWED_BLOCKS = [ 'ekiline-blocks/ekiline-progress-item' ];
-		const CHILD_TEMPLATE = [ [ 'ekiline-blocks/ekiline-progress-item' ] ];
+		const PARENT_ALLOWED_BLOCKS = [ 'ekiline-collection/ekiline-progress-item' ];
+		const CHILD_TEMPLATE = [ [ 'ekiline-collection/ekiline-progress-item' ] ];
 
 		// Personalizar clase.
 		const blockProps = useBlockProps( {
@@ -96,9 +113,9 @@ registerBlockType('ekiline-blocks/ekiline-progress', {
 
 				{/* Inspector controles */}
 				<InspectorControls>
-					<PanelBody title={ __( 'Progress bar Settings', 'ekiline-progress' ) } initialOpen={ true }>
+					<PanelBody title={ __( 'Progress bar Settings', 'ekiline-collection' ) } initialOpen={ true }>
 						<TextControl
-							label={ __( 'Height bar (pixels)', 'ekiline-progress' ) }
+							label={ __( 'Height bar (pixels)', 'ekiline-collection' ) }
 							type="number"
 							value={ attributes.progHeight }
 							onChange={ ( newval ) =>
@@ -146,21 +163,21 @@ registerBlockType('ekiline-blocks/ekiline-progress', {
 /**
  * Bloque interno
  */
- registerBlockType('ekiline-blocks/ekiline-progress-item', {
-	  title: __( 'Progress data bar', 'ekiline-progress' ),
-	  parent: ['ekiline-blocks/ekiline-progress'],
-	  icon: 'ellipsis',
-	  description: __( 'Progress data, could be multiple bars between 1 to 100.', 'ekiline-progress' ),
-	  category: 'design',
-	  supports: {
+registerBlockType('ekiline-collection/ekiline-progress-item', {
+	title: __( 'Progress data bar', 'ekiline-collection' ),
+	parent: ['ekiline-collection/ekiline-progress'],
+	icon: 'ellipsis',
+	description: __( 'Progress data, could be multiple bars between 1 to 100.', 'ekiline-collection' ),
+	category: 'design',
+	supports: {
 		anchor: false,
 		color: { // Text UI control is enabled.
 			background: true, // Disable background UI control.
 			gradients: true, // Enable gradients UI control.
 			text: true // Enable gradients UI control.
 		},
-	  },
-	  attributes:{
+	},
+	attributes:{
 		progRange: {
 			type: 'number',
 			default: 10, // Rango o contador, 0 a 100 int.
@@ -177,7 +194,7 @@ registerBlockType('ekiline-blocks/ekiline-progress', {
 			type: 'boolean',
 			default: false, // Animar rayas + progress-bar-animated.
 		},
-	 },
+	},
 
 	/**
 	 * @see ./edit.js
@@ -200,9 +217,9 @@ registerBlockType('ekiline-blocks/ekiline-progress', {
 			<div { ...blockProps } >
 				{/* Inspector controles */}
 				<InspectorControls>
-					<PanelBody title={ __( 'Progress bar Settings', 'ekiline-progress' ) } initialOpen={ true }>
+					<PanelBody title={ __( 'Progress bar Settings', 'ekiline-collection' ) } initialOpen={ true }>
 						<TextControl
-							label={ __( 'Data range min 1% max 100%', 'ekiline-progress' ) }
+							label={ __( 'Data range min 1% max 100%', 'ekiline-collection' ) }
 							type="number"
 							value={ attributes.progRange }
 							onChange={ ( newval ) =>
@@ -212,21 +229,21 @@ registerBlockType('ekiline-blocks/ekiline-progress', {
 							max="100"
 						/>
 						<ToggleControl
-							label={ __( 'Hide number in bar.', 'ekiline-progress' ) }
+							label={ __( 'Hide number in bar.', 'ekiline-collection' ) }
 							checked={ attributes.progLabel }
 							onChange={ ( progLabel ) =>
 								setAttributes( { progLabel } )
 							}
 						/>
 						<ToggleControl
-							label={ __( 'Show stripes over background.', 'ekiline-progress' ) }
+							label={ __( 'Show stripes over background.', 'ekiline-collection' ) }
 							checked={ attributes.progStripes }
 							onChange={ ( progStripes ) =>
 								setAttributes( { progStripes } )
 							}
 						/>
 						<ToggleControl
-							label={ __( 'Show animation.', 'ekiline-progress' ) }
+							label={ __( 'Show animation.', 'ekiline-collection' ) }
 							checked={ attributes.progAnimation }
 							onChange={ ( progAnimation ) =>
 								setAttributes( { progAnimation } )
@@ -282,7 +299,7 @@ const newWrapperAtts = createHigherOrderComponent( ( BlockListBlock ) => {
 	return ( props ) => {
 
 		// Aplicar solo a bloque item progress.
-		if( props.name === 'ekiline-blocks/ekiline-progress-item' ){
+		if( props.name === 'ekiline-collection/ekiline-progress-item' ){
 
 			// Hook para maniobrar (wrapperProps).
 			const wrapperProps = {
@@ -308,6 +325,6 @@ const newWrapperAtts = createHigherOrderComponent( ( BlockListBlock ) => {
 
 addFilter(
 	'editor.BlockListBlock',
-	'ekiline-blocks/ekiline-progress-item',
+	'ekiline-collection/ekiline-progress-item',
 	newWrapperAtts
 );

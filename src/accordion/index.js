@@ -12,7 +12,24 @@ import { PanelBody, ToggleControl } from '@wordpress/components';
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
- import { __ } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
+
+/**
+ * Crear un icono.
+ * Import the element creator function (React abstraction layer)
+ * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-element/
+ */
+ import { createElement } from '@wordpress/element';
+const customIcon = createElement(
+	'svg', 
+	{ width: 20, height: 20 }, 
+	createElement(
+		'path', 
+		{ 
+			d: 'M1,1V6.04H19V1H1ZM18.1,5.14H1.9V1.9H18.1v3.24Zm-2.8,12.51l1.44-1.17-1.44-1.17v2.34Zm-14.3,1.35H19v-5.04H1v5.04Zm.9-4.14H18.1v3.24H1.9v-3.24Zm-.9-2.34H19V7.48H1v5.04Zm16.19-3.24l-1.17,1.44-1.17-1.44h2.34Zm-1.89-6.93v2.34l1.44-1.17-1.44-1.17Z'
+		}
+	)
+);
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -43,25 +60,25 @@ import { PanelBody, ToggleControl } from '@wordpress/components';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-registerBlockType('ekiline-blocks/ekiline-accordion', {
+registerBlockType('ekiline-collection/ekiline-accordion', {
 
 	/**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */
-	 apiVersion: 2,
+	apiVersion: 2,
 
-	 /**
-	  * Parametros de alta.
-	  * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
-	  */
-	 title: __( 'Ekiline Accordion, full control', 'ekiline-accordion' ),
-	 icon: 'menu-alt',
-	 description: __( 'Show your content as an accordion.', 'ekiline-accordion' ),
-	 category: 'design',
-	 supports: {
-		 anchor: true,
-	 },
-	 attributes:{
+	/**
+	 * Parametros de alta.
+	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
+	 */
+	title: __( 'Accordion', 'ekiline-collection' ),
+	icon: customIcon,
+	description: __( 'Show your content as an accordion.', 'ekiline-collection' ),
+	category: 'design',
+	supports: {
+		anchor: true,
+	},
+	attributes:{
 		noStyle: {
 			type: 'boolean',
 			default: false, // add classname .accordion-flush.
@@ -84,11 +101,11 @@ registerBlockType('ekiline-blocks/ekiline-accordion', {
 		const { attributes, setAttributes } = props;
 
 		// Restringir los bloques, Cargar un preset.
-		const PARENT_ALLOWED_BLOCKS = [ 'ekiline-blocks/ekiline-accordion-item' ];
+		const PARENT_ALLOWED_BLOCKS = [ 'ekiline-collection/ekiline-accordion-item' ];
 		const CHILD_TEMPLATE = [
-			[ 'ekiline-blocks/ekiline-accordion-item' ],
-			[ 'ekiline-blocks/ekiline-accordion-item' ],
-			[ 'ekiline-blocks/ekiline-accordion-item' ]
+			[ 'ekiline-collection/ekiline-accordion-item' ],
+			[ 'ekiline-collection/ekiline-accordion-item' ],
+			[ 'ekiline-collection/ekiline-accordion-item' ]
 		];
 
 		// Personalizar clase.
@@ -108,9 +125,9 @@ registerBlockType('ekiline-blocks/ekiline-accordion', {
 			<div { ...blockProps }>
 				{/* Inspector controles */}
 				<InspectorControls>
-					<PanelBody title={ __( 'Accordion Settings', 'ekiline-accordion' ) } initialOpen={ true }>
+					<PanelBody title={ __( 'Accordion Settings', 'ekiline-collection' ) } initialOpen={ true }>
 						<ToggleControl
-							label={ __( 'Clear style.', 'ekiline-accordion' ) }
+							label={ __( 'Clear style.', 'ekiline-collection' ) }
 							checked={ attributes.noStyle }
 							onChange={ ( noStyle ) =>
 								setAttributes( { noStyle } )
@@ -154,21 +171,21 @@ registerBlockType('ekiline-blocks/ekiline-accordion', {
  * Bloque interno
  */
 
-registerBlockType('ekiline-blocks/ekiline-accordion-item', {
+registerBlockType('ekiline-collection/ekiline-accordion-item', {
 
-	 title: __( 'Accordion item', 'ekiline-accordion' ),
-	 parent: ['ekiline-blocks/ekiline-accordion'],
-	 icon: 'menu-alt',
-	 description: __( 'Set tittle and content in your accordion container', 'ekiline-accordion' ),
-	 category: 'design',
-	 //Se ocupa contexto para pasar valores desde el padre, en este caso el ID.
-	 usesContext: ['ekiline-accordion/anchor'],
-	 supports: {
+	title: __( 'Accordion item', 'ekiline-collection' ),
+	parent: ['ekiline-collection/ekiline-accordion'],
+	icon: 'menu-alt',
+	description: __( 'Set tittle and content in your accordion container', 'ekiline-collection' ),
+	category: 'design',
+	//Se ocupa contexto para pasar valores desde el padre, en este caso el ID.
+	usesContext: ['ekiline-accordion/anchor'],
+	supports: {
 		anchor: true,
 		html: false,
 		reusable: false,
 	},
-	 attributes:{
+	attributes:{
 		showDefault: {
 			type: 'boolean',
 			default: false, // remove dataset [data-bs-parent].
@@ -181,12 +198,12 @@ registerBlockType('ekiline-blocks/ekiline-accordion-item', {
 			type: 'string',
 			default: '', // retrive parent Id (Anchor).
 		},
-        content: {
-            type: 'string',
-            source: 'html',
-            selector: 'button',
-			default: __( 'Item title.', 'ekiline-accordion' ),
-        },
+		content: {
+			type: 'string',
+			source: 'html',
+			selector: 'button',
+			default: __( 'Item title.', 'ekiline-collection' ),
+		},
 	},
 
 	/**
@@ -199,7 +216,9 @@ registerBlockType('ekiline-blocks/ekiline-accordion-item', {
 
 		// Cargar un preset.
 		const CHILD_TEMPLATE = [
-			[ 'core/paragraph', { content: __( 'Item content.', 'ekiline-accordion' ) } ],
+			[ 'core/paragraph', 
+				{ content: __( 'Item content.', 'ekiline-collection' ) } 
+			],
 		];
 
 		// personalizar clase
@@ -224,21 +243,21 @@ registerBlockType('ekiline-blocks/ekiline-accordion-item', {
 			<div { ...blockProps }>
 				{/* Inspector controles */}
 				<InspectorControls>
-					<PanelBody title={ __( 'Accordion Item Params', 'ekiline-accordion' ) } initialOpen={ true }>
+					<PanelBody title={ __( 'Accordion Item Params', 'ekiline-collection' ) } initialOpen={ true }>
 					<ToggleControl
-						label={ __( 'Show element by default.', 'ekiline-accordion' ) }
+						label={ __( 'Show element by default.', 'ekiline-collection' ) }
 						checked={ attributes.showDefault }
 						onChange={ ( showDefault ) =>
 							setAttributes( { showDefault } )
 						}
 					/>
 					<ToggleControl
-						label={ __( 'Toggle.', 'ekiline-accordion' ) }
+						label={ __( 'Toggle.', 'ekiline-collection' ) }
 						checked={ attributes.keepOpen }
 						onChange={ ( keepOpen ) =>
 							setAttributes( { keepOpen } )
 						}
-						help={__('Close previously active accordion elements.', 'ekiline-accordion')}
+						help={__('Close previously active accordion elements.', 'ekiline-collection')}
 					/>
 					</PanelBody>
 				</InspectorControls>
@@ -251,7 +270,7 @@ registerBlockType('ekiline-blocks/ekiline-accordion-item', {
 					className={ 'item-title' }
 					value={ attributes.content } // Any existing content, either from the database or an attribute default
 					onChange={ ( content ) => setAttributes( { content } ) } // Store updated content as a block attribute
-					placeholder={ __( 'Accordion Title', 'ekiline-accordion' ) } // Display this text before any content has been added by the user
+					placeholder={ __( 'Accordion Title', 'ekiline-collection' ) } // Display this text before any content has been added by the user
 				/>
 				<InnerBlocks
 					template={ CHILD_TEMPLATE }/>
