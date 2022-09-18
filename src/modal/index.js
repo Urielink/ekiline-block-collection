@@ -268,8 +268,8 @@ registerBlockType('ekiline-collection/ekiline-modal', {
 						}
 						help={
 							( attributes.modalTime > 0 )
-							? __( 'Run after page load "' + attributes.modalTime + '" milliseconds.', 'ekiline-collection' )
-							: __( '"' + attributes.modalTime + '" do nothing.', 'ekiline-collection' )
+							? __( 'Run after page load ', 'ekiline-collection' ) + attributes.modalTime + __( ' milliseconds.', 'ekiline-collection' )
+							: attributes.modalTime + __( ' do nothing.', 'ekiline-collection' )
 						}
 					/>
 

@@ -222,9 +222,10 @@ registerBlockType( 'ekiline-collection/ekiline-toast-item', {
 						}
 						help={
 							( attributes.toastTime > 0 )
-							? __( 'Run after page load "' + attributes.toastTime + '" milliseconds.', 'ekiline-collection' )
-							: __( '"' + attributes.toastTime + '" run immediately on page load.', 'ekiline-collection' )
+							? __( 'Run after page load ', 'ekiline-collection' ) + attributes.toastTime + __( ' milliseconds.', 'ekiline-collection' )
+							: attributes.toastTime + __( ' run immediately on page load.', 'ekiline-collection' )
 						}
+						min={ 0 }
 					/>
 					<ToggleControl
 						label={ __( 'Run at end of page scroll.', 'ekiline-collection' ) }

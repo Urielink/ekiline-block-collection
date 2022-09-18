@@ -82,9 +82,9 @@ const customIcon = createElement(
  */
 registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 	apiVersion: 2,
-	title: __( 'Carousel Extra', 'ekiline-collection' ),
+	title: __( 'Carousel basic', 'ekiline-collection' ),
 	icon: customIcon,
-	description: __( 'Add a carousel to your posts, choose between posts or images, colmuns and more.', 'ekiline-collection' ),
+	description: __( 'Add a non dynamic carousel to your posts, choose between posts or images.', 'ekiline-collection' ),
 	category: 'media',
 	supports: {
 		// Removes support for an HTML mode.
@@ -533,11 +533,11 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
  * @returns HTML code with message.
  */
 export function UserRemind( {slugname} ){
-	let message = __( 'Sin selecciones. ', 'ekiline-collection' );
+	let message = __( 'No category selected. ', 'ekiline-collection' );
 	let classname = 'editor-modal-route';
 	if ( slugname.length != 0){
 		let element = slugname?.map(( el ) => ( el ));
-		message = __( 'Selecciones: ', 'ekiline-collection' ) + element ;
+		message = __( 'Selected categories: ', 'ekiline-collection' ) + element ;
 		classname = classname + ' has-anchor';
 	}
 	return(
