@@ -147,7 +147,7 @@ const withAdvancedControlsBtnCollapse = createHigherOrderComponent( ( BlockEdit 
 							/>
 							{/* Posicion. */}
 							<SelectControl
-								label={ __( 'Popover  position', 'ekiline-collection' ) }
+								label={ __( 'Popover position', 'ekiline-collection' ) }
 								value={ props.attributes.addPositionLnkPopover }
 								options={ [
 									{ label: __( 'Popover position', 'ekiline-collection' ), value: 'auto' },

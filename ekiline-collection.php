@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       Ekiline Block Collection
- * Description:       HTML plugins for your project, based on Bootstrap 5.
+ * Description:       Actions and blocks based on bootstrap 5 (carousel, collapse and more). Includes Bootstrap library. Support this project to add new features and expand a customer service branch.
  * Requires at least: 5.8
  * Requires PHP:      7.0
  * Version:           0.1.0
@@ -119,3 +119,18 @@ function ekiline_collection_required_scripts() {
 }
 // add_action( 'wp_enqueue_scripts', 'ekiline_collection_required_scripts', 1 );
 
+/**
+ * Pasos para el idioma:
+ * 1) Compilar el POT del plugin:
+ * $ wp i18n make-pot ./ languages/ekiline-collection.pot
+ * Genera el archivo principal con strings declarados en cada js.
+ * 2) Crear la traduccion acorde al idioma necesario.
+ * En este caso es español y español México.
+ * $ cp languages/ekiline-collection.pot languages/ekiline-collection-es_ES.po
+ * $ cp languages/ekiline-collection-es_ES.po languages/ekiline-collection-es_MX.po
+ * 3) Se necesita software para hacer la traduccion al español.
+ * Yo ocupo Poedit.
+ * 4) Por ultimo compilar los json.
+ * $ wp i18n make-json languages/ekiline-collection-es_ES.po --no-purge
+ * $ wp i18n make-json languages/ekiline-collection-es_MX.po --no-purge
+ */
