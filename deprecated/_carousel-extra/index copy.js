@@ -46,7 +46,7 @@ import { __ } from '@wordpress/i18n';
  * Import the element creator function (React abstraction layer)
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-element/
  */
- import { createElement, renderToString } from '@wordpress/element';
+import { createElement, renderToString } from '@wordpress/element';
 const customIcon = createElement(
 	'svg',
 	{ width: 20, height: 20 },
@@ -102,11 +102,11 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		},
 		SetCatSlug: {
 			type: 'array',
-			default: '',
+			default: [],
 		},
 		SetCatIds: {
 			type: 'array',
-			default: '',
+			default: [],
 		},
 		SetAmount: {
 			type: 'number',
@@ -225,21 +225,21 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		 *
 		 * @link https://developer.wordpress.org/block-editor/how-to-guides/data-basics/2-building-a-list-of-pages/
 		 * @link https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/creating-dynamic-blocks/
-		 * @link https://wordpress.stackexchange.com/questions/352323/how-to-return-a-list-of-custom-taxonomy-terms-via-the-gutenberg-getentityrecords 
+		 * @link https://wordpress.stackexchange.com/questions/352323/how-to-return-a-list-of-custom-taxonomy-terms-via-the-gutenberg-getentityrecords
 		 *
 		 * @returns Custom component: EntriesList.
 		 */
-		function EntriesList({categories, amount, showby, sort}) {
+		function EntriesList({attributes}) {
 			// Categoria default: todas.
-			const setCats = (categories>0)?categories:[];
+			const setCats = (attributes.SetCatIds>0)?attributes.SetCatIds:[];
 			// Cantidad de entradas: 3.
-			const setAmount = (amount<=0)?'-1':amount;
+			const setAmount = (attributes.SetAmount<=0)?'-1':attributes.SetAmount;
 			// Orden: Ascendente.
 			const queryPosts = {
 				categories: setCats,
 				per_page: setAmount,
-				orderby: showby,
-				order: sort,
+				orderby: attributes.ShowPostsBy,
+				order: attributes.SortPosts,
 			}
 			const posts = useSelect(
 				select =>
@@ -435,6 +435,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 								onChange={ ( newval ) =>
 									setAttributes( { SetTime: parseInt( newval ) } )
 								}
+								min={ 0 }
 							/>
 
 							<SelectControl
@@ -451,12 +452,14 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 							/>
 
 							<TextControl
-								label={ __( 'Height in pixels, set zero to see full display height.', 'ekiline-collection' ) }
+								label={ __( 'Height in pixels.', 'ekiline-collection' ) }
 								type="number"
 								value={ attributes.SetHeight }
 								onChange={ ( newval ) =>
 									setAttributes( { SetHeight: parseInt( newval ) } )
 								}
+								min={ 0 }
+								help={ ( 0 === attributes.SetHeight ) ? __( 'Zero sets carousel at full display height.', 'ekiline-collection'  ) : '' }
 							/>
 						</PanelBody>
 					{/* fin nuevos controles  */}
@@ -465,20 +468,15 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 				{/* El bloque */}
 				{ 'posts' === attributes.ChooseType
 					&& attributes.SavePosts
-					&& (<EntriesList
-							categories={attributes.SetCatIds}
-							amount={attributes.SetAmount}
-							showby={attributes.ShowPostsBy}
-							sort={attributes.SortPosts}
-						/>)
+					&& ( <EntriesList attributes={attributes}/> )
 				}
 				{/* El recordatorio */}
-				{ 'posts' === attributes.ChooseType 
+				{ 'posts' === attributes.ChooseType
 					&& isSelected && ( <UserRemind slugname={attributes.SetCatSlug}/> )
 				}
 				{/* En caso de imagenes */}
-				{ 'images' === attributes.ChooseType 
-					&& attributes.SaveImages 
+				{ 'images' === attributes.ChooseType
+					&& attributes.SaveImages
 					&& ( <CarosuelMarkupHtml attributes={attributes} postsStored={attributes.SaveImages}/> )
 				}
 				{/* las imagenes en un arreglo */}
@@ -501,13 +499,13 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		return (
 			<div {...blockProps}>
 				{/* El bloque */}
-				{ 'posts' === attributes.ChooseType 
-					&& attributes.SavePosts 
+				{ 'posts' === attributes.ChooseType
+					&& attributes.SavePosts
 					&& ( <CarosuelMarkupHtml attributes={attributes} postsStored={attributes.SavePosts}/> )
 				}
 				{/* En caso de imagenes */}
-				{ 'images' === attributes.ChooseType 
-					&& attributes.SaveImages 
+				{ 'images' === attributes.ChooseType
+					&& attributes.SaveImages
 					&& ( <CarosuelMarkupHtml attributes={attributes} postsStored={attributes.SaveImages}/> )
 				}
 			</div>
@@ -550,7 +548,7 @@ export function UserRemind( {slugname} ){
 
 /**
  * Transformo una cadena id por nombre.
- * Crear nuevo array de categorias por ID. 
+ * Crear nuevo array de categorias por ID.
  * @param {*} nombres slugs (url) de cada categoria.
  * @param {*} matriz grupo de categorias existentes.
  * @param {*} devolucion nombre de dato que buscas obtener, en este caso IDs.
@@ -632,28 +630,42 @@ function datoEntradaExtracto(extracto){
  * Marcado de carrusel, editor + front.
  */
 export function CarosuelMarkupHtml({postsStored, attributes}){
-	const setCarouselId = attributes.anchor + 'block';
+	const carId = attributes.anchor + 'block';
+	const carCol = ( 1 < attributes.SetColumns ) ? ' carousel-multiple x' + attributes.SetColumns : '';
+	const carAni = ( attributes.SetAnimation ) ? ' carousel-' + attributes.SetAnimation : '';
+	const carStr = ( attributes.SetAuto ) ? 'carousel' : null;
+	// Reglas CSS inline.
+	const min_height = ( 0 !== attributes.SetHeight ) ? attributes.SetHeight + 'px' : '100vh';
+
 	return (
-		<div id={setCarouselId} className='carousel slide' data-bs-ride='false'>
-			<div class='carousel-indicators'>
-				{ postsStored?.map( (post,index) => (
-						<button
-							key={post.id}
-							type='button'
-							data-bs-target={'#'+setCarouselId}
-							data-bs-slide-to={index}
-							className={(index === 0)?'active':null}
-							aria-current={(index === 0)?true:null}
-							aria-label={'Slide '+(index + 1)}
-						></button>
-				) ) }
-			</div>
+		<div id={carId}
+			className={'carousel slide' + carCol + carAni}
+			data-bs-ride={carStr}
+			data-bs-interval={attributes.SetTime}
+			style={{min_height}}>
+
+			{attributes.AddIndicators && 
+				<div class='carousel-indicators'>
+					{ postsStored?.map( (post,index) => (
+							<button
+								key={post.id}
+								type='button'
+								data-bs-target={'#'+carId}
+								data-bs-slide-to={index}
+								className={(index === 0)?'active':null}
+								aria-current={(index === 0)?true:null}
+								aria-label={'Slide '+(index + 1)}
+							></button>
+					) ) }
+				</div>
+			}
+
 			<div className={'carousel-inner'}>
 				{ postsStored?.map( (post, index) => (
-					<div className={(index===0?'carousel-item active':'carousel-item')} key={ post.post_id }>
+					<div className={(index===0?'carousel-item active':'carousel-item')} key={ post.post_id } style={{min_height}}>
 						{/* Traer imagenes de cada entrada */}
-						{ (post.post_thumbnail_url) 
-							? <img className='d-block w-100' src={ post.post_thumbnail_url } alt={ (post.post_thumbnail_alt) ? post.post_thumbnail_alt:null } /> 
+						{ (post.post_thumbnail_url)
+							? <img className='d-block w-100' src={ post.post_thumbnail_url } alt={ (post.post_thumbnail_alt) ? post.post_thumbnail_alt:null } />
 							: null }
 						<div class='carousel-caption d-none d-md-block'>
 							<a className='h5' href={ post.post_permalink } title={ decodeEntities( post.post_title ) }>
@@ -665,14 +677,20 @@ export function CarosuelMarkupHtml({postsStored, attributes}){
 					</div>
 				)) }
 			</div>
-			<button class='carousel-control-prev' type='button' data-bs-target={(setCarouselId)?'#'+setCarouselId:null} data-bs-slide='prev'>
-				<span class='carousel-control-prev-icon' aria-hidden='true'></span>
-				<span class='visually-hidden'>Previous</span>
-			</button>
-			<button class='carousel-control-next' type='button' data-bs-target={(setCarouselId)?'#'+setCarouselId:null} data-bs-slide='next'>
-				<span class='carousel-control-next-icon' aria-hidden='true'></span>
-				<span class='visually-hidden'>Next</span>
-			</button>
+
+			{attributes.AddControls && (
+				<div>
+					<button class='carousel-control-prev' type='button' data-bs-target={(carId)?'#'+carId:null} data-bs-slide='prev'>
+						<span class='carousel-control-prev-icon' aria-hidden='true'></span>
+						<span class='visually-hidden'>Previous</span>
+					</button>
+					<button class='carousel-control-next' type='button' data-bs-target={(carId)?'#'+carId:null} data-bs-slide='next'>
+						<span class='carousel-control-next-icon' aria-hidden='true'></span>
+						<span class='visually-hidden'>Next</span>
+					</button>
+				</div>
+			)}
+
 		</div>
 	);
 }

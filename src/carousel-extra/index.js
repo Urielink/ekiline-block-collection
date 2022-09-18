@@ -46,7 +46,7 @@ import { __ } from '@wordpress/i18n';
  * Import the element creator function (React abstraction layer)
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-element/
  */
- import { createElement, renderToString } from '@wordpress/element';
+import { createElement, renderToString } from '@wordpress/element';
 const customIcon = createElement(
 	'svg',
 	{ width: 20, height: 20 },
@@ -435,6 +435,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 								onChange={ ( newval ) =>
 									setAttributes( { SetTime: parseInt( newval ) } )
 								}
+								min={ 0 }
 							/>
 
 							<SelectControl
@@ -451,12 +452,14 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 							/>
 
 							<TextControl
-								label={ __( 'Height in pixels, set zero to see full display height.', 'ekiline-collection' ) }
+								label={ __( 'Height in pixels.', 'ekiline-collection' ) }
 								type="number"
 								value={ attributes.SetHeight }
 								onChange={ ( newval ) =>
 									setAttributes( { SetHeight: parseInt( newval ) } )
 								}
+								min={ 0 }
+								help={ ( 0 === attributes.SetHeight ) ? __( 'Zero sets carousel at full display height.', 'ekiline-collection'  ) : '' }
 							/>
 						</PanelBody>
 					{/* fin nuevos controles  */}
@@ -627,25 +630,39 @@ function datoEntradaExtracto(extracto){
  * Marcado de carrusel, editor + front.
  */
 export function CarosuelMarkupHtml({postsStored, attributes}){
-	const setCarouselId = attributes.anchor + 'block';
+	const carId = attributes.anchor + 'block';
+	const carCol = ( 1 < attributes.SetColumns ) ? ' carousel-multiple x' + attributes.SetColumns : '';
+	const carAni = ( attributes.SetAnimation ) ? ' carousel-' + attributes.SetAnimation : '';
+	const carStr = ( attributes.SetAuto ) ? 'carousel' : null;
+	// Reglas CSS inline.
+	const min_height = ( 0 !== attributes.SetHeight ) ? attributes.SetHeight + 'px' : '100vh';
+
 	return (
-		<div id={setCarouselId} className='carousel slide' data-bs-ride='false'>
-			<div class='carousel-indicators'>
-				{ postsStored?.map( (post,index) => (
-						<button
-							key={post.id}
-							type='button'
-							data-bs-target={'#'+setCarouselId}
-							data-bs-slide-to={index}
-							className={(index === 0)?'active':null}
-							aria-current={(index === 0)?true:null}
-							aria-label={'Slide '+(index + 1)}
-						></button>
-				) ) }
-			</div>
+		<div id={carId}
+			className={'carousel slide' + carCol + carAni}
+			data-bs-ride={carStr}
+			data-bs-interval={attributes.SetTime}
+			style={{min_height}}>
+
+			{attributes.AddIndicators && 
+				<div class='carousel-indicators'>
+					{ postsStored?.map( (post,index) => (
+							<button
+								key={post.id}
+								type='button'
+								data-bs-target={'#'+carId}
+								data-bs-slide-to={index}
+								className={(index === 0)?'active':null}
+								aria-current={(index === 0)?true:null}
+								aria-label={'Slide '+(index + 1)}
+							></button>
+					) ) }
+				</div>
+			}
+
 			<div className={'carousel-inner'}>
 				{ postsStored?.map( (post, index) => (
-					<div className={(index===0?'carousel-item active':'carousel-item')} key={ post.post_id }>
+					<div className={(index===0?'carousel-item active':'carousel-item')} key={ post.post_id } style={{min_height}}>
 						{/* Traer imagenes de cada entrada */}
 						{ (post.post_thumbnail_url)
 							? <img className='d-block w-100' src={ post.post_thumbnail_url } alt={ (post.post_thumbnail_alt) ? post.post_thumbnail_alt:null } />
@@ -660,14 +677,20 @@ export function CarosuelMarkupHtml({postsStored, attributes}){
 					</div>
 				)) }
 			</div>
-			<button class='carousel-control-prev' type='button' data-bs-target={(setCarouselId)?'#'+setCarouselId:null} data-bs-slide='prev'>
-				<span class='carousel-control-prev-icon' aria-hidden='true'></span>
-				<span class='visually-hidden'>Previous</span>
-			</button>
-			<button class='carousel-control-next' type='button' data-bs-target={(setCarouselId)?'#'+setCarouselId:null} data-bs-slide='next'>
-				<span class='carousel-control-next-icon' aria-hidden='true'></span>
-				<span class='visually-hidden'>Next</span>
-			</button>
+
+			{attributes.AddControls && (
+				<div>
+					<button class='carousel-control-prev' type='button' data-bs-target={(carId)?'#'+carId:null} data-bs-slide='prev'>
+						<span class='carousel-control-prev-icon' aria-hidden='true'></span>
+						<span class='visually-hidden'>Previous</span>
+					</button>
+					<button class='carousel-control-next' type='button' data-bs-target={(carId)?'#'+carId:null} data-bs-slide='next'>
+						<span class='carousel-control-next-icon' aria-hidden='true'></span>
+						<span class='visually-hidden'>Next</span>
+					</button>
+				</div>
+			)}
+
 		</div>
 	);
 }

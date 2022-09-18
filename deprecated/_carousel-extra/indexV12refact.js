@@ -102,11 +102,11 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		},
 		SetCatSlug: {
 			type: 'array',
-			default: '',
+			default: [],
 		},
 		SetCatIds: {
 			type: 'array',
-			default: '',
+			default: [],
 		},
 		SetAmount: {
 			type: 'number',
@@ -225,21 +225,21 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		 *
 		 * @link https://developer.wordpress.org/block-editor/how-to-guides/data-basics/2-building-a-list-of-pages/
 		 * @link https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/creating-dynamic-blocks/
-		 * @link https://wordpress.stackexchange.com/questions/352323/how-to-return-a-list-of-custom-taxonomy-terms-via-the-gutenberg-getentityrecords 
+		 * @link https://wordpress.stackexchange.com/questions/352323/how-to-return-a-list-of-custom-taxonomy-terms-via-the-gutenberg-getentityrecords
 		 *
 		 * @returns Custom component: EntriesList.
 		 */
-		function EntriesList({categories, amount, showby, sort}) {
+		function EntriesList({attributes}) {
 			// Categoria default: todas.
-			const setCats = (categories>0)?categories:[];
+			const setCats = (attributes.SetCatIds>0)?attributes.SetCatIds:[];
 			// Cantidad de entradas: 3.
-			const setAmount = (amount<=0)?'-1':amount;
+			const setAmount = (attributes.SetAmount<=0)?'-1':attributes.SetAmount;
 			// Orden: Ascendente.
 			const queryPosts = {
 				categories: setCats,
 				per_page: setAmount,
-				orderby: showby,
-				order: sort,
+				orderby: attributes.ShowPostsBy,
+				order: attributes.SortPosts,
 			}
 			const posts = useSelect(
 				select =>
@@ -465,20 +465,15 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 				{/* El bloque */}
 				{ 'posts' === attributes.ChooseType
 					&& attributes.SavePosts
-					&& (<EntriesList
-							categories={attributes.SetCatIds}
-							amount={attributes.SetAmount}
-							showby={attributes.ShowPostsBy}
-							sort={attributes.SortPosts}
-						/>)
+					&& ( <EntriesList attributes={attributes}/> )
 				}
 				{/* El recordatorio */}
-				{ 'posts' === attributes.ChooseType 
+				{ 'posts' === attributes.ChooseType
 					&& isSelected && ( <UserRemind slugname={attributes.SetCatSlug}/> )
 				}
 				{/* En caso de imagenes */}
-				{ 'images' === attributes.ChooseType 
-					&& attributes.SaveImages 
+				{ 'images' === attributes.ChooseType
+					&& attributes.SaveImages
 					&& ( <CarosuelMarkupHtml attributes={attributes} postsStored={attributes.SaveImages}/> )
 				}
 				{/* las imagenes en un arreglo */}
@@ -501,13 +496,13 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		return (
 			<div {...blockProps}>
 				{/* El bloque */}
-				{ 'posts' === attributes.ChooseType 
-					&& attributes.SavePosts 
+				{ 'posts' === attributes.ChooseType
+					&& attributes.SavePosts
 					&& ( <CarosuelMarkupHtml attributes={attributes} postsStored={attributes.SavePosts}/> )
 				}
 				{/* En caso de imagenes */}
-				{ 'images' === attributes.ChooseType 
-					&& attributes.SaveImages 
+				{ 'images' === attributes.ChooseType
+					&& attributes.SaveImages
 					&& ( <CarosuelMarkupHtml attributes={attributes} postsStored={attributes.SaveImages}/> )
 				}
 			</div>
@@ -550,7 +545,7 @@ export function UserRemind( {slugname} ){
 
 /**
  * Transformo una cadena id por nombre.
- * Crear nuevo array de categorias por ID. 
+ * Crear nuevo array de categorias por ID.
  * @param {*} nombres slugs (url) de cada categoria.
  * @param {*} matriz grupo de categorias existentes.
  * @param {*} devolucion nombre de dato que buscas obtener, en este caso IDs.
@@ -652,8 +647,8 @@ export function CarosuelMarkupHtml({postsStored, attributes}){
 				{ postsStored?.map( (post, index) => (
 					<div className={(index===0?'carousel-item active':'carousel-item')} key={ post.post_id }>
 						{/* Traer imagenes de cada entrada */}
-						{ (post.post_thumbnail_url) 
-							? <img className='d-block w-100' src={ post.post_thumbnail_url } alt={ (post.post_thumbnail_alt) ? post.post_thumbnail_alt:null } /> 
+						{ (post.post_thumbnail_url)
+							? <img className='d-block w-100' src={ post.post_thumbnail_url } alt={ (post.post_thumbnail_alt) ? post.post_thumbnail_alt:null } />
 							: null }
 						<div class='carousel-caption d-none d-md-block'>
 							<a className='h5' href={ post.post_permalink } title={ decodeEntities( post.post_title ) }>
