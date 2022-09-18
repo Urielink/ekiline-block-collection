@@ -5,27 +5,27 @@
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './editor.scss';
+import './editor.scss'
 
 /**
  * Internal dependencies
  */
 // import './collection/index';
-import './accordion/index';
-import './collapse/index';
-import './popovers/index';
-import './progress/index';
-import './toast/index';
-import './tabs/index';
-import './modal/index';
-import './carousel/index';
-import './carousel-extra/index';
+import './accordion/index'
+import './collapse/index'
+import './popovers/index'
+import './progress/index'
+import './toast/index'
+import './tabs/index'
+import './modal/index'
+import './carousel/index'
+import './carousel-extra/index'
 
 /**
  * Incorporar bloques a coleccion.
  */
-import { registerBlockCollection } from '@wordpress/blocks';
-registerBlockCollection( 'ekiline-collection', {
-    title: 'Ekiline Collection',
-    // icon: customIcon,
-} );
+import { registerBlockCollection } from '@wordpress/blocks'
+registerBlockCollection('ekiline-collection', {
+  title: 'Ekiline Collection'
+  // icon: customIcon,
+})
