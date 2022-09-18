@@ -7,8 +7,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-09-18T22:45:27+00:00\n"
-"PO-Revision-Date: 2022-09-18 17:51-0500\n"
+"POT-Creation-Date: 2022-09-18T23:15:39+00:00\n"
+"PO-Revision-Date: 2022-09-18 18:16-0500\n"
 "X-Generator: Poedit 1.8.12\n"
 "X-Domain: ekiline-collection\n"
 "Last-Translator: \n"
@@ -20,8 +20,8 @@ msgid "Ekiline Block Collection"
 msgstr "Ekiline colección de bloques"
 
 #. Description of the plugin
-msgid "HTML plugins for your project, based on Bootstrap 5."
-msgstr "Plugins HTML para tu proyecto, basados en Bootstrap 5."
+msgid "Actions and blocks based on bootstrap 5 (carousel, collapse and more). Includes Bootstrap library. Support this project to add new features and expand a customer service branch."
+msgstr "Acciones y bloques basados en bootstrap 5 (carrusel, colapso y más). Incluye la biblioteca Bootstrap. Apoye este proyecto para añadir nuevas características y ampliar una rama de servicio al cliente."
 
 #. Author of the plugin
 msgid "Uri Lazcano (Urielink)"
