@@ -1,7 +1,14 @@
 <?php
 /**
+ * Dynamic render and scripts for blocks
+ *
+ * @package ekiline-collection
+ */
+
+/**
  * Buscar un bloque y eliminarlo del loop de bloques en el contenido.
  *
+ * @param array $content the content.
  * @return array $content contenido del loop.
  *
  * @link https://developer.wordpress.org/reference/functions/serialize_blocks/.
@@ -13,7 +20,7 @@ function remove_blocks( $content ) {
 	$find_block = 'ekiline-collection/ekiline-modal';
 
 	// Aplicar en publicacion en frontend y solo que tenga el bloque.
-	if ( !is_admin() && is_singular() && has_block( $find_block ) ){
+	if ( ! is_admin() && is_singular() && has_block( $find_block ) ) {
 		// Analizar bloques existentes.
 		$blocks = parse_blocks( get_the_content() );
 		$output = '';
@@ -30,17 +37,17 @@ function remove_blocks( $content ) {
 	}
 	return $content;
 }
-add_filter( 'the_content', 'remove_blocks');
-
+add_filter( 'the_content', 'remove_blocks' );
 
 /**
- * Modal.
+ * Modal. Sin argumentos.
+ * 
  * Prueba, intentar mover el contenido de un bloque al final de la pagina con PHP.
- * https://developer.wordpress.org/reference/functions/parse_blocks/
+ * link https://developer.wordpress.org/reference/functions/parse_blocks/
  * Prueba render block cambiar contenido tampoco.
- * @https://developer.wordpress.org/reference/hooks/render_block/
+ * link https://developer.wordpress.org/reference/hooks/render_block/
  * Otra prueba.
- * https://florianbrinkmann.com/en/display-specific-gutenberg-blocks-of-a-post-outside-of-the-post-content-in-the-theme-5620/
+ * link https://florianbrinkmann.com/en/display-specific-gutenberg-blocks-of-a-post-outside-of-the-post-content-in-the-theme-5620/
  * Falta extender esta funcion para los widgets.
  */
 function ekiline_block_modal_find_and_move() {
@@ -49,11 +56,11 @@ function ekiline_block_modal_find_and_move() {
 	$find_block = 'ekiline-collection/ekiline-modal';
 
 	// Aplicar en publicacion en frontend y solo que tenga el bloque.
-	if ( !is_admin() && is_singular() && has_block( $find_block ) ){
+	if ( ! is_admin() && is_singular() && has_block( $find_block ) ) {
 
 		// Remover filtro (remove_blocks) para leer y rescatar dato.
-		if ( has_filter( 'the_content', 'remove_blocks' ) ){
-			remove_filter( 'the_content', 'remove_blocks');
+		if ( has_filter( 'the_content', 'remove_blocks' ) ) {
+			remove_filter( 'the_content', 'remove_blocks' );
 		}
 
 		// Analizar bloques existentes.
@@ -74,14 +81,13 @@ add_action( 'wp_footer', 'ekiline_block_modal_find_and_move', 0 );
  *
  * @link https://developer.wordpress.org/reference/functions/wp_script_is/
  */
-
 function ekiline_block_modal_inline_script() {
 	// Condición para mostrar js en front.
-	if ( !is_admin() && is_singular() && ! has_block( 'ekiline-collection/ekiline-modal' ) ) {
+	if ( ! is_admin() && is_singular() && ! has_block( 'ekiline-collection/ekiline-modal' ) ) {
 		return;
 	}
 	// Si existe Ekiline Theme, apoyar de su manejador, o ocupar nuevo manejador.
-	$script_handle = ( wp_script_is( 'ekiline-layout', 'enqueued' ) ) ? 'ekiline-layout' : 'ekiline-collection-inline' ;
+	$script_handle = ( wp_script_is( 'ekiline-layout', 'enqueued' ) ) ? 'ekiline-layout' : 'ekiline-collection-inline';
 	wp_add_inline_script( $script_handle, ekiline_block_modal_scripts_code(), 'after' );
 }
 add_action( 'wp_enqueue_scripts', 'ekiline_block_modal_inline_script', 100 );
@@ -91,24 +97,24 @@ add_action( 'wp_enqueue_scripts', 'ekiline_block_modal_inline_script', 100 );
  * Afecta al marcado de los banners, dependen de la clase css .adsbygoogle.
  */
 function ekiline_block_modal_scripts_code() {
-$code = '
+	$code = '
 // Cerrar una ventana modal si está abierta.
-function ekiline_close_modal(){
+function ekiline_close_modal() {
 	// Bucar un modal abierto.
 	const ventanasAbiertas = document.querySelectorAll(\'.modal.show\');
 	// Si existe cerrar con click.
-	if(0!==ventanasAbiertas.length){
-		ventanasAbiertas.forEach(function(el){
+	if(0!==ventanasAbiertas.length) {
+		ventanasAbiertas.forEach(function(el) {
 			el.click();
 		});
 	}
 }
 // Abrir un modal programado.
-function ekiline_launch_modal(){
+function ekiline_launch_modal() {
 	// Bucar un modal programado.
 	const modalProgramado = document.querySelectorAll(\'[data-ek-time]\');
 	// Si existe ejecutar.
-	if(0!==modalProgramado.length){
+	if(0!==modalProgramado.length) {
 		modalProgramado.forEach(function (modalItem) {
 			// Modal programado.
 			const nuevoModal = new bootstrap.Modal(modalItem, {});
@@ -129,5 +135,5 @@ function ekiline_launch_modal(){
 }
 ekiline_launch_modal();
 ';
-return $code;
+	return $code;
 }

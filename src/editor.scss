@@ -30,6 +30,8 @@
 	border-bottom: 1px solid #c8c8c8;
 }
 
+
+
 /* Collapse Styles */
 
 .wp-block-ekiline-collection-ekiline-collapse {
@@ -185,6 +187,15 @@
 
 /* tabs */
 
+.wp-block-ekiline-collection-ekiline-tabs {
+	border: 1px dashed #c8c8c8;
+	border-radius: 2px !important;
+}
+
+.wp-block-ekiline-collection-ekiline-tabs.is-selected,
+.wp-block-ekiline-collection-ekiline-tabs.has-child-selected {
+	border: 1px solid #000000;
+}
 
 .wp-block-ekiline-collection-ekiline-tabs.tabs-wrapper.wp-block,
 .tabs-wrapper.wp-block {
@@ -192,7 +203,7 @@
 	margin-top: initial;
 }
 
-.tabs-wrapper.wp-block, .tabs-wrapper .wp-block {
+.tabs-wrapper .wp-block .wp-block:not(.tabs-navbar,.tabs-container, .tab-content) {
 	max-width: 100% !important;
 	margin-top: 0px !important;
 	margin-bottom: 5px !important;
@@ -226,20 +237,12 @@
 	background-color: #ffffff;
 	border-radius: 0px 0px 2px 0px;
 	padding: 10px 20px 20px;
+	// margin-left: 10px;
+	// margin-right: 10px;
 }
 
-.tabs-wrapper .tabs-navbar .is-selected>.tab-link,
-.tabs-wrapper .tab-content.has-child-selected {
-	border-top: 1px solid #000000;
-	border-right: 1px solid #000000;
-	border-bottom: 1px solid #000000;
-	border-left: 1px solid #000000;
-	border-radius: 2px;
-}
 
 /** Modal **/
-
-
 .wp-block-ekiline-collection-ekiline-modal {
 	border: 1px dashed #c8c8c8;
 	border-radius: 2px !important;
@@ -278,4 +281,13 @@
 .editor-modal-route pre{
 	margin-bottom: 0px !important;
 	padding: 10px;
+}
+
+/* Carousel Styles */
+
+.wp-block-ekiline-collection-ekiline-carousel,
+.wp-block-ekiline-collection-ekiline-carousel-extra {
+	border-radius: 2px !important;
+	padding: 1px;
+	background-color: #c8c8c8;
 }

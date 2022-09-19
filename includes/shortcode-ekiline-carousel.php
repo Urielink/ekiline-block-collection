@@ -4,7 +4,7 @@
  *
  * Eventually, some of the functionality here could be replaced by core features
  *
- * @package ekiline
+ * @package ekiline-collection
  */
 
 /**
@@ -105,8 +105,7 @@ function ekiline_carousel_posts( $ppp = 3, $cat = array(), $findblock = null, $o
 			$new_excerpt = '';
 			if ( strpos( get_the_content(), '<!--more-->' ) ) {
 				$new_excerpt = get_the_content();
-			}
-			else {
+			} else {
 				$new_excerpt = wp_trim_words( get_the_content(), 55, '...' );
 			}
 
@@ -114,7 +113,7 @@ function ekiline_carousel_posts( $ppp = 3, $cat = array(), $findblock = null, $o
 			$info['title']   = get_the_title();
 			$info['plink']   = get_the_permalink();
 			$info['content'] = get_the_content();
-			$info['excerpt'] = ( has_excerpt() )?get_the_excerpt():$new_excerpt;
+			$info['excerpt'] = ( has_excerpt() ) ? get_the_excerpt() : $new_excerpt;
 
 			if ( has_post_thumbnail() ) {
 				$thumb_id        = get_post_thumbnail_id();
@@ -157,6 +156,9 @@ function ekiline_carousel_posts( $ppp = 3, $cat = array(), $findblock = null, $o
  * @link ref: https://developer.wordpress.org/reference/functions/wp_get_attachment_image_src/
  * @link ref: https://developer.wordpress.org/reference/functions/get_post_mime_type/
  *
+ * 05-03-22: adicion de videos en el carrusel.
+ * $info['image']   = wp_get_attachment_image_src( $image, 'full', true )[0]; // seleccion especifica url de imagen.
+ * 
  * @param array $ids image ids.
  * @return array images data.
  */
@@ -166,16 +168,14 @@ function ekiline_carousel_images( $ids = array() ) {
 	}
 	$carousel = array();
 	foreach ( $ids as $index => $image ) {
-		$info            = array();
-		$info['title']   = get_the_title( $image );
-		// 05-03-22: adicion de videos en el carrusel.
-		// $info['image']   = wp_get_attachment_image_src( $image, 'full', true )[0]; // seleccion especifica url de imagen.
-		$info['image']   = wp_get_attachment_url( $image ); // seleccion general de url de attachment.
-		$info['mimetype']= get_post_mime_type($image); // conocer tipo de archivo llamado.
-		$info['alt']     = get_post_meta( $image, '_wp_attachment_image_alt', true );
-		$info['excerpt'] = get_post( $image )->post_excerpt; // Caption.
-		$info['content'] = get_post( $image )->post_content; // Description.
-		$carousel[]      = $info;
+		$info             = array();
+		$info['title']    = get_the_title( $image );
+		$info['image']    = wp_get_attachment_url( $image ); // seleccion general de url de attachment.
+		$info['mimetype'] = get_post_mime_type( $image ); // conocer tipo de archivo llamado.
+		$info['alt']      = get_post_meta( $image, '_wp_attachment_image_alt', true );
+		$info['excerpt']  = get_post( $image )->post_excerpt; // Caption.
+		$info['content']  = get_post( $image )->post_content; // Description.
+		$carousel[]       = $info;
 	}
 	return $carousel;
 }
@@ -192,6 +192,7 @@ function ekiline_carousel_images( $ids = array() ) {
  * @param string $auto opcion, no iniciar carrusel = false.
  * @param string $time opcion, milisegundos para las transiciones del carrusel = 5000.
  * @param string $animation opcion, = fade, vertical.
+ * @param string $height opcion, = altura 0 a 480.
  */
 function ekiline_carousel_html( $carousel, $columns, $control, $indicators, $auto, $time, $animation, $height ) {
 
@@ -200,9 +201,9 @@ function ekiline_carousel_html( $carousel, $columns, $control, $indicators, $aut
 		$auto      = ( 'false' !== $auto ) ? ' data-bs-ride="carousel"' : '';
 		$time      = ( $time ) ? ' data-bs-interval="' . $time . '"' : '';
 		$animation = ( $animation ) ? ' carousel-' . $animation : '';
-		if( null === $height ){
+		if ( null === $height ) {
 			$height = ' style="min-height:480px;"';
-		} elseif ( '0' === $height ){
+		} elseif ( '0' === $height ) {
 			$height = ' style="min-height:100vh;"';
 		} else {
 			$height = ' style="min-height:' . $height . 'px;"';
@@ -228,7 +229,7 @@ function ekiline_carousel_html( $carousel, $columns, $control, $indicators, $aut
 				<?php
 				foreach ( $carousel as $index => $slide ) {
 					$active  = ( 0 === $index ) ? ' active' : '';
-					$cap_img = ( !isset( $slide['image'] ) ) ? ' no-image' : '';
+					$cap_img = ( ! isset( $slide['image'] ) ) ? ' no-image' : '';
 					?>
 
 					<div class="carousel-item<?php echo esc_attr( $active ); ?>"<?php echo wp_kses_post( $height ); ?>>
@@ -242,7 +243,7 @@ function ekiline_carousel_html( $carousel, $columns, $control, $indicators, $aut
 							<?php if ( isset( $slide['image'] ) ) { ?>
 
 								<?php // 05-03-22: adicion de videos en el carrusel. ?>
-								<?php if ( isset( $slide['mimetype'] ) && str_contains( $slide['mimetype'], 'video') ) { ?>
+								<?php if ( isset( $slide['mimetype'] ) && str_contains( $slide['mimetype'], 'video' ) ) { ?>
 									<video class="carousel-media wp-block-cover__video-background intrinsic-ignore" autoplay="" muted="" loop="" playsinline="" controls="" src="<?php echo esc_url( $slide['image'] ); ?>" data-object-fit="cover"></video>
 								<?php } else { ?>
 									<img class="carousel-media img-fluid" src="<?php echo esc_url( $slide['image'] ); ?>" alt="<?php echo esc_html( $slide['alt'] ); ?>" title="<?php echo esc_html( $slide['title'] ); ?>" loading="lazy">

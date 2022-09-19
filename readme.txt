@@ -1,6 +1,6 @@
 === Ekiline Block Collection ===
 Contributors:      Uri Lazcano (Urielink)
-Tags:              block
+Tags:              block, collection
 Tested up to:      5.9
 Stable tag:        0.1.0
 License:           GPL-2.0-or-later
@@ -10,10 +10,8 @@ Complementos para tu sitio, basado en Bootstrap.
 
 == Description ==
 
-This is the long description. No limit, and you can use Markdown (as well as in the following sections).
+Actions and blocks based on bootstrap 5 (carousel, collapse and more). Includes Bootstrap library. Support this project to add new features and expand a customer service branch.
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
 
 == Installation ==
 

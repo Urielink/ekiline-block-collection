@@ -32,7 +32,7 @@ function ekiline_collection_ekiline_collection_block_init() {
 	// Bloque carrusel (ekiline-carousel.php).
 	ekiline_carousel_block_init();
 	// Idioma plugin para PHP.
-	load_plugin_textdomain( 'ekiline-collection', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
+	load_plugin_textdomain( 'ekiline-collection', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 	// Idioma plugin para Bloques JS.
 	wp_set_script_translations( 'ekiline-collection-ekiline-collection-editor-script', 'ekiline-collection', plugin_dir_path( __FILE__ ) . 'languages' );
 }
@@ -46,57 +46,9 @@ require EKILINE_COLLECTION_PATH . 'ekiline-toast.php';
 require EKILINE_COLLECTION_PATH . 'ekiline-modal.php';
 require EKILINE_COLLECTION_PATH . 'ekiline-tabs.php';
 
-
-/*
-* Auxiliar solo para desarrollo.
-* Para conocer la lista de bloques:
-* @ref https://developer.wordpress.org/reference/functions/get_dynamic_block_names/
-* @ref https://developer.wordpress.org/block-editor/reference-guides/core-blocks/ 
-* get_dynamic_block_names();
-*/
-
-function show_registered_blocks(){
-	// Conocer los bloques existentes.
-	$bloques = get_dynamic_block_names();
-	$lista = '';
-	foreach($bloques as $key => $bloque) {
-		$lista .= '(' . $key  . ') ' . $bloque . ( next($bloques) === true ? ', ' : '' ) ;
-	}
-	$aviso = '<div class="alert alert-success">' . $lista . '</div>';
-		echo $aviso;
-	}
-	// add_action('wp_footer','show_registered_blocks',100);
-
-
-	/**
-	 * Detectar si un bloque esta en funcionamineto en los widgets.
-	 * @link https://wordpress.stackexchange.com/questions/392493/find-if-widget-block-is-active
-	 */
-	function is_active_block_widget_wpse( $blockname ){
-		$widget_blocks = get_option( 'widget_block' );
-		foreach( (array) $widget_blocks as $widget_block ) {
-			if ( ! empty( $widget_block['content'] )
-				&& has_block( $blockname, $widget_block['content'] )
-			) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	function detectar_widget(){
-		// Funcion para detectar widget.
-		$resultado = is_active_block_widget_wpse( 'ekiline-blocks/ekiline-modal' );
-		if ( true === $resultado ){
-			echo 'widget activo';
-		}
-	}
-	// add_action( 'wp_footer', 'detectar_widget', 0 );
-
-
-
 /**
  * Scripts y estilos en el front.
+ * 
  * @link https://developer.wordpress.org/reference/functions/wp_script_is/
  */
 function ekiline_collection_required_scripts() {
@@ -107,8 +59,7 @@ function ekiline_collection_required_scripts() {
 	if ( 'Ekiline' !== $theme->name || 'Ekiline' !== $theme->parent_theme ) {
 		wp_enqueue_style( $text_domain . '-bootstrap-style', plugin_dir_url( __FILE__ ) . 'assets/css/bootstrap.min.css', array(), '5', 'all' );
 		wp_enqueue_script( $text_domain . '-bootstrap-script', plugin_dir_url( __FILE__ ) . 'assets/js/bootstrap.bundle.min.js', array(), '5', true );
-		// Si no existe el manejador 'ekiline-layout' de Ekiline Theme, crear uno nuevo.
-		wp_register_script( $text_domain . '-inline', '', array(), '', true );
+		wp_register_script( $text_domain . '-inline', '', array(), '1', true );
 		wp_enqueue_script( $text_domain . '-inline' );
 	}
 	if ( 'Ekiline' === $theme->name || 'Ekiline' === $theme->parent_theme ) {
@@ -117,20 +68,4 @@ function ekiline_collection_required_scripts() {
 		wp_dequeue_script( $text_domain . '-inline' );
 	}
 }
-// add_action( 'wp_enqueue_scripts', 'ekiline_collection_required_scripts', 1 );
-
-/**
- * Pasos para el idioma:
- * 1) Compilar el POT del plugin:
- * $ wp i18n make-pot ./ languages/ekiline-collection.pot
- * Genera el archivo principal con strings declarados en cada js.
- * 2) Crear la traduccion acorde al idioma necesario.
- * En este caso es español y español México.
- * $ cp languages/ekiline-collection.pot languages/ekiline-collection-es_ES.po
- * $ cp languages/ekiline-collection-es_ES.po languages/ekiline-collection-es_MX.po
- * 3) Se necesita software para hacer la traduccion al español.
- * Yo ocupo Poedit.
- * 4) Por ultimo compilar los json.
- * $ wp i18n make-json languages/ekiline-collection-es_ES.po --no-purge
- * $ wp i18n make-json languages/ekiline-collection-es_MX.po --no-purge
- */
+add_action( 'wp_enqueue_scripts', 'ekiline_collection_required_scripts', 1 );
