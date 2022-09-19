@@ -57,8 +57,8 @@ function ekiline_collection_required_scripts() {
 	$text_domain = 'ekiline-collection';
 
 	if ( 'Ekiline' !== $theme->name || 'Ekiline' !== $theme->parent_theme ) {
-		wp_enqueue_style( $text_domain . '-bootstrap-style', plugin_dir_url( __FILE__ ) . 'assets/css/bootstrap.min.css', array(), '5', 'all' );
-		wp_enqueue_script( $text_domain . '-bootstrap-script', plugin_dir_url( __FILE__ ) . 'assets/js/bootstrap.bundle.min.js', array(), '5', true );
+		wp_enqueue_style( $text_domain . '-bootstrap-style', plugin_dir_url( __FILE__ ) . 'includes/assets/css/bootstrap.min.css', array(), '5', 'all' );
+		wp_enqueue_script( $text_domain . '-bootstrap-script', plugin_dir_url( __FILE__ ) . 'includes/assets/js/bootstrap.bundle.min.js', array(), '5', true );
 		wp_register_script( $text_domain . '-inline', '', array(), '1', true );
 		wp_enqueue_script( $text_domain . '-inline' );
 	}
