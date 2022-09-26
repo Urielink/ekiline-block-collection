@@ -10,15 +10,15 @@
  * in the corresponding context.
  *
  * @see https://developer.wordpress.org/block-editor/tutorials/block-tutorial/applying-styles-with-stylesheets/
- * add_action( 'init', 'ekiline_carousel_block_init' )
+ * add_action( 'init', 'ekiline_collection_carousel_block_init' )
  */
-function ekiline_carousel_block_init() {
+function ekiline_collection_carousel_block_init() {
 	register_block_type(
 		'ekiline-collection/ekiline-carousel',
 		array(
 			'api_version'     => 2,
 			// Render dinamico con php.
-			'render_callback' => 'ekiline_carousel_dynamic_render_callback',
+			'render_callback' => 'ekiline_collection_carousel_dynamic_render_callback',
 			'attributes'      => [
 				// Clase css.
 				'className'     => [
@@ -95,7 +95,7 @@ function ekiline_carousel_block_init() {
  * @param array $block_attributes controls from block.
  * @param array $content the content.
  */
-function ekiline_carousel_dynamic_render_callback( $block_attributes, $content ) {
+function ekiline_collection_carousel_dynamic_render_callback( $block_attributes, $content ) {
 
 	$carousel_args = '';
 

@@ -14,7 +14,7 @@
  * @link https://developer.wordpress.org/reference/functions/serialize_blocks/.
  * @link https://developer.wordpress.org/reference/functions/parse_blocks/.
  */
-function remove_blocks( $content ) {
+function ekiline_collection_remove_blocks( $content ) {
 
 	// Idetificador de bloque.
 	$find_block = 'ekiline-collection/ekiline-modal';
@@ -37,7 +37,7 @@ function remove_blocks( $content ) {
 	}
 	return $content;
 }
-add_filter( 'the_content', 'remove_blocks' );
+add_filter( 'the_content', 'ekiline_collection_remove_blocks' );
 
 /**
  * Modal. Sin argumentos.
@@ -50,7 +50,7 @@ add_filter( 'the_content', 'remove_blocks' );
  * link https://florianbrinkmann.com/en/display-specific-gutenberg-blocks-of-a-post-outside-of-the-post-content-in-the-theme-5620/
  * Falta extender esta funcion para los widgets.
  */
-function ekiline_block_modal_find_and_move() {
+function ekiline_collection_block_modal_find_and_move() {
 
 	// Idetificador de bloque.
 	$find_block = 'ekiline-collection/ekiline-modal';
@@ -58,9 +58,9 @@ function ekiline_block_modal_find_and_move() {
 	// Aplicar en publicacion en frontend y solo que tenga el bloque.
 	if ( ! is_admin() && is_singular() && has_block( $find_block ) ) {
 
-		// Remover filtro (remove_blocks) para leer y rescatar dato.
-		if ( has_filter( 'the_content', 'remove_blocks' ) ) {
-			remove_filter( 'the_content', 'remove_blocks' );
+		// Remover filtro (ekiline_collection_remove_blocks) para leer y rescatar dato.
+		if ( has_filter( 'the_content', 'ekiline_collection_remove_blocks' ) ) {
+			remove_filter( 'the_content', 'ekiline_collection_remove_blocks' );
 		}
 
 		// Analizar bloques existentes.
@@ -74,32 +74,32 @@ function ekiline_block_modal_find_and_move() {
 		}
 	}
 }
-add_action( 'wp_footer', 'ekiline_block_modal_find_and_move', 0 );
+add_action( 'wp_footer', 'ekiline_collection_block_modal_find_and_move', 0 );
 
 /**
  * Javascript en linea para modal.
  *
  * @link https://developer.wordpress.org/reference/functions/wp_script_is/
  */
-function ekiline_block_modal_inline_script() {
+function ekiline_collection_block_modal_inline_script() {
 	// Condición para mostrar js en front.
 	if ( ! is_admin() && is_singular() && ! has_block( 'ekiline-collection/ekiline-modal' ) ) {
 		return;
 	}
 	// Si existe Ekiline Theme, apoyar de su manejador, o ocupar nuevo manejador.
 	$script_handle = ( wp_script_is( 'ekiline-layout', 'enqueued' ) ) ? 'ekiline-layout' : 'ekiline-collection-inline';
-	wp_add_inline_script( $script_handle, ekiline_block_modal_scripts_code(), 'after' );
+	wp_add_inline_script( $script_handle, ekiline_collection_block_modal_scripts_code(), 'after' );
 }
-add_action( 'wp_enqueue_scripts', 'ekiline_block_modal_inline_script', 100 );
+add_action( 'wp_enqueue_scripts', 'ekiline_collection_block_modal_inline_script', 100 );
 
 /**
  * Código JS complementario.
  * Afecta al marcado de los banners, dependen de la clase css .adsbygoogle.
  */
-function ekiline_block_modal_scripts_code() {
+function ekiline_collection_block_modal_scripts_code() {
 	$code = '
 // Cerrar una ventana modal si está abierta.
-function ekiline_close_modal() {
+function ekiline_collection_js_close_modal() {
 	// Bucar un modal abierto.
 	const ventanasAbiertas = document.querySelectorAll(\'.modal.show\');
 	// Si existe cerrar con click.
@@ -110,7 +110,7 @@ function ekiline_close_modal() {
 	}
 }
 // Abrir un modal programado.
-function ekiline_launch_modal() {
+function ekiline_collection_js_launch_modal() {
 	// Bucar un modal programado.
 	const modalProgramado = document.querySelectorAll(\'[data-ek-time]\');
 	// Si existe ejecutar.
@@ -123,7 +123,7 @@ function ekiline_launch_modal() {
 			setTimeout(
 				function() {
 					// Si existe un modal abierto, cerrar.
-					ekiline_close_modal();
+					ekiline_collection_js_close_modal();
 					// Despues de cerrar, mostrar.
 					nuevoModal.show();
 				},
@@ -133,7 +133,20 @@ function ekiline_launch_modal() {
 		});
 	}
 }
-ekiline_launch_modal();
+ekiline_collection_js_launch_modal();
+
+// Cambiar el tamaño de modal.
+function ekiline_collection_js_modal_behavior(){
+	var modalResizeBtn = document.querySelector(\'.modal-resize\');
+	if ( modalResizeBtn ){
+		modalResizeBtn.addEventListener(\'click\', function() {
+			var modalOpen = document.querySelector(\'.modal-dialog\');
+			modalOpen.classList.toggle(\'modal-fullscreen\');
+			this.firstElementChild.classList.toggle(\'text-success\');
+		}, false);
+	}
+}
+ekiline_collection_js_modal_behavior();
 ';
 	return $code;
 }

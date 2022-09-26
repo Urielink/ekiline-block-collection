@@ -30,7 +30,7 @@ function ekiline_collection_ekiline_collection_block_init() {
 	// Script de coleccion.
 	register_block_type( __DIR__ . '/build' );
 	// Bloque carrusel (ekiline-carousel.php).
-	ekiline_carousel_block_init();
+	ekiline_collection_carousel_block_init();
 	// Idioma plugin para PHP.
 	load_plugin_textdomain( 'ekiline-collection', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 	// Idioma plugin para Bloques JS.
@@ -40,15 +40,15 @@ add_action( 'init', 'ekiline_collection_ekiline_collection_block_init' );
 
 // Funciones complementarias.
 define( 'EKILINE_COLLECTION_PATH', plugin_dir_path( __FILE__ ) . 'includes/' );
-require EKILINE_COLLECTION_PATH . 'ekiline-carousel.php';
-require EKILINE_COLLECTION_PATH . 'shortcode-ekiline-carousel.php';
-require EKILINE_COLLECTION_PATH . 'ekiline-toast.php';
-require EKILINE_COLLECTION_PATH . 'ekiline-modal.php';
-require EKILINE_COLLECTION_PATH . 'ekiline-tabs.php';
+require EKILINE_COLLECTION_PATH . 'ekiline-collection-carousel.php';
+require EKILINE_COLLECTION_PATH . 'ekiline-collection-shortcode-carousel.php';
+require EKILINE_COLLECTION_PATH . 'ekiline-collection-toast.php';
+require EKILINE_COLLECTION_PATH . 'ekiline-collection-modal.php';
+require EKILINE_COLLECTION_PATH . 'ekiline-collection-tabs.php';
 
 /**
  * Scripts y estilos en el front.
- * 
+ *
  * @link https://developer.wordpress.org/reference/functions/wp_script_is/
  */
 function ekiline_collection_required_scripts() {

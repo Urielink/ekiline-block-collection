@@ -26,7 +26,7 @@
  * @param array $atts Shortcode attributes. Default empty.
  * @return string Full html.
  */
-function ekiline_shortcode_carousel( $atts = [] ) {
+function ekiline_collection_shortcode_carousel( $atts = [] ) {
 
 	$atts = shortcode_atts(
 		array(
@@ -51,20 +51,20 @@ function ekiline_shortcode_carousel( $atts = [] ) {
 	// Obtener ids.
 	$id_arr = explode( ',', $atts['id'] );
 	// Default posts.
-	$carousel = ekiline_carousel_posts( $atts['amount'], $id_arr, $atts['block'], $atts['orderby'], $atts['mixed'] );
+	$carousel = ekiline_collection_carousel_posts( $atts['amount'], $id_arr, $atts['block'], $atts['orderby'], $atts['mixed'] );
 	// Condicion para images.
 	if ( 'images' === $atts['type'] ) {
-		$carousel = ekiline_carousel_images( $id_arr );
+		$carousel = ekiline_collection_carousel_images( $id_arr );
 	}
 	// Numero de columnas.
 	$columns = ( in_array( $atts['columns'], [ '2', '3', '4', '6' ], true ) ) ? ' carousel-multiple x' . $atts['columns'] : '';
 	// Obtener HTML y combinar con funciones previas.
 	ob_start();
-	ekiline_carousel_html( $carousel, $columns, $atts['control'], $atts['indicators'], $atts['auto'], $atts['time'], $atts['animation'], $atts['height'] );
+	ekiline_collection_carousel_html( $carousel, $columns, $atts['control'], $atts['indicators'], $atts['auto'], $atts['time'], $atts['animation'], $atts['height'] );
 	return ob_get_clean();
 }
 // phpcs:ignore WPThemeReview.PluginTerritory.ForbiddenFunctions.plugin_territory_add_shortcode
-add_shortcode( 'ekiline-carousel', 'ekiline_shortcode_carousel' );
+add_shortcode( 'ekiline-carousel', 'ekiline_collection_shortcode_carousel' );
 
 
 /**
@@ -80,7 +80,7 @@ add_shortcode( 'ekiline-carousel', 'ekiline_shortcode_carousel' );
  * @param string $mixed allow to show thumbnails and blocks.
  * @return array query data.
  */
-function ekiline_carousel_posts( $ppp = 3, $cat = array(), $findblock = null, $orderby = 'date', $mixed = null ) {
+function ekiline_collection_carousel_posts( $ppp = 3, $cat = array(), $findblock = null, $orderby = 'date', $mixed = null ) {
 
 	$carousel = array();
 
@@ -162,7 +162,7 @@ function ekiline_carousel_posts( $ppp = 3, $cat = array(), $findblock = null, $o
  * @param array $ids image ids.
  * @return array images data.
  */
-function ekiline_carousel_images( $ids = array() ) {
+function ekiline_collection_carousel_images( $ids = array() ) {
 	if ( ! $ids ) {
 		return;
 	}
@@ -194,7 +194,7 @@ function ekiline_carousel_images( $ids = array() ) {
  * @param string $animation opcion, = fade, vertical.
  * @param string $height opcion, = altura 0 a 480.
  */
-function ekiline_carousel_html( $carousel, $columns, $control, $indicators, $auto, $time, $animation, $height ) {
+function ekiline_collection_carousel_html( $carousel, $columns, $control, $indicators, $auto, $time, $animation, $height ) {
 
 	if ( $carousel ) {
 		$uniq_id   = 'carousel_module_' . wp_rand( 1, 99 );

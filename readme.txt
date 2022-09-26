@@ -1,7 +1,7 @@
 === Ekiline Block Collection ===
 Contributors:      Uri Lazcano (Urielink)
 Tags:              block, collection
-Tested up to:      5.9
+Tested up to:      6.0.2
 Stable tag:        0.1.0
 License:           GPL-2.0-or-later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.txt

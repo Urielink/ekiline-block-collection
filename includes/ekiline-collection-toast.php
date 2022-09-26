@@ -11,7 +11,7 @@
  *
  * @link https://developer.wordpress.org/reference/functions/wp_script_is/
  */
-function ekiline_block_toast_inline_script() {
+function ekiline_collection_block_toast_inline_script() {
 	// Condición para mostrar js en front.
 	if ( ! is_admin() && is_singular() && ! has_block( 'ekiline-collection/ekiline-toast' ) ) {
 		return;
@@ -20,7 +20,7 @@ function ekiline_block_toast_inline_script() {
 	$script_handle = ( wp_script_is( 'ekiline-layout', 'enqueued' ) ) ? 'ekiline-layout' : 'ekiline-collection-inline';
 	wp_add_inline_script( $script_handle, ekiline_block_toast_scripts_code(), 'after' );
 }
-add_action( 'wp_enqueue_scripts', 'ekiline_block_toast_inline_script', 100 );
+add_action( 'wp_enqueue_scripts', 'ekiline_collection_block_toast_inline_script', 100 );
 
 /**
  * Código JS complementario.
@@ -28,7 +28,7 @@ add_action( 'wp_enqueue_scripts', 'ekiline_block_toast_inline_script', 100 );
 function ekiline_block_toast_scripts_code() {
 	$code = '
 // Abrir un toast programado.
-function ekiline_launch_toast(){
+function ekiline_collection_js_launch_toast(){
 	// Bucar un toast programado.
 	var toastProgramado = document.querySelectorAll(\'[data-ek-launch-time]\');
 	// Si existe ejecutar.
@@ -51,10 +51,10 @@ function ekiline_launch_toast(){
 		});
 	}
 }
-ekiline_launch_toast();
+ekiline_collection_js_launch_toast();
 
 // Abrir un toast con scroll.
-function ekiline_scroll_toast(){
+function ekiline_collection_js_scroll_toast(){
 	// Buscar un toast programado.
 	var toastScroll = document.querySelectorAll(\'.launch-scroll\');
 	// Si existe ejecutar.
@@ -69,14 +69,14 @@ function ekiline_scroll_toast(){
 				function() {
 					if( (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 200) ) {
 						nuevoToast.show();
-					} 
+					}
 				}
 			);
 
 		});
 	}
 }
-ekiline_scroll_toast();
+ekiline_collection_js_scroll_toast();
 ';
 	return $code;
 }
