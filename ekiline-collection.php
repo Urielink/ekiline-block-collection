@@ -45,6 +45,7 @@ require EKILINE_COLLECTION_PATH . 'ekiline-collection-shortcode-carousel.php';
 require EKILINE_COLLECTION_PATH . 'ekiline-collection-toast.php';
 require EKILINE_COLLECTION_PATH . 'ekiline-collection-modal.php';
 require EKILINE_COLLECTION_PATH . 'ekiline-collection-tabs.php';
+require EKILINE_COLLECTION_PATH . 'ekiline-collection-popover.php';
 
 /**
  * Scripts y estilos en el front.

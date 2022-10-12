@@ -27,6 +27,20 @@ add_action( 'wp_enqueue_scripts', 'ekiline_collection_block_toast_inline_script'
  */
 function ekiline_block_toast_scripts_code() {
 	$code = '
+function ekiline_collection_js_init_toast(item=null){
+	document.querySelectorAll(item)
+	.forEach(function (toastNode) {
+		var toast = new bootstrap.Toast(toastNode, {
+			autohide: false
+		});
+		// Dont run if .hide classname presents.
+		if (!toastNode.classList.contains(\'hide\')){
+			toast.show();
+		}
+	});
+}
+ekiline_collection_js_init_toast(\'.toast\');
+
 // Abrir un toast programado.
 function ekiline_collection_js_launch_toast(){
 	// Bucar un toast programado.
