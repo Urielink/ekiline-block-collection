@@ -10,23 +10,25 @@
  *
  * @link https://developer.wordpress.org/reference/functions/wp_script_is/
  */
-function ekiline_collection_block_tabs_inline_script() {
-	// Condición para mostrar js en front.
-	if ( ! is_admin() && is_singular() && ! has_block( 'ekiline-collection/ekiline-tabs' ) ) {
-		return;
-	}
-	// Si existe Ekiline Theme, apoyar de su manejador, o ocupar nuevo manejador.
-	$script_handle = ( wp_script_is( 'ekiline-layout', 'enqueued' ) ) ? 'ekiline-layout' : 'ekiline-collection-inline';
-	wp_add_inline_script( $script_handle, ekiline_collection_block_tabs_scripts_code(), 'after' );
+function ekiline_collection_block_tabs_inline_script()
+{
+    // Condición para mostrar js en front.
+    if (! is_admin() && is_singular() && ! has_block('ekiline-collection/ekiline-tabs')) {
+        return;
+    }
+    // Si existe Ekiline Theme, apoyar de su manejador, o ocupar nuevo manejador.
+    $script_handle = (wp_script_is('ekiline-layout', 'enqueued')) ? 'ekiline-layout' : 'ekiline-collection-inline';
+    wp_add_inline_script($script_handle, ekiline_collection_block_tabs_scripts_code(), 'after');
 }
-add_action( 'wp_enqueue_scripts', 'ekiline_collection_block_tabs_inline_script', 100 );
+add_action('wp_enqueue_scripts', 'ekiline_collection_block_tabs_inline_script', 100);
 
 /**
  * Código JS complementario.
  * Afecta al marcado de los banners, dependen de la clase css .adsbygoogle.
  */
-function ekiline_collection_block_tabs_scripts_code() {
-	$code = '
+function ekiline_collection_block_tabs_scripts_code()
+{
+    $code = '
 function ekiline_collection_js_persist_tab_select(allTabs, linkItem){
 
 	// Confirmar la existencia de tabs.
@@ -68,5 +70,5 @@ function ekiline_collection_js_persist_tab_select(allTabs, linkItem){
 }
 ekiline_collection_js_persist_tab_select(\'.tabs-wrapper\',\'[data-bs-target]\');
 ';
-	return $code;
+    return $code;
 }
