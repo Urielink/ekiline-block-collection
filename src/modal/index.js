@@ -319,7 +319,7 @@ registerBlockType('ekiline-collection/ekiline-modal', {
 				return (
 					<button
 						type="button"
-						class="modal-resize btn btn-sm btn-outline-secondary"
+						class="modal-resize btn btn-sm position-absolute bottom-0 mb-2 ms-1"
 						aria-label={__( 'play btn', 'ekiline-collection' )}>
 							<span class="dashicons dashicons-editor-expand"></span>
 					</button>
@@ -338,8 +338,8 @@ registerBlockType('ekiline-collection/ekiline-modal', {
 			>
 				<div class={dialogProps.className}>
 					<div class="modal-content">
-						<ModalGrowBtn/>
 						<InnerBlocks.Content />
+						<ModalGrowBtn/>
 					</div>
 				</div>
 

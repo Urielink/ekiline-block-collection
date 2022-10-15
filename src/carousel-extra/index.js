@@ -667,10 +667,12 @@ export function CarosuelMarkupHtml({postsStored, attributes}){
 						{ (post.post_thumbnail_url)
 							? <img className='d-block w-100' src={ post.post_thumbnail_url } alt={ (post.post_thumbnail_alt) ? post.post_thumbnail_alt:null } />
 							: null }
-						<div class='carousel-caption d-none d-md-block'>
-							<a className='h5' href={ post.post_permalink } title={ decodeEntities( post.post_title ) }>
-								{ decodeEntities( post.post_title ) }
-							</a>
+						<div class='carousel-caption'>
+							<h3>
+								<a href={ post.post_permalink } title={ decodeEntities( post.post_title ) }>
+									{ decodeEntities( post.post_title ) }
+								</a>
+							</h3>
 							{/* Traer extracto de cada entrada */}
 							<p>{post.post_excerpt}</p>
 						</div>

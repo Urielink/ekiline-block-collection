@@ -1,19 +1,45 @@
 === Ekiline Block Collection ===
-Contributors:      Uri Lazcano (Urielink)
-Tags:              block
-Tested up to:      5.9
-Stable tag:        0.1.0
+Contributors:      urielink
+Requires at least: 5.0
+Tags:              block, collection, bootstrap
+Tested up to:      6.0.2
+Requires PHP:      7.0
+Stable tag:        0.1.2
 License:           GPL-2.0-or-later
-License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+License URI:       https://www.gnu.org/licenses/license-list.html#GPLv2
+Donate link:       https://www.paypal.com/paypalme/urielink
 
-Complementos para tu sitio, basado en Bootstrap.
+Bootstrap components turned into WordPress editor blocks. Add new functionality to your project. Install and use directly in the editor.
 
 == Description ==
 
-This is the long description. No limit, and you can use Markdown (as well as in the following sections).
+== Made for those of us who love working with Bootstrap ==
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
+- **Accordion**.
+- **Collapse**.
+- **Modal**.
+- **Tabs**.
+- **Progress bar**.
+- **Pop over**.
+- **Tooltip**.
+- **Toast**.
+- **Static carousel**.
+- **Dynamic carousel**.
+
+HTML markup as well as classes and attributes have been respected to work with Bootstrap in its most recent version (5.2.X).
+CSS styles and JS scripts are included, maintaining the layout and behaviors.
+
+= Compatibility =
+Great response on new block-based themes like twenty-twenty two and the twenty-twenty one hybrid themes.
+Do you want more? Download the Ekiline theme to have more options in customizing your site.
+
+= About the author =
+The author of this plugin will be careful to keep the code as faithful to Bootstrap.
+As well as to maintain this development and incorporate new features in each new update.
+
+“I have created this plugin to provide a better web development service to my clients, from a trusted source such as WordPress.”
+Uri Lazcano.
+
 
 == Installation ==
 
@@ -45,8 +71,21 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Changelog ==
 
+= 0.1.2 =
+* Improve: Ajust css rules and js for all blocks.
+* Improve: Init for bootstrap items.
+* Update: Readme information.
+
+= 0.1.1 =
+* Update banner and icon images
+
 = 0.1.0 =
 * Release
+
+== Upgrade Notice ==
+
+Fix editor css styles for each block.
+Ready translations, English and Spanish.
 
 == Arbitrary section ==
 
