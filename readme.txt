@@ -1,6 +1,6 @@
 === Ekiline Block Collection ===
 Contributors:      urielink
-Requires at least: 5.0
+Requires at least: 5.8
 Tags:              block, collection, bootstrap
 Tested up to:      6.0.2
 Requires PHP:      7.0
