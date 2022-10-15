@@ -70,3 +70,15 @@ function ekiline_collection_required_scripts() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'ekiline_collection_required_scripts', 1 );
+
+/**
+ * Estilos de apoyo para el editor.
+ * Incorporar los estilos de bootstrap.
+ * @link https://developer.wordpress.org/reference/functions/add_editor_style/
+ */
+// if ( 'Ekiline' !== wp_get_theme()->name || 'Ekiline' !== wp_get_theme()->parent_theme ) {
+// 	$block_styles = array(
+// 		plugin_dir_url( __FILE__ ) . 'includes/assets/css/bootstrap.min.css',
+// 	);
+// 	add_editor_style( $block_styles );
+// }
