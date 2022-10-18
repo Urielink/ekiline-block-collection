@@ -4,7 +4,7 @@ Requires at least: 5.8
 Tags:              block, collection, bootstrap
 Tested up to:      6.0.2
 Requires PHP:      7.0
-Stable tag:        0.1.2
+Stable tag:        0.1.3
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/license-list.html#GPLv2
 Donate link:       https://www.paypal.com/paypalme/urielink
@@ -70,6 +70,12 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 2. This is the second screen shot
 
 == Changelog ==
+
+= 0.1.3 =
+* Improve: Added information page, admin/themes/About EBC.
+* Fix: Carousel and Carousel dynamic height styles.
+* Fix: Compatibility problem, editor gets stuck when select an image/media block.
+* Fix: Carousel static, correction when set, add or delete images.
 
 = 0.1.2 =
 * Improve: Ajust css rules and js for all blocks.

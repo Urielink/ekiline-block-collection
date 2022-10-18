@@ -263,10 +263,10 @@ ekiline_collection_transform_modal(\'.carousel-multiple\');
 /**
  * Código JS complementario, mejora el carrusel.
  */
-function ekiline_collection_block_carousel_style_code(){
+function ekiline_collection_block_carousel_style_code() {
 	$custom_css = '
 /* Carousel base */
-.carousel,.carousel-item{min-height:400px;}
+.carousel,.carousel-item{min-height:50px;}
 .carousel .carousel-item{overflow:hidden;}
 .carousel-item .carousel-media{position:absolute;top:0;left:0;right:0;bottom:0;margin:0;padding:0;width:100%;height:100%;max-width:none;max-height:none;-o-object-fit:cover;object-fit:cover;outline:none;border:none;box-shadow:none;}
 /* Carousel multiple */
@@ -342,5 +342,5 @@ function ekiline_collection_block_carousel_style_code(){
 	.col-sm-1a5,.col-xs-1a5,.col-sm-1a7,.col-xs-1a7,.col-sm-1a8,.col-xs-1a8,.col-sm-1a9,.col-xs-1a9{width:100%;width:100%;}
 }
 ';
-return $custom_css;
+	return $custom_css;
 }

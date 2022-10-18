@@ -10,13 +10,13 @@ import { useBlockProps, InspectorControls, MediaUpload, MediaUploadCheck } from 
  * Componente MediaUpload inicializacion.
  * @link https://github.com/WordPress/gutenberg/blob/trunk/packages/block-editor/src/components/media-upload/README.md
  */
-import { addFilter } from '@wordpress/hooks';
-const replaceMediaUpload = () => MediaUpload;
-addFilter(
-	'editor.MediaUpload',
-	'core/edit-post/components/media-upload/replace-media-upload',
-	replaceMediaUpload
-);
+// import { addFilter } from '@wordpress/hooks';
+// const replaceMediaUpload = () => MediaUpload;
+// addFilter(
+// 	'editor.MediaUpload',
+// 	'core/edit-post/components/media-upload/replace-media-upload',
+// 	replaceMediaUpload
+// );
 
 /**
  * Funciones personalizadas.
@@ -340,10 +340,14 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 									onSelect={ (media) => onSelectMedia(media) }
 									allowedTypes={ [ 'image', 'video' ] }
 									multiple={ true }
-									value={ attributes.SaveImages?.map(item => item.id) }
+									value={ attributes.SaveImages?.map(item => item.post_id) }
 									render={ ( { open } ) => (
 										<Button isSecondary onClick={ open }>
-											{ __( 'Add images', 'ekiline-collection' ) }
+											{/* { __( 'Add images', 'ekiline-collection' ) } */}
+											{ attributes.SaveImages.length
+												? __( 'Manage images', 'ekiline-collection' )
+												: __( 'Add images', 'ekiline-collection' ) }
+
 										</Button>
 									) }
 									gallery={ true }
@@ -635,14 +639,14 @@ export function CarosuelMarkupHtml({postsStored, attributes}){
 	const carAni = ( attributes.SetAnimation ) ? ' carousel-' + attributes.SetAnimation : '';
 	const carStr = ( attributes.SetAuto ) ? 'carousel' : null;
 	// Reglas CSS inline.
-	const min_height = ( 0 !== attributes.SetHeight ) ? attributes.SetHeight + 'px' : '100vh';
+	const min_height = { height : ( 0 !== attributes.SetHeight ) ? attributes.SetHeight + 'px' : '100vh' };
 
 	return (
 		<div id={carId}
 			className={'carousel slide' + carCol + carAni}
 			data-bs-ride={carStr}
 			data-bs-interval={attributes.SetTime}
-			style={{min_height}}>
+			style={min_height}>
 
 			{attributes.AddIndicators && 
 				<div class='carousel-indicators'>
@@ -662,7 +666,7 @@ export function CarosuelMarkupHtml({postsStored, attributes}){
 
 			<div className={'carousel-inner'}>
 				{ postsStored?.map( (post, index) => (
-					<div className={(index===0?'carousel-item active':'carousel-item')} key={ post.post_id } style={{min_height}}>
+					<div className={(index===0?'carousel-item active':'carousel-item')} key={ post.post_id } style={min_height}>
 						{/* Traer imagenes de cada entrada */}
 						{ (post.post_thumbnail_url)
 							? <img className='d-block w-100' src={ post.post_thumbnail_url } alt={ (post.post_thumbnail_alt) ? post.post_thumbnail_alt:null } />

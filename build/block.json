@@ -6,7 +6,7 @@
   "title": "Ekiline Block Collection",
   "category": "design",
   "icon": "smiley",
-  "description": "Complementos para tu sitio, basado en Bootstrap.",
+  "description": "Actions and blocks based on bootstrap 5.",
   "supports": {
     "html": false
   },

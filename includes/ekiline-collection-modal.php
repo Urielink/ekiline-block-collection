@@ -94,7 +94,7 @@ add_action( 'wp_enqueue_scripts', 'ekiline_collection_block_modal_inline_script'
 
 /**
  * Código JS complementario.
- * Afecta al marcado de los banners, dependen de la clase css .adsbygoogle.
+ * Agrega opciones al modal en el front.
  */
 function ekiline_collection_block_modal_scripts_code() {
 	$code = '
