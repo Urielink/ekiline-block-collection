@@ -12,81 +12,82 @@
  * @see https://developer.wordpress.org/block-editor/tutorials/block-tutorial/applying-styles-with-stylesheets/
  * add_action( 'init', 'ekiline_collection_carousel_block_init' )
  */
-function ekiline_collection_carousel_block_init() {
-	register_block_type(
-		'ekiline-collection/ekiline-carousel',
-		array(
-			'api_version'     => 2,
-			// Render dinamico con php.
-			'render_callback' => 'ekiline_collection_carousel_dynamic_render_callback',
-			'attributes'      => [
-				// Clase css.
-				'className'     => [
-					'type'    => 'string',
-					'default' => '',
-				],
-				// Toolbar.
-				'align'         => [
-					'type'    => 'string',
-					'default' => '',
-				],
-				// Panel de personalizacion.
-				'ChooseType'    => [
-					'type'    => 'string',
-					'default' => 'posts',
-				],
-				'SetIds'        => [
-					'type'    => 'array',
-					'default' => '',
-				],
-				'SetAmount'     => [
-					'type'    => 'number',
-					'default' => 3,
-				],
-				'SetOrderBy'    => [
-					'type'    => 'string',
-					'default' => 'date',
-				],
-				'SetColumns'    => [
-					'type'    => 'number',
-					'default' => 1,
-				],
-				'FindBlock'     => [
-					'type'    => 'string',
-					'default' => 'none',
-				],
-				'AllowMixed'    => [
-					'type'    => 'boolean',
-					'default' => false,
-				],
-				'AddControls'   => [
-					'type'    => 'boolean',
-					'default' => true,
-				],
-				'AddIndicators' => [
-					'type'    => 'boolean',
-					'default' => true,
-				],
-				'SetAuto'       => [
-					'type'    => 'boolean',
-					'default' => true,
-				],
-				'SetTime'       => [
-					'type'    => 'number',
-					'default' => '5000',
-				],
-				'SetAnimation'  => [
-					'type'    => 'string',
-					'default' => '',
-				],
-				'SetHeight'     => [
-					'type'    => 'number',
-					'default' => '480',
-				],
-			],
+function ekiline_collection_carousel_block_init()
+{
+    register_block_type(
+        'ekiline-collection/ekiline-carousel',
+        array(
+            'api_version'     => 2,
+            // Render dinamico con php.
+            'render_callback' => 'ekiline_collection_carousel_dynamic_render_callback',
+            'attributes'      => [
+                // Clase css.
+                'className'     => [
+                    'type'    => 'string',
+                    'default' => '',
+                ],
+                // Toolbar.
+                'align'         => [
+                    'type'    => 'string',
+                    'default' => '',
+                ],
+                // Panel de personalizacion.
+                'ChooseType'    => [
+                    'type'    => 'string',
+                    'default' => 'posts',
+                ],
+                'SetIds'        => [
+                    'type'    => 'array',
+                    'default' => '',
+                ],
+                'SetAmount'     => [
+                    'type'    => 'number',
+                    'default' => 3,
+                ],
+                'SetOrderBy'    => [
+                    'type'    => 'string',
+                    'default' => 'date',
+                ],
+                'SetColumns'    => [
+                    'type'    => 'number',
+                    'default' => 1,
+                ],
+                'FindBlock'     => [
+                    'type'    => 'string',
+                    'default' => 'none',
+                ],
+                'AllowMixed'    => [
+                    'type'    => 'boolean',
+                    'default' => false,
+                ],
+                'AddControls'   => [
+                    'type'    => 'boolean',
+                    'default' => true,
+                ],
+                'AddIndicators' => [
+                    'type'    => 'boolean',
+                    'default' => true,
+                ],
+                'SetAuto'       => [
+                    'type'    => 'boolean',
+                    'default' => true,
+                ],
+                'SetTime'       => [
+                    'type'    => 'number',
+                    'default' => '5000',
+                ],
+                'SetAnimation'  => [
+                    'type'    => 'string',
+                    'default' => '',
+                ],
+                'SetHeight'     => [
+                    'type'    => 'number',
+                    'default' => '480',
+                ],
+            ],
 
-		)
-	);
+        )
+    );
 }
 
 /**
@@ -95,65 +96,65 @@ function ekiline_collection_carousel_block_init() {
  * @param array $block_attributes controls from block.
  * @param array $content the content.
  */
-function ekiline_collection_carousel_dynamic_render_callback( $block_attributes, $content ) {
+function ekiline_collection_carousel_dynamic_render_callback($block_attributes, $content)
+{
+    $carousel_args = '';
 
-	$carousel_args = '';
+    if ('posts' !== $block_attributes['ChooseType']) {
+        $carousel_args .= 'type="' . $block_attributes['ChooseType'] . '" ';
+    }
 
-	if ( 'posts' !== $block_attributes['ChooseType'] ) {
-		$carousel_args .= 'type="' . $block_attributes['ChooseType'] . '" ';
-	}
+    if ($block_attributes['SetIds']) {
+        $array_to_string = implode(',', $block_attributes['SetIds']);
+        $carousel_args  .= 'id="' . $array_to_string . '" ';
+    }
 
-	if ( $block_attributes['SetIds'] ) {
-		$array_to_string = implode( ',', $block_attributes['SetIds'] );
-		$carousel_args  .= 'id="' . $array_to_string . '" ';
-	}
+    if ('3' !== $block_attributes['SetAmount'] && 'posts' === $block_attributes['ChooseType']) {
+        $carousel_args .= 'amount="' . $block_attributes['SetAmount'] . '" ';
+    }
 
-	if ( '3' !== $block_attributes['SetAmount'] && 'posts' === $block_attributes['ChooseType'] ) {
-		$carousel_args .= 'amount="' . $block_attributes['SetAmount'] . '" ';
-	}
+    if ('date' !== $block_attributes['SetOrderBy'] && 'posts' === $block_attributes['ChooseType']) {
+        $carousel_args .= 'orderby="' . $block_attributes['SetOrderBy'] . '" ';
+    }
 
-	if ( 'date' !== $block_attributes['SetOrderBy'] && 'posts' === $block_attributes['ChooseType'] ) {
-		$carousel_args .= 'orderby="' . $block_attributes['SetOrderBy'] . '" ';
-	}
+    if ('none' !== $block_attributes['FindBlock'] && 'posts' === $block_attributes['ChooseType']) {
+        $carousel_args .= 'block="' . $block_attributes['FindBlock'] . '" ';
+    }
 
-	if ( 'none' !== $block_attributes['FindBlock'] && 'posts' === $block_attributes['ChooseType'] ) {
-		$carousel_args .= 'block="' . $block_attributes['FindBlock'] . '" ';
-	}
+    if ('none' !== $block_attributes['FindBlock'] && false !== $block_attributes['AllowMixed'] && 'posts' === $block_attributes['ChooseType']) {
+        $carousel_args .= 'mixed="true" ';
+    }
 
-	if ( 'none' !== $block_attributes['FindBlock'] && false !== $block_attributes['AllowMixed'] && 'posts' === $block_attributes['ChooseType'] ) {
-		$carousel_args .= 'mixed="true" ';
-	}
+    if (1 !== $block_attributes['SetColumns']) {
+        $carousel_args .= 'columns="' . $block_attributes['SetColumns'] . '" ';
+    }
+    if (false === $block_attributes['AddControls']) {
+        $carousel_args .= 'control="false" ';
+    }
+    if (false === $block_attributes['AddIndicators']) {
+        $carousel_args .= 'indicators="false" ';
+    }
+    if (false === $block_attributes['SetAuto']) {
+        $carousel_args .= 'auto="false" ';
+    }
+    if ('5000' !== $block_attributes['SetTime']) {
+        $carousel_args .= 'time="' . $block_attributes['SetTime'] . '" ';
+    }
+    if ('' !== $block_attributes['SetAnimation']) {
+        $carousel_args .= 'animation="' . $block_attributes['SetAnimation'] . '" ';
+    }
+    if ('480' !== $block_attributes['SetHeight']) {
+        $carousel_args .= 'height="' . $block_attributes['SetHeight'] . '" ';
+    }
 
-	if ( 1 !== $block_attributes['SetColumns'] ) {
-		$carousel_args .= 'columns="' . $block_attributes['SetColumns'] . '" ';
-	}
-	if ( false === $block_attributes['AddControls'] ) {
-		$carousel_args .= 'control="false" ';
-	}
-	if ( false === $block_attributes['AddIndicators'] ) {
-		$carousel_args .= 'indicators="false" ';
-	}
-	if ( false === $block_attributes['SetAuto'] ) {
-		$carousel_args .= 'auto="false" ';
-	}
-	if ( '5000' !== $block_attributes['SetTime'] ) {
-		$carousel_args .= 'time="' . $block_attributes['SetTime'] . '" ';
-	}
-	if ( '' !== $block_attributes['SetAnimation'] ) {
-		$carousel_args .= 'animation="' . $block_attributes['SetAnimation'] . '" ';
-	}
-	if ( '480' !== $block_attributes['SetHeight'] ) {
-		$carousel_args .= 'height="' . $block_attributes['SetHeight'] . '" ';
-	}
+    $default_class_name  = '';
+    $default_class_name  = 'wp-block-ekiline-collection-ekiline-carousel';
+    $default_class_name .= (! $block_attributes['className']) ? '' : ' ' . $block_attributes['className'];
+    $default_class_name .= (! $block_attributes['align']) ? '' : ' align' . $block_attributes['align'];
+    $default_class_name  = ' class="' . $default_class_name . '"';
 
-	$default_class_name  = '';
-	$default_class_name  = 'wp-block-ekiline-collection-ekiline-carousel';
-	$default_class_name .= ( ! $block_attributes['className'] ) ? '' : ' ' . $block_attributes['className'];
-	$default_class_name .= ( ! $block_attributes['align'] ) ? '' : ' align' . $block_attributes['align'];
-	$default_class_name  = ' class="' . $default_class_name . '"';
-
-	$carousel = '<div' . $default_class_name . '>' . do_shortcode( '[ekiline-carousel ' . $carousel_args . ']' ) . '</div>';
-	return $carousel;
+    $carousel = '<div' . $default_class_name . '>' . do_shortcode('[ekiline-carousel ' . $carousel_args . ']') . '</div>';
+    return $carousel;
 }
 
 
@@ -162,25 +163,27 @@ function ekiline_collection_carousel_dynamic_render_callback( $block_attributes,
  *
  * @link https://developer.wordpress.org/reference/functions/wp_script_is/
  */
-function ekiline_collection_block_carousel_inline_script() {
-	// Condición para mostrar js en front.
-	if ( ! is_admin() && is_singular() && ! ( has_block( 'ekiline-collection/ekiline-carousel' ) || has_block( 'ekiline-collection/ekiline-carousel-extra' ) ) ) {
-		return;
-	}
-	// Si existe Ekiline Theme, apoyar de su manejador, o ocupar nuevo manejador JS.
-	$script_handle = ( wp_script_is( 'ekiline-layout', 'enqueued' ) ) ? 'ekiline-layout' : 'ekiline-collection-inline';
-	wp_add_inline_script( $script_handle, ekiline_collection_block_carousel_scripts_code(), 'after' );
-	// Si existe Ekiline Theme, apoyar de su manejador, o ocupar nuevo manejador CSS.
-	$style_handle = ( wp_style_is( 'ekiline-style', 'enqueued' ) ) ? 'ekiline-style' : 'ekiline-collection-bootstrap-style';
-	wp_add_inline_style( $style_handle, ekiline_collection_block_carousel_style_code() );
+function ekiline_collection_block_carousel_inline_script()
+{
+    // Condición para mostrar js en front.
+    if (! is_admin() && is_singular() && ! (has_block('ekiline-collection/ekiline-carousel') || has_block('ekiline-collection/ekiline-carousel-extra'))) {
+        return;
+    }
+    // Si existe Ekiline Theme, apoyar de su manejador, o ocupar nuevo manejador JS.
+    $script_handle = (wp_script_is('ekiline-layout', 'enqueued')) ? 'ekiline-layout' : 'ekiline-collection-inline';
+    wp_add_inline_script($script_handle, ekiline_collection_block_carousel_scripts_code(), 'after');
+    // Si existe Ekiline Theme, apoyar de su manejador, o ocupar nuevo manejador CSS.
+    $style_handle = (wp_style_is('ekiline-style', 'enqueued')) ? 'ekiline-style' : 'ekiline-collection-bootstrap-style';
+    wp_add_inline_style($style_handle, ekiline_collection_block_carousel_style_code());
 }
-add_action( 'wp_enqueue_scripts', 'ekiline_collection_block_carousel_inline_script', 100 );
+add_action('wp_enqueue_scripts', 'ekiline_collection_block_carousel_inline_script', 100);
 
 /**
  * Código JS complementario, transforma el carrusel.
  */
-function ekiline_collection_block_carousel_scripts_code() {
-	$code = '
+function ekiline_collection_block_carousel_scripts_code()
+{
+    $code = '
 function ekiline_collection_transform_modal(carrusel){
 
 	// Si no hay carrusel cancelar todo.
@@ -257,14 +260,15 @@ function ekiline_collection_transform_modal(carrusel){
 };
 ekiline_collection_transform_modal(\'.carousel-multiple\');
 ';
-	return $code;
+    return $code;
 }
 
 /**
  * Código JS complementario, mejora el carrusel.
  */
-function ekiline_collection_block_carousel_style_code() {
-	$custom_css = '
+function ekiline_collection_block_carousel_style_code()
+{
+    $custom_css = '
 /* Carousel base */
 .carousel,.carousel-item{min-height:50px;}
 .carousel .carousel-item{overflow:hidden;}
@@ -342,5 +346,5 @@ function ekiline_collection_block_carousel_style_code() {
 	.col-sm-1a5,.col-xs-1a5,.col-sm-1a7,.col-xs-1a7,.col-sm-1a8,.col-xs-1a8,.col-sm-1a9,.col-xs-1a9{width:100%;width:100%;}
 }
 ';
-	return $custom_css;
+    return $custom_css;
 }
