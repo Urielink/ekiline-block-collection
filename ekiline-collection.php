@@ -4,7 +4,7 @@
  * Description:       Actions and blocks based on bootstrap 5 (carousel, collapse and more). Includes Bootstrap library. Support this project to add new features and expand a customer service branch.
  * Requires at least: 5.8
  * Requires PHP:      7.0
- * Version:           0.1.2
+ * Version:           0.1.3
  * Author:            Uri Lazcano (Urielink)
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/license-list.html#GPLv2
@@ -46,6 +46,7 @@ require EKILINE_COLLECTION_PATH . 'ekiline-collection-toast.php';
 require EKILINE_COLLECTION_PATH . 'ekiline-collection-modal.php';
 require EKILINE_COLLECTION_PATH . 'ekiline-collection-tabs.php';
 require EKILINE_COLLECTION_PATH . 'ekiline-collection-popover.php';
+require EKILINE_COLLECTION_PATH . 'ekiline-collection-info.php';
 
 /**
  * Scripts y estilos en el front.

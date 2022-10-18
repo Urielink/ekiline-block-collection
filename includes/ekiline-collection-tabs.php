@@ -23,7 +23,7 @@ add_action( 'wp_enqueue_scripts', 'ekiline_collection_block_tabs_inline_script',
 
 /**
  * Código JS complementario.
- * Afecta al marcado de los banners, dependen de la clase css .adsbygoogle.
+ * Agrega comportamineto a los tabs en el front.
  */
 function ekiline_collection_block_tabs_scripts_code() {
 	$code = '
