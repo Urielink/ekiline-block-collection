@@ -73,9 +73,10 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 = 0.1.3 =
 * Improve: Added information page, admin/themes/About EBC.
-* Fix: Carousel and Carousel dynamic height styles.
+* Fix: Carousel static and Carousel dynamic height styles.
 * Fix: Compatibility problem, editor gets stuck when select an image/media block.
 * Fix: Carousel static, correction when set, add or delete images.
+* Improve: Carousel static added show hide caption.
 
 = 0.1.2 =
 * Improve: Ajust css rules and js for all blocks.
