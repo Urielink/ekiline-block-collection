@@ -181,7 +181,7 @@ add_action( 'wp_enqueue_scripts', 'ekiline_collection_block_carousel_inline_scri
  */
 function ekiline_collection_block_carousel_scripts_code() {
 	$code = '
-function ekiline_collection_transform_modal(carrusel){
+function ekiline_collection_transform_carousel(carrusel){
 
 	// Si no hay carrusel cancelar todo.
 	var loaditem = document.querySelector(carrusel);
@@ -255,7 +255,31 @@ function ekiline_collection_transform_modal(carrusel){
 		});
 	});
 };
-ekiline_collection_transform_modal(\'.carousel-multiple\');
+ekiline_collection_transform_carousel(\'.carousel-multiple\');
+
+function ekiline_collection_carousel_text_indicators(indicadores){
+	const controlExterno = document.querySelectorAll(indicadores);
+	// Verificar si existe text-indicators.
+	if (controlExterno.length > 0){
+		// Por cada control, agregar un evento.
+		controlExterno.forEach(control => {
+			// Verificar el carrusel padre.
+			const padreCarrusel = control.parentNode;
+			// Saber que indice se activa.
+			padreCarrusel.addEventListener(\'slide.bs.carousel\', e => {
+				// Quitar clase css active.
+				control.children[e.from].classList.remove(\'active\')
+				// Agregar clase css active.
+				control.children[e.to].classList.add(\'active\')
+				// Agregar un inidice de ayuda.
+				padreCarrusel.classList.remove(\'index-\'+[e.from])
+				padreCarrusel.classList.add(\'index-\'+[e.to])
+			});
+			padreCarrusel.classList.add(\'has-text-inidicators\');
+		});
+	}
+}
+ekiline_collection_carousel_text_indicators(\'.carousel-indicators.text-indicators\');
 ';
 	return $code;
 }
@@ -341,6 +365,15 @@ function ekiline_collection_block_carousel_style_code() {
 	.carousel-multiple.x2 .carousel-inner .active.carousel-item-end,.carousel-multiple.x3 .carousel-inner .active.carousel-item-end,.carousel-multiple.x4 .carousel-inner .active.carousel-item-end,.carousel-multiple.x6 .carousel-inner .active.carousel-item-end{-webkit-transform:translate3d(100%,0,0);-moz-transform:translate3d(100%,0,0);-ms-transform:translate3d(100%,0,0);transform:translate3d(100%,0,0);}
 	.col-sm-1a5,.col-xs-1a5,.col-sm-1a7,.col-xs-1a7,.col-sm-1a8,.col-xs-1a8,.col-sm-1a9,.col-xs-1a9{width:100%;width:100%;}
 }
+/* Carrusel con controles extra */
+@keyframes animation_fadein_bottom{from{opacity:0;transform:translateY(100%);}to{opacity:1;}}
+@keyframes animation_grow_right{0%{width:0%;}100%{width:90%;}}
+.has-text-inidicators .carousel-caption{top:1.25rem;text-align:left;animation-duration:1s;animation-fill-mode:both;animation-name:animation_fadein_bottom;}
+@media screen and (min-width:768px){.has-text-inidicators .carousel-caption{width:40%;top:calc(100%/4);}}
+.has-text-inidicators .carousel-indicators:first-child{justify-content:start;}
+.text-indicators{left:70%;width:25%;color:var(--bs-light);top:0;flex-direction:column;margin:0px;right:auto;z-index:1;}
+.text-indicators [data-bs-target]{width:auto;height:auto;text-indent:initial;margin:0px;border:1px soli var(--bs-border-color);padding-top:15px;padding-bottom:15px;background-color:initial;background-clip:inherit;}
+.text-indicators .active::after{content:"";height:3px;display:block;background-color:rgba(var(--bs-light-rgb),.5);animation:4s animation_grow_right;margin-top:10px;width:90%;}
 ';
 	return $custom_css;
 }

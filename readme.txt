@@ -4,7 +4,7 @@ Requires at least: 5.8
 Tags:              block, collection, bootstrap
 Tested up to:      6.0.2
 Requires PHP:      7.0
-Stable tag:        0.1.3
+Stable tag:        0.1.4
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/license-list.html#GPLv2
 Donate link:       https://www.paypal.com/paypalme/urielink
@@ -32,14 +32,6 @@ CSS styles and JS scripts are included, maintaining the layout and behaviors.
 = Compatibility =
 Great response on new block-based themes like twenty-twenty two and the twenty-twenty one hybrid themes.
 Do you want more? Download the Ekiline theme to have more options in customizing your site.
-
-= About the author =
-The author of this plugin will be careful to keep the code as faithful to Bootstrap.
-As well as to maintain this development and incorporate new features in each new update.
-
-“I have created this plugin to provide a better web development service to my clients, from a trusted source such as WordPress.”
-Uri Lazcano.
-
 
 == Installation ==
 
@@ -71,6 +63,9 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Changelog ==
 
+= 0.1.4 =
+* Improve: Extend carousel module, added new visual controls.
+
 = 0.1.3 =
 * Improve: Added information page, admin/themes/About EBC.
 * Fix: Carousel static and Carousel dynamic height styles.
@@ -91,11 +86,14 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Upgrade Notice ==
 
-Fix editor css styles for each block.
-Ready translations, English and Spanish.
+New carousel design options!
+- Lateral control with titles.
+- Show / Hide link button.
 
-== Arbitrary section ==
+== About author ==
 
-You may provide arbitrary sections, in the same format as the ones above. This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation." Arbitrary sections will be shown below the built-in sections outlined above.
+The author of this plugin will be careful to keep the code as faithful to Bootstrap.
+As well as to maintain this development and incorporate new features in each new update.
+
+“I have created this plugin to provide a better web development service to my clients, from a trusted source such as WordPress.”
+Uri Lazcano.

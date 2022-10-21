@@ -551,3 +551,59 @@
 }
 
 }
+
+/* Carousel: ekiline side controls */
+@keyframes animation_fadein_bottom{
+  from{opacity:0;transform:translateY(100%);}
+  to{opacity:1;}
+}
+@keyframes animation_grow_right{
+  0%{width:0%;}
+  100%{width:90%;}
+}
+.has-text-inidicators .carousel-caption{
+  top: 1.25rem;
+  text-align: left;
+  animation-duration:1s;
+  animation-fill-mode:both;
+  animation-name:animation_fadein_bottom;
+}
+@media screen and (min-width:768px){
+  .has-text-inidicators .carousel-caption{
+    width: 40%;
+    top: calc(100% / 4);
+  }
+}
+.has-text-inidicators .carousel-indicators:first-child{
+  justify-content: start;
+}
+.text-indicators {
+  left: 70%;
+  width: 25%;
+  color: var(--bs-light);
+  top: 0;
+  flex-direction: column;
+  margin: 0px;
+  right: auto;
+  z-index: 1;
+}
+.text-indicators [data-bs-target] {
+  width: auto;
+  height: auto;
+  text-indent: initial;
+  margin: 0px;
+  border: 1px soli var(--bs-border-color);
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background-color: initial;
+  background-clip: inherit;
+}
+.text-indicators .active::after{
+  content:"";
+  height: 3px;
+  display: block;
+  background-color: rgba(var(--bs-light-rgb),.5);
+  animation: 4s animation_grow_right;
+  margin-top:10px;
+  width:90%;
+}
