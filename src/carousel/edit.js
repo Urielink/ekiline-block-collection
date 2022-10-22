@@ -11,8 +11,8 @@
   *
   * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
   */
- import{useBlockProps,InspectorControls,BlockControls,MediaUpload,MediaUploadCheck,} from '@wordpress/block-editor';
- import{ToggleControl,PanelBody,SelectControl,ToolbarGroup,ToolbarItem,Button,TextControl,RangeControl,} from '@wordpress/components';
+ import{useBlockProps,InspectorControls,MediaUpload,MediaUploadCheck,} from '@wordpress/block-editor';
+ import{ToggleControl,PanelBody,SelectControl,Button,TextControl,RangeControl,} from '@wordpress/components';
  import ServerSideRender from '@wordpress/server-side-render';
  
  /**
@@ -276,22 +276,7 @@
 					 />
 				 </PanelBody>
 			 </InspectorControls>
- 
-			 <BlockControls>
-				 <ToolbarGroup>
-					 <ToolbarItem
-						 as={ Button }
-						 icon="dashicons dashicons-visibility"
-						 title={ __( 'Preview', 'ekiline-collection' ) }
-						 onClick={ () => {
-							 ekiline_transformarCarrusel(
-								 '.' + boxClass + ' .carousel-multiple'
-							 );
-						 } }
-					 />
-				 </ToolbarGroup>
-			 </BlockControls>
- 
+  
 			 <div className={ boxClass }>
 				 <div>
 					 <ServerSideRender
