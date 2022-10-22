@@ -55,10 +55,10 @@ function ekiline_collection_js_persist_tab_select(allTabs, linkItem){
 		});
 
 		// En la recarga, buscar dato segun el id.
-		const activeTab = localStorage.getItem(gtabId);
+		const savedTab = localStorage.getItem(gtabId);
 
-		if( activeTab ){
-			const someTabTriggerEl = document.querySelector(\'[data-bs-target="\' + activeTab + \'"]\');
+		if( savedTab ){
+			const someTabTriggerEl = document.querySelector(\'[data-bs-target="\' + savedTab + \'"]\');
 			const tab = new bootstrap.Tab(someTabTriggerEl);
 			tab.show();
 		}
