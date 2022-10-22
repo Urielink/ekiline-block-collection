@@ -574,10 +574,10 @@
     top: calc(100% / 4);
   }
 }
-.has-text-inidicators .carousel-indicators:first-child{
+.has-text-inidicators .carousel-indicators.text-indicators:first-child{
   justify-content: start;
 }
-.text-indicators {
+.has-text-inidicators .carousel-indicators.text-indicators {
   left: 70%;
   width: 25%;
   color: var(--bs-light);
@@ -587,7 +587,7 @@
   right: auto;
   z-index: 1;
 }
-.text-indicators [data-bs-target] {
+.has-text-inidicators .carousel-indicators.text-indicators [data-bs-target] {
   width: auto;
   height: auto;
   text-indent: initial;
@@ -598,7 +598,7 @@
   background-color: initial;
   background-clip: inherit;
 }
-.text-indicators .active::after{
+.has-text-inidicators .carousel-indicators.text-indicators .active::after{
   content:"";
   height: 3px;
   display: block;

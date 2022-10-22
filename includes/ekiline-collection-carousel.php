@@ -21,78 +21,78 @@ function ekiline_collection_carousel_block_init() {
 			'render_callback' => 'ekiline_collection_carousel_dynamic_render_callback',
 			'attributes'      => [
 				// Clase css.
-				'className'     => [
+				'className'         => [
 					'type'    => 'string',
 					'default' => '',
 				],
 				// Toolbar.
-				'align'         => [
+				'align'             => [
 					'type'    => 'string',
 					'default' => '',
 				],
 				// Panel de personalizacion.
-				'ChooseType'    => [
+				'ChooseType'        => [
 					'type'    => 'string',
 					'default' => 'posts',
 				],
-				'SetIds'        => [
+				'SetIds'            => [
 					'type'    => 'array',
 					'default' => '',
 				],
-				'SetAmount'     => [
+				'SetAmount'         => [
 					'type'    => 'number',
 					'default' => 3,
 				],
-				'SetOrderBy'    => [
+				'SetOrderBy'        => [
 					'type'    => 'string',
 					'default' => 'date',
 				],
-				'SetColumns'    => [
+				'SetColumns'        => [
 					'type'    => 'number',
 					'default' => 1,
 				],
-				'FindBlock'     => [
+				'FindBlock'         => [
 					'type'    => 'string',
 					'default' => 'none',
 				],
-				'AllowMixed'    => [
+				'AllowMixed'        => [
 					'type'    => 'boolean',
 					'default' => false,
 				],
-				'AddControls'   => [
+				'AddControls'       => [
 					'type'    => 'boolean',
 					'default' => true,
 				],
-				'AddIndicators' => [
+				'AddIndicators'     => [
 					'type'    => 'boolean',
 					'default' => true,
 				],
-				'SetAuto'       => [
+				'SetAuto'           => [
 					'type'    => 'boolean',
 					'default' => true,
 				],
-				'SetTime'       => [
+				'SetTime'           => [
 					'type'    => 'number',
 					'default' => '5000',
 				],
-				'SetAnimation'  => [
+				'SetAnimation'      => [
 					'type'    => 'string',
 					'default' => '',
 				],
-				'SetHeight'     => [
+				'SetHeight'         => [
 					'type'    => 'number',
 					'default' => '480',
 				],
 				// Nuevas opciones.
-				'ShowCaption'   => [
+				'ShowCaption'       => [
 					'type'    => 'boolean',
 					'default' => true,
 				],
-				'SetLinks'   => [
+				'SetLinks'          => [
 					'type'    => 'boolean',
 					'default' => false,
 				],
-				'AddIndicatorsText'   => [
+				'AddIndicatorsText' => [
 					'type'    => 'boolean',
 					'default' => false,
 				],

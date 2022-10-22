@@ -196,6 +196,9 @@ function ekiline_collection_carousel_images( $ids = array() ) {
  * @param string $time opcion, milisegundos para las transiciones del carrusel = 5000.
  * @param string $animation opcion, = fade, vertical.
  * @param string $height opcion, = altura 0 a 480.
+ * @param string $showcaption opcion, = true.
+ * @param string $setlinks opcion, = false.
+ * @param string $indicatorstext opcion, = false.
  */
 function ekiline_collection_carousel_html( $carousel, $columns, $control, $indicators, $auto, $time, $animation, $height, $showcaption, $setlinks, $indicatorstext ) {
 
@@ -211,9 +214,10 @@ function ekiline_collection_carousel_html( $carousel, $columns, $control, $indic
 		} else {
 			$height = ' style="min-height:' . $height . 'px;"';
 		}
+		$hastxtind = ( 'false' !== $indicatorstext ) ? ' has-text-inidicators' : '';
 		?>
 
-		<div id="<?php echo esc_attr( $uniq_id ); ?>" class="carousel slide<?php echo esc_attr( $columns . $animation ); ?>"<?php echo wp_kses_post( $auto . $time . $height ); ?>>
+		<div id="<?php echo esc_attr( $uniq_id ); ?>" class="carousel slide<?php echo esc_attr( $columns . $animation .  $hastxtind ); ?>"<?php echo wp_kses_post( $auto . $time . $height ); ?>>
 
 			<?php if ( 'false' !== $indicators ) { ?>
 
@@ -301,7 +305,7 @@ function ekiline_collection_carousel_html( $carousel, $columns, $control, $indic
 
 			<?php } ?>
 
-			<?php if ( !$columns && 'false' !== $indicatorstext ) { ?>
+			<?php if ( ! $columns && 'false' !== $indicatorstext ) { ?>
 
 				<ul class='carousel-indicators text-indicators d-none d-md-flex'>
 					<?php
