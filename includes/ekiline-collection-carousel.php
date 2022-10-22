@@ -83,6 +83,19 @@ function ekiline_collection_carousel_block_init() {
 					'type'    => 'number',
 					'default' => '480',
 				],
+				// Nuevas opciones.
+				'ShowCaption'   => [
+					'type'    => 'boolean',
+					'default' => true,
+				],
+				'SetLinks'   => [
+					'type'    => 'boolean',
+					'default' => false,
+				],
+				'AddIndicatorsText'   => [
+					'type'    => 'boolean',
+					'default' => false,
+				],
 			],
 
 		)
@@ -144,6 +157,15 @@ function ekiline_collection_carousel_dynamic_render_callback( $block_attributes,
 	}
 	if ( '480' !== $block_attributes['SetHeight'] ) {
 		$carousel_args .= 'height="' . $block_attributes['SetHeight'] . '" ';
+	}
+	if ( false === $block_attributes['ShowCaption'] ) {
+		$carousel_args .= 'showcaption="false" '; // Nuevas opciones.
+	}
+	if ( $block_attributes['ShowCaption'] && false === $block_attributes['SetLinks'] ) {
+		$carousel_args .= 'setlinks="false" ';
+	}
+	if ( false === $block_attributes['AddIndicatorsText'] ) {
+		$carousel_args .= 'indicatorstext="false" ';
 	}
 
 	$default_class_name  = '';

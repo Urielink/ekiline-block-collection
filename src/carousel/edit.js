@@ -213,12 +213,36 @@
 							 setAttributes( { AddIndicators } )
 						 }
 					 />
+
+					{/* Opcion de controles */}
+					{ attributes.SetColumns === 1
+						&& (<ToggleControl
+							label={ __( 'Show text indicators', 'ekiline-collection' ) }
+							checked={ attributes.AddIndicatorsText }
+							onChange={ ( AddIndicatorsText ) =>
+								setAttributes( { AddIndicatorsText } )
+							}
+					/>)}
  
 					 <ToggleControl
 						 label={ __( 'Auto start', 'ekiline-collection' ) }
 						 checked={ attributes.SetAuto }
 						 onChange={ ( SetAuto ) => setAttributes( { SetAuto } ) }
 					 />
+
+					<ToggleControl
+						label={ __( 'Show caption', 'ekiline-collection' ) }
+						checked={ attributes.ShowCaption }
+						onChange={ ( ShowCaption ) => setAttributes( { ShowCaption } ) }
+					/>
+
+					{/* Opcion de enlaces */}
+					{ attributes.ShowCaption
+						&& ( <ToggleControl
+								label={ __( 'Link titles', 'ekiline-collection' ) }
+								checked={ attributes.SetLinks }
+								onChange={ ( SetLinks ) => setAttributes( { SetLinks } ) }
+						/> )}
  
 					 <TextControl
 						 label={ __( 'Transition in milliseconds', 'ekiline-collection' ) }

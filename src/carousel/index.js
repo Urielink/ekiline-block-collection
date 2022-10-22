@@ -148,6 +148,18 @@ registerBlockType( 'ekiline-collection/ekiline-carousel', {
 			type: 'number',
 			default: '480',
 		},
+		ShowCaption: {
+			type: 'boolean',
+			default: true,
+		},
+		SetLinks: {
+			type: 'boolean',
+			default: false,
+		},
+		AddIndicatorsText: {
+			type: 'boolean',
+			default: false,
+		},
 	},
 
 	/**
