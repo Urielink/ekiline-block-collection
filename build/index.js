@@ -990,7 +990,7 @@ function CarosuelMarkupHtml(_ref6) {
   const carId = attributes.anchor + 'block';
   const carCol = 1 < attributes.SetColumns ? ' carousel-multiple x' + attributes.SetColumns : '';
   const carAni = attributes.SetAnimation ? ' carousel-' + attributes.SetAnimation : '';
-  const carInd = attributes.SetColumns === 1 && attributes.AddIndicatorsText ? ' has-text-inidicators' : '';
+  const carInd = attributes.SetColumns === 1 && attributes.AddIndicatorsText ? ' has-text-indicators' : '';
   const carStr = attributes.SetAuto ? 'carousel' : null; // Reglas CSS inline.
 
   const min_height = {
@@ -1048,7 +1048,7 @@ function CarosuelMarkupHtml(_ref6) {
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     class: "visually-hidden"
   }, "Next"))), attributes.SetColumns === 1 && attributes.AddIndicatorsText && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", {
-    class: "carousel-indicators text-indicators d-none d-md-flex"
+    class: "carousel-text-indicators carousel-caption list-unstyled d-none d-md-flex"
   }, postsStored?.map((post, index) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
     key: post.id,
     type: "button",

@@ -671,7 +671,7 @@ export function CarosuelMarkupHtml({postsStored, attributes}){
 	const carId = attributes.anchor + 'block';
 	const carCol = ( 1 < attributes.SetColumns ) ? ' carousel-multiple x' + attributes.SetColumns : '';
 	const carAni = ( attributes.SetAnimation ) ? ' carousel-' + attributes.SetAnimation : '';
-	const carInd = ( attributes.SetColumns === 1 && attributes.AddIndicatorsText ) ? ' has-text-inidicators': '';
+	const carInd = ( attributes.SetColumns === 1 && attributes.AddIndicatorsText ) ? ' has-text-indicators': '';
 	const carStr = ( attributes.SetAuto ) ? 'carousel' : null;
 	// Reglas CSS inline.
 	const min_height = { height : ( 0 !== attributes.SetHeight ) ? attributes.SetHeight + 'px' : '100vh' };
@@ -738,7 +738,7 @@ export function CarosuelMarkupHtml({postsStored, attributes}){
 			) }
 
 			{ attributes.SetColumns === 1 && attributes.AddIndicatorsText && (
-				<ul class='carousel-indicators text-indicators d-none d-md-flex'>
+				<ul class='carousel-text-indicators carousel-caption list-unstyled d-none d-md-flex'>
 					{ postsStored?.map( (post,index) => (
 							<li
 								key={post.id}

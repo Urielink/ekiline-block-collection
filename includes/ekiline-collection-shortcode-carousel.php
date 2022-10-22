@@ -214,7 +214,7 @@ function ekiline_collection_carousel_html( $carousel, $columns, $control, $indic
 		} else {
 			$height = ' style="min-height:' . $height . 'px;"';
 		}
-		$hastxtind = ( 'false' !== $indicatorstext ) ? ' has-text-inidicators' : '';
+		$hastxtind = ( 'false' !== $indicatorstext ) ? ' has-text-indicators' : '';
 		?>
 
 		<div id="<?php echo esc_attr( $uniq_id ); ?>" class="carousel slide<?php echo esc_attr( $columns . $animation .  $hastxtind ); ?>"<?php echo wp_kses_post( $auto . $time . $height ); ?>>
@@ -307,7 +307,7 @@ function ekiline_collection_carousel_html( $carousel, $columns, $control, $indic
 
 			<?php if ( ! $columns && 'false' !== $indicatorstext ) { ?>
 
-				<ul class='carousel-indicators text-indicators d-none d-md-flex'>
+				<ul class='carousel-text-indicators carousel-caption list-unstyled d-none d-md-flex'>
 					<?php
 					foreach ( $carousel as $index => $indicator ) {
 						$active = ( 0 === $index ) ? 'active' : '';
