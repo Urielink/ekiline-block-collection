@@ -88,7 +88,7 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 New carousel design options!
 - Lateral control with titles.
-- Show / Hide link button.
+- Show / Hide caption options.
 
 == About author ==
 
