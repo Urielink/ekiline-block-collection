@@ -207,7 +207,7 @@ function ekiline_collection_carousel_images( $ids = array() ) {
 function ekiline_collection_carousel_html( $carousel, $columns, $control, $indicators, $auto, $time, $animation, $height, $showcaption, $setlinks, $indicatorstext, $classname, $anchor ) {
 
 	if ( $carousel ) {
-		$uniq_id   = ( $anchor ) ? $anchor : 'carousel_module_' . wp_rand( 1, 99 ) ;
+		$uniq_id   = ( $anchor ) ? $anchor : 'carousel_module_' . wp_rand( 1, 99 );
 		$auto      = ( 'false' !== $auto ) ? ' data-bs-ride="carousel"' : '';
 		$time      = ( $time ) ? ' data-bs-interval="' . $time . '"' : '';
 		$animation = ( $animation ) ? ' carousel-' . $animation : '';

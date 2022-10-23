@@ -31,7 +31,7 @@ function ekiline_collection_carousel_block_init() {
 					'default' => '',
 				],
 				// Ancla ID.
-				'anchor'             => [
+				'anchor'            => [
 					'type'    => 'string',
 					'default' => '',
 				],
@@ -176,7 +176,7 @@ function ekiline_collection_carousel_dynamic_render_callback( $block_attributes,
 	if ( '' !== $block_attributes['anchor'] ) {
 		$carousel_args .= 'anchor="' . $block_attributes['anchor'] . '" ';
 	}
-	$default_class_name  = 'wp-block-ekiline-collection-ekiline-carousel';
+	$default_class_name = 'wp-block-ekiline-collection-ekiline-carousel';
 	if ( '' !== $block_attributes['align'] ) {
 		$default_class_name .= ( ! $block_attributes['align'] ) ? '' : ' align' . $block_attributes['align'];
 	}
