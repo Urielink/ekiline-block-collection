@@ -86,6 +86,7 @@ registerBlockType( 'ekiline-collection/ekiline-carousel', {
 		// Removes support for an HTML mode.
 		html: false,
 		align: [ 'wide', 'full' ],
+		anchor: true,
 	},
 
 	/**
@@ -93,6 +94,10 @@ registerBlockType( 'ekiline-collection/ekiline-carousel', {
 	 */
 	attributes: {
 		align: {
+			type: 'string',
+			default: '',
+		},
+		anchor: {
 			type: 'string',
 			default: '',
 		},

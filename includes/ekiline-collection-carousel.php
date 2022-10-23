@@ -30,6 +30,11 @@ function ekiline_collection_carousel_block_init() {
 					'type'    => 'string',
 					'default' => '',
 				],
+				// Ancla ID.
+				'anchor'             => [
+					'type'    => 'string',
+					'default' => '',
+				],
 				// Panel de personalizacion.
 				'ChooseType'        => [
 					'type'    => 'string',
@@ -167,14 +172,20 @@ function ekiline_collection_carousel_dynamic_render_callback( $block_attributes,
 	if ( false === $block_attributes['AddIndicatorsText'] ) {
 		$carousel_args .= 'indicatorstext="false" ';
 	}
-
-	$default_class_name  = '';
+	// Nuevas propiedades anchor, align + classname.
+	if ( '' !== $block_attributes['anchor'] ) {
+		$carousel_args .= 'anchor="' . $block_attributes['anchor'] . '" ';
+	}
 	$default_class_name  = 'wp-block-ekiline-collection-ekiline-carousel';
-	$default_class_name .= ( ! $block_attributes['className'] ) ? '' : ' ' . $block_attributes['className'];
-	$default_class_name .= ( ! $block_attributes['align'] ) ? '' : ' align' . $block_attributes['align'];
-	$default_class_name  = ' class="' . $default_class_name . '"';
+	if ( '' !== $block_attributes['align'] ) {
+		$default_class_name .= ( ! $block_attributes['align'] ) ? '' : ' align' . $block_attributes['align'];
+	}
+	if ( '' !== $block_attributes['className'] ) {
+		$default_class_name .= ( ! $block_attributes['className'] ) ? '' : ' ' . $block_attributes['className'];
+	}
+	$carousel_args .= 'classname="' . $default_class_name . '" ';
 
-	$carousel = '<div' . $default_class_name . '>' . do_shortcode( '[ekiline-carousel ' . $carousel_args . ']' ) . '</div>';
+	$carousel = do_shortcode( '[ekiline-carousel ' . $carousel_args . ']' );
 	return $carousel;
 }
 
