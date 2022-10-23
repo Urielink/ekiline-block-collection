@@ -64,6 +64,7 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 == Changelog ==
 
 = 0.1.4 =
+* This version is being tested in different online projects, it has not shown difficulties in its operation. It allows adding improvements and new features to the development team.
 * Improve: Extend carousel module, added new visual controls.
 
 = 0.1.3 =
