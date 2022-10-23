@@ -30,19 +30,24 @@ function ekiline_collection_shortcode_carousel( $atts = [] ) {
 
 	$atts = shortcode_atts(
 		array(
-			'type'       => 'posts', // Default posts, or images.
-			'id'         => null, // Default none, image ids, category ids.
-			'amount'     => '3', // Default 3.
-			'orderby'    => null, // Default Date.
-			'columns'    => null, // Default single view.
-			'block'      => null, // Find a block.
-			'mixed'      => null, // Dont load post if image or block not exist.
-			'control'    => null, // Show carousel controls.
-			'indicators' => null, // Show carousel indicators.
-			'auto'       => null, // Show carousel indicators.
-			'time'       => null, // Set time interval between slides.
-			'animation'  => null, // Set time animation.
-			'height'     => null, // Set min-height of carousel.
+			'type'           => 'posts', // Default posts, or images.
+			'id'             => null, // Default none, image ids, category ids.
+			'amount'         => '3', // Default 3.
+			'orderby'        => null, // Default Date.
+			'columns'        => null, // Default single view.
+			'block'          => null, // Find a block.
+			'mixed'          => null, // Dont load post if image or block not exist.
+			'control'        => null, // Show carousel controls.
+			'indicators'     => null, // Show carousel indicators.
+			'auto'           => null, // Show carousel indicators.
+			'time'           => null, // Set time interval between slides.
+			'animation'      => null, // Set time animation.
+			'height'         => null, // Set min-height of carousel.
+			'showcaption'    => null, // Show-hide carousel text, new options.
+			'setlinks'       => null, // Link text titles.
+			'indicatorstext' => null, // Show new indicators.
+			'classname'      => null, // Enable classname from editor.
+			'anchor'         => null, // Enable ID from editor.
 		),
 		$atts,
 		'ekiline-carousel'
@@ -60,7 +65,7 @@ function ekiline_collection_shortcode_carousel( $atts = [] ) {
 	$columns = ( in_array( $atts['columns'], [ '2', '3', '4', '6' ], true ) ) ? ' carousel-multiple x' . $atts['columns'] : '';
 	// Obtener HTML y combinar con funciones previas.
 	ob_start();
-	ekiline_collection_carousel_html( $carousel, $columns, $atts['control'], $atts['indicators'], $atts['auto'], $atts['time'], $atts['animation'], $atts['height'] );
+	ekiline_collection_carousel_html( $carousel, $columns, $atts['control'], $atts['indicators'], $atts['auto'], $atts['time'], $atts['animation'], $atts['height'], $atts['showcaption'], $atts['setlinks'], $atts['indicatorstext'], $atts['classname'], $atts['anchor'] );
 	return ob_get_clean();
 }
 // phpcs:ignore WPThemeReview.PluginTerritory.ForbiddenFunctions.plugin_territory_add_shortcode
@@ -193,11 +198,16 @@ function ekiline_collection_carousel_images( $ids = array() ) {
  * @param string $time opcion, milisegundos para las transiciones del carrusel = 5000.
  * @param string $animation opcion, = fade, vertical.
  * @param string $height opcion, = altura 0 a 480.
+ * @param string $showcaption opcion, = true.
+ * @param string $setlinks opcion, = false.
+ * @param string $indicatorstext opcion, = false.
+ * @param string $classname string from editor.
+ * @param string $anchor string from editor.
  */
-function ekiline_collection_carousel_html( $carousel, $columns, $control, $indicators, $auto, $time, $animation, $height ) {
+function ekiline_collection_carousel_html( $carousel, $columns, $control, $indicators, $auto, $time, $animation, $height, $showcaption, $setlinks, $indicatorstext, $classname, $anchor ) {
 
 	if ( $carousel ) {
-		$uniq_id   = 'carousel_module_' . wp_rand( 1, 99 );
+		$uniq_id   = ( $anchor ) ? $anchor : 'carousel_module_' . wp_rand( 1, 99 );
 		$auto      = ( 'false' !== $auto ) ? ' data-bs-ride="carousel"' : '';
 		$time      = ( $time ) ? ' data-bs-interval="' . $time . '"' : '';
 		$animation = ( $animation ) ? ' carousel-' . $animation : '';
@@ -208,9 +218,11 @@ function ekiline_collection_carousel_html( $carousel, $columns, $control, $indic
 		} else {
 			$height = ' style="min-height:' . $height . 'px;"';
 		}
+		$hastxtind = ( 'false' !== $indicatorstext ) ? ' has-text-indicators' : '';
+		$classname = ( $classname ) ? ' ' . $classname : '';
 		?>
 
-		<div id="<?php echo esc_attr( $uniq_id ); ?>" class="carousel slide<?php echo esc_attr( $columns . $animation ); ?>"<?php echo wp_kses_post( $auto . $time . $height ); ?>>
+		<div id="<?php echo esc_attr( $uniq_id ); ?>" class="carousel slide<?php echo esc_attr( $columns . $animation . $hastxtind . $classname ); ?>"<?php echo wp_kses_post( $auto . $time . $height ); ?>>
 
 			<?php if ( 'false' !== $indicators ) { ?>
 
@@ -251,28 +263,32 @@ function ekiline_collection_carousel_html( $carousel, $columns, $control, $indic
 
 							<?php } ?>
 
-							<div class="carousel-caption <?php echo esc_attr( $cap_img ); ?>">
+							<?php if ( 'false' !== $showcaption ) { ?>
 
-								<?php if ( isset( $slide['title'] ) && $slide['title'] ) { ?>
-									<h3>
-										<?php if ( isset( $slide['plink'] ) ) { ?>
-											<a href="<?php echo esc_html( $slide['plink'] ); ?>">
-										<?php } ?>
+								<div class="carousel-caption <?php echo esc_attr( $cap_img ); ?>">
 
-										<?php echo esc_html( $slide['title'] ); ?>
+									<?php if ( isset( $slide['title'] ) && $slide['title'] ) { ?>
+										<h3>
+											<?php if ( isset( $slide['plink'] ) && 'false' !== $setlinks ) { ?>
+												<a href="<?php echo esc_html( $slide['plink'] ); ?>">
+											<?php } ?>
 
-										<?php if ( isset( $slide['plink'] ) ) { ?>
-											</a>
-										<?php } ?>
+											<?php echo esc_html( $slide['title'] ); ?>
 
-									</h3>
-								<?php } ?>
+											<?php if ( isset( $slide['plink'] ) && 'false' !== $setlinks ) { ?>
+												</a>
+											<?php } ?>
 
-								<?php if ( isset( $slide['excerpt'] ) && $slide['excerpt'] ) { ?>
-									<p><?php echo wp_kses_post( $slide['excerpt'] ); ?></p>
-								<?php } ?>
+										</h3>
+									<?php } ?>
 
-							</div>
+									<?php if ( isset( $slide['excerpt'] ) && $slide['excerpt'] ) { ?>
+										<p><?php echo wp_kses_post( $slide['excerpt'] ); ?></p>
+									<?php } ?>
+
+								</div>
+
+							<?php } ?>
 
 						<?php } ?>
 
@@ -291,6 +307,21 @@ function ekiline_collection_carousel_html( $carousel, $columns, $control, $indic
 					<span class="carousel-control-next-icon" aria-hidden="true"></span>
 					<span class="visually-hidden">Next</span>
 				</button>
+
+			<?php } ?>
+
+			<?php if ( ! $columns && 'false' !== $indicatorstext ) { ?>
+
+				<ul class='carousel-text-indicators carousel-caption list-unstyled d-none d-md-flex'>
+					<?php
+					foreach ( $carousel as $index => $indicator ) {
+						$active = ( 0 === $index ) ? 'active' : '';
+						?>
+						<li type="button" data-bs-target="#<?php echo esc_html( $uniq_id ); ?>" data-bs-slide-to="<?php echo esc_attr( $index ); ?>" class="<?php echo esc_attr( $active ); ?>">
+							<span class="h5"><?php echo esc_html( $slide['title'] ); ?></span>
+						</li>
+					<?php } ?>
+				</ul>
 
 			<?php } ?>
 

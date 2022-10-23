@@ -171,6 +171,10 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 			type: 'boolean',
 			default: false,
 		},
+		AddIndicatorsText: {
+			type: 'boolean',
+			default: false,
+		},
 	},
 
 	/**
@@ -433,6 +437,15 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 									setAttributes( { AddIndicators } )
 								}
 							/>
+							{/* Opcion de controles */}
+							{ attributes.SetColumns === 1
+								&& (<ToggleControl
+									label={ __( 'Show text indicators', 'ekiline-collection' ) }
+									checked={ attributes.AddIndicatorsText }
+									onChange={ ( AddIndicatorsText ) =>
+										setAttributes( { AddIndicatorsText } )
+									}
+							/>)}
 
 							<ToggleControl
 								label={ __( 'Auto start', 'ekiline-collection' ) }
@@ -658,18 +671,19 @@ export function CarosuelMarkupHtml({postsStored, attributes}){
 	const carId = attributes.anchor + 'block';
 	const carCol = ( 1 < attributes.SetColumns ) ? ' carousel-multiple x' + attributes.SetColumns : '';
 	const carAni = ( attributes.SetAnimation ) ? ' carousel-' + attributes.SetAnimation : '';
+	const carInd = ( attributes.SetColumns === 1 && attributes.AddIndicatorsText ) ? ' has-text-indicators': '';
 	const carStr = ( attributes.SetAuto ) ? 'carousel' : null;
 	// Reglas CSS inline.
 	const min_height = { height : ( 0 !== attributes.SetHeight ) ? attributes.SetHeight + 'px' : '100vh' };
 
 	return (
 		<div id={carId}
-			className={'carousel slide' + carCol + carAni}
+			className={'carousel slide' + carCol + carAni + carInd}
 			data-bs-ride={carStr}
 			data-bs-interval={attributes.SetTime}
 			style={min_height}>
 
-			{attributes.AddIndicators && 
+			{ attributes.AddIndicators && (
 				<div class='carousel-indicators'>
 					{ postsStored?.map( (post,index) => (
 							<button
@@ -683,7 +697,7 @@ export function CarosuelMarkupHtml({postsStored, attributes}){
 							></button>
 					) ) }
 				</div>
-			}
+			) }
 
 			<div className={'carousel-inner'}>
 				{ postsStored?.map( (post, index) => (
@@ -710,7 +724,7 @@ export function CarosuelMarkupHtml({postsStored, attributes}){
 				)) }
 			</div>
 
-			{attributes.AddControls && (
+			{ attributes.AddControls && (
 				<div>
 					<button class='carousel-control-prev' type='button' data-bs-target={(carId)?'#'+carId:null} data-bs-slide='prev'>
 						<span class='carousel-control-prev-icon' aria-hidden='true'></span>
@@ -721,8 +735,25 @@ export function CarosuelMarkupHtml({postsStored, attributes}){
 						<span class='visually-hidden'>Next</span>
 					</button>
 				</div>
-			)}
+			) }
 
+			{ attributes.SetColumns === 1 && attributes.AddIndicatorsText && (
+				<ul class='carousel-text-indicators carousel-caption list-unstyled d-none d-md-flex'>
+					{ postsStored?.map( (post,index) => (
+							<li
+								key={post.id}
+								type='button'
+								data-bs-target={'#'+carId}
+								data-bs-slide-to={index}
+								className={(index === 0)?'active':null}
+								aria-current={(index === 0)?true:null}
+								aria-label={'Slide '+(index + 1)}
+							>
+								<span class="h5">{ decodeEntities( post.post_title ) }</span>
+							</li>
+					) ) }
+				</ul>
+			)}
 		</div>
 	);
 }

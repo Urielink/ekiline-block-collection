@@ -21,67 +21,85 @@ function ekiline_collection_carousel_block_init() {
 			'render_callback' => 'ekiline_collection_carousel_dynamic_render_callback',
 			'attributes'      => [
 				// Clase css.
-				'className'     => [
+				'className'         => [
 					'type'    => 'string',
 					'default' => '',
 				],
 				// Toolbar.
-				'align'         => [
+				'align'             => [
+					'type'    => 'string',
+					'default' => '',
+				],
+				// Ancla ID.
+				'anchor'            => [
 					'type'    => 'string',
 					'default' => '',
 				],
 				// Panel de personalizacion.
-				'ChooseType'    => [
+				'ChooseType'        => [
 					'type'    => 'string',
 					'default' => 'posts',
 				],
-				'SetIds'        => [
+				'SetIds'            => [
 					'type'    => 'array',
 					'default' => '',
 				],
-				'SetAmount'     => [
+				'SetAmount'         => [
 					'type'    => 'number',
 					'default' => 3,
 				],
-				'SetOrderBy'    => [
+				'SetOrderBy'        => [
 					'type'    => 'string',
 					'default' => 'date',
 				],
-				'SetColumns'    => [
+				'SetColumns'        => [
 					'type'    => 'number',
 					'default' => 1,
 				],
-				'FindBlock'     => [
+				'FindBlock'         => [
 					'type'    => 'string',
 					'default' => 'none',
 				],
-				'AllowMixed'    => [
+				'AllowMixed'        => [
 					'type'    => 'boolean',
 					'default' => false,
 				],
-				'AddControls'   => [
+				'AddControls'       => [
 					'type'    => 'boolean',
 					'default' => true,
 				],
-				'AddIndicators' => [
+				'AddIndicators'     => [
 					'type'    => 'boolean',
 					'default' => true,
 				],
-				'SetAuto'       => [
+				'SetAuto'           => [
 					'type'    => 'boolean',
 					'default' => true,
 				],
-				'SetTime'       => [
+				'SetTime'           => [
 					'type'    => 'number',
 					'default' => '5000',
 				],
-				'SetAnimation'  => [
+				'SetAnimation'      => [
 					'type'    => 'string',
 					'default' => '',
 				],
-				'SetHeight'     => [
+				'SetHeight'         => [
 					'type'    => 'number',
 					'default' => '480',
+				],
+				// Nuevas opciones.
+				'ShowCaption'       => [
+					'type'    => 'boolean',
+					'default' => true,
+				],
+				'SetLinks'          => [
+					'type'    => 'boolean',
+					'default' => false,
+				],
+				'AddIndicatorsText' => [
+					'type'    => 'boolean',
+					'default' => false,
 				],
 			],
 
@@ -145,14 +163,29 @@ function ekiline_collection_carousel_dynamic_render_callback( $block_attributes,
 	if ( '480' !== $block_attributes['SetHeight'] ) {
 		$carousel_args .= 'height="' . $block_attributes['SetHeight'] . '" ';
 	}
+	if ( false === $block_attributes['ShowCaption'] ) {
+		$carousel_args .= 'showcaption="false" '; // Nuevas opciones.
+	}
+	if ( $block_attributes['ShowCaption'] && false === $block_attributes['SetLinks'] ) {
+		$carousel_args .= 'setlinks="false" ';
+	}
+	if ( false === $block_attributes['AddIndicatorsText'] ) {
+		$carousel_args .= 'indicatorstext="false" ';
+	}
+	// Nuevas propiedades anchor, align + classname.
+	if ( '' !== $block_attributes['anchor'] ) {
+		$carousel_args .= 'anchor="' . $block_attributes['anchor'] . '" ';
+	}
+	$default_class_name = 'wp-block-ekiline-collection-ekiline-carousel';
+	if ( '' !== $block_attributes['align'] ) {
+		$default_class_name .= ( ! $block_attributes['align'] ) ? '' : ' align' . $block_attributes['align'];
+	}
+	if ( '' !== $block_attributes['className'] ) {
+		$default_class_name .= ( ! $block_attributes['className'] ) ? '' : ' ' . $block_attributes['className'];
+	}
+	$carousel_args .= 'classname="' . $default_class_name . '" ';
 
-	$default_class_name  = '';
-	$default_class_name  = 'wp-block-ekiline-collection-ekiline-carousel';
-	$default_class_name .= ( ! $block_attributes['className'] ) ? '' : ' ' . $block_attributes['className'];
-	$default_class_name .= ( ! $block_attributes['align'] ) ? '' : ' align' . $block_attributes['align'];
-	$default_class_name  = ' class="' . $default_class_name . '"';
-
-	$carousel = '<div' . $default_class_name . '>' . do_shortcode( '[ekiline-carousel ' . $carousel_args . ']' ) . '</div>';
+	$carousel = do_shortcode( '[ekiline-carousel ' . $carousel_args . ']' );
 	return $carousel;
 }
 
@@ -181,7 +214,7 @@ add_action( 'wp_enqueue_scripts', 'ekiline_collection_block_carousel_inline_scri
  */
 function ekiline_collection_block_carousel_scripts_code() {
 	$code = '
-function ekiline_collection_transform_modal(carrusel){
+function ekiline_collection_transform_carousel(carrusel){
 
 	// Si no hay carrusel cancelar todo.
 	var loaditem = document.querySelector(carrusel);
@@ -255,7 +288,31 @@ function ekiline_collection_transform_modal(carrusel){
 		});
 	});
 };
-ekiline_collection_transform_modal(\'.carousel-multiple\');
+ekiline_collection_transform_carousel(\'.carousel-multiple\');
+
+function ekiline_collection_carousel_text_indicators(indicadores){
+	const controlExterno = document.querySelectorAll(indicadores);
+	// Verificar si existe text-indicators.
+	if (controlExterno.length > 0){
+		// Por cada control, agregar un evento.
+		controlExterno.forEach(control => {
+			// Verificar el carrusel padre.
+			const padreCarrusel = control.parentNode;
+			// Saber que indice se activa.
+			padreCarrusel.addEventListener(\'slide.bs.carousel\', e => {
+				// Quitar clase css active.
+				control.children[e.from].classList.remove(\'active\')
+				// Agregar clase css active.
+				control.children[e.to].classList.add(\'active\')
+				// Agregar un inidice de ayuda.
+				padreCarrusel.classList.remove(\'index-\'+[e.from])
+				padreCarrusel.classList.add(\'index-\'+[e.to])
+			});
+			padreCarrusel.classList.add(\'has-text-indicators\');
+		});
+	}
+}
+ekiline_collection_carousel_text_indicators(\'.carousel-text-indicators\');
 ';
 	return $code;
 }
@@ -341,6 +398,16 @@ function ekiline_collection_block_carousel_style_code() {
 	.carousel-multiple.x2 .carousel-inner .active.carousel-item-end,.carousel-multiple.x3 .carousel-inner .active.carousel-item-end,.carousel-multiple.x4 .carousel-inner .active.carousel-item-end,.carousel-multiple.x6 .carousel-inner .active.carousel-item-end{-webkit-transform:translate3d(100%,0,0);-moz-transform:translate3d(100%,0,0);-ms-transform:translate3d(100%,0,0);transform:translate3d(100%,0,0);}
 	.col-sm-1a5,.col-xs-1a5,.col-sm-1a7,.col-xs-1a7,.col-sm-1a8,.col-xs-1a8,.col-sm-1a9,.col-xs-1a9{width:100%;width:100%;}
 }
+/* Carrusel con controles extra */
+@keyframes animation_fadein_bottom{from{opacity:0;transform:translateY(100%);}to{opacity:1;}}
+@keyframes animation_grow_right{0%{width:0%;}100%{width:90%;}}
+.has-text-indicators .carousel-caption:not(.carousel-text-indicators){top:1.25rem;text-align:left;animation-duration:1s;animation-fill-mode:both;animation-name:animation_fadein_bottom;}
+@media screen and (min-width:768px){.has-text-indicators .carousel-caption:not(.carousel-text-indicators){width:40%;top:calc(100% / 4);}}
+.has-text-indicators .carousel-indicators:first-child{justify-content:start;}
+.has-text-indicators .carousel-text-indicators{left:70%;width:25%;top:1.25rem;margin-bottom:0px;right:auto;padding:0px;text-align:left;flex-direction:column;justify-content:center;z-index:1;}
+.has-text-indicators .carousel-text-indicators [data-bs-target]{padding-top:15px;padding-bottom:15px;transition:.6s ease;opacity:.5;}
+.has-text-indicators .carousel-text-indicators .active{opacity:1;}
+.has-text-indicators .carousel-text-indicators .active::after{content:"";height:3px;display:block;background-color:rgba(var(--bs-light-rgb),.5);animation:4s animation_grow_right;margin-top:10px;width:90%;}
 ';
 	return $custom_css;
 }
