@@ -318,7 +318,7 @@ function ekiline_collection_carousel_html( $carousel, $columns, $control, $indic
 						$active = ( 0 === $index ) ? 'active' : '';
 						?>
 						<li type="button" data-bs-target="#<?php echo esc_html( $uniq_id ); ?>" data-bs-slide-to="<?php echo esc_attr( $index ); ?>" class="<?php echo esc_attr( $active ); ?>">
-							<span class="h5"><?php echo esc_html( $slide['title'] ); ?></span>
+							<span class="h5"><?php echo esc_html( $indicator['title'] ); ?></span>
 						</li>
 					<?php } ?>
 				</ul>
