@@ -270,7 +270,10 @@ registerBlockType( 'ekiline-collection/ekiline-toast-item', {
 		return (
 		<div {...blockProps}>
 			<div class="toast-header">
-				<p class="me-auto my-0">{ attributes.content }</p>
+				<RichText.Content
+					tagName="p"
+					value={ attributes.content }
+					className="me-auto my-0" />
 				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
 			</div>
 			<div class="toast-body">

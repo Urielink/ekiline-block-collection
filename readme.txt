@@ -2,9 +2,9 @@
 Contributors:      urielink
 Requires at least: 5.8
 Tags:              block, collection, bootstrap
-Tested up to:      6.0.2
+Tested up to:      6.1
 Requires PHP:      7.0
-Stable tag:        0.1.5
+Stable tag:        0.1.6
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/license-list.html#GPLv2
 Donate link:       https://www.paypal.com/paypalme/urielink
@@ -25,6 +25,8 @@ Bootstrap components turned into WordPress editor blocks. Add new functionality 
 - **Toast**.
 - **Static carousel**.
 - **Dynamic carousel**.
+- **Offcanvas (new)**.
+
 
 HTML markup as well as classes and attributes have been respected to work with Bootstrap in its most recent version (5.2.X).
 CSS styles and JS scripts are included, maintaining the layout and behaviors.
@@ -62,6 +64,11 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 2. This is the second screen shot
 
 == Changelog ==
+
+= 0.1.6 =
+* WP 6.1 Compatibility Check.
+* Fix: Toast: title displayed HTML tags.
+* Improve: New Offcanvas Block.
 
 = 0.1.5 =
 * Fix: Carousel title.

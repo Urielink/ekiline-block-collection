@@ -20,6 +20,7 @@ import './tabs/index';
 import './modal/index';
 import './carousel/index';
 import './carousel-extra/index';
+import './offcanvas/index';
 
 /**
  * Incorporar bloques a coleccion.
