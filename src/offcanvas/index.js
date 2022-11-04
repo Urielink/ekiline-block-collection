@@ -26,7 +26,7 @@ const customIcon = createElement(
 	createElement(
 		'path',
 		{
-			d: 'M15.32,5.14l.64-.64,.64,.64,.76-.76-.64-.64,.63-.63-.76-.76-.63,.63-.63-.63-.76,.76,.63,.63-.64,.64,.76,.76Zm2.78-4.14H1.9c-.5,0-.9,.4-.9,.9V18.1c0,.5,.4,.9,.9,.9H18.1c.5,0,.9-.4,.9-.9V1.9c0-.5-.4-.9-.9-.9Zm-.18,16.92H2.08v-3.36h15.84v3.36Zm0-4.44H2.08V6.52h15.84v6.97Zm0-8.05H2.08V2.08h15.84v3.36Z'
+			d: 'M9.46,12.43h1.08v-1.74h-1.08v1.74Zm0,3.12h1.08v-1.74h-1.08v1.74Zm0-6.25h1.08v-1.74h-1.08v1.74ZM13.42,1H1V19H19V1h-5.58Zm0,16.92h-2.88v-.98h-1.08v.98H2.08V2.08h7.38v.97h1.08v-.97h2.88v15.84Zm3.51-6.76l-1.44-1.17,1.44-1.17v2.34Zm-7.47-4.98h1.08v-1.74h-1.08v1.74Z'
 		}
 	)
 );
@@ -127,6 +127,17 @@ registerBlockType('ekiline-collection/ekiline-offcanvas', {
 			type: 'string',
 			default: ' offcanvas', // -sm, -md, -lg, -xl, -xxl.
 		},
+		parentAnchor: {
+			type: 'string',
+		},
+	},
+
+	/**
+	 * Se ocupara contexto para pasar valores.
+	 * @link https://developer.wordpress.org/block-editor/reference-guides/block-api/block-context/
+	 */
+	 providesContext: {
+		'ekiline-offcanvas/anchor': 'anchor',
 	},
 
 	/**
@@ -172,9 +183,9 @@ registerBlockType('ekiline-collection/ekiline-offcanvas', {
 				return(
 					<div class="editor-offcanvas-route has-anchor">
 						<pre>
-						{ '#' + attributes.anchor }
-						<br></br>
-						{ __( 'Add this #anchor to a button and its advanced options.', 'ekiline-collection' ) }
+						{ __( 'Add this anchor: #', 'ekiline-collection' ) }
+						{ attributes.anchor }
+						{ __( ', in a button link field and in its advanced options.', 'ekiline-collection' ) }
 						</pre>
 					</div>
 					)
@@ -182,7 +193,7 @@ registerBlockType('ekiline-collection/ekiline-offcanvas', {
 
 			return(
 				<div class="editor-offcanvas-route">
-					{ __( 'Do not forget to add an anchor. ', 'ekiline-collection' )}
+					{ __( 'Do not forget to add an #anchor. ', 'ekiline-collection' )}
 				</div>
 			)
 		}
@@ -333,13 +344,23 @@ registerBlockType( 'ekiline-collection/ekiline-offcanvas-header', {
 	icon: 'feedback',
 	description:__( 'Offcanvas header content. ', 'ekiline-collection' ),
 	category: 'design',
+	//Se ocupa contexto para pasar valores desde el padre, en este caso el ID.
+	usesContext: ['ekiline-offcanvas/anchor'],
 	supports: {
 		html: false,
 		reusable: false,
 		multiple: false,
 		inserter: true,
 	},
-	edit: () => {
+	attributes: {
+		parentId: {
+			type: 'string',
+			default: '', // retrive parent Id (Anchor).
+		},
+	},
+	edit: ( props ) => {
+
+		const { attributes, setAttributes } = props;
 
 		// Restringir los bloques, Cargar un preset.
 		const PARENT_ALLOWED_BLOCKS = [ 'core/heading', 'core/paragraph' ];
@@ -356,6 +377,11 @@ registerBlockType( 'ekiline-collection/ekiline-offcanvas-header', {
 			className: 'editor-offcanvas-header',
 		} );
 
+		// Precargar nombre de ID Padre en objetos internos.
+		if( !attributes.parentId || ( attributes.parentId !== props.context['ekiline-offcanvas/anchor'] )  ){
+			setAttributes( { parentId: props.context['ekiline-offcanvas/anchor'] } )
+		}
+
 		return (
 			<div { ...blockProps }>
 				<InnerBlocks
@@ -366,7 +392,7 @@ registerBlockType( 'ekiline-collection/ekiline-offcanvas-header', {
 		);
 	},
 
-	save: () => {
+	save: ( { attributes } ) => {
 
 		// Clases y atributos auxiliares, incluir save.
 		const blockProps = useBlockProps.save( {
@@ -376,7 +402,12 @@ registerBlockType( 'ekiline-collection/ekiline-offcanvas-header', {
 		return (
 			<div { ...blockProps }>
 				<InnerBlocks.Content />
-				<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"/>
+				<button
+					type="button"
+					class="btn-close"
+					data-bs-dismiss="offcanvas"
+					data-bs-target={ (attributes.parentId)?'#' + attributes.parentId:null }
+					aria-label="Close"/>
 			</div>
 		);
 	},
@@ -531,7 +562,7 @@ const withAdvancedControlsBtnOffcanvas = createHigherOrderComponent( ( BlockEdit
 							/>
 							{/* Cerrar offcanvas */}
 							<ToggleControl
-								label={ __( 'Close offcanvas button.', 'ekiline-collection'  ) }
+								label={ __( 'Close offcanvas button?', 'ekiline-collection'  ) }
 								checked={ ! closeOffcanvas }
 								onChange={ () => setAttributes( {  closeOffcanvas: ! closeOffcanvas } ) }
 								help={ ! closeOffcanvas ? __( 'Yes.', 'ekiline-collection'  ) : __( 'No.', 'ekiline-collection'  ) }

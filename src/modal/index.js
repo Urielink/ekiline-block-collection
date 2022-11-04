@@ -612,7 +612,7 @@ const withAdvancedControlsBtn = createHigherOrderComponent( ( BlockEdit ) => {
 							/>
 							{/* Nuevo: Cerrar modal */}
 							<ToggleControl
-								label={ __( 'Close modal button.', 'ekiline-collection'  ) }
+								label={ __( 'Close modal button?', 'ekiline-collection'  ) }
 								checked={ ! closeModal }
 								onChange={ () => setAttributes( {  closeModal: ! closeModal } ) }
 								help={ ! closeModal ? __( 'Yes.', 'ekiline-collection'  ) : __( 'No.', 'ekiline-collection'  ) }

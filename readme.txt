@@ -25,7 +25,7 @@ Bootstrap components turned into WordPress editor blocks. Add new functionality 
 - **Toast**.
 - **Static carousel**.
 - **Dynamic carousel**.
-- **Offcanvas (new)**.
+- **Offcanvas (new!)**.
 
 
 HTML markup as well as classes and attributes have been respected to work with Bootstrap in its most recent version (5.2.X).
@@ -66,9 +66,10 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 == Changelog ==
 
 = 0.1.6 =
-* WP 6.1 Compatibility Check.
+* WP 6.1 Compatibility Check, works fine with new theme: Twenty Twenty-Three.
 * Fix: Toast: title displayed HTML tags.
 * Improve: New Offcanvas Block.
+* Update: Language files.
 
 = 0.1.5 =
 * Fix: Carousel title.
