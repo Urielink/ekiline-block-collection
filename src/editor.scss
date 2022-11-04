@@ -609,3 +609,39 @@
   margin-top:10px;
   width:90%;
 }
+
+/** offcanvas **/
+.wp-block-ekiline-collection-ekiline-offcanvas {
+	border: 1px dashed #c8c8c8;
+	border-radius: 2px !important;
+}
+
+.wp-block-ekiline-collection-ekiline-offcanvas.is-selected,
+.wp-block-ekiline-collection-ekiline-offcanvas.has-child-selected {
+	border: 1px solid #000000;
+}
+
+.editor-offcanvas-header{
+	border-bottom: 1px solid #c8c8c8;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.editor-offcanvas-body{
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.editor-offcanvas-route:not(.has-anchor){
+	background-color:#000;
+	color: #fff;
+	padding: 5px;
+	margin: 0px;
+}
+
+.editor-offcanvas-route.has-anchor{
+	background-color: #efefef;
+}
+.editor-offcanvas-route pre{
+	margin-bottom: 0px !important;
+	padding: 10px;
+}

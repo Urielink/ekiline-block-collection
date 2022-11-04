@@ -26,7 +26,7 @@ const customIcon = createElement(
 	createElement(
 		'path',
 		{
-			d: 'M15.32,5.14l.64-.64,.64,.64,.76-.76-.64-.64,.63-.63-.76-.76-.63,.63-.63-.63-.76,.76,.63,.63-.64,.64,.76,.76Zm2.78-4.14H1.9c-.5,0-.9,.4-.9,.9V18.1c0,.5,.4,.9,.9,.9H18.1c.5,0,.9-.4,.9-.9V1.9c0-.5-.4-.9-.9-.9Zm-.18,16.92H2.08v-3.36h15.84v3.36Zm0-4.44H2.08V6.52h15.84v6.97Zm0-8.05H2.08V2.08h15.84v3.36Z'
+			d: 'M9.46,12.43h1.08v-1.74h-1.08v1.74Zm0,3.12h1.08v-1.74h-1.08v1.74Zm0-6.25h1.08v-1.74h-1.08v1.74ZM13.42,1H1V19H19V1h-5.58Zm0,16.92h-2.88v-.98h-1.08v.98H2.08V2.08h7.38v.97h1.08v-.97h2.88v15.84Zm3.51-6.76l-1.44-1.17,1.44-1.17v2.34Zm-7.47-4.98h1.08v-1.74h-1.08v1.74Z'
 		}
 	)
 );
@@ -53,33 +53,35 @@ const customIcon = createElement(
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  *
- * Bloques necesarios para modal.
- * - .modal
- * - - .modal-dialog
- * - - - .modal-content
- * - - - - .modal-header, modal-title, btn-close
- * - - - - .modal-body, [bloques]
- * - - - - .modal-footer, btn-close, [bloques]
- *
+ * Bloques necesarios para offcanvas.
+ * - .offcanvas
+ * - - .offcanvas-header
+ * - - - variable: h5
+ * - - - variable: .btn-close
+ * - - .offcanvas-body
+ * - - - variable: [bloques]
  * Variables:
- * - staticBackdrop = data-bs-backdrop="static"
- * - longcontent = .modal-dialog-scrollable
- * - centrado = modal-dialog-centered
- * - size = modal-xl, modal-lg, modal-sm, modal-fullscreen
+ * attributos:
+ * - anchor: true
+ * Look:
+ * - ocPosition: string, default: offcanvas-end. Opciones:  *-start, end, top, bottom
+ * - ocWidth: string, default: ''. // Opciones: w-25, w-50, w-75, w-100
+ * - ocHeight: string, default: ''. // Opciones: h-25, h-50, h-75, h-100
+ * - ocScroll: boolean, default: false. // true. attr: data-bs-scroll="true"
+ * - ocBackdrop: string, default: true. // Opciones: false,static. attr: data-bs-backdrop="false"
+ * - ocDisplay: string, default: offcanvas. Opciones: offcanvas-sm, md, lg, xl, xxl.
  *
  * Referencias para anidado.
  * @ref https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/nested-blocks-inner-blocks/
- *
  * No mostrar en inspector.
  * @ref https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/
- *
  * Uso de Lock
  * @ref https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/nested-blocks-inner-blocks/
  * @ref https://github.com/WordPress/gutenberg/blob/17baf6f33c391daa44daf8b3465f27aba8cf200d/docs/reference-guides/block-api/block-templates.md#individual-block-locking.
  * @ref https://github.com/WordPress/gutenberg/blob/17baf6f33c391daa44daf8b3465f27aba8cf200d/packages/block-editor/src/components/inner-blocks/README.md#templatelock
  *
  */
-registerBlockType('ekiline-collection/ekiline-modal', {
+registerBlockType('ekiline-collection/ekiline-offcanvas', {
 	/**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */
@@ -89,7 +91,7 @@ registerBlockType('ekiline-collection/ekiline-modal', {
 	 * Parametros de alta.
 	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
 	 */
-	title: __( 'Modal', 'ekiline-collection' ),
+	title: __( 'Offcanvas', 'ekiline-collection' ),
 	icon: customIcon,
 	description: __( 'Add your content here, then invoque with a link anchor #anchor.', 'ekiline-collection' ),
 	category: 'design',
@@ -101,34 +103,41 @@ registerBlockType('ekiline-collection/ekiline-modal', {
 	 * Argumentos para personalizacion.
 	 */
 	attributes:{
-		modalShow: {
+		ocPosition: {
 			type: 'string',
-			default: 'default', // top, right, bottom, left.
+			default: ' offcanvas-end', // -start, -end, -top, -bottom.
 		},
-		modalSize: {
+		ocWidth: {
 			type: 'string',
-			default: 'default', // small, large, extralarge, fullwindow.
+			default: '', // w-25, w-50, w-75, w-100.
 		},
-		modalAlign: {
+		ocHeight: {
+			type: 'string',
+			default: '', // h-25, h-50, h-75, h-100.
+		},
+		ocScroll: {
 			type: 'boolean',
-			default: true, // center.
+			default: false, // true = data-bs-scroll="true".
 		},
-		modalBackdrop: {
-			type: 'boolean',
-			default: true, // cerrar modal dando clic fuera.
+		ocBackdrop: {
+			type: 'string',
+			default: 'true', // false, static = data-bs-backdrop="false".
 		},
-		modalKeyboard: {
-			type: 'boolean',
-			default: true, // cerrar modal con teclado.
+		ocDisplay: {
+			type: 'string',
+			default: ' offcanvas', // -sm, -md, -lg, -xl, -xxl.
 		},
-		modalGrow: {
-			type: 'boolean',
-			default: false,
+		parentAnchor: {
+			type: 'string',
 		},
-		modalTime: {
-			type: 'number',
-			default: 0,
-		},
+	},
+
+	/**
+	 * Se ocupara contexto para pasar valores.
+	 * @link https://developer.wordpress.org/block-editor/reference-guides/block-api/block-context/
+	 */
+	 providesContext: {
+		'ekiline-offcanvas/anchor': 'anchor',
 	},
 
 	/**
@@ -141,25 +150,18 @@ registerBlockType('ekiline-collection/ekiline-modal', {
 
 		// Restringir los bloques, Cargar un preset.
 		const PARENT_ALLOWED_BLOCKS = [
-			'ekiline-collection/ekiline-modal-header',
-			'ekiline-collection/ekiline-modal-body',
-			'ekiline-collection/ekiline-modal-footer'
+			'ekiline-collection/ekiline-offcanvas-header',
+			'ekiline-collection/ekiline-offcanvas-body',
 		];
 
 		const CHILD_TEMPLATE = [
-			[ 'ekiline-collection/ekiline-modal-header', {
+			[ 'ekiline-collection/ekiline-offcanvas-header', {
 				lock: {
 					remove: false,
 					move: true,
 				}
 			} ],
-			[ 'ekiline-collection/ekiline-modal-body', {
-				lock: {
-					remove: false,
-					move: true,
-				}
-			} ],
-			[ 'ekiline-collection/ekiline-modal-footer', {
+			[ 'ekiline-collection/ekiline-offcanvas-body', {
 				lock: {
 					remove: false,
 					move: true,
@@ -169,29 +171,29 @@ registerBlockType('ekiline-collection/ekiline-modal', {
 
 		// personalizar clase
 		const blockProps = useBlockProps( {
-			className: 'group-modal',
+			className: 'group-offcanvas',
 		} );
 
 		/**
 		 * Control personalizado: recordatorio
 		 */
-		function ModalUserRemind(){
+		function OffcanvasUserRemind(){
 
 			if ( attributes.anchor ){
 				return(
-					<div class="editor-modal-route has-anchor">
+					<div class="editor-offcanvas-route has-anchor">
 						<pre>
-						{ '#' + attributes.anchor }
-						<br></br>
-						{ __( 'Add this #anchor to a button and its advanced options.', 'ekiline-collection' ) }
+						{ __( 'Add this anchor: #', 'ekiline-collection' ) }
+						{ attributes.anchor }
+						{ __( ', in a button link field and in its advanced options.', 'ekiline-collection' ) }
 						</pre>
 					</div>
 					)
 			}
 
 			return(
-				<div class="editor-modal-route">
-					{ __( 'Do not forget to add an anchor. ', 'ekiline-collection' )}
+				<div class="editor-offcanvas-route">
+					{ __( 'Do not forget to add an #anchor. ', 'ekiline-collection' )}
 				</div>
 			)
 		}
@@ -200,77 +202,87 @@ registerBlockType('ekiline-collection/ekiline-modal', {
 			<div { ...blockProps }>
 				{/* Inspector controles */}
 				<InspectorControls>
-					<PanelBody title={ __( 'Modal Params', 'ekiline-collection' ) } initialOpen={ true }>
+					<PanelBody title={ __( 'Offcanvas Params', 'ekiline-collection' ) } initialOpen={ true }>
 
 					<SelectControl
-						label={ __( 'Rise modal', 'ekiline-collection' ) }
-						value={ attributes.modalShow }
+						label={ __( 'Position', 'ekiline-collection' ) }
+						value={ attributes.ocPosition }
 						options={ [
-							{ label: __( 'Default', 'ekiline-collection' ), value: '' },
-							{ label: __( 'Right', 'ekiline-collection' ), value: ' right-aside' },
-							{ label: __( 'Bottom', 'ekiline-collection' ), value: ' move-from-bottom' },
-							{ label: __( 'Left', 'ekiline-collection' ), value: ' left-aside' },
+							{ label: __( 'Right', 'ekiline-collection' ), value: ' offcanvas-end' },
+							{ label: __( 'Bottom', 'ekiline-collection' ), value: ' offcanvas-bottom' },
+							{ label: __( 'Left', 'ekiline-collection' ), value: ' offcanvas-start' },
+							{ label: __( 'Top', 'ekiline-collection' ), value: ' offcanvas-top' },
 						] }
-						onChange={ ( modalShow ) =>
-							setAttributes( { modalShow } )
+						onChange={ ( ocPosition ) =>
+							setAttributes( { ocPosition } )
 						}
 					/>
 
 					<SelectControl
-						label={ __( 'Size modal', 'ekiline-collection' ) }
-						value={ attributes.modalSize }
+						label={ __( 'Width', 'ekiline-collection' ) }
+						value={ attributes.ocWidth }
 						options={ [
 							{ label: __( 'Default', 'ekiline-collection' ), value: '' },
-							{ label: __( 'Small', 'ekiline-collection' ), value: ' modal-sm' },
-							{ label: __( 'Large', 'ekiline-collection' ), value: ' modal-lg' },
-							{ label: __( 'Extra Large', 'ekiline-collection' ), value: ' modal-xl' },
-							{ label: __( 'Full window', 'ekiline-collection' ), value: ' modal-fullscreen' },
+							{ label: __( 'Small', 'ekiline-collection' ), value: ' w-25' },
+							{ label: __( 'Half', 'ekiline-collection' ), value: ' w-50' },
+							{ label: __( 'Large', 'ekiline-collection' ), value: ' w-75' },
+							{ label: __( 'Full window', 'ekiline-collection' ), value: ' w-100' },
 						] }
-						onChange={ ( modalSize ) =>
-							setAttributes( { modalSize } )
+						onChange={ ( ocWidth ) =>
+							setAttributes( { ocWidth } )
 						}
 					/>
 
-					<ToggleControl
-						label={ __( 'Center in window', 'ekiline-collection' ) }
-						checked={ attributes.modalAlign }
-						onChange={ ( modalAlign ) =>
-							setAttributes( { modalAlign } )
+					<SelectControl
+						label={ __( 'Height', 'ekiline-collection' ) }
+						value={ attributes.ocHeight }
+						options={ [
+							{ label: __( 'Default', 'ekiline-collection' ), value: '' },
+							{ label: __( 'Small', 'ekiline-collection' ), value: ' h-25' },
+							{ label: __( 'Half', 'ekiline-collection' ), value: ' h-50' },
+							{ label: __( 'Large', 'ekiline-collection' ), value: ' h-75' },
+							{ label: __( 'Full window', 'ekiline-collection' ), value: ' h-100' },
+						] }
+						onChange={ ( ocHeight ) =>
+							setAttributes( { ocHeight } )
 						}
 					/>
+
+					<SelectControl
+						label={ __( 'Display run', 'ekiline-collection' ) }
+						value={ attributes.ocDisplay }
+						options={ [
+							{ label: __( 'All', 'ekiline-collection' ), value: ' offcanvas' },
+							{ label: __( 'Small', 'ekiline-collection' ), value: ' offcanvas-sm' },
+							{ label: __( 'Medium', 'ekiline-collection' ), value: ' offcanvas-md' },
+							{ label: __( 'Large', 'ekiline-collection' ), value: ' offcanvas-lg' },
+						] }
+						onChange={ ( ocDisplay ) =>
+							setAttributes( { ocDisplay } )
+						}
+						help={ __( 'Run only on specific screen sizes', 'ekiline-collection' ) }
+					/>
+
 					<ToggleControl
-						label={ __( 'Enable background click to close', 'ekiline-collection' ) }
-						checked={ attributes.modalBackdrop }
-						onChange={ ( modalBackdrop ) =>
-							setAttributes( { modalBackdrop } )
+						label={ __( 'Keep scroll window', 'ekiline-collection' ) }
+						checked={ attributes.ocScroll }
+						onChange={ ( ocScroll ) =>
+							setAttributes( { ocScroll } )
 						}
 					/>
-					<ToggleControl
-						label={ __( 'Enable ESC key to close', 'ekiline-collection' ) }
-						checked={ attributes.modalKeyboard }
-						onChange={ ( modalKeyboard ) =>
-							setAttributes( { modalKeyboard } )
+
+					<SelectControl
+						label={ __( 'Backdrop behavior', 'ekiline-collection' ) }
+						value={ attributes.ocBackdrop }
+						options={ [
+							{ label: __( 'Default', 'ekiline-collection' ), value: 'true' },
+							{ label: __( 'Static', 'ekiline-collection' ), value: 'static' },
+							{ label: __( 'False', 'ekiline-collection' ), value: 'false' },
+						] }
+						onChange={ ( ocBackdrop ) =>
+							setAttributes( { ocBackdrop } )
 						}
-					/>
-					<ToggleControl
-						label={ __( 'Show resize modal button', 'ekiline-collection' ) }
-						checked={ attributes.modalGrow }
-						onChange={ ( modalGrow ) =>
-							setAttributes( { modalGrow } )
-						}
-					/>
-					<TextControl
-						label={ __( 'Show with timer', 'ekiline-collection' ) }
-						type="number"
-						value={ attributes.modalTime }
-						onChange={ ( newval ) =>
-							setAttributes( { modalTime: parseInt( newval ) } )
-						}
-						help={
-							( attributes.modalTime > 0 )
-							? __( 'Run after page load ', 'ekiline-collection' ) + attributes.modalTime + __( ' milliseconds.', 'ekiline-collection' )
-							: attributes.modalTime + __( ' do nothing.', 'ekiline-collection' )
-						}
+						help={ __( 'Run only on specific screen sizes', 'ekiline-collection' ) }
 					/>
 
 					</PanelBody>
@@ -283,7 +295,7 @@ registerBlockType('ekiline-collection/ekiline-modal', {
 					// templateLock="all"
 					// templateLock="insert"
 				/>
-				<ModalUserRemind/>
+				<OffcanvasUserRemind/>
 			</div>
 		);
 	},
@@ -297,36 +309,15 @@ registerBlockType('ekiline-collection/ekiline-modal', {
 		// Clases y atributos auxiliares, incluir save.
 		const blockProps = useBlockProps.save( {
 			className:
-				'group-modal modal fade'
-				+ ( attributes.modalShow != 'default' ? attributes.modalShow : '' )
+				'group-offcanvas'
+				+ attributes.ocDisplay
+				+ attributes.ocPosition
+				+ attributes.ocWidth
+				+ attributes.ocHeight
 			,
-			'data-bs-backdrop' : attributes.modalBackdrop,
-			'data-bs-keyboard' : attributes.modalKeyboard,
-			'data-ek-time'   : ( attributes.modalTime || null ),
+			'data-bs-backdrop' : attributes.ocBackdrop,
+			'data-bs-scroll' : attributes.ocScroll,
 		} );
-
-		const dialogProps = useBlockProps.save({
-			className:
-			'modal-dialog'
-			+ ( attributes.modalAlign ? ' modal-dialog-centered' : '' )
-			+ ( attributes.modalSize != 'default' ? attributes.modalSize : '' )
-			,
-		});
-
-	// Componente Boton.
-		function ModalGrowBtn() {
-			if ( attributes.modalGrow ) {
-				return (
-					<button
-						type="button"
-						class="modal-resize btn btn-sm position-absolute bottom-0 mb-2 ms-1"
-						aria-label={__( 'play btn', 'ekiline-collection' )}>
-							<span class="dashicons dashicons-editor-expand"></span>
-					</button>
-				)
-			}
-		}
-
 
 		return (
 			<div
@@ -336,13 +327,7 @@ registerBlockType('ekiline-collection/ekiline-modal', {
 				aria-labelledby={ blockProps.id + 'Label' }
 				aria-hidden="true"
 			>
-				<div class={dialogProps.className}>
-					<div class="modal-content">
-						<InnerBlocks.Content />
-						<ModalGrowBtn/>
-					</div>
-				</div>
-
+				<InnerBlocks.Content />
 			</div>
 		);
 	},
@@ -350,37 +335,52 @@ registerBlockType('ekiline-collection/ekiline-modal', {
 });
 
 /**
- * - ekiline-modal-header
+ * - ekiline-offcanvas-header
  */
 
-registerBlockType( 'ekiline-collection/ekiline-modal-header', {
-	title: __( 'Modal header', 'ekiline-collection' ),
-	parent: ['ekiline-collection/ekiline-modal'],
+registerBlockType( 'ekiline-collection/ekiline-offcanvas-header', {
+	title: __( 'Offcanvas header', 'ekiline-collection' ),
+	parent: ['ekiline-collection/ekiline-offcanvas'],
 	icon: 'feedback',
-	description:__( 'Modal header content. ', 'ekiline-collection' ),
+	description:__( 'Offcanvas header content. ', 'ekiline-collection' ),
 	category: 'design',
+	//Se ocupa contexto para pasar valores desde el padre, en este caso el ID.
+	usesContext: ['ekiline-offcanvas/anchor'],
 	supports: {
 		html: false,
 		reusable: false,
 		multiple: false,
 		inserter: true,
 	},
-	edit: () => {
+	attributes: {
+		parentId: {
+			type: 'string',
+			default: '', // retrive parent Id (Anchor).
+		},
+	},
+	edit: ( props ) => {
+
+		const { attributes, setAttributes } = props;
 
 		// Restringir los bloques, Cargar un preset.
 		const PARENT_ALLOWED_BLOCKS = [ 'core/heading', 'core/paragraph' ];
 		// Cargar un preset.
 		const CHILD_TEMPLATE = [
 			[ 'core/heading', {
-				content: __( 'Add modal title', 'ekiline-collection' ),
+				content: __( 'Add offcanvas title', 'ekiline-collection' ),
 				level: 4,
 			} ],
 		];
 
 		// personalizar clase
 		const blockProps = useBlockProps( {
-			className: 'editor-modal-header',
+			className: 'editor-offcanvas-header',
 		} );
+
+		// Precargar nombre de ID Padre en objetos internos.
+		if( !attributes.parentId || ( attributes.parentId !== props.context['ekiline-offcanvas/anchor'] )  ){
+			setAttributes( { parentId: props.context['ekiline-offcanvas/anchor'] } )
+		}
 
 		return (
 			<div { ...blockProps }>
@@ -392,17 +392,22 @@ registerBlockType( 'ekiline-collection/ekiline-modal-header', {
 		);
 	},
 
-	save: () => {
+	save: ( { attributes } ) => {
 
 		// Clases y atributos auxiliares, incluir save.
 		const blockProps = useBlockProps.save( {
-			className: 'modal-header',
+			className: 'offcanvas-header',
 		} );
 
 		return (
 			<div { ...blockProps }>
 				<InnerBlocks.Content />
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
+				<button
+					type="button"
+					class="btn-close"
+					data-bs-dismiss="offcanvas"
+					data-bs-target={ (attributes.parentId)?'#' + attributes.parentId:null }
+					aria-label="Close"/>
 			</div>
 		);
 	},
@@ -411,14 +416,14 @@ registerBlockType( 'ekiline-collection/ekiline-modal-header', {
 
 
 /**
- * - ekiline-modal-body
+ * - ekiline-offcanvas-body
  */
 
-registerBlockType( 'ekiline-collection/ekiline-modal-body', {
-	title: __( 'Modal body content', 'ekiline-collection' ),
-	parent: ['ekiline-collection/ekiline-modal'],
+registerBlockType( 'ekiline-collection/ekiline-offcanvas-body', {
+	title: __( 'Offcanvas body content', 'ekiline-collection' ),
+	parent: ['ekiline-collection/ekiline-offcanvas'],
 	icon: 'feedback',
-	description:__( 'Modal body content. ', 'ekiline-collection' ),
+	description:__( 'Offcanvas body content. ', 'ekiline-collection' ),
 	category: 'design',
 	supports: {
 		html: false,
@@ -430,12 +435,12 @@ registerBlockType( 'ekiline-collection/ekiline-modal-body', {
 
 		// Cargar un preset.
 		const CHILD_TEMPLATE = [
-			[ 'core/paragraph', { content: __( 'Add modal content blocks', 'ekiline-collection' ) } ],
+			[ 'core/paragraph', { content: __( 'Add offcanvas content blocks', 'ekiline-collection' ) } ],
 		];
 
 		// personalizar clase
 		const blockProps = useBlockProps( {
-			className: 'editor-modal-body',
+			className: 'editor-offcanvas-body',
 		} );
 
 		return (
@@ -451,7 +456,7 @@ registerBlockType( 'ekiline-collection/ekiline-modal-body', {
 
 		// Clases y atributos auxiliares, incluir save.
 		const blockProps = useBlockProps.save( {
-			className: 'modal-body',
+			className: 'offcanvas-body',
 		} );
 
 		return (
@@ -464,61 +469,6 @@ registerBlockType( 'ekiline-collection/ekiline-modal-body', {
 } );
 
 
-/**
- * - ekiline-modal-footer
- */
-
-registerBlockType( 'ekiline-collection/ekiline-modal-footer', {
-	title: __( 'Modal footer', 'ekiline-collection' ),
-	parent: ['ekiline-collection/ekiline-modal'],
-	icon: 'feedback',
-	description:__( 'Inner footer content. ', 'ekiline-collection' ),
-	category: 'design',
-	supports: {
-		html: false,
-		reusable: false,
-		multiple: false,
-		inserter: true,
-	},
-	edit: () => {
-
-		// Restringir los bloques, Cargar un preset.
-		const PARENT_ALLOWED_BLOCKS = [ 'core/paragraph', 'core/buttons', 'core/button' ];
-		// Cargar un preset.
-		const CHILD_TEMPLATE = [
-			[ 'core/paragraph', { content: __( 'Add modal footer text', 'ekiline-collection' ) } ],
-		];
-
-		// personalizar clase
-		const blockProps = useBlockProps( {
-			className: 'editor-modal-footer',
-		} );
-
-		return (
-			<div { ...blockProps }>
-				<InnerBlocks
-					allowedBlocks={ PARENT_ALLOWED_BLOCKS }
-					template={ CHILD_TEMPLATE }
-				/>
-			</div>
-		);
-	},
-
-	save: () => {
-
-		// Clases y atributos auxiliares, incluir save.
-		const blockProps = useBlockProps.save( {
-			className: 'modal-footer',
-		} );
-
-		return (
-			<div { ...blockProps }>
-				<InnerBlocks.Content />
-			</div>
-		);
-	},
-
-} );
 
 
 /**
@@ -562,18 +512,18 @@ const allowedBlocks = [ 'core/button', 'core/buttons' ];
  * @param {*} settings Valores nuevos a incluir
  * @returns Deveulve los valores modificados.
  */
-function addAttributesBtn( settings ) {
+function addAttributesBtnOffcanvas( settings ) {
 
 	//Restriccion
 	if( allowedBlocks.includes( settings.name ) ){
 
 		settings.attributes = Object.assign( settings.attributes, {
-			addDataBtn: {
+			addDataBtnOffcanvas: {
 				type: 'string',
 				default: '',
 			},
-			// Nuevo: Cerrar modal
-			closeModal:{
+			// Cerrar offcanvas.
+			closeOffcanvas:{
 				type: 'boolean',
 				default: true,
 			}
@@ -590,12 +540,12 @@ function addAttributesBtn( settings ) {
  *
  * @return {function} Devuelve el BlockEdit modificado.
  */
-const withAdvancedControlsBtn = createHigherOrderComponent( ( BlockEdit ) => {
+const withAdvancedControlsBtnOffcanvas = createHigherOrderComponent( ( BlockEdit ) => {
 	return ( props ) => {
 
-		// Nuevo: Cerrar modal
+		// Cerrar offcanvas.
 		const{ attributes, setAttributes } = props;
-		const{ closeModal } = attributes;
+		const{ closeOffcanvas } = attributes;
 
 		if( allowedBlocks.includes( props.name ) ){
 
@@ -606,16 +556,16 @@ const withAdvancedControlsBtn = createHigherOrderComponent( ( BlockEdit ) => {
 					{props.attributes.url && (
 						<InspectorAdvancedControls>
 							<TextControl
-								label={ __( 'Modal anchor for execute it.', 'ekiline-collection'  ) }
-								value={props.attributes.addDataBtn}
-								onChange={newData => props.setAttributes({addDataBtn: newData})}
+								label={ __( 'Offcanvas anchor for execute it.', 'ekiline-collection'  ) }
+								value={props.attributes.addDataBtnOffcanvas}
+								onChange={newData => props.setAttributes({addDataBtnOffcanvas: newData})}
 							/>
-							{/* Nuevo: Cerrar modal */}
+							{/* Cerrar offcanvas */}
 							<ToggleControl
-								label={ __( 'Close modal button?', 'ekiline-collection'  ) }
-								checked={ ! closeModal }
-								onChange={ () => setAttributes( {  closeModal: ! closeModal } ) }
-								help={ ! closeModal ? __( 'Yes.', 'ekiline-collection'  ) : __( 'No.', 'ekiline-collection'  ) }
+								label={ __( 'Close offcanvas button?', 'ekiline-collection'  ) }
+								checked={ ! closeOffcanvas }
+								onChange={ () => setAttributes( {  closeOffcanvas: ! closeOffcanvas } ) }
+								help={ ! closeOffcanvas ? __( 'Yes.', 'ekiline-collection'  ) : __( 'No.', 'ekiline-collection'  ) }
 							/>
 						</InspectorAdvancedControls>
 					)}
@@ -625,7 +575,7 @@ const withAdvancedControlsBtn = createHigherOrderComponent( ( BlockEdit ) => {
 		}
 		return <BlockEdit {...props} />;
 	};
-}, 'withAdvancedControlsBtn');
+}, 'withAdvancedControlsBtnOffcanvas');
 
 /**
  * Guardar el nuevo valor, en este caso como atributo.
@@ -636,14 +586,14 @@ const withAdvancedControlsBtn = createHigherOrderComponent( ( BlockEdit ) => {
  *
  * @return {Object} Devuelve los nuevos atributos al bloque.
  */
-function applyExtraClassBtn( element, block, attributes ) {
+function applyExtraClassBtnOffcanvas( element, block, attributes ) {
 
-	// Nuevo: Cerrar modal, sobrescribe los atributos.
-	const { closeModal } = attributes;
+	// Nuevo: Cerrar offcanvas, sobrescribe los atributos.
+	const { closeOffcanvas } = attributes;
 
 	if( allowedBlocks.includes( block.name ) ){
 
-		if( attributes.addDataBtn && attributes.url && closeModal ) {
+		if( attributes.addDataBtnOffcanvas && attributes.url && closeOffcanvas ) {
 
 			return wp.element.cloneElement(
 				element,
@@ -651,15 +601,15 @@ function applyExtraClassBtn( element, block, attributes ) {
 				wp.element.cloneElement(
 					element.props.children,
 					{
-						'data-bs-target': attributes.addDataBtn,
-						'data-bs-toggle': 'modal',
+						'data-bs-target': attributes.addDataBtnOffcanvas,
+						'data-bs-toggle': 'offcanvas',
 						// 'type': 'button',
 					}
 				)
 			);
 		}
 
-		if ( !closeModal && attributes.addDataBtn && attributes.url ) {
+		if ( !closeOffcanvas && attributes.addDataBtnOffcanvas && attributes.url ) {
 
 			return wp.element.cloneElement(
 				element,
@@ -667,7 +617,7 @@ function applyExtraClassBtn( element, block, attributes ) {
 				wp.element.cloneElement(
 					element.props.children,
 					{
-						'data-bs-dismiss': 'modal',
+						'data-bs-dismiss': 'offcanvas',
 					}
 				)
 			);
@@ -680,18 +630,18 @@ function applyExtraClassBtn( element, block, attributes ) {
 
 addFilter(
 	'blocks.registerBlockType',
-	'ekilineModalBtnData/dataAttribute',
-	addAttributesBtn
+	'ekilineOffcanvasBtnData/dataAttribute',
+	addAttributesBtnOffcanvas
 );
 
 addFilter(
 	'editor.BlockEdit',
-	'ekilineModalBtnData/dataInput',
-	withAdvancedControlsBtn
+	'ekilineOffcanvasBtnData/dataInput',
+	withAdvancedControlsBtnOffcanvas
 );
 
 addFilter(
 	'blocks.getSaveElement',
-	'ekilineModalBtnData/dataModified',
-	applyExtraClassBtn
+	'ekilineOffcanvasBtnData/dataModified',
+	applyExtraClassBtnOffcanvas
 );
