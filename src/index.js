@@ -21,6 +21,7 @@ import './modal/index';
 import './carousel/index';
 import './carousel-extra/index';
 import './offcanvas/index';
+import './hooks/index';
 
 /**
  * Incorporar bloques a coleccion.
