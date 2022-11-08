@@ -104,8 +104,7 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 == Upgrade Notice ==
 
 New carousel design options!
-- Lateral control with titles.
-- Show / Hide caption options.
+Link images and activate modal, offcanvas and more!
 
 == About author ==
 
