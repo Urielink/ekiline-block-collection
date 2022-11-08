@@ -68,6 +68,7 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 = 0.1.7 =
 * Improve: Extend link control (images). Add options to trigger collapsing, modal or offcanvas.
 * Enahnce: Extend link control (buttons). Add options to trigger collapsing, modal or offcanvas.
+* Update: Language files.
 
 = 0.1.6 =
 * WP 6.1 Compatibility Check, works fine with new theme: Twenty Twenty-Three.
