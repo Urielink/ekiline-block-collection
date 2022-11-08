@@ -1,37 +1,8 @@
 /**
- * Tarea desarrollar un nuevo boton para toolbar.
- * Este debe aparecer en core/paragraph, button, image, gallery.
- * - verificar el dato.
- * Al dar click ejecuta un popover.
- * Dentro del popover lanza un __experimentalLinkControl con opciones personalizadas.
- * Las opciones son:
- * - Ejecutar: modal, Bslink, colapse. Esto debe estar abierto a inlcuir futuras opciones.
- * Problema:
- * - Averiguar como seleccionar una palabra.
- * - Averigaur como convertirla en enlace con atributos propios:
- * - - base: rel, target, follow.
- * - - extra:
- * class="dropdown-toggle"
- * type="button"
- * href="#ejemplo"
- * data-bs-target="#ejemplo"
- * data-bs-toggle="Bslink*", collapse*, dropdown, modal*, popover, tooltip
- * role="button"
- * aria-controls="ejemplo"
- * aria-expanded="false"
- * data-bs-placement="top", right, bottom, left.
- * data-bs-title="Custom popover"
- * data-bs-content="Top popover"
- * data-bs-custom-class="custom-popover"
- * data-bs-html="true"
- * - data-bs-title="<em>Tooltip</em>"
+ * Nuevo complemento:
+ * Permitir enlazar componentes bs desde imagen.
  *
- * - - cerrar:
- * class="btn-close"
- * data-bs-dismiss="Bslink"
- * aria-label="Close"
- *
- * Referencia de bloques:
+ * Referencia de bloques y filtros:
  * @see https://developer.wordpress.org/block-editor/reference-guides/core-blocks/
  * @see https://joshpress.net/blog/add-block-attributes
  * @see https://jschof.com/gutenberg-blocks/using-gutenberg-filters-to-extend-blocks/
@@ -40,7 +11,6 @@
  * @see https://stackoverflow.com/questions/36064277/how-to-inject-pass-attributes-to-nested-elements
  */
 
-
 /**
  * Importar otras dependencias de WP.
  */
@@ -48,12 +18,10 @@ import { __ } from '@wordpress/i18n';
 import { ToggleControl, TextControl, SelectControl, PanelBody } from '@wordpress/components';
 import { addFilter } from '@wordpress/hooks'; // este permite crear filtros.
 import { Fragment, cloneElement } from '@wordpress/element'; // UI.
-// import { InspectorAdvancedControls } from '@wordpress/block-editor'; // UI.
 import { InspectorControls } from '@wordpress/block-editor'; // UI.
 import { createHigherOrderComponent } from '@wordpress/compose'; // UI.
 
 // Restringir el uso a botones:'core/button, buttons, paragraph, image, gallery, navigation-link'.
-
 const allowedBlocks = [ 'core/image' ];
 
 /**
