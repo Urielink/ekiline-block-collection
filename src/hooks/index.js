@@ -1,6 +1,6 @@
 /**
  * Nuevo complemento:
- * Permitir enlazar componentes bs desde imagen.
+ * Permitir enlazar componentes bs desde boton.
  *
  * Referencia de bloques y filtros:
  * @see https://developer.wordpress.org/block-editor/reference-guides/core-blocks/
@@ -202,7 +202,8 @@ addFilter(
 );
 
 /**
- * Atributos para imagenes.
+ * Nuevo complemento:
+ * Permitir enlazar componentes bs desde imagen.
  */
 
 // Restringir el uso a botones:'core/button, buttons, paragraph, image, gallery, navigation-link'.
