@@ -4,7 +4,7 @@ Requires at least: 5.8
 Tags:              block, collection, bootstrap
 Tested up to:      6.1
 Requires PHP:      7.0
-Stable tag:        0.1.6
+Stable tag:        0.1.7
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/license-list.html#GPLv2
 Donate link:       https://www.paypal.com/paypalme/urielink
@@ -64,6 +64,11 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 2. This is the second screen shot
 
 == Changelog ==
+
+= 0.1.7 =
+* Improve: Extend link control (images). Add options to trigger collapsing, modal or offcanvas.
+* Enahnce: Extend link control (buttons). Add options to trigger collapsing, modal or offcanvas.
+* Update: Language files.
 
 = 0.1.6 =
 * WP 6.1 Compatibility Check, works fine with new theme: Twenty Twenty-Three.

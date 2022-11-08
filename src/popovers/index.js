@@ -4,7 +4,7 @@
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 import { registerBlockType } from '@wordpress/blocks';
-import { TextControl,SelectControl,ToggleControl } from '@wordpress/components';
+import { TextControl,SelectControl,ToggleControl,PanelBody } from '@wordpress/components';
 import { useBlockProps } from '@wordpress/block-editor';
 
 /**
@@ -86,8 +86,8 @@ registerBlockType('ekiline-collection/ekiline-popovers', {
  * Importar otras dependencias de WP.
  */
 import { addFilter } from '@wordpress/hooks'; // este permite crear filtros.
-import { Fragment } from '@wordpress/element'; // UI.
-import { InspectorAdvancedControls } from '@wordpress/block-editor'; // UI.
+import { Fragment, cloneElement } from '@wordpress/element'; // UI.
+import { InspectorControls } from '@wordpress/block-editor'; // UI.
 import { createHigherOrderComponent } from '@wordpress/compose'; // UI.
 
 // Restringir el uso a botones.
@@ -139,7 +139,8 @@ const withAdvancedControlsBtnCollapse = createHigherOrderComponent( ( BlockEdit 
 				<Fragment>
 				<BlockEdit {...props} />
 					{props.attributes.url && (
-						<InspectorAdvancedControls>
+						<InspectorControls>
+							<PanelBody title={ __( 'Button to Popover (Ekiline)', 'ekiline-collection' ) } initialOpen={ true }>
 							<TextControl
 								label={ __( 'Popover text to show.', 'ekiline-collection'  ) }
 								value={props.attributes.addDataLnkPopover}
@@ -168,7 +169,8 @@ const withAdvancedControlsBtnCollapse = createHigherOrderComponent( ( BlockEdit 
 									props.setAttributes( { defineTooltip } )
 								}
 							/>
-						</InspectorAdvancedControls>
+							</PanelBody>
+						</InspectorControls>
 					)}
 				</Fragment>
 			);
@@ -193,10 +195,10 @@ function applyExtraClassLnkPopover( element, block, attributes ) {
 
 		if( attributes.addDataLnkPopover && attributes.url ) {
 
-			return wp.element.cloneElement(
+			return cloneElement(
 				element,
 				{},
-				wp.element.cloneElement(
+				cloneElement(
 					element.props.children,
 					{
 						'data-bs-content': attributes.addDataLnkPopover,
