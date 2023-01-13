@@ -118,7 +118,7 @@
 								multiple={ true }
 								value={ attributes.SetIds }
 								render={ ( { open } ) => (
-									<Button isSecondary onClick={ open }>
+									<Button variant="secondary" onClick={ open }>
 										{ __( 'Add images', 'ekiline-collection' ) }
 									</Button>
 								) }
