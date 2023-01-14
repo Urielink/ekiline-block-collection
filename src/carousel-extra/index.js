@@ -355,7 +355,6 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 									value={ attributes.SaveImages?.map(item => item.post_id) }
 									render={ ( { open } ) => (
 										<Button variant="secondary" onClick={ open }>
-											{/* { __( 'Add images', 'ekiline-collection' ) } */}
 											{ attributes.SaveImages.length
 												? __( 'Manage images', 'ekiline-collection' )
 												: __( 'Add images', 'ekiline-collection' ) }

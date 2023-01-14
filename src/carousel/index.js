@@ -107,7 +107,7 @@ registerBlockType( 'ekiline-collection/ekiline-carousel', {
 		},
 		SetIds: {
 			type: 'array',
-			default: '',
+			default: [],
 		},
 		SetAmount: {
 			type: 'number',

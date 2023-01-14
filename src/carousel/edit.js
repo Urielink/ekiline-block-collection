@@ -57,13 +57,17 @@
 					 multiple
 					 label={ __( 'Choose category', 'ekiline-collection' ) }
 					 value={ attributes.SetIds }
-					 options={ categories.map( ( category ) => (
-						 { label: category.name, value: category.id }
-					 ) ) }
 					 onChange={ ( newval ) =>
-						 setAttributes( { SetIds: newval } )
-					 }
-					 style={ { height: 'auto' } }
+						setAttributes( { SetIds: newval } )
+					}
+					 options={
+						categories.map( ( category ) => (
+						 { label: category.name, value: category.id }
+					 	) )
+					}
+					 style={
+						{height:'auto',minHeight:'120px',overflowY:'scroll',width:'100%',padding:'0px' }
+					}
 				 />
 			 )
 		 } else {
@@ -77,6 +81,16 @@
 		 categories: select( 'core' ).getEntityRecords( 'taxonomy', 'category', { per_page: -1 } ),
 	 } ) )( MyCategoryList );
  
+	/**
+	 * Callback para los medios.
+	 * @ref https://github.com/WordPress/gutenberg/blob/HEAD/packages/block-editor/src/components/media-upload/README.md.
+	 * @param {*} media arreglo de imagenes.
+	 */
+	const onSelectMedia = ( media ) => {
+		const theImagesArray = media?.map( media => media.id )
+		setAttributes( { SetIds: theImagesArray } )
+	};
+
 	 return (
 		 <div {...blockProps}>
 			<InspectorControls>
@@ -90,7 +104,7 @@
 							{ label: __( 'Images / Video', 'ekiline-collection' ), value: 'images' },
 						] }
 						onChange={ ( ChooseType ) =>
-							setAttributes( { ChooseType } )
+							{ setAttributes( { ChooseType, SetIds: [] } ) }
 						}
 					/>
 
@@ -102,24 +116,15 @@
 						<MediaUploadCheck>
 							<MediaUpload
 								title={ __( 'Carousel Images', 'ekiline-collection' ) }
-								onSelect={ ( media ) => {
-									const img_ids = [];
-									for (
-										let i = 0, max = media.length;
-										i < max;
-										i += 1
-									) {
-										img_ids.push( media[ i ].id );
-									}
-									setAttributes( { SetIds: img_ids } );
-								} }
-								// ref: https://github.com/WordPress/gutenberg/blob/HEAD/packages/block-editor/src/components/media-upload/README.md.
+								onSelect={ ( media ) => onSelectMedia( media ) }
 								allowedTypes={ [ 'image', 'video' ] }
 								multiple={ true }
 								value={ attributes.SetIds }
 								render={ ( { open } ) => (
 									<Button variant="secondary" onClick={ open }>
-										{ __( 'Add images', 'ekiline-collection' ) }
+										{ attributes.SetIds.length
+											? __( 'Manage images', 'ekiline-collection' )
+											: __( 'Add images', 'ekiline-collection' ) }
 									</Button>
 								) }
 								gallery={ false }
