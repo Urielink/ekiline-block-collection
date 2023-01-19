@@ -258,7 +258,17 @@ function ekiline_collection_carousel_html( $carousel, $columns, $control, $indic
 								<?php if ( isset( $slide['mimetype'] ) && str_contains( $slide['mimetype'], 'video' ) ) { ?>
 									<video class="carousel-media wp-block-cover__video-background intrinsic-ignore" autoplay="" muted="" loop="" playsinline="" controls="" src="<?php echo esc_url( $slide['image'] ); ?>" data-object-fit="cover"></video>
 								<?php } else { ?>
-									<img class="carousel-media img-fluid" src="<?php echo esc_url( $slide['image'] ); ?>" alt="<?php echo esc_html( $slide['alt'] ); ?>" title="<?php echo esc_html( $slide['title'] ); ?>" loading="lazy">
+
+									<?php // 18-01-23: permitir enlaces solo en imagenes. ?>
+									<?php // 18-01-23: descartar protocolo https o permitir abrir en nueva ventana. ?>
+									<?php if ( 'false' !== $setlinks && $slide['content'] ) { ?>
+										<a href="<?php echo esc_html( $slide['content'] ); ?>" target="_blank">
+									<?php } ?>
+											<img class="carousel-media img-fluid" src="<?php echo esc_url( $slide['image'] ); ?>" alt="<?php echo esc_html( $slide['alt'] ); ?>" title="<?php echo esc_html( $slide['title'] ); ?>" loading="lazy">
+									<?php if ( 'false' !== $setlinks && $slide['content'] ) { ?>
+										</a>
+									<?php } ?>
+
 								<?php } ?>
 
 							<?php } ?>
