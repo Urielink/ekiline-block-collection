@@ -244,7 +244,11 @@
 				{/* Opcion de enlaces */}
 				{ attributes.ShowCaption
 					&& ( <ToggleControl
-							label={ __( 'Link titles', 'ekiline-collection' ) }
+							label={ 
+								'posts' === attributes.ChooseType
+									? __( 'Link titles', 'ekiline-collection' )
+									: __( 'Link images', 'ekiline-collection' )
+							}
 							checked={ attributes.SetLinks }
 							onChange={ ( SetLinks ) => setAttributes( { SetLinks } ) }
 					/> )}

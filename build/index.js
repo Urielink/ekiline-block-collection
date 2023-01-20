@@ -1329,7 +1329,7 @@ function Edit(props) {
       ShowCaption
     })
   }), attributes.ShowCaption && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Link titles', 'ekiline-collection'),
+    label: 'posts' === attributes.ChooseType ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Link titles', 'ekiline-collection') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Link images', 'ekiline-collection'),
     checked: attributes.SetLinks,
     onChange: SetLinks => setAttributes({
       SetLinks

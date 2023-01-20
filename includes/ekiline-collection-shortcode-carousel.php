@@ -259,14 +259,11 @@ function ekiline_collection_carousel_html( $carousel, $columns, $control, $indic
 									<video class="carousel-media wp-block-cover__video-background intrinsic-ignore" autoplay="" muted="" loop="" playsinline="" controls="" src="<?php echo esc_url( $slide['image'] ); ?>" data-object-fit="cover"></video>
 								<?php } else { ?>
 
-									<?php // 18-01-23: permitir enlaces solo en imagenes. ?>
-									<?php // 18-01-23: descartar protocolo https o permitir abrir en nueva ventana. ?>
+									<?php // 18-01-23: permitir enlaces solo en imagenes, descartar protocolo https o permitir abrir en nueva ventana. ?>
 									<?php if ( 'false' !== $setlinks && $slide['content'] ) { ?>
-										<a href="<?php echo esc_html( $slide['content'] ); ?>" target="_blank">
-									<?php } ?>
-											<img class="carousel-media img-fluid" src="<?php echo esc_url( $slide['image'] ); ?>" alt="<?php echo esc_html( $slide['alt'] ); ?>" title="<?php echo esc_html( $slide['title'] ); ?>" loading="lazy">
-									<?php if ( 'false' !== $setlinks && $slide['content'] ) { ?>
-										</a>
+										<?php echo wp_kses_post( ekiline_set_media_link( $slide['content'], $slide['image'], $slide['alt'], $slide['title'] ) ); ?>
+									<?php } else { ?>
+										<img class="carousel-media img-fluid" src="<?php echo esc_url( $slide['image'] ); ?>" alt="<?php echo esc_html( $slide['alt'] ); ?>" title="<?php echo esc_html( $slide['title'] ); ?>" loading="lazy">
 									<?php } ?>
 
 								<?php } ?>
@@ -338,4 +335,34 @@ function ekiline_collection_carousel_html( $carousel, $columns, $control, $indic
 		</div>
 		<?php
 	}
+}
+
+/**
+ * Funcion auxiliar, detectar url y adaptar a un enlace con o sin atributo.
+ *
+ * @param string $img_desc media description field content.
+ * @param string $img_url media url.
+ * @param string $img_alt media alt content.
+ * @param string $img_title media title content.
+ *
+ * @return string html media code with/without link.
+ */
+function ekiline_set_media_link( $img_desc, $img_url, $img_alt, $img_title ) {
+
+	$media  = '<img class="carousel-media img-fluid" src="' . esc_url( $img_url ) . '" alt="' . esc_html( $img_alt ) . '" title="' . esc_html( $img_title ) . '" loading="lazy">';
+	$target = '_self';
+	// Verificar el texto en el campo, solo debe existir un enlace.
+	$desc_str = explode( ' ', trim( $img_desc ) )[0];
+
+	// Verificar que cuente con protocolo http.
+	if ( substr( $desc_str, 0, 4 ) === 'http' ) {
+		// Verificar si necesita que el enlace se abra en una nueva ventana.
+		if ( strpos( $desc_str, '/_blank' ) !== false ) {
+			$img_desc = str_replace( '/_blank', '', $img_desc );
+			$target   = '_blank';
+		}
+		// Devolver el medio en un enlace.
+		$media = '<a href="' . esc_html( $img_desc ) . '" target="' . $target . '">' . $media . '</a>';
+	}
+	return $media;
 }
