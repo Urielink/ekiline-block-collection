@@ -101,6 +101,11 @@ function ekiline_collection_carousel_block_init() {
 					'type'    => 'boolean',
 					'default' => false,
 				],
+				// 23ENE23: Apoyo para la busqueda de categorias.
+				'SetCatSlug' => [
+					'type'    => 'array',
+					'default' => '',
+				],
 			],
 
 		)

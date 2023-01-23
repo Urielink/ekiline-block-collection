@@ -547,7 +547,10 @@ const customIcon = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElem
 
     const TokenCategoriesSelect = () => {
       // Array de categorias existentes.
-      const categories = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => select('core').getEntityRecords('taxonomy', 'category'), []); // Actualizacion de categorias seleccionadas.
+      // 230123 Fix, mostrar todas las categorias.
+      const categories = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => select('core').getEntityRecords('taxonomy', 'category', {
+        per_page: -1
+      }), []); // Actualizacion de categorias seleccionadas.
 
       const [selectedCategories, setSelectedCategories] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)([]); // Componente, necesita de cambiarNombrePorIds.
 
@@ -1107,24 +1110,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /**
+ * Funciones personalizadas.
+ * Selector de categorias con busqueda.
+ */
+
+
+
+
+/**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * Those files can contain any CSS code that gets applied to the editor.
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 // import './editor.scss';
-
-/**
- * Funciones personalizadas.
- * withSelect se ocupara para obtener datos del core.
- * Classname dinamica para el envoltorio del carrusel.
- */
-
- //  const setClassName = () => {
-// 	 var rand = Math.floor( Math.random() * 100 ) + 1,
-// 		 name = 'ekiline-box-' + rand + '-wrapper';
-// 	 return name;
-//  }
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -1140,49 +1139,44 @@ function Edit(props) {
     attributes,
     setAttributes,
     blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)()
-  } = props; //  const boxClass = setClassName();
-  // Componente dinamico: categoriasss.
+  } = props;
+  /**
+   * Selector de categorias, maneja la informacion que se guarda en el bloque.
+   * @param {*} attributes Accede a los registros en el bloque.
+   * @param {*} setAttributes Actualiza los registros en el bloque.
+   * @returns Custom component: FormTokenField.
+   */
 
-  const MyCategoryList = _ref => {
-    let {
-      categories
-    } = _ref;
-
-    if (categories) {
-      return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {
-        multiple: true,
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Choose category', 'ekiline-collection'),
-        value: attributes.SetIds,
-        onChange: newval => setAttributes({
-          SetIds: newval
-        }),
-        options: categories.map(category => ({
-          label: category.name,
-          value: category.id
-        })),
-        style: {
-          height: 'auto',
-          minHeight: '120px',
-          overflowY: 'scroll',
-          width: '100%',
-          padding: '0px'
-        }
-      });
-    } else {
-      return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null);
-    }
-  };
-
-  const MyCategorySelect = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.withSelect)(select => ({
-    categories: select('core').getEntityRecords('taxonomy', 'category', {
+  const TokenCategoriesSelect = () => {
+    // Array de categorias existentes.
+    const categories = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => select('core').getEntityRecords('taxonomy', 'category', {
       per_page: -1
-    })
-  }))(MyCategoryList);
+    }), []); // Actualizacion de categorias seleccionadas.
+
+    const [selectedCategories, setSelectedCategories] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)([]); // Componente, necesita de cambiarNombrePorIds.
+
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.FormTokenField, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Find and select categories:', 'ekiline-collection'),
+      value: !attributes.SetCatSlug ? selectedCategories : attributes.SetCatSlug // Mostrar sugerencias por nombre de url. (id, name, slug).
+      ,
+      suggestions: categories === null || categories === void 0 ? void 0 : categories.map(el => el.slug) // Varias operaciones: mostrar categorias seleccionadas, actualizar/guardar datos.
+      ,
+      onChange: tokens => {
+        setSelectedCategories(tokens);
+        setAttributes({
+          SetCatSlug: tokens,
+          // SetCatIds: (cambiarNombrePorIds(tokens,categories,'id')),
+          SetIds: cambiarNombrePorIds(tokens, categories, 'id')
+        });
+      }
+    });
+  };
   /**
    * Callback para los medios.
    * @ref https://github.com/WordPress/gutenberg/blob/HEAD/packages/block-editor/src/components/media-upload/README.md.
    * @param {*} media arreglo de imagenes.
    */
+
 
   const onSelectMedia = media => {
     const theImagesArray = media === null || media === void 0 ? void 0 : media.map(media => media.id);
@@ -1210,16 +1204,16 @@ function Edit(props) {
         SetIds: []
       });
     }
-  }), 'posts' === attributes.ChooseType && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(MyCategorySelect, null), 'images' === attributes.ChooseType && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.MediaUploadCheck, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.MediaUpload, {
+  }), 'posts' === attributes.ChooseType && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(TokenCategoriesSelect, null), 'images' === attributes.ChooseType && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.MediaUploadCheck, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.MediaUpload, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Carousel Images', 'ekiline-collection'),
     onSelect: media => onSelectMedia(media),
     allowedTypes: ['image', 'video'],
     multiple: true,
     value: attributes.SetIds,
-    render: _ref2 => {
+    render: _ref => {
       let {
         open
-      } = _ref2;
+      } = _ref;
       return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
         variant: "secondary",
         onClick: open
@@ -1368,6 +1362,24 @@ function Edit(props) {
     block: "ekiline-collection/ekiline-carousel",
     attributes: props.attributes
   }));
+}
+/**
+ * Transformo una cadena id por nombre.
+ * Crear nuevo array de categorias por ID.
+ * @param {*} nombres slugs (url) de cada categoria.
+ * @param {*} matriz grupo de categorias existentes.
+ * @param {*} devolucion nombre de dato que buscas obtener, en este caso IDs.
+ * @returns array de IDs por cada categoria.
+ */
+
+function cambiarNombrePorIds(nombres, matriz, devolucion) {
+  const agrupoIds = [];
+  nombres.forEach(nombre => {
+    // Encontrar objeto por value
+    const encontrado = matriz.find(objeto => (objeto.slug || objeto.id) === nombre);
+    agrupoIds.push(encontrado);
+  });
+  return agrupoIds.map(itm => itm[devolucion]);
 }
 
 /***/ }),
@@ -1548,6 +1560,11 @@ const customIcon = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.createElem
     AddIndicatorsText: {
       type: 'boolean',
       default: false
+    },
+    // 23ENE23: Apoyo para la busqueda de categorias.
+    SetCatSlug: {
+      type: 'array',
+      default: []
     }
   },
 

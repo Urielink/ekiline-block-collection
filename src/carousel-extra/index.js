@@ -198,9 +198,10 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		 */
 		const TokenCategoriesSelect = ()=>{
 			// Array de categorias existentes.
+			// 230123 Fix, mostrar todas las categorias.
 			const categories = useSelect(
 				select =>
-					select( 'core' ).getEntityRecords( 'taxonomy', 'category' ),
+					select( 'core' ).getEntityRecords( 'taxonomy', 'category', { per_page: -1 } ),
 				[]
 			);
 			// Actualizacion de categorias seleccionadas.

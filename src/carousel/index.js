@@ -165,6 +165,11 @@ registerBlockType( 'ekiline-collection/ekiline-carousel', {
 			type: 'boolean',
 			default: false,
 		},
+		// 23ENE23: Apoyo para la busqueda de categorias.
+		SetCatSlug: {
+			type: 'array',
+			default: [],
+		},
 	},
 
 	/**
