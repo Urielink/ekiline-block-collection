@@ -202,9 +202,9 @@ function ekiline_collection_carousel_dynamic_render_callback( $block_attributes,
  */
 function ekiline_collection_block_carousel_inline_script() {
 	// Condición para mostrar js en front.
-	if ( ! is_admin() && is_singular() && ! ( has_block( 'ekiline-collection/ekiline-carousel' ) || has_block( 'ekiline-collection/ekiline-carousel-extra' ) ) ) {
-		return;
-	}
+	// if ( ! is_admin() && is_singular() && ! ( has_block( 'ekiline-collection/ekiline-carousel' ) || has_block( 'ekiline-collection/ekiline-carousel-extra' ) ) ) {
+	// 	return;
+	// }
 	// Si existe Ekiline Theme, apoyar de su manejador, o ocupar nuevo manejador JS.
 	$script_handle = ( wp_script_is( 'ekiline-layout', 'enqueued' ) ) ? 'ekiline-layout' : 'ekiline-collection-inline';
 	wp_add_inline_script( $script_handle, ekiline_collection_block_carousel_scripts_code(), 'after' );
