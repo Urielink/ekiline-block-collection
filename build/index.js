@@ -1195,8 +1195,11 @@ function Edit(props) {
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Posts', 'ekiline-collection'),
       value: 'posts'
     }, {
-      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Images / Video', 'ekiline-collection'),
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Images', 'ekiline-collection'),
       value: 'images'
+    }, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Video + Images', 'ekiline-collection'),
+      value: 'videos'
     }],
     onChange: ChooseType => {
       setAttributes({
@@ -1204,10 +1207,10 @@ function Edit(props) {
         SetIds: []
       });
     }
-  }), 'posts' === attributes.ChooseType && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(TokenCategoriesSelect, null), 'images' === attributes.ChooseType && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.MediaUploadCheck, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.MediaUpload, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Carousel Images', 'ekiline-collection'),
+  }), 'posts' === attributes.ChooseType && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(TokenCategoriesSelect, null), 'posts' !== attributes.ChooseType && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.MediaUploadCheck, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.MediaUpload, {
+    title: 'images' === attributes.ChooseType ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Carousel Images', 'ekiline-collection') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Carousel Video and Images', 'ekiline-collection'),
     onSelect: media => onSelectMedia(media),
-    allowedTypes: ['image', 'video'],
+    allowedTypes: 'images' === attributes.ChooseType ? ['image'] : ['image', 'video'],
     multiple: true,
     value: attributes.SetIds,
     render: _ref => {
@@ -1217,10 +1220,10 @@ function Edit(props) {
       return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
         variant: "secondary",
         onClick: open
-      }, attributes.SetIds.length ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Manage images', 'ekiline-collection') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Add images', 'ekiline-collection'));
+      }, attributes.SetIds.length ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Manage media', 'ekiline-collection') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Add media', 'ekiline-collection'));
     },
-    gallery: false,
-    addToGallery: false
+    gallery: 'images' === attributes.ChooseType ? true : false,
+    addToGallery: 'images' === attributes.ChooseType ? true : false
   })), 'posts' === attributes.ChooseType && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post amount', 'ekiline-collection'),
     type: "number",

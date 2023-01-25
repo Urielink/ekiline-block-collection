@@ -23,6 +23,7 @@
  * Animacion: animation = vertical o fade
  *
  * @link ref: https://developer.wordpress.org/reference/classes/wp_query/#properties-and-methods
+ * @link ref: https://wpshout.com/php-output-buffering/
  * @param array $atts Shortcode attributes. Default empty.
  * @return string Full html.
  */
@@ -57,8 +58,8 @@ function ekiline_collection_shortcode_carousel( $atts = [] ) {
 	$id_arr = explode( ',', $atts['id'] );
 	// Default posts.
 	$carousel = ekiline_collection_carousel_posts( $atts['amount'], $id_arr, $atts['block'], $atts['orderby'], $atts['mixed'] );
-	// Condicion para images.
-	if ( 'images' === $atts['type'] ) {
+	// Condicion para imagenes y video.
+	if ( 'posts' !== $atts['type'] ) {
 		$carousel = ekiline_collection_carousel_images( $id_arr );
 	}
 	// Numero de columnas.
@@ -68,9 +69,7 @@ function ekiline_collection_shortcode_carousel( $atts = [] ) {
 	ekiline_collection_carousel_html( $carousel, $columns, $atts['control'], $atts['indicators'], $atts['auto'], $atts['time'], $atts['animation'], $atts['height'], $atts['showcaption'], $atts['setlinks'], $atts['indicatorstext'], $atts['classname'], $atts['anchor'] );
 	return ob_get_clean();
 }
-// phpcs:ignore WPThemeReview.PluginTerritory.ForbiddenFunctions.plugin_territory_add_shortcode
 add_shortcode( 'ekiline-carousel', 'ekiline_collection_shortcode_carousel' );
-
 
 /**
  * Funcion para carrusel de entradas, por default, ocupa 7 slides y todas las categorias.

@@ -102,7 +102,8 @@ export default function Edit(props) {
 						value={ attributes.ChooseType }
 						options={ [
 							{ label: __( 'Posts', 'ekiline-collection' ), value: 'posts' },
-							{ label: __( 'Images / Video', 'ekiline-collection' ), value: 'images' },
+							{ label: __( 'Images', 'ekiline-collection' ), value: 'images' },
+							{ label: __( 'Video + Images', 'ekiline-collection' ), value: 'videos' },
 						] }
 						onChange={ ( ChooseType ) =>
 							{ setAttributes( { ChooseType, SetIds: [] } ) }
@@ -113,23 +114,23 @@ export default function Edit(props) {
 						<TokenCategoriesSelect/>
 					)}
 
-					{ 'images' === attributes.ChooseType && (
+					{ 'posts' !== attributes.ChooseType && (
 						<MediaUploadCheck>
 							<MediaUpload
-								title={ __( 'Carousel Images', 'ekiline-collection' ) }
+								title={ ( 'images' === attributes.ChooseType ) ? __( 'Carousel Images', 'ekiline-collection' ) : __( 'Carousel Video and Images', 'ekiline-collection' ) }
 								onSelect={ ( media ) => onSelectMedia( media ) }
-								allowedTypes={ [ 'image', 'video' ] }
+								allowedTypes={ ( 'images' === attributes.ChooseType ) ? [ 'image' ] : [ 'image', 'video' ] }
 								multiple={ true }
 								value={ attributes.SetIds }
 								render={ ( { open } ) => (
 									<Button variant="secondary" onClick={ open }>
 										{ attributes.SetIds.length
-											? __( 'Manage images', 'ekiline-collection' )
-											: __( 'Add images', 'ekiline-collection' ) }
+											? __( 'Manage media', 'ekiline-collection' )
+											: __( 'Add media', 'ekiline-collection' ) }
 									</Button>
 								) }
-								gallery={ false }
-								addToGallery={ false }
+								gallery={ ( 'images' === attributes.ChooseType ) ? true : false }
+								addToGallery={ ( 'images' === attributes.ChooseType ) ? true : false }
 							/>
 						</MediaUploadCheck>
 					) }
