@@ -23,6 +23,7 @@
  * Animacion: animation = vertical o fade
  *
  * @link ref: https://developer.wordpress.org/reference/classes/wp_query/#properties-and-methods
+ * @link ref: https://wpshout.com/php-output-buffering/
  * @param array $atts Shortcode attributes. Default empty.
  * @return string Full html.
  */
@@ -57,8 +58,8 @@ function ekiline_collection_shortcode_carousel( $atts = [] ) {
 	$id_arr = explode( ',', $atts['id'] );
 	// Default posts.
 	$carousel = ekiline_collection_carousel_posts( $atts['amount'], $id_arr, $atts['block'], $atts['orderby'], $atts['mixed'] );
-	// Condicion para images.
-	if ( 'images' === $atts['type'] ) {
+	// Condicion para imagenes y video.
+	if ( 'posts' !== $atts['type'] ) {
 		$carousel = ekiline_collection_carousel_images( $id_arr );
 	}
 	// Numero de columnas.
@@ -68,9 +69,7 @@ function ekiline_collection_shortcode_carousel( $atts = [] ) {
 	ekiline_collection_carousel_html( $carousel, $columns, $atts['control'], $atts['indicators'], $atts['auto'], $atts['time'], $atts['animation'], $atts['height'], $atts['showcaption'], $atts['setlinks'], $atts['indicatorstext'], $atts['classname'], $atts['anchor'] );
 	return ob_get_clean();
 }
-// phpcs:ignore WPThemeReview.PluginTerritory.ForbiddenFunctions.plugin_territory_add_shortcode
 add_shortcode( 'ekiline-carousel', 'ekiline_collection_shortcode_carousel' );
-
 
 /**
  * Funcion para carrusel de entradas, por default, ocupa 7 slides y todas las categorias.
@@ -258,7 +257,14 @@ function ekiline_collection_carousel_html( $carousel, $columns, $control, $indic
 								<?php if ( isset( $slide['mimetype'] ) && str_contains( $slide['mimetype'], 'video' ) ) { ?>
 									<video class="carousel-media wp-block-cover__video-background intrinsic-ignore" autoplay="" muted="" loop="" playsinline="" controls="" src="<?php echo esc_url( $slide['image'] ); ?>" data-object-fit="cover"></video>
 								<?php } else { ?>
-									<img class="carousel-media img-fluid" src="<?php echo esc_url( $slide['image'] ); ?>" alt="<?php echo esc_html( $slide['alt'] ); ?>" title="<?php echo esc_html( $slide['title'] ); ?>" loading="lazy">
+
+									<?php // 18-01-23: permitir enlaces solo en imagenes, descartar protocolo https o permitir abrir en nueva ventana. ?>
+									<?php if ( 'false' !== $setlinks && $slide['content'] ) { ?>
+										<?php echo wp_kses_post( ekiline_set_media_link( $slide['content'], $slide['image'], $slide['alt'], $slide['title'] ) ); ?>
+									<?php } else { ?>
+										<img class="carousel-media img-fluid" src="<?php echo esc_url( $slide['image'] ); ?>" alt="<?php echo esc_html( $slide['alt'] ); ?>" title="<?php echo esc_html( $slide['title'] ); ?>" loading="lazy">
+									<?php } ?>
+
 								<?php } ?>
 
 							<?php } ?>
@@ -328,4 +334,34 @@ function ekiline_collection_carousel_html( $carousel, $columns, $control, $indic
 		</div>
 		<?php
 	}
+}
+
+/**
+ * Funcion auxiliar, detectar url y adaptar a un enlace con o sin atributo.
+ *
+ * @param string $img_desc media description field content.
+ * @param string $img_url media url.
+ * @param string $img_alt media alt content.
+ * @param string $img_title media title content.
+ *
+ * @return string html media code with/without link.
+ */
+function ekiline_set_media_link( $img_desc, $img_url, $img_alt, $img_title ) {
+
+	$media  = '<img class="carousel-media img-fluid" src="' . esc_url( $img_url ) . '" alt="' . esc_html( $img_alt ) . '" title="' . esc_html( $img_title ) . '" loading="lazy">';
+	$target = '_self';
+	// Verificar el texto en el campo, solo debe existir un enlace.
+	$desc_str = explode( ' ', trim( $img_desc ) )[0];
+
+	// Verificar que cuente con protocolo http.
+	if ( substr( $desc_str, 0, 4 ) === 'http' ) {
+		// Verificar si necesita que el enlace se abra en una nueva ventana.
+		if ( strpos( $desc_str, '/_blank' ) !== false ) {
+			$img_desc = str_replace( '/_blank', '', $img_desc );
+			$target   = '_blank';
+		}
+		// Devolver el medio en un enlace.
+		$media = '<a href="' . esc_html( $img_desc ) . '" target="' . $target . '">' . $media . '</a>';
+	}
+	return $media;
 }

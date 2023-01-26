@@ -3,82 +3,97 @@
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
- import { __ } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
- /**
-  * React hook that is used to mark the block wrapper element.
-  * It provides all the necessary props like the class name.
-  *
-  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
-  */
- import{useBlockProps,InspectorControls,MediaUpload,MediaUploadCheck,} from '@wordpress/block-editor';
- import{ToggleControl,PanelBody,SelectControl,Button,TextControl,RangeControl,} from '@wordpress/components';
- import ServerSideRender from '@wordpress/server-side-render';
- 
- /**
-  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
-  * Those files can contain any CSS code that gets applied to the editor.
-  *
-  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
-  */
- // import './editor.scss';
- 
- /**
-  * Funciones personalizadas.
-  * withSelect se ocupara para obtener datos del core.
-  * Classname dinamica para el envoltorio del carrusel.
-  */
- import { withSelect } from '@wordpress/data';
- 
-//  const setClassName = () => {
-// 	 var rand = Math.floor( Math.random() * 100 ) + 1,
-// 		 name = 'ekiline-box-' + rand + '-wrapper';
-// 	 return name;
-//  }
- 
- /**
-  * The edit function describes the structure of your block in the context of the
-  * editor. This represents what the editor will render when the block is used.
-  *
-  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
-  *
-  * @return {WPElement} Element to render.
-  */
- export default function Edit(props) {
- 
-	 const { attributes, setAttributes, blockProps = useBlockProps() } = props;
-	//  const boxClass = setClassName();
- 
-	 // Componente dinamico: categoriasss.
-	 const MyCategoryList = ( { categories } ) => {
-		 if ( categories ){
-			 return (
-				 <SelectControl
-					 multiple
-					 label={ __( 'Choose category', 'ekiline-collection' ) }
-					 value={ attributes.SetIds }
-					 options={ categories.map( ( category ) => (
-						 { label: category.name, value: category.id }
-					 ) ) }
-					 onChange={ ( newval ) =>
-						 setAttributes( { SetIds: newval } )
-					 }
-					 style={ { height: 'auto' } }
-				 />
-			 )
-		 } else {
-			 return (
-				 <></>
-			 )
-		 }
-	 }
- 
-	 const MyCategorySelect = withSelect( ( select ) => ( {
-		 categories: select( 'core' ).getEntityRecords( 'taxonomy', 'category', { per_page: -1 } ),
-	 } ) )( MyCategoryList );
- 
-	 return (
-		 <div {...blockProps}>
+/**
+ * React hook that is used to mark the block wrapper element.
+ * It provides all the necessary props like the class name.
+ *
+ * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
+ */
+import{useBlockProps,InspectorControls,MediaUpload,MediaUploadCheck} from '@wordpress/block-editor';
+import{ToggleControl,PanelBody,SelectControl,Button,TextControl,RangeControl} from '@wordpress/components';
+import ServerSideRender from '@wordpress/server-side-render';
+
+/**
+ * Funciones personalizadas.
+ * Selector de categorias con busqueda.
+ */
+import { FormTokenField } from '@wordpress/components';
+import { useState } from '@wordpress/element';
+import { useSelect } from '@wordpress/data';
+
+/**
+ * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
+ * Those files can contain any CSS code that gets applied to the editor.
+ *
+ * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
+ */
+// import './editor.scss';
+
+/**
+ * The edit function describes the structure of your block in the context of the
+ * editor. This represents what the editor will render when the block is used.
+ *
+ * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
+ *
+ * @return {WPElement} Element to render.
+ */
+export default function Edit(props) {
+
+	const { attributes, setAttributes, blockProps = useBlockProps() } = props;
+
+	/**
+	 * Selector de categorias, maneja la informacion que se guarda en el bloque.
+	 * @param {*} attributes Accede a los registros en el bloque.
+	 * @param {*} setAttributes Actualiza los registros en el bloque.
+	 * @returns Custom component: FormTokenField.
+	 */
+	const TokenCategoriesSelect = ()=>{
+		// Array de categorias existentes.
+		const categories = useSelect(
+			select =>
+				select( 'core' ).getEntityRecords( 'taxonomy', 'category', { per_page: -1 } ),
+			[]
+		);
+		// Actualizacion de categorias seleccionadas.
+		const [ selectedCategories, setSelectedCategories ] = useState( [] );
+		// Componente, necesita de cambiarNombrePorIds.
+		return(
+			<FormTokenField
+				label={ __( 'Find and select categories:', 'ekiline-collection' ) }
+				value={
+					(!attributes.SetCatSlug) ? selectedCategories : attributes.SetCatSlug
+				}
+				// Mostrar sugerencias por nombre de url. (id, name, slug).
+				suggestions={
+					categories?.map( ( el ) => el.slug )
+				}
+				// Varias operaciones: mostrar categorias seleccionadas, actualizar/guardar datos.
+				onChange={ ( tokens ) => {
+					setSelectedCategories( tokens );
+					setAttributes( {
+						SetCatSlug:tokens,
+						// SetCatIds: (cambiarNombrePorIds(tokens,categories,'id')),
+						SetIds: (cambiarNombrePorIds(tokens,categories,'id')),
+					} );
+				} }
+			/>
+		);
+	};
+
+	/**
+	 * Callback para los medios.
+	 * @ref https://github.com/WordPress/gutenberg/blob/HEAD/packages/block-editor/src/components/media-upload/README.md.
+	 * @param {*} media arreglo de imagenes.
+	 */
+	const onSelectMedia = ( media ) => {
+		const theImagesArray = media?.map( media => media.id )
+		setAttributes( { SetIds: theImagesArray } )
+	};
+
+	return (
+		<div {...blockProps}>
 			<InspectorControls>
 				<PanelBody title={ __( 'Carousel content', 'ekiline-collection' ) } initialOpen={ true }>
 
@@ -87,43 +102,35 @@
 						value={ attributes.ChooseType }
 						options={ [
 							{ label: __( 'Posts', 'ekiline-collection' ), value: 'posts' },
-							{ label: __( 'Images / Video', 'ekiline-collection' ), value: 'images' },
+							{ label: __( 'Images', 'ekiline-collection' ), value: 'images' },
+							{ label: __( 'Video + Images', 'ekiline-collection' ), value: 'videos' },
 						] }
 						onChange={ ( ChooseType ) =>
-							setAttributes( { ChooseType } )
+							{ setAttributes( { ChooseType, SetIds: [] } ) }
 						}
 					/>
 
 					{ 'posts' === attributes.ChooseType && (
-						<MyCategorySelect/>
+						<TokenCategoriesSelect/>
 					)}
 
-					{ 'images' === attributes.ChooseType && (
+					{ 'posts' !== attributes.ChooseType && (
 						<MediaUploadCheck>
 							<MediaUpload
-								title={ __( 'Carousel Images', 'ekiline-collection' ) }
-								onSelect={ ( media ) => {
-									const img_ids = [];
-									for (
-										let i = 0, max = media.length;
-										i < max;
-										i += 1
-									) {
-										img_ids.push( media[ i ].id );
-									}
-									setAttributes( { SetIds: img_ids } );
-								} }
-								// ref: https://github.com/WordPress/gutenberg/blob/HEAD/packages/block-editor/src/components/media-upload/README.md.
-								allowedTypes={ [ 'image', 'video' ] }
+								title={ ( 'images' === attributes.ChooseType ) ? __( 'Carousel Images', 'ekiline-collection' ) : __( 'Carousel Video and Images', 'ekiline-collection' ) }
+								onSelect={ ( media ) => onSelectMedia( media ) }
+								allowedTypes={ ( 'images' === attributes.ChooseType ) ? [ 'image' ] : [ 'image', 'video' ] }
 								multiple={ true }
 								value={ attributes.SetIds }
 								render={ ( { open } ) => (
-									<Button isSecondary onClick={ open }>
-										{ __( 'Add images', 'ekiline-collection' ) }
+									<Button variant="secondary" onClick={ open }>
+										{ attributes.SetIds.length
+											? __( 'Manage media', 'ekiline-collection' )
+											: __( 'Add media', 'ekiline-collection' ) }
 									</Button>
 								) }
-								gallery={ false }
-								addToGallery={ false }
+								gallery={ ( 'images' === attributes.ChooseType ) ? true : false }
+								addToGallery={ ( 'images' === attributes.ChooseType ) ? true : false }
 							/>
 						</MediaUploadCheck>
 					) }
@@ -239,7 +246,11 @@
 				{/* Opcion de enlaces */}
 				{ attributes.ShowCaption
 					&& ( <ToggleControl
-							label={ __( 'Link titles', 'ekiline-collection' ) }
+							label={ 
+								'posts' === attributes.ChooseType
+									? __( 'Link titles', 'ekiline-collection' )
+									: __( 'Link images', 'ekiline-collection' )
+							}
 							checked={ attributes.SetLinks }
 							onChange={ ( SetLinks ) => setAttributes( { SetLinks } ) }
 					/> )}
@@ -281,8 +292,29 @@
 				block="ekiline-collection/ekiline-carousel"
 				attributes={ props.attributes }
 			/>
- 
-		 </div>
-	 );
- }
- 
+
+		</div>
+	);
+}
+
+/**
+ * Transformo una cadena id por nombre.
+ * Crear nuevo array de categorias por ID.
+ * @param {*} nombres slugs (url) de cada categoria.
+ * @param {*} matriz grupo de categorias existentes.
+ * @param {*} devolucion nombre de dato que buscas obtener, en este caso IDs.
+ * @returns array de IDs por cada categoria.
+ */
+function cambiarNombrePorIds(nombres,matriz,devolucion){
+	const agrupoIds = [];
+	nombres.forEach(
+		(nombre) => {
+			// Encontrar objeto por value
+			const encontrado = matriz.find((objeto) => (objeto.slug || objeto.id) === nombre);
+			agrupoIds.push(encontrado);
+		}
+	);
+	return agrupoIds.map(
+		(itm) => itm[devolucion]
+	);
+}

@@ -107,7 +107,7 @@ registerBlockType( 'ekiline-collection/ekiline-carousel', {
 		},
 		SetIds: {
 			type: 'array',
-			default: '',
+			default: [],
 		},
 		SetAmount: {
 			type: 'number',
@@ -164,6 +164,11 @@ registerBlockType( 'ekiline-collection/ekiline-carousel', {
 		AddIndicatorsText: {
 			type: 'boolean',
 			default: false,
+		},
+		// 23ENE23: Apoyo para la busqueda de categorias.
+		SetCatSlug: {
+			type: 'array',
+			default: [],
 		},
 	},
 

@@ -4,7 +4,7 @@ Requires at least: 5.8
 Tags:              block, collection, bootstrap
 Tested up to:      6.1
 Requires PHP:      7.0
-Stable tag:        0.1.7
+Stable tag:        1.0.1
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/license-list.html#GPLv2
 Donate link:       https://www.paypal.com/paypalme/urielink
@@ -64,6 +64,14 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 2. This is the second screen shot
 
 == Changelog ==
+
+= 1.0.1 =
+* Fix modal script.
+
+= 1.0.0 =
+* Refactoring of css styles and js scripts to improve compatibility with themes.
+* New options for the dynamic carousel, choose what to show: images, posts or videos.
+* In addition you will be able to link each image with the use of the media description field.
 
 = 0.1.7 =
 * Improve: Extend link control (images). Add options to trigger collapsing, modal or offcanvas.
