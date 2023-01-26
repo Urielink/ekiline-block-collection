@@ -4,7 +4,7 @@
  * Description:       Actions and blocks based on bootstrap 5 (carousel, collapse and more). Includes Bootstrap library. Support this project to add new features and expand a customer service branch.
  * Requires at least: 5.8
  * Requires PHP:      7.0
- * Version:           0.1.7
+ * Version:           1.0.0
  * Author:            Uri Lazcano (Urielink)
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/license-list.html#GPLv2
@@ -42,10 +42,7 @@ add_action( 'init', 'ekiline_collection_ekiline_collection_block_init' );
 define( 'EKILINE_COLLECTION_PATH', plugin_dir_path( __FILE__ ) . 'includes/' );
 require EKILINE_COLLECTION_PATH . 'ekiline-collection-carousel.php';
 require EKILINE_COLLECTION_PATH . 'ekiline-collection-shortcode-carousel.php';
-require EKILINE_COLLECTION_PATH . 'ekiline-collection-toast.php';
 require EKILINE_COLLECTION_PATH . 'ekiline-collection-modal.php';
-require EKILINE_COLLECTION_PATH . 'ekiline-collection-tabs.php';
-require EKILINE_COLLECTION_PATH . 'ekiline-collection-popover.php';
 require EKILINE_COLLECTION_PATH . 'ekiline-collection-info.php';
 
 /**
@@ -61,14 +58,21 @@ function ekiline_collection_required_scripts() {
 	if ( 'Ekiline' !== $theme->name || 'Ekiline' !== $theme->parent_theme ) {
 		wp_enqueue_style( $text_domain . '-bootstrap-style', plugin_dir_url( __FILE__ ) . 'includes/assets/css/bootstrap.min.css', array(), '5', 'all' );
 		wp_enqueue_script( $text_domain . '-bootstrap-script', plugin_dir_url( __FILE__ ) . 'includes/assets/js/bootstrap.bundle.min.js', array(), '5', true );
-		wp_register_script( $text_domain . '-inline', '', array(), '1', true );
-		wp_enqueue_script( $text_domain . '-inline' );
 	}
 	if ( 'Ekiline' === $theme->name || 'Ekiline' === $theme->parent_theme ) {
 		wp_dequeue_style( $text_domain . '-bootstrap-style' );
 		wp_dequeue_script( $text_domain . '-bootstrap-script' );
-		wp_dequeue_script( $text_domain . '-inline' );
 	}
+
+	// Condicion: Si Ekiline no es su tema, habilitar manejador de plugin.
+	$style_handler  = $text_domain . '-bootstrap-style';
+	$script_handler = $text_domain . '-bootstrap-script';
+	if( 'Ekiline' === $theme->name || 'Ekiline' === $theme->parent_theme ){
+		$style_handler  = 'ekiline-style';
+		$script_handler = 'ekiline-layout';
+	}
+	wp_enqueue_style( $text_domain . '-block-styles', plugin_dir_url( __FILE__ ) . 'includes/assets/css/ekiline-collection-block-styles.css', array( $style_handler ), '1.0', 'all' );
+	wp_enqueue_script( $text_domain . '-block-scripts', plugin_dir_url( __FILE__ ) . 'includes/assets/js/ekiline-collection-block-scripts.js', array( $script_handler ), '1.0', true );
 }
 add_action( 'wp_enqueue_scripts', 'ekiline_collection_required_scripts', 1 );
 
