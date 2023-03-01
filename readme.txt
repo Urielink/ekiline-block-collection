@@ -4,7 +4,7 @@ Requires at least: 5.8
 Tags:              block, collection, bootstrap
 Tested up to:      6.1
 Requires PHP:      7.0
-Stable tag:        1.0.1
+Stable tag:        1.0.2
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/license-list.html#GPLv2
 Donate link:       https://www.paypal.com/paypalme/urielink
