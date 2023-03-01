@@ -69,7 +69,8 @@ function ekiline_collection_block_modal_find_and_move() {
 		// Enviar al pie del portal el bloque deseado.
 		foreach ( $blocks as $block ) {
 			if ( $find_block === $block['blockName'] ) {
-				echo render_block( $block );
+				// 13-02-23: permitir el uso de shortcodes dentro del modal.
+				echo apply_filters( 'the_content', render_block( $block ) );
 			}
 		}
 	}

@@ -65,6 +65,10 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Changelog ==
 
+= 1.0.2 =
+* Allow shortcodes in modal block.
+* Update language files.
+
 = 1.0.1 =
 * Fix modal script.
 

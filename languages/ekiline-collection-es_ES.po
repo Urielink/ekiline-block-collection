@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2023-01-25T01:33:26+00:00\n"
-"PO-Revision-Date: 2023-01-24 19:43-0600\n"
+"PO-Revision-Date: 2023-03-01 16:00-0600\n"
 "X-Generator: Poedit 1.8.12\n"
 "X-Domain: ekiline-collection\n"
 "Last-Translator: \n"
@@ -561,7 +561,6 @@ msgid "Add modal title"
 msgstr "Título modal"
 
 #: build/index.js:1 src/modal/index.js:418
-#, fuzzy
 msgid "Modal body content"
 msgstr "Contenido del cuerpo del modal. "
 
@@ -610,9 +609,8 @@ msgid "Images"
 msgstr "Imágenes"
 
 #: build/index.js:1 src/carousel/edit.js:106
-#, fuzzy
 msgid "Video + Images"
-msgstr "Imágenes de Vídeo"
+msgstr "Imágenes + Vídeo"
 
 #: build/index.js:1 src/carousel-extra/index.js:212 src/carousel/edit.js:64
 msgid "Find and select categories:"
@@ -620,12 +618,11 @@ msgstr "Buscar y seleccionar categorías:"
 
 #: build/index.js:1 src/carousel-extra/index.js:352 src/carousel/edit.js:120
 msgid "Carousel Images"
-msgstr "Imágenes del carrusel"
+msgstr "Imágenes en carrusel"
 
 #: build/index.js:1 src/carousel/edit.js:120
-#, fuzzy
 msgid "Carousel Video and Images"
-msgstr "Video e imágenes de carrusel"
+msgstr "Video e imágenes en carrusel"
 
 #: build/index.js:1 src/carousel/edit.js:128
 msgid "Manage media"
@@ -922,7 +919,6 @@ msgid "Is close button?"
 msgstr "Botón cerrar Modal."
 
 #: build/index.js:1 src/hooks/index.js:127 src/hooks/index.js:290
-#, fuzzy
 msgid "No."
 msgstr "No."
 
