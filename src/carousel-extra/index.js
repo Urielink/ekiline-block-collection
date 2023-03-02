@@ -335,7 +335,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 							value={ attributes.ChooseType }
 							options={ [
 								{ label: __( 'Posts', 'ekiline-collection' ), value: 'posts' },
-								{ label: __( 'Images / Video', 'ekiline-collection' ), value: 'images' },
+								{ label: __( 'Images', 'ekiline-collection' ), value: 'images' },
 							] }
 							onChange={ ( ChooseType ) =>
 								{ setAttributes( { ChooseType, SavePosts: [], SaveImages: [] } ) }

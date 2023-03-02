@@ -4,7 +4,7 @@ Requires at least: 5.8
 Tags:              block, collection, bootstrap
 Tested up to:      6.1
 Requires PHP:      7.0
-Stable tag:        1.0.2
+Stable tag:        1.0.3
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/license-list.html#GPLv2
 Donate link:       https://www.paypal.com/paypalme/urielink
@@ -64,6 +64,9 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 2. This is the second screen shot
 
 == Changelog ==
+
+= 1.0.3 =
+* Fix language descriptions.
 
 = 1.0.2 =
 * Allow shortcodes in modal block.
