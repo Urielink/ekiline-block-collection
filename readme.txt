@@ -2,7 +2,7 @@
 Contributors:      urielink
 Requires at least: 5.8
 Tags:              block, collection, bootstrap
-Tested up to:      6.1
+Tested up to:      6.2
 Requires PHP:      7.0
 Stable tag:        1.0.3
 License:           GPL-2.0-or-later
@@ -64,6 +64,10 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 2. This is the second screen shot
 
 == Changelog ==
+
+= 1.0.4 =
+* Fix classname in dynamic carosuel.
+* Improve: Avoid lazy load in dynamic carosuel first image.
 
 = 1.0.3 =
 * Fix language descriptions.
@@ -128,3 +132,5 @@ As well as to maintain this development and incorporate new features in each new
 
 “I have created this plugin to provide a better web development service to my clients, from a trusted source such as WordPress.”
 Uri Lazcano.
+
+Dev Note: [node v14.21.3, npm 6.14.18, nvm 0.39.1]

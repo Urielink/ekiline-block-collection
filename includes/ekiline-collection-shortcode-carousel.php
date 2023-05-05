@@ -240,7 +240,8 @@ function ekiline_collection_carousel_html( $carousel, $columns, $control, $indic
 				<?php
 				foreach ( $carousel as $index => $slide ) {
 					$active  = ( 0 === $index ) ? ' active' : '';
-					$cap_img = ( ! isset( $slide['image'] ) ) ? ' no-image' : '';
+					$img_load = ( 0 === $index ) ? 'eager' : 'lazy';
+					$img_cap  = ( ! isset( $slide['image'] ) ) ? ' no-image' : '';
 					?>
 
 					<div class="carousel-item<?php echo esc_attr( $active ); ?>"<?php echo wp_kses_post( $height ); ?>>
@@ -262,7 +263,7 @@ function ekiline_collection_carousel_html( $carousel, $columns, $control, $indic
 									<?php if ( 'false' !== $setlinks && $slide['content'] ) { ?>
 										<?php echo wp_kses_post( ekiline_set_media_link( $slide['content'], $slide['image'], $slide['alt'], $slide['title'] ) ); ?>
 									<?php } else { ?>
-										<img class="carousel-media img-fluid" src="<?php echo esc_url( $slide['image'] ); ?>" alt="<?php echo esc_html( $slide['alt'] ); ?>" title="<?php echo esc_html( $slide['title'] ); ?>" loading="lazy">
+										<img class="carousel-media img-fluid" src="<?php echo esc_url( $slide['image'] ); ?>" alt="<?php echo esc_html( $slide['alt'] ); ?>" title="<?php echo esc_html( $slide['title'] ); ?>" loading="<?php echo esc_attr( $img_load  ); ?>">
 									<?php } ?>
 
 								<?php } ?>
@@ -271,7 +272,7 @@ function ekiline_collection_carousel_html( $carousel, $columns, $control, $indic
 
 							<?php if ( 'false' !== $showcaption ) { ?>
 
-								<div class="carousel-caption <?php echo esc_attr( $cap_img ); ?>">
+								<div class="carousel-caption<?php echo esc_attr( $img_cap  ); ?>">
 
 									<?php if ( isset( $slide['title'] ) && $slide['title'] ) { ?>
 										<h3>
