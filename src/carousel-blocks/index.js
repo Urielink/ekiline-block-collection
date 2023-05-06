@@ -6,6 +6,8 @@
 import { registerBlockType } from '@wordpress/blocks';
 import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, TextControl } from '@wordpress/components';
+import { useSelect, select } from '@wordpress/data';
+
 
 /**
  * Retrieves the translation of text.
@@ -118,26 +120,91 @@ registerBlockType( 'ekiline-collection/ekiline-carousel-blocks', {
 	},
 
 	/**
+	 * Argumentos para personalizacion.
+	 */
+	attributes:{
+		align: {
+			type: 'string',
+			default: '',
+		},
+		CountChildren: {
+			type: 'number',
+			default: '',
+		},
+		// Controles de carrusel.
+		SetColumns: {
+			type: 'number',
+			default: 1,
+		},
+		AddControls: {
+			type: 'boolean',
+			default: true,
+		},
+		AddIndicators: {
+			type: 'boolean',
+			default: true,
+		},
+		SetAuto: {
+			type: 'boolean',
+			default: true,
+		},
+		SetTime: {
+			type: 'number',
+			default: '5000',
+		},
+		SetAnimation: {
+			type: 'string',
+			default: '',
+		},
+		SetHeight: {
+			type: 'number',
+			default: '480',
+		},
+	},
+
+	/**
 	 * @see ./edit.js
 	 */
 	// edit: Edit,
-	edit: () => {
+	edit: ( props ) => {
 
-		// Restringir los bloques, Cargar un preset.
-		const PARENT_ALLOWED_BLOCKS = [ 'ekiline-collection/ekiline-carousel-blocks-container' ];
+		const { attributes, setAttributes } = props;
+
+		const PARENT_ALLOWED_BLOCKS = [ 'ekiline-collection/ekiline-carousel-blocks-content' ];
 		const CHILD_TEMPLATE = [
-			[ 'ekiline-collection/ekiline-carousel-blocks-container' ]
+			[ 'ekiline-collection/ekiline-carousel-blocks-content', {
+				className: 'carousel-item active',
+			} ],
+			[ 'ekiline-collection/ekiline-carousel-blocks-content', {
+				className: 'carousel-item',
+			} ],
 		];
-		// personalizar clase
+
+
+		// Personalizar clase.
 		const blockProps = useBlockProps( {
 			className: 'carousel-wrapper',
 		} );
+
+		// Precargar nombre ID.
+		if( !attributes.anchor ){
+			function getRandomArbitrary(min, max) {
+				return Math.floor(Math.random() * (max - min) + min);
+			}
+			setAttributes( { anchor: 'carouselblocks' + getRandomArbitrary(10,150) } )
+		}
+
+		// Obtener el indice de los bloques agregados.
+		const { clientId } = props;
+		const innerBlockCount = useSelect( ( select ) => select( 'core/block-editor' ).getBlock( clientId ).innerBlocks );
+		setAttributes( { CountChildren: innerBlockCount.length } )
 
 		return (
 			<div { ...blockProps }>
 				<InnerBlocks
 					allowedBlocks={ PARENT_ALLOWED_BLOCKS }
 					template={ CHILD_TEMPLATE }/>
+					{/* {console.log(attributes.CountChildren)} */}
 			</div>
 		);
 	},
@@ -146,29 +213,45 @@ registerBlockType( 'ekiline-collection/ekiline-carousel-blocks', {
 	 * @see ./save.js
 	 */
 	// save,
-	save: () => {
+	save: ({attributes}) => {
 
 		// personalizar clase
 		const blockProps = useBlockProps.save( {
 			className: 'carousel-wrapper carousel slide',
 		} );
 
+		// Al inicio del componente
+		const carouselId = `#${attributes.anchor}`;
+
 		return (
 			<div { ...blockProps }>
+				{/* Controles. */}
+				{ attributes.CountChildren && (
+				<div className='carousel-indicators'>
+					{ Array.from({ length: attributes.CountChildren }).map((_, i) => (
+					<button
+						key={i}
+						type='button'
+						data-bs-target={carouselId}
+						data-bs-slide-to={i}
+						className={i === 0 ? 'active' : ''}
+						aria-current={i === 0 ? 'true' : ''}
+						aria-label={`Slide ${i + 1}`}
+					/>
+					))}
+				</div>
+				)}
 
-				<div class="carousel-indicators">
-					<button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-					<button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1" aria-label="Slide 2"></button>
-					<button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2" aria-label="Slide 3"></button>
+				{/* Contenido */}
+				<div class='carousel-inner'>
+					<InnerBlocks.Content />
 				</div>
 
-				<InnerBlocks.Content />
-
-				<button class='carousel-control-prev' type='button' data-bs-target='#carouselExample' data-bs-slide='prev'>
+				<button class='carousel-control-prev' type='button' data-bs-target={carouselId} data-bs-slide='prev'>
 					<span class='carousel-control-prev-icon' aria-hidden='true'></span>
 					<span class='visually-hidden'>Previous</span>
 				</button>
-				<button class='carousel-control-next' type='button' data-bs-target='#carouselExample' data-bs-slide='next'>
+				<button class='carousel-control-next' type='button' data-bs-target={carouselId} data-bs-slide='next'>
 					<span class='carousel-control-next-icon' aria-hidden='true'></span>
 					<span class='visually-hidden'>Next</span>
 				</button>
@@ -181,69 +264,12 @@ registerBlockType( 'ekiline-collection/ekiline-carousel-blocks', {
 
 
 /**
- * - tabs-container
- */
-
-registerBlockType( 'ekiline-collection/ekiline-carousel-blocks-container', {
-	title: __( 'Carousel container', 'ekiline-collection' ),
-	parent: ['ekiline-collection/ekiline-carousel-blocks'],
-	icon: 'editor-kitchensink',
-	description: __( 'All carousel content add here.', 'ekiline-collection' ),
-	category: 'design',
-	supports: {
-		html: false,
-		reusable: false,
-		multiple: false,
-		inserter: false,
-	},
-
-	edit: () => {
-
-		// Restringir los bloques, Cargar un preset.
-		const PARENT_ALLOWED_BLOCKS = [ 'ekiline-collection/ekiline-carousel-blocks-content' ];
-		const CHILD_TEMPLATE = [
-			[ 'ekiline-collection/ekiline-carousel-blocks-content', {
-				className: 'carousel-item active',
-			} ],
-			[ 'ekiline-collection/ekiline-carousel-blocks-content', {
-				className: 'carousel-item',
-			} ],
-		];
-		// personalizar clase
-		const blockProps = useBlockProps( {
-			className: 'carousel-container',
-		} );
-
-		return (
-			<div { ...blockProps }>
-				<InnerBlocks
-					allowedBlocks={ PARENT_ALLOWED_BLOCKS }
-					template={ CHILD_TEMPLATE }/>
-			</div>
-		);
-	},
-	save: () => {
-
-		// personalizar clase
-		const blockProps = useBlockProps.save( {
-			className: 'carousel-container carousel-inner',
-		} );
-
-		return (
-			<div { ...blockProps }>
-				<InnerBlocks.Content />
-			</div>
-		);
-	},
-} );
-
-/**
- * - - tab-content
+ * - - carousel-blocks-content
  */
 
 registerBlockType( 'ekiline-collection/ekiline-carousel-blocks-content', {
 	title: __( 'Carousel Content', 'ekiline-collection' ),
-	parent: ['ekiline-collection/ekiline-carousel-blocks-container'],
+	parent: ['ekiline-collection/ekiline-carousel-blocks'],
 	icon: 'feedback',
 	description:__( 'Inner carousel content.', 'ekiline-collection' ),
 	category: 'design',
