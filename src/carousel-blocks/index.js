@@ -5,8 +5,8 @@
  */
 import { registerBlockType } from '@wordpress/blocks';
 import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, TextControl } from '@wordpress/components';
-import { useSelect, select } from '@wordpress/data';
+import { PanelBody, TextControl, RangeControl, ToggleControl, SelectControl } from '@wordpress/components';
+import { useSelect } from '@wordpress/data';
 
 
 /**
@@ -161,6 +161,14 @@ registerBlockType( 'ekiline-collection/ekiline-carousel-blocks', {
 			default: '480',
 		},
 	},
+	
+	/**
+	 * Se ocupara contexto para pasar valores.
+	 * @link https://developer.wordpress.org/block-editor/reference-guides/block-api/block-context/
+	 */
+	providesContext: {
+		'ekiline-carousel-blocks/height': 'SetHeight',
+	},
 
 	/**
 	 * @see ./edit.js
@@ -201,6 +209,82 @@ registerBlockType( 'ekiline-collection/ekiline-carousel-blocks', {
 
 		return (
 			<div { ...blockProps }>
+
+				{/* Inspector controles */}
+				<InspectorControls>
+
+					{/* Caracteristicas de carrusel, controles. */}
+					<PanelBody title={ __( 'Carousel Look', 'ekiline-collection' ) } initialOpen={ true }>
+						<RangeControl
+							label={ __( 'Columns', 'ekiline-collection' ) }
+							value={ attributes.SetColumns }
+							onChange={ ( newval ) =>
+								setAttributes( { SetColumns: parseInt( newval ) } )
+							}
+							min={ 1 }
+							max={ 4 }
+						/>
+
+						<ToggleControl
+							label={ __( 'Show controls', 'ekiline-collection' ) }
+							checked={ attributes.AddControls }
+							onChange={ ( AddControls ) =>
+								setAttributes( { AddControls } )
+							}
+						/>
+
+						<ToggleControl
+							label={ __( 'Show indicators', 'ekiline-collection' ) }
+							checked={ attributes.AddIndicators }
+							onChange={ ( AddIndicators ) =>
+								setAttributes( { AddIndicators } )
+							}
+						/>
+
+						<ToggleControl
+							label={ __( 'Auto start', 'ekiline-collection' ) }
+							checked={ attributes.SetAuto }
+							onChange={ ( SetAuto ) => setAttributes( { SetAuto } ) }
+						/>
+
+						<TextControl
+							label={ __( 'Transition in milliseconds', 'ekiline-collection' ) }
+							type="number"
+							value={ attributes.SetTime }
+							onChange={ ( newval ) =>
+								setAttributes( { SetTime: parseInt( newval ) } )
+							}
+							min={ 0 }
+						/>
+
+						<SelectControl
+							label={ __( 'Animation type', 'ekiline-collection' ) }
+							value={ attributes.SetAnimation }
+							options={ [
+								{ label: __( 'Default', 'ekiline-collection' ), value: '' },
+								{ label: __( 'Fade', 'ekiline-collection' ), value: 'fade' },
+								{ label: __( 'Vertical', 'ekiline-collection' ), value: 'vertical' },
+							] }
+							onChange={ ( SetAnimation ) =>
+								setAttributes( { SetAnimation } )
+							}
+						/>
+
+						<TextControl
+							label={ __( 'Height in pixels.', 'ekiline-collection' ) }
+							type="number"
+							value={ attributes.SetHeight }
+							onChange={ ( newval ) =>
+								setAttributes( { SetHeight: parseInt( newval ) } )
+							}
+							min={ 0 }
+							help={ ( 0 === attributes.SetHeight ) ? __( 'Zero sets carousel at full display height.', 'ekiline-collection'  ) : '' }
+						/>
+					</PanelBody>
+					{/* fin controles  */}
+
+				</InspectorControls>
+
 				<InnerBlocks
 					allowedBlocks={ PARENT_ALLOWED_BLOCKS }
 					template={ CHILD_TEMPLATE }/>
@@ -215,46 +299,59 @@ registerBlockType( 'ekiline-collection/ekiline-carousel-blocks', {
 	// save,
 	save: ({attributes}) => {
 
-		// personalizar clase
-		const blockProps = useBlockProps.save( {
-			className: 'carousel-wrapper carousel slide',
-		} );
+		// Al inicio del componente, todas las variables.
+		const carId = `#${attributes.anchor}`;
+		const carCol = ( 1 < attributes.SetColumns ) ? ' carousel-multiple x' + attributes.SetColumns : '';
+		const carAni = ( attributes.SetAnimation ) ? ' carousel-' + attributes.SetAnimation : '';
+		const carStr = ( attributes.SetAuto ) ? 'carousel' : null;
+		// Reglas CSS inline.
+		const min_height = { height : ( 0 !== attributes.SetHeight ) ? attributes.SetHeight + 'px' : '100vh' };
 
-		// Al inicio del componente
-		const carouselId = `#${attributes.anchor}`;
+		// personalizar attributos.
+		const blockProps = useBlockProps.save( {
+			className: 'carousel-wrapper carousel slide' + carCol + carAni,
+			'data-bs-ride': carStr,
+			'data-bs-Interval': attributes.SetTime,
+			style: min_height,
+		} );
 
 		return (
 			<div { ...blockProps }>
-				{/* Controles. */}
-				{ attributes.CountChildren && (
-				<div className='carousel-indicators'>
-					{ Array.from({ length: attributes.CountChildren }).map((_, i) => (
-					<button
-						key={i}
-						type='button'
-						data-bs-target={carouselId}
-						data-bs-slide-to={i}
-						className={i === 0 ? 'active' : ''}
-						aria-current={i === 0 ? 'true' : ''}
-						aria-label={`Slide ${i + 1}`}
-					/>
-					))}
-				</div>
+				{/* Indicadores. */}
+				{ attributes.AddIndicators &&
+				  attributes.CountChildren && (
+					<div className='carousel-indicators'>
+						{ Array.from({ length: attributes.CountChildren }).map((_, i) => (
+						<button
+							key={i}
+							type='button'
+							data-bs-target={carId}
+							data-bs-slide-to={i}
+							className={i === 0 ? 'active' : null}
+							aria-current={i === 0 ? 'true' : null}
+							aria-label={`Slide ${i + 1}`}
+						/>
+						))}
+					</div>
 				)}
 
 				{/* Contenido */}
-				<div class='carousel-inner'>
+				<div className={'carousel-inner'}>
 					<InnerBlocks.Content />
 				</div>
 
-				<button class='carousel-control-prev' type='button' data-bs-target={carouselId} data-bs-slide='prev'>
-					<span class='carousel-control-prev-icon' aria-hidden='true'></span>
-					<span class='visually-hidden'>Previous</span>
-				</button>
-				<button class='carousel-control-next' type='button' data-bs-target={carouselId} data-bs-slide='next'>
-					<span class='carousel-control-next-icon' aria-hidden='true'></span>
-					<span class='visually-hidden'>Next</span>
-				</button>
+				{ attributes.AddControls && (
+					<div>
+						<button class='carousel-control-prev' type='button' data-bs-target={carId} data-bs-slide='prev'>
+							<span class='carousel-control-prev-icon' aria-hidden='true'></span>
+							<span class='visually-hidden'>Previous</span>
+						</button>
+						<button class='carousel-control-next' type='button' data-bs-target={carId} data-bs-slide='next'>
+							<span class='carousel-control-next-icon' aria-hidden='true'></span>
+							<span class='visually-hidden'>Next</span>
+						</button>
+					</div>
+				) }
 
 
 			</div>
@@ -273,6 +370,8 @@ registerBlockType( 'ekiline-collection/ekiline-carousel-blocks-content', {
 	icon: 'feedback',
 	description:__( 'Inner carousel content.', 'ekiline-collection' ),
 	category: 'design',
+	//Se ocupa contexto para pasar valores desde el padre, en este caso el ID.
+	usesContext: ['ekiline-carousel-blocks/height'],
 	supports: {
 		anchor: true,
 		html: false,
@@ -280,16 +379,33 @@ registerBlockType( 'ekiline-collection/ekiline-carousel-blocks-content', {
 		// multiple: false,
 		// inserter: false,
 	},
-	edit: () => {
+	attributes:{
+		parentHeight:{
+			type: 'number',
+			default: '480',
+		}
+	},
+	edit: ( props) => {
+
+		const { attributes, setAttributes } = props;
+
 		// Cargar un preset.
 		const CHILD_TEMPLATE = [
 			[ 'core/paragraph', { content: __( 'Add your blocks', 'ekiline-collection' ) } ],
 		];
 
-		// personalizar clase
+		// Precargar altura Padre en objetos internos.
+		if( !attributes.parentHeight || ( attributes.parentHeight !== props.context['ekiline-carousel-blocks/height'] )  ){
+			setAttributes( { 
+				parentHeight: props.context['ekiline-carousel-blocks/height'] 
+			} )
+		}
+
+		// personalizar atributos.
 		const blockProps = useBlockProps( {
-			className: 'carousel-content',
+			className: 'carousel-content'
 		} );
+
 
 		return (
 			<div { ...blockProps }>
@@ -299,15 +415,20 @@ registerBlockType( 'ekiline-collection/ekiline-carousel-blocks-content', {
 		);
 	},
 
-	save: () => {
+	save: ( { attributes } ) => {
+
+		// Reglas CSS inline.
+		const min_height = { height : ( 0 !== attributes.parentHeight ) ? attributes.parentHeight + 'px' : '100vh' };
 
 		// Clases y atributos auxiliares, incluir save.
 		const blockProps = useBlockProps.save( {
 			className: 'carousel-content carousel-item',
+			style: min_height,
 		} );
 
 		return (
 			<div { ...blockProps }>
+			{/* <div className={(index===0?'carousel-item active':'carousel-item')} key={ post.post_id } style={min_height}> */}
 				<InnerBlocks.Content />
 			</div>
 		);
