@@ -133,4 +133,4 @@ As well as to maintain this development and incorporate new features in each new
 “I have created this plugin to provide a better web development service to my clients, from a trusted source such as WordPress.”
 Uri Lazcano.
 
-Dev Note: [node v14.21.3, npm 6.14.18, nvm 0.39.1]
+DevIm: [node v19.1.0, npm 8.19.3, nvm 0.39.3]
