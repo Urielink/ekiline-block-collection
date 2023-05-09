@@ -19,7 +19,6 @@ import './toast/index';
 import './tabs/index';
 import './modal/index';
 import './carousel/index';
-// import './carousel-blocks/index';
 import './carousel-extra/index';
 import './carousel-blocks/index';
 import './offcanvas/index';
