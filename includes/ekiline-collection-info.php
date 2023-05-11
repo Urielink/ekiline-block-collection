@@ -20,21 +20,23 @@
 /**
  * Ekiline, side menu button.
  */
-function ekiline_collection_info_page() {
-	add_theme_page(
-		'Ekiline Menu Page Title',
-		__( 'About Ekiline BC', 'ekiline-collection' ),
-		'edit_posts',
-		'ekiline_collection_options',
-		'ekiline_collection_plugin_html_page'
-	);
+function ekiline_collection_info_page()
+{
+    add_theme_page(
+        'Ekiline Menu Page Title',
+        __('About Ekiline BC', 'ekiline-collection'),
+        'edit_posts',
+        'ekiline_collection_options',
+        'ekiline_collection_plugin_html_page'
+    );
 }
-add_action( 'admin_menu', 'ekiline_collection_info_page' );
+add_action('admin_menu', 'ekiline_collection_info_page');
 
 /**
  * Ekiline, info.
  */
-function ekiline_collection_plugin_html_page() { ?>
+function ekiline_collection_plugin_html_page()
+{ ?>
 <style>
 	.ekiline-notice, .ekiline-notice h4, .ekiline-notice ul, .ekiline-notice ul li{ margin:0px 5px 0px 0px !important; padding-bottom:0px !important; display: inline-block; }
 	.ekiline-notice ul li, .welcome-panel::before{ display:none;}
@@ -45,66 +47,66 @@ function ekiline_collection_plugin_html_page() { ?>
 <div class="wrap">
 	<h1>
 		<span class="dashicons dashicons-layout" aria-hidden="true"></span>
-			<?php esc_html_e( 'About Ekiline Block Collection', 'ekiline-collection' ); ?>
+			<?php esc_html_e('About Ekiline Block Collection', 'ekiline-collection'); ?>
 	</h1>
 
 	<div id="welcome-panel" class="welcome-panel">
 		<div class="welcome-panel-content">
 
 			<div class="welcome-panel-header">
-				<span style="float:right;"><?php echo ( function_exists( 'get_avatar' ) ) ? get_avatar( 'uriel@bixnia.com', $size = '100', $default = '' ) : ''; ?></span>
-				<h2><?php esc_html_e( 'Thanks for using this plugin!', 'ekiline-collection' ); ?></h2>
+				<span style="float:right;"><?php echo (function_exists('get_avatar')) ? get_avatar('uriel@bixnia.com', $size = '100', $default = '') : ''; ?></span>
+				<h2><?php esc_html_e('Thanks for using this plugin!', 'ekiline-collection'); ?></h2>
 				<p class="about-description">
-					<?php esc_html_e( 'Find more information to improve your skills when use it.', 'ekiline-collection' ); ?>
+					<?php esc_html_e('Find more information to improve your skills when use it.', 'ekiline-collection'); ?>
 				</p>
 			</div>
 
 			<div class="welcome-panel-column-container">
 				<div class="welcome-panel-column">
 					<div style="padding:4px;">
-						<h3><?php esc_html_e( 'Add an extra to the creation and delivery of your projects.', 'ekiline-collection' ); ?></h3>
+						<h3><?php esc_html_e('Add an extra to the creation and delivery of your projects.', 'ekiline-collection'); ?></h3>
 						<ul>
 							<li><span class="dashicons dashicons-book dash-note"></span>
-								<?php esc_html_e( 'Quick use guide in Keynote or Powerpoint to freely customize and deliver to your clients.', 'ekiline-collection' ); ?></li>
+								<?php esc_html_e('Quick use guide in Keynote or Powerpoint to freely customize and deliver to your clients.', 'ekiline-collection'); ?></li>
 							<li><span class="dashicons dashicons-edit dash-note"></span>
-								<?php esc_html_e( 'More design elements, CSS, HTML and JS available to grow your project.', 'ekiline-collection' ); ?></li>
+								<?php esc_html_e('More design elements, CSS, HTML and JS available to grow your project.', 'ekiline-collection'); ?></li>
 							<li><span class="dashicons dashicons-layout dash-note"></span>
-								<?php esc_html_e( 'Ekiline Blocks, plugin with carousel and more options in page editor.', 'ekiline-collection' ); ?></li>
+								<?php esc_html_e('Ekiline Blocks, plugin with carousel and more options in page editor.', 'ekiline-collection'); ?></li>
 							<li><span class="dashicons dashicons-welcome-view-site dash-note"></span>
-								<?php esc_html_e( 'Complete clean theme, no warnings or messages.', 'ekiline-collection' ); ?></li>
+								<?php esc_html_e('Complete clean theme, no warnings or messages.', 'ekiline-collection'); ?></li>
 						</ul>
 						<p>
-							<?php printf( '<a class="button button-primary button-hero" href="%1$s" target="_blank"><span class="dashicons dashicons-cart"></span> %2$s</a>', esc_url( 'https://ekiline.com/compra/' ), esc_html__( 'Buy and download', 'ekiline-collection' ) ); ?>
-							<?php printf( '<a class="button button-primary button-hero gold" href="%1$s" target="_blank"><span class="dashicons dashicons-carrot"></span> %2$s</a>', esc_url( 'https://ekiline.com/fondeo/' ), esc_html__( 'FundMe', 'ekiline-collection' ) ); ?>
+							<?php printf('<a class="button button-primary button-hero" href="%1$s" target="_blank"><span class="dashicons dashicons-cart"></span> %2$s</a>', esc_url('https://ekiline.com/compra/'), esc_html__('Buy and download', 'ekiline-collection')); ?>
+							<?php printf('<a class="button button-primary button-hero gold" href="%1$s" target="_blank"><span class="dashicons dashicons-carrot"></span> %2$s</a>', esc_url('https://ekiline.com/fondeo/'), esc_html__('FundMe', 'ekiline-collection')); ?>
 						</p>
 						<p>
 							<?php
-							printf(
-								/* translators: %1$s is replaced with links data */
-								esc_html__( '%1$s with Ekiline and %2$s, %3$s.', 'ekiline-collection' ),
-								'<a href="' . esc_url( 'https://ekiline.com/gana/' ) . '" target="_blank" rel="noopener">' . esc_html__( 'Make money', 'ekiline-collection' ) . '</a>',
-								'<a href="' . esc_url( 'https://ekiline.com/fondeo/' ) . '" target="_blank" rel="noopener">' . esc_html__( 'fund its development', 'ekiline-collection' ) . '</a>',
-								'<a href="' . esc_url( 'https://ekiline.com/' ) . '" target="_blank" rel="noopener">' . esc_html__( 'discover how', 'ekiline-collection' ) . '</a>'
-							);
-							?>
+                            printf(
+                                /* translators: %1$s is replaced with links data */
+                                esc_html__('%1$s with Ekiline and %2$s, %3$s.', 'ekiline-collection'),
+                                '<a href="' . esc_url('https://ekiline.com/gana/') . '" target="_blank" rel="noopener">' . esc_html__('Make money', 'ekiline-collection') . '</a>',
+                                '<a href="' . esc_url('https://ekiline.com/fondeo/') . '" target="_blank" rel="noopener">' . esc_html__('fund its development', 'ekiline-collection') . '</a>',
+                                '<a href="' . esc_url('https://ekiline.com/') . '" target="_blank" rel="noopener">' . esc_html__('discover how', 'ekiline-collection') . '</a>'
+                            );
+    ?>
 						</p>
 					</div>
 				</div>
 				<div class="welcome-panel-column">
 					<div style="padding:4px;">
-						<h3><?php esc_html_e( 'About Ekiline', 'ekiline-collection' ); ?></h3>
-						<p><?php esc_html_e( 'Ekiline simplifies the creation of a website with WordPress, it is a working method that brings together the standard practices of the internet industry, to facilitate the tasks of planning, design, development and optimization. For more information visit ekiline.com', 'ekiline-collection' ); ?></p>
-						<h3><?php esc_html_e( 'About Uri Lazcano', 'ekiline-collection' ); ?></h3>
+						<h3><?php esc_html_e('About Ekiline', 'ekiline-collection'); ?></h3>
+						<p><?php esc_html_e('Ekiline simplifies the creation of a website with WordPress, it is a working method that brings together the standard practices of the internet industry, to facilitate the tasks of planning, design, development and optimization. For more information visit ekiline.com', 'ekiline-collection'); ?></p>
+						<h3><?php esc_html_e('About Uri Lazcano', 'ekiline-collection'); ?></h3>
 						<p>
-							<span style="float:left;"><?php echo ( function_exists( 'get_avatar' ) ) ? get_avatar( 'uriel@bixnia.com', $size = '60', $default = '' ) : ''; ?></span>
-							<?php esc_html_e( 'Frontend designer established in Mexico City. 10 years developing websites and 10 more years of experience in graphic design for advertising. Check my career and work.', 'ekiline-collection' ); ?>
+							<span style="float:left;"><?php echo (function_exists('get_avatar')) ? get_avatar('uriel@bixnia.com', $size = '60', $default = '') : ''; ?></span>
+							<?php esc_html_e('Frontend designer established in Mexico City. 10 years developing websites and 10 more years of experience in graphic design for advertising. Check my career and work.', 'ekiline-collection'); ?>
 						</p>
 						<p>
-							<?php printf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( 'https://profiles.wordpress.org/urielink/' ), esc_html__( 'WordPress', 'ekiline-collection' ) ); ?>
-							| <?php printf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( 'https://github.com/Urielink' ), esc_html__( 'Github', 'ekiline-collection' ) ); ?>
-							| <?php printf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( 'https://www.linkedin.com/in/urielink/' ), esc_html__( 'Linkedin', 'ekiline-collection' ) ); ?>
-							| <?php printf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( 'https://www.behance.net/Urielink' ), esc_html__( 'Behance', 'ekiline-collection' ) ); ?>
-							| <?php printf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( 'https://bixnia.com' ), esc_html__( 'B I X N I A', 'ekiline-collection' ) ); ?>
+							<?php printf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://profiles.wordpress.org/urielink/'), esc_html__('WordPress', 'ekiline-collection')); ?>
+							| <?php printf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://github.com/Urielink'), esc_html__('Github', 'ekiline-collection')); ?>
+							| <?php printf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://www.linkedin.com/in/urielink/'), esc_html__('Linkedin', 'ekiline-collection')); ?>
+							| <?php printf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://www.behance.net/Urielink'), esc_html__('Behance', 'ekiline-collection')); ?>
+							| <?php printf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://bixnia.com'), esc_html__('B I X N I A', 'ekiline-collection')); ?>
 						</p>
 					</div>
 				</div>
@@ -112,35 +114,35 @@ function ekiline_collection_plugin_html_page() { ?>
 					<div style="padding:4px;">
 						<h3>
 							<span class="dashicons dashicons-book dash-note"></span>
-							<?php esc_html_e( 'Ekiline docs', 'ekiline-collection' ); ?>
+							<?php esc_html_e('Ekiline docs', 'ekiline-collection'); ?>
 						</h3>
 						<ul>
-							<li><?php printf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( 'https://ekiline.com/instala/' ), esc_html__( 'Install', 'ekiline-collection' ) ); ?></li>
-							<li><?php printf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( 'https://ekiline.com/personaliza/' ), esc_html__( 'Customize', 'ekiline-collection' ) ); ?></li>
-							<li><?php printf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( 'https://ekiline.com/elementos/' ), esc_html__( 'Elements and blocks', 'ekiline-collection' ) ); ?></li>
-							<li><?php printf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( 'https://ekiline.com/compatible/' ), esc_html__( 'Compatibility', 'ekiline-collection' ) ); ?></li>
+							<li><?php printf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://ekiline.com/instala/'), esc_html__('Install', 'ekiline-collection')); ?></li>
+							<li><?php printf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://ekiline.com/personaliza/'), esc_html__('Customize', 'ekiline-collection')); ?></li>
+							<li><?php printf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://ekiline.com/elementos/'), esc_html__('Elements and blocks', 'ekiline-collection')); ?></li>
+							<li><?php printf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://ekiline.com/compatible/'), esc_html__('Compatibility', 'ekiline-collection')); ?></li>
 						</ul>
 
 						<?php
-						/**
-						 * Widget RSS reader.
-						 */
-						$rss_instance = array(
-							'title' => 'Ekiline Tips:',
-							'url'   => 'http://ekiline.com/feed/',
-							'items' => 5,
-						);
-						$rss_args     = array(
-							'before_widget' => '<div class="ekiline-notice widget %s">',
-							'after_widget'  => '</div>',
-							'before_title'  => '<h4 class="widgettitle">',
-							'after_title'   => '</h4>',
-						);
-						the_widget( 'WP_Widget_RSS', $rss_instance, $rss_args );
-						?>
+                        /**
+                         * Widget RSS reader.
+                         */
+                        $rss_instance = array(
+    'title' => 'Ekiline Tips:',
+    'url'   => 'http://ekiline.com/feed/',
+    'items' => 5,
+                        );
+    $rss_args     = array(
+        'before_widget' => '<div class="ekiline-notice widget %s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4 class="widgettitle">',
+        'after_title'   => '</h4>',
+    );
+    the_widget('WP_Widget_RSS', $rss_instance, $rss_args);
+    ?>
 
-						<p><small><strong><?php esc_html_e( 'Limited liability:', 'ekiline-collection' ); ?></strong>
-						<?php esc_html_e( 'As a courtesy, we provide information on how to use certain third-party products, but we do not directly support their use and we are not responsible for the functions, reliability or compatibility of such products. The names, trademarks and logos of third parties are registered trademarks of their respective owners.', 'ekiline-collection' ); ?></small></p>
+						<p><small><strong><?php esc_html_e('Limited liability:', 'ekiline-collection'); ?></strong>
+						<?php esc_html_e('As a courtesy, we provide information on how to use certain third-party products, but we do not directly support their use and we are not responsible for the functions, reliability or compatibility of such products. The names, trademarks and logos of third parties are registered trademarks of their respective owners.', 'ekiline-collection'); ?></small></p>
 					</div>
 				</div>
 			</div>
@@ -151,11 +153,11 @@ function ekiline_collection_plugin_html_page() { ?>
 	<p style="text-align: right;">
 		<small>
 			<?php
-				/* translators: %1$s is replaced with date data */
-				printf( esc_html__( '&copy; Copyright %1$s Ekiline', 'ekiline-collection' ), esc_attr( date( 'Y' ) ) );
-			?>
-			<?php esc_html_e( 'All rights reserved. Ekiline developed by', 'ekiline-collection' ); ?>
-			<?php printf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( 'https://bixnia.com/' ), esc_html__( 'B I X N I A', 'ekiline-collection' ) ); ?>
+                /* translators: %1$s is replaced with date data */
+                printf(esc_html__('&copy; Copyright %1$s Ekiline', 'ekiline-collection'), esc_attr(date('Y')));
+    ?>
+			<?php esc_html_e('All rights reserved. Ekiline developed by', 'ekiline-collection'); ?>
+			<?php printf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://bixnia.com/'), esc_html__('B I X N I A', 'ekiline-collection')); ?>
 		</small>
 	</p>
 </div>
@@ -167,4 +169,3 @@ function ekiline_collection_plugin_html_page() { ?>
 </script>
 	<?php
 }
-
