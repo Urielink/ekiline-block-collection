@@ -4,7 +4,7 @@ Requires at least: 5.8
 Tags:              block, collection, bootstrap
 Tested up to:      6.2
 Requires PHP:      7.0
-Stable tag:        1.0.3
+Stable tag:        1.0.4
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/license-list.html#GPLv2
 Donate link:       https://www.paypal.com/paypalme/urielink
@@ -25,7 +25,8 @@ Bootstrap components turned into WordPress editor blocks. Add new functionality 
 - **Toast**.
 - **Static carousel**.
 - **Dynamic carousel**.
-- **Offcanvas (new!)**.
+- **Offcanvas**.
+- **Carousel Blocks (new!)**.
 
 
 HTML markup as well as classes and attributes have been respected to work with Bootstrap in its most recent version (5.2.X).
@@ -68,6 +69,7 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 = 1.0.4 =
 * Fix classname in dynamic carosuel.
 * Improve: Avoid lazy load in dynamic carosuel first image.
+* Improve: New carousel, customize slide by slide with existing blocks.
 
 = 1.0.3 =
 * Fix language descriptions.
