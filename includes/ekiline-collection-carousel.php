@@ -185,10 +185,10 @@ function ekiline_collection_carousel_dynamic_render_callback($block_attributes, 
     }
     $default_class_name = 'wp-block-ekiline-collection-ekiline-carousel';
     if ('' !== $block_attributes['align']) {
-        $default_class_name .= (! $block_attributes['align']) ? '' : ' align' . $block_attributes['align'];
+        $default_class_name .= (!$block_attributes['align']) ? '' : ' align' . $block_attributes['align'];
     }
     if ('' !== $block_attributes['className']) {
-        $default_class_name .= (! $block_attributes['className']) ? '' : ' ' . $block_attributes['className'];
+        $default_class_name .= (!$block_attributes['className']) ? '' : ' ' . $block_attributes['className'];
     }
     $carousel_args .= 'classname="' . $default_class_name . '" ';
 

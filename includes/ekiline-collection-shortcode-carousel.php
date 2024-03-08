@@ -170,7 +170,7 @@ function ekiline_collection_carousel_posts($ppp = 3, $cat = array(), $findblock 
  */
 function ekiline_collection_carousel_images($ids = array())
 {
-    if (! $ids) {
+    if (!$ids) {
         return;
     }
     $carousel = array();
@@ -245,7 +245,7 @@ function ekiline_collection_carousel_html($carousel, $columns, $control, $indica
                 foreach ($carousel as $index => $slide) {
                     $active  = (0 === $index) ? ' active' : '';
                     $img_load = (0 === $index) ? 'eager' : 'lazy';
-                    $img_cap  = (! isset($slide['image'])) ? ' no-image' : '';
+                    $img_cap  = (!isset($slide['image'])) ? ' no-image' : '';
                     ?>
 
 					<div class="carousel-item<?php echo esc_attr($active); ?>"<?php echo wp_kses_post($height); ?>>
@@ -321,7 +321,7 @@ function ekiline_collection_carousel_html($carousel, $columns, $control, $indica
 
 			<?php } ?>
 
-			<?php if (! $columns && 'false' !== $indicatorstext) { ?>
+			<?php if (!$columns && 'false' !== $indicatorstext) { ?>
 
 				<ul class='carousel-text-indicators carousel-caption list-unstyled d-none d-md-flex'>
 					<?php
