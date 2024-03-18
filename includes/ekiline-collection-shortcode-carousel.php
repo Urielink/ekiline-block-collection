@@ -56,7 +56,7 @@ function ekiline_collection_shortcode_carousel($atts = [])
     );
 
     // Obtener ids.
-    $id_arr = explode(',', $atts['id']);
+    $id_arr = explode(',', $atts['id'] ?? '');
     // Default posts.
     $carousel = ekiline_collection_carousel_posts($atts['amount'], $id_arr, $atts['block'], $atts['orderby'], $atts['mixed']);
     // Condicion para imagenes y video.

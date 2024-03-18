@@ -184,6 +184,7 @@ registerBlockType('ekiline-collection/ekiline-accordion-item', {
 		anchor: true,
 		html: false,
 		reusable: false,
+		color: true,
 	},
 	attributes:{
 		showDefault: {
@@ -295,18 +296,38 @@ registerBlockType('ekiline-collection/ekiline-accordion-item', {
 			itemClassName: ( !attributes.showDefault ? 'accordion-collapse collapse' : 'accordion-collapse collapse show' ),
 		} );
 
+		// 17Mar2024: estilos css y clases a partir de librerias.
+		// Función para generar las clases del elemento boton
+		const addAccordionButtonClassnames = (backgroundColor) => {
+			let classes = 'accordion-button';
+			if (backgroundColor) {
+				classes += ` ${backgroundColor}`;
+			}
+			return classes;
+		};
+
+		// Función para generar los estilos en línea del elemento boton.
+		const addAccordionButtonStyles = (backgroundStyle) => {
+			if (backgroundStyle) {
+				return { backgroundColor: backgroundStyle + ' !important' };
+			}
+			return null;
+		};
+
 		return (
 			<div { ...blockProps }>
-				<h2 class="accordion-header"
-					id={ itemBlockProps.headingId }
+				<h2
+				className={ 'accordion-header' }
+				id={ itemBlockProps.headingId }
 				>
 					<RichText.Content
 						tagName="button"
-						className={ 'accordion-button' }
+						className={ addAccordionButtonClassnames(attributes.backgroundColor) }
 						type="button"
 						value={ attributes.content }
 						data-bs-toggle="collapse"
 						data-bs-target={ (itemBlockProps.itemId)?'#' + itemBlockProps.itemId:null }
+						style={ addAccordionButtonStyles(attributes.style?.color?.background) }
 					/>
 				</h2>
 				<div
