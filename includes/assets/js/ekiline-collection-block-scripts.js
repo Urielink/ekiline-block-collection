@@ -195,9 +195,12 @@ function ekiline_collection_transform_carousel(carrusel){
 
 	// Si no hay carrusel cancelar todo.
 	var loaditem = document.querySelector(carrusel);
-	if ( !loaditem || 0 < loaditem.getElementsByTagName('figure').length ) {
+	if ( !loaditem ) {
 		return;
 	}
+	// if ( 0 < loaditem.getElementsByTagName('figure').length ) {
+	// 	return;
+	// }
 
 	// Funcion envoltorio (Wrapper).
 	function envolver(fuente,col){
