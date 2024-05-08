@@ -21,14 +21,14 @@ import { __ } from '@wordpress/i18n'
  */
 import { createElement } from '@wordpress/element'
 const customIcon = createElement(
-  'svg',
-  { width: 20, height: 20 },
-  createElement(
-    'path',
-    {
-      d: 'M1,1V6.04H19V1H1ZM18.1,5.14H1.9V1.9H18.1v3.24Zm-2.8,12.51l1.44-1.17-1.44-1.17v2.34Zm-14.3,1.35H19v-5.04H1v5.04Zm.9-4.14H18.1v3.24H1.9v-3.24Zm-.9-2.34H19V7.48H1v5.04Zm16.19-3.24l-1.17,1.44-1.17-1.44h2.34Zm-1.89-6.93v2.34l1.44-1.17-1.44-1.17Z'
-    }
-  )
+	'svg',
+	{ width: 20, height: 20 },
+	createElement(
+		'path',
+		{
+			d: 'M1,1V6.04H19V1H1ZM18.1,5.14H1.9V1.9H18.1v3.24Zm-2.8,12.51l1.44-1.17-1.44-1.17v2.34Zm-14.3,1.35H19v-5.04H1v5.04Zm.9-4.14H18.1v3.24H1.9v-3.24Zm-.9-2.34H19V7.48H1v5.04Zm16.19-3.24l-1.17,1.44-1.17-1.44h2.34Zm-1.89-6.93v2.34l1.44-1.17-1.44-1.17Z'
+		}
+	)
 )
 
 /**
@@ -62,276 +62,441 @@ const customIcon = createElement(
  */
 registerBlockType('ekiline-collection/ekiline-accordion', {
 
-  /**
+	/**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */
-  apiVersion: 2,
+	apiVersion: 2,
 
-  /**
+	/**
 	 * Parametros de alta.
 	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/
 	 */
-  title: __('Accordion', 'ekiline-collection'),
-  icon: customIcon,
-  description: __('Show your content as an accordion.', 'ekiline-collection'),
-  category: 'design',
-  supports: {
-    anchor: true
-  },
-  attributes: {
-    noStyle: {
-      type: 'boolean',
-      default: false // add classname .accordion-flush.
-    }
-  },
-  /**
+	title: __('Accordion', 'ekiline-collection'),
+	icon: customIcon,
+	description: __('Show your content as an accordion.', 'ekiline-collection'),
+	category: 'design',
+	supports: {
+		html: false, // no permitir HTML
+		anchor: true // id personalizado.
+	},
+	attributes: {
+		noStyle: {
+			type: 'boolean',
+			default: false // add classname .accordion-flush.
+		}
+	},
+	/**
 	 * Se ocupara contexto para pasar valores.
 	 * @link https://developer.wordpress.org/block-editor/reference-guides/block-api/block-context/
 	 */
-  providesContext: {
-    'ekiline-accordion/anchor': 'anchor'
-  },
+	providesContext: {
+		'ekiline-accordion/anchor': 'anchor'
+	},
 
-  /**
+	/**
 	 * @see ./edit.js
 	 */
-  // edit: Edit,
-  edit: (props) => {
-    const { attributes, setAttributes } = props
+	// edit: Edit,
+	edit: (props) => {
+		const { attributes, setAttributes } = props
 
-    // Restringir los bloques, Cargar un preset.
-    const PARENT_ALLOWED_BLOCKS = ['ekiline-collection/ekiline-accordion-item']
-    const CHILD_TEMPLATE = [
-      ['ekiline-collection/ekiline-accordion-item'],
-      ['ekiline-collection/ekiline-accordion-item'],
-      ['ekiline-collection/ekiline-accordion-item']
-    ]
+		// Restringir los bloques, Cargar un preset.
+		const PARENT_ALLOWED_BLOCKS = ['ekiline-collection/ekiline-accordion-item']
+		const CHILD_TEMPLATE = [
+			['ekiline-collection/ekiline-accordion-item'],
+			['ekiline-collection/ekiline-accordion-item'],
+			['ekiline-collection/ekiline-accordion-item']
+		]
 
-    // Personalizar clase.
-    const blockProps = useBlockProps({
-      className: 'group-accordion'
-    })
+		// Personalizar clase en editor.
+		const blockProps = useBlockProps({
+			className: 'group-accordion'
+		})
 
-    // Precargar nombre ID.
-    if (!attributes.anchor) {
-      function getRandomArbitrary (min, max) {
-        return Math.floor(Math.random() * (max - min) + min)
-      }
-      setAttributes({ anchor: 'accordion' + getRandomArbitrary(10, 150) })
-    }
+		// Precargar nombre ID (anchor).
+		if (!attributes.anchor) {
+			setAttributes({ anchor: 'accordion' + getRandomArbitrary(10, 150) })
+		}
 
-    return (
-      <div {...blockProps}>
-        {/* Inspector controles */}
-        <InspectorControls>
-          <PanelBody title={__('Accordion Settings', 'ekiline-collection')} initialOpen>
-            <ToggleControl
-              label={__('Clear style.', 'ekiline-collection')}
-              checked={attributes.noStyle}
-              onChange={(noStyle) =>
-							  setAttributes({ noStyle })}
-            />
-          </PanelBody>
-        </InspectorControls>
-        {/* El bloque */}
+		return (
+			<div {...blockProps}>
+				{/* Inspector controles */}
+				<InspectorControls>
+					<PanelBody title={__('Accordion Settings', 'ekiline-collection')} initialOpen>
+						<ToggleControl
+							label={__('Use bootstrap default style.', 'ekiline-collection')}
+							checked={attributes.noStyle}
+							onChange={(noStyle) => setAttributes({ noStyle })}
+						/>
+					</PanelBody>
+				</InspectorControls>
 
-        <InnerBlocks
-          allowedBlocks={PARENT_ALLOWED_BLOCKS}
-          template={CHILD_TEMPLATE}
-        />
+				{/* El bloque */}
+				<InnerBlocks
+					allowedBlocks={PARENT_ALLOWED_BLOCKS}
+					template={CHILD_TEMPLATE}
+				/>
 
-      </div>
-    )
-  },
+			</div>
+		)
+	},
 
-  /**
+	/**
 	 * @see ./save.js
 	 */
-  // save,
-  save: ({ attributes }) => {
-    // Clases y atributos auxiliares, incluir save.
-    const blockProps = useBlockProps.save({
-      className: (!attributes.noStyle ? 'accordion' : 'accordion accordion-flush')
-    })
+	// save,
+	save: ({ attributes }) => {
+		// Clases y atributos auxiliares, incluir save.
+		const blockProps = useBlockProps.save({
+			className: (!attributes.noStyle ? 'accordion accordion-flush' : 'accordion')
+		})
 
-    return (
-      <div {...blockProps}>
-        <InnerBlocks.Content />
-      </div>
-    )
-  }
+		return (
+			<div {...blockProps}>
+				<InnerBlocks.Content />
+			</div>
+		)
+	}
 
 })
 
 /**
- * Bloque interno
+ * Bloque interno accordion-item
  */
-
 registerBlockType('ekiline-collection/ekiline-accordion-item', {
 
-  title: __('Accordion item', 'ekiline-collection'),
-  parent: ['ekiline-collection/ekiline-accordion'],
-  icon: 'menu-alt',
-  description: __('Set tittle and content in your accordion container', 'ekiline-collection'),
-  category: 'design',
-  // Se ocupa contexto para pasar valores desde el padre, en este caso el ID.
-  usesContext: ['ekiline-accordion/anchor'],
-  supports: {
-    anchor: true,
-    html: false,
-    reusable: false,
-    color: true
-  },
-  attributes: {
-    showDefault: {
-      type: 'boolean',
-      default: false // remove dataset [data-bs-parent].
-    },
-    keepOpen: {
-      type: 'boolean',
-      default: true // remove dataset [data-bs-parent].
-    },
-    parentId: {
-      type: 'string',
-      default: '' // retrive parent Id (Anchor).
-    },
-    content: {
-      type: 'string',
-      source: 'html',
-      selector: 'button',
-      default: __('Item title.', 'ekiline-collection')
-    }
-  },
+	title: __('Accordion item', 'ekiline-collection'),
+	parent: ['ekiline-collection/ekiline-accordion'],
+	icon: customIcon,
+	description: __('Set tittle and content in your accordion container', 'ekiline-collection'),
+	category: 'design',
+	// Se ocupa contexto para pasar valores desde el padre, en este caso el ID.
+	usesContext: ['ekiline-accordion/anchor'],
+	supports: {
+		html: false, // no permitir HTML
+		reusable: false,
+	},
+	attributes: {
+		showDefault: {
+			type: 'boolean',
+			default: false // remove dataset [data-bs-parent].
+		},
+		keepOpen: {
+			type: 'boolean',
+			default: false // remove dataset [data-bs-parent].
+		},
+		itemTarget: {
+			type: 'string',
+			default: '' // remove dataset [data-bs-parent].
+		},
+		content: {
+			type: 'string',
+			source: 'html',
+			selector: 'button',
+			default: __('Item title.', 'ekiline-collection')
+		}
+	},
+	/**
+	 * Se ocupara contexto para pasar valores.
+	 * @link https://developer.wordpress.org/block-editor/reference-guides/block-api/block-context/
+	 */
+	providesContext: {
+		'ekiline-accordion-item/showDefault': 'showDefault',
+		'ekiline-accordion-item/keepOpen': 'keepOpen',
+		'ekiline-accordion-item/itemTarget': 'itemTarget'
+	},
 
-  /**
+	/**
 	 * @see ./edit.js
 	 */
-  // edit: Edit,
-  edit: (props) => {
-    const { attributes, setAttributes } = props
+	// edit: Edit,
+	edit: (props) => {
+		const { attributes, setAttributes } = props
 
-    // Cargar un preset.
-    const CHILD_TEMPLATE = [
-      ['core/paragraph',
-        { content: __('Item content.', 'ekiline-collection') }
-      ]
-    ]
+		// Cargar un preset.
+		const CHILD_TEMPLATE = [
+			['ekiline-collection/ekiline-accordion-item-header'],
+			['ekiline-collection/ekiline-accordion-item-body'],
+		]
 
-    // personalizar clase
-    const blockProps = useBlockProps({
-      className: 'child-item-accordion'
-    })
+		// personalizar clase en editor.
+		const blockProps = useBlockProps({
+			className: 'child-item-accordion'
+		})
 
-    // Precargar nombre ID en hijos.
-    if (!attributes.anchor) {
-      function getRandomArbitrary (min, max) {
-        return Math.floor(Math.random() * (max - min) + min)
-      }
-      setAttributes({ anchor: 'accordionChild' + getRandomArbitrary(10, 150) })
-    }
+		// Precargar nombre ID en hijos.
+		if (!attributes.itemTarget) {
+			setAttributes({ itemTarget: props.context['ekiline-accordion/anchor'] + 'item' + getRandomArbitrary(10, 150) })
+		}
 
-    // Precargar nombre de ID Padre en objetos internos.
-    if (!attributes.parentId || (attributes.parentId !== props.context['ekiline-accordion/anchor'])) {
-      setAttributes({ parentId: props.context['ekiline-accordion/anchor'] })
-    }
+		return (
+			<div {...blockProps}>
+				{/* Inspector controles */}
+				<InspectorControls>
+					<PanelBody title={__('Accordion Item Params', 'ekiline-collection')} initialOpen>
+						<ToggleControl
+							label={__('Show element by default.', 'ekiline-collection')}
+							checked={attributes.showDefault}
+							onChange={(showDefault) =>
+							setAttributes({ showDefault })}
+						/>
+						<ToggleControl
+							label={__('Toggle.', 'ekiline-collection')}
+							checked={attributes.keepOpen}
+							onChange={(keepOpen) =>
+							setAttributes({ keepOpen })}
+							help={__('Close previously active accordion elements.', 'ekiline-collection')}
+						/>
+					</PanelBody>
+				</InspectorControls>
 
-    return (
-      <div {...blockProps}>
-        {/* Inspector controles */}
-        <InspectorControls>
-          <PanelBody title={__('Accordion Item Params', 'ekiline-collection')} initialOpen>
-            <ToggleControl
-              label={__('Show element by default.', 'ekiline-collection')}
-              checked={attributes.showDefault}
-              onChange={(showDefault) =>
-						  setAttributes({ showDefault })}
-            />
-            <ToggleControl
-              label={__('Toggle.', 'ekiline-collection')}
-              checked={attributes.keepOpen}
-              onChange={(keepOpen) =>
-						  setAttributes({ keepOpen })}
-              help={__('Close previously active accordion elements.', 'ekiline-collection')}
-            />
-          </PanelBody>
-        </InspectorControls>
+				{/* El bloque */}
+				<InnerBlocks
+					template={CHILD_TEMPLATE}
+				/>
+			</div>
+		)
+	},
 
-        {/* El bloque */}
-        <RichText
-          withoutInteractiveFormatting
-          allowedFormats={['core/bold', 'core/italic', 'core/image', 'core/align']} // Formatos de texto.
-          tagName='p' // The tag here is the element output and editable in the admin
-          className='item-title'
-          value={attributes.content} // Any existing content, either from the database or an attribute default
-          onChange={(content) => setAttributes({ content })} // Store updated content as a block attribute
-          placeholder={__('Accordion Title', 'ekiline-collection')}
-        />
-        <InnerBlocks
-          template={CHILD_TEMPLATE}
-        />
-      </div>
-    )
-  },
-
-  /**
+	/**
 	 * @see ./save.js
 	 */
-  // save,
-  save: ({ attributes }) => {
-    // Clases y atributos auxiliares, incluir save.
-    const blockProps = useBlockProps.save({
-      className: 'accordion-item'
-    })
+	// save,
+	save: ({ attributes }) => {
+		// Clases y atributos auxiliares, incluir save.
+		const blockProps = useBlockProps.save({
+			className:'accordion-item'
+		})
 
-    const itemBlockProps = useBlockProps.save({
-      headingId: (!blockProps.id) ? null : 'heading' + blockProps.id,
-      itemId: (!blockProps.id) ? null : 'item' + blockProps.id,
-      itemClassName: (!attributes.showDefault ? 'accordion-collapse collapse' : 'accordion-collapse collapse show')
-    })
-
-    // 17Mar2024: estilos css y clases a partir de librerias.
-    // Función para generar las clases del elemento boton
-    const addAccordionButtonClassnames = (backgroundColor) => {
-      let classes = 'accordion-button'
-      if (backgroundColor) {
-        classes += ` ${backgroundColor}`
-      }
-      return classes
-    }
-
-    // Función para generar los estilos en línea del elemento boton.
-    const addAccordionButtonStyles = (backgroundStyle) => {
-      if (backgroundStyle) {
-        return { backgroundColor: backgroundStyle + ' !important' }
-      }
-      return null
-    }
-
-    return (
-      <div {...blockProps}>
-        <h2
-          className='accordion-header'
-          id={itemBlockProps.headingId}
-        >
-          <RichText.Content
-            tagName='button'
-            className={addAccordionButtonClassnames(attributes.backgroundColor)}
-            type='button'
-            value={attributes.content}
-            data-bs-toggle='collapse'
-            data-bs-target={(itemBlockProps.itemId) ? '#' + itemBlockProps.itemId : null}
-            style={addAccordionButtonStyles(attributes.style?.color?.background)}
-          />
-        </h2>
-        <div
-          id={itemBlockProps.itemId}
-          className={itemBlockProps.itemClassName}
-          data-bs-parent={(attributes.keepOpen && attributes.parentId) ? '#' + attributes.parentId : null}
-        >
-          <InnerBlocks.Content />
-        </div>
-      </div>
-    )
-  }
+		return (
+			<div {...blockProps}>
+					<InnerBlocks.Content />
+			</div>
+		)
+	}
 
 })
+
+
+/**
+ * Bloque interno accordion-item-header
+ */
+registerBlockType('ekiline-collection/ekiline-accordion-item-header', {
+	title: __('Accordion item header', 'ekiline-collection'),
+	parent: ['ekiline-collection/ekiline-accordion-item'],
+	icon: 'button',
+	description: __('Set tittle and content in your accordion container', 'ekiline-collection'),
+	category: 'design',
+	// Se ocupa contexto para pasar valores desde el padre, en este caso el ID.
+	usesContext: [
+		'ekiline-accordion-item/anchor',
+		'ekiline-accordion-item/itemTarget',
+	],
+	supports: {
+		html: false, // no permitir HTML
+		reusable: false,
+		inserter:false,
+		color: {
+			gradients: true // Enables the gradients UI control.
+		}
+	},
+	attributes: {
+		itemTarget: {
+			type: 'string',
+			default: '' // remove dataset [data-bs-parent].
+		},
+		content: {
+			type: 'string',
+			source: 'html',
+			selector: 'button',
+			default: __('Item title.', 'ekiline-collection')
+		}
+	},
+
+	/**
+	 * @see ./edit.js
+	 */
+	// edit: Edit,
+	edit: (props) => {
+		const { attributes, setAttributes } = props
+
+		// personalizar clase
+		const blockProps = useBlockProps({
+			className: 'child-item-accordion-header'
+		})
+
+		// Precargar nombre ID en hijos.
+		if (!attributes.itemTarget) {
+			setAttributes({ itemTarget: props.context['ekiline-accordion-item/itemTarget'] })
+		}
+
+		return (
+			<div {...blockProps}>
+				{/* El bloque */}
+				<RichText
+					withoutInteractiveFormatting
+					allowedFormats={['core/bold', 'core/italic', 'core/image', 'core/align']} // Formatos de texto.
+					tagName='p' // The tag here is the element output and editable in the admin
+					className='item-title-header'
+					value={attributes.content} // Any existing content, either from the database or an attribute default
+					onChange={(content) => setAttributes({ content })} // Store updated content as a block attribute
+					placeholder={attributes.default}
+				/>
+			</div>
+		)
+	},
+
+	/**
+	 * @see ./save.js
+	 */
+	// save,
+	save: ({ attributes }) => {
+		// Clases y atributos auxiliares, incluir save.
+		const blockProps = useBlockProps.save({
+			className: 'accordion-header',
+		})
+		//Adecuar clases para boton.
+		let buttonClasses = blockProps.className.replace('wp-block-ekiline-collection-ekiline-accordion-item-header accordion-header', '')
+
+		return (
+			<div {...blockProps}>
+				<RichText.Content
+					tagName={'button'}
+					className={'accordion-button' + buttonClasses}
+					type='button'
+					value={attributes.content}
+					data-bs-toggle={'collapse'}
+					data-bs-target={(attributes.itemTarget) ? '#' + attributes.itemTarget : null}
+					style={(blockProps.style)? blockProps.style : null}
+				/>
+			</div>
+		)
+	}
+
+})
+
+
+
+
+/**
+ * Bloque interno accordion-item-body
+ */
+registerBlockType('ekiline-collection/ekiline-accordion-item-body', {
+
+	title: __('Accordion item body', 'ekiline-collection'),
+	parent: ['ekiline-collection/ekiline-accordion-item'],
+	icon: 'feedback',
+	description: __('Set tittle and content in your accordion container', 'ekiline-collection'),
+	category: 'design',
+	// Se ocupa contexto para pasar valores desde el padre, en este caso el ID.
+	usesContext: [
+		'ekiline-accordion/anchor',
+		'ekiline-accordion-item/showDefault',
+		'ekiline-accordion-item/keepOpen',
+		'ekiline-accordion-item/itemTarget',
+	],
+	supports: {
+		anchor: true,
+		html: false, // no permitir HTML
+		reusable: false,
+		inserter:false,
+		color: {
+			gradients: true // Enables the gradients UI control.
+		},
+	},
+	attributes: {
+		showDefault: {
+			type: 'boolean',
+			default: false // remove dataset [data-bs-parent].
+		},
+		keepOpen: {
+			type: 'boolean',
+			default: true // remove dataset [data-bs-parent].
+		},
+		itemParent: {
+			type: 'string',
+			default: '' // remove dataset [data-bs-parent].
+		},
+		itemTarget: {
+			type: 'string',
+			default: '' // remove dataset [data-bs-parent].
+		},
+		content: {
+			type: 'string',
+			source: 'html',
+			selector: 'button',
+			default: __('Item title.', 'ekiline-collection')
+		}
+	},
+
+	/**
+	 * @see ./edit.js
+	 */
+	// edit: Edit,
+	edit: (props) => {
+		const { attributes, setAttributes } = props
+
+		// Cargar un preset.
+		const CHILD_TEMPLATE = [
+			['core/paragraph',
+				{ content: __('Item content.', 'ekiline-collection') }
+			],
+		]
+
+		// personalizar clase
+		const blockProps = useBlockProps({
+			className: 'child-item-accordion-body'
+		})
+
+		// Precargar nombre ID en hijos y valores heredados de contexto.
+		if (!attributes.itemParent) {
+			setAttributes({ itemParent: props.context['ekiline-accordion/anchor'] })
+		}
+
+		// Actualizar estado showDefault.
+		setAttributes({ showDefault: props.context['ekiline-accordion-item/showDefault'] })
+		// Actualizar estado keepOpen.
+		setAttributes({ keepOpen: props.context['ekiline-accordion-item/keepOpen'] })
+
+		if (!attributes.anchor) {
+			setAttributes({ anchor: props.context['ekiline-accordion-item/itemTarget'] })
+		}
+
+		return (
+			<div {...blockProps}>
+				{/* El bloque */}
+				<InnerBlocks
+					template={CHILD_TEMPLATE}
+				/>
+			</div>
+		)
+	},
+
+	/**
+	 * @see ./save.js
+	 */
+	// save,
+	save: ({ attributes }) => {
+		// Clases y atributos auxiliares, incluir save.
+		const blockProps = useBlockProps.save({
+			className: (!attributes.showDefault ? 'accordion-collapse collapse' : 'accordion-collapse collapse show'),
+			'data-bs-parent': (attributes.keepOpen && attributes.itemParent) ? '#' + attributes.itemParent : null,
+		})
+
+		return (
+			<div {...blockProps}>
+				<div className="accordion-body">
+					<InnerBlocks.Content />
+				</div>
+			</div>
+		)
+	}
+
+})
+
+/**
+ * Función auxiliar.
+ */
+function getRandomArbitrary (min, max) {
+	return Math.floor(Math.random() * (max - min) + min)
+}

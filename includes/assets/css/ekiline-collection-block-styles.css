@@ -457,3 +457,18 @@
 	margin-top: 10px;
 	width: 90%;
 }
+
+/**
+ * Estilos pendientes de ajuste.
+ */
+/* Acordeon, pendiente ajustar color segun heredado */
+.accordion-button:not(.collapsed)::after {
+	-webkit-mask-image: var(--bs-accordion-btn-icon);
+	mask-image: var(--bs-accordion-btn-icon);
+	background: red;
+}
+.accordion-button::after {
+	-webkit-mask-image: var(--bs-accordion-btn-icon);
+	mask-image: var(--bs-accordion-btn-icon);
+	background: #f00;
+  }
