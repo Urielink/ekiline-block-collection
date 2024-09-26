@@ -89,3 +89,13 @@ add_action('wp_enqueue_scripts', 'ekiline_collection_required_scripts', 1);
 // 	);
 // 	add_editor_style( $block_styles );
 // }
+
+/**
+ * Deshabilitar WP Auto P
+ */
+// function disable_wp_auto_p( $content ) {
+//     remove_filter( 'the_content', 'wpautop' );
+//     remove_filter( 'the_excerpt', 'wpautop' );
+//     return $content;
+// }
+// add_filter( 'the_content', 'disable_wp_auto_p', 0 );

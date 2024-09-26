@@ -365,7 +365,9 @@ registerBlockType( 'ekiline-collection/ekiline-modal-header', {
 		multiple: false,
 		inserter: true,
 	},
-	edit: () => {
+	edit: (props) => {
+
+		const { attributes, setAttributes } = props;
 
 		// Restringir los bloques, Cargar un preset.
 		const PARENT_ALLOWED_BLOCKS = [ 'core/heading', 'core/paragraph' ];
@@ -381,6 +383,11 @@ registerBlockType( 'ekiline-collection/ekiline-modal-header', {
 		const blockProps = useBlockProps( {
 			className: 'editor-modal-header',
 		} );
+
+		// agregar clase de bootstrap en campo de clase
+		if ( !attributes.className ){
+			setAttributes( { className: 'justify-content-between' } );
+		}
 
 		return (
 			<div { ...blockProps }>
@@ -480,7 +487,9 @@ registerBlockType( 'ekiline-collection/ekiline-modal-footer', {
 		multiple: false,
 		inserter: true,
 	},
-	edit: () => {
+	edit: (props) => {
+
+		const { attributes, setAttributes } = props;
 
 		// Restringir los bloques, Cargar un preset.
 		const PARENT_ALLOWED_BLOCKS = [ 'core/paragraph', 'core/buttons', 'core/button' ];
@@ -493,6 +502,11 @@ registerBlockType( 'ekiline-collection/ekiline-modal-footer', {
 		const blockProps = useBlockProps( {
 			className: 'editor-modal-footer',
 		} );
+
+		// agregar clase de bootstrap en campo de clase
+		if ( !attributes.className ){
+				setAttributes( { className: 'justify-content-between' } );
+		}
 
 		return (
 			<div { ...blockProps }>
