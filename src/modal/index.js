@@ -98,7 +98,7 @@ registerBlockType('ekiline-collection/ekiline-modal', {
 	},
 
 	/**
-	 * Argumentos para personalizacion.
+	 * Atributos para personalizacion.
 	 */
 	attributes:{
 		modalShow: {
@@ -121,7 +121,7 @@ registerBlockType('ekiline-collection/ekiline-modal', {
 			type: 'boolean',
 			default: true, // cerrar modal con teclado.
 		},
-		modalGrow: {
+		modalGrow: { // boton tamaño.
 			type: 'boolean',
 			default: false,
 		},
@@ -130,7 +130,13 @@ registerBlockType('ekiline-collection/ekiline-modal', {
 			default: 0,
 		},
 	},
-
+	/**
+	 * Se ocupara contexto para pasar valores.
+	 * @link https://developer.wordpress.org/block-editor/reference-guides/block-api/block-context/
+	 */
+	providesContext: {
+		'ekiline-modal-item/modalGrow': 'modalGrow'
+	},
 	/**
 	 * @see ./edit.js
 	 */
@@ -313,21 +319,6 @@ registerBlockType('ekiline-collection/ekiline-modal', {
 			,
 		});
 
-	// Componente Boton.
-		function ModalGrowBtn() {
-			if ( attributes.modalGrow ) {
-				return (
-					<button
-						type="button"
-						class="modal-resize btn btn-sm position-absolute bottom-0 mb-2 ms-1"
-						aria-label={__( 'play btn', 'ekiline-collection' )}>
-							<span class="dashicons dashicons-editor-expand"></span>
-					</button>
-				)
-			}
-		}
-
-
 		return (
 			<div
 				{ ...blockProps }
@@ -339,7 +330,6 @@ registerBlockType('ekiline-collection/ekiline-modal', {
 				<div class={dialogProps.className}>
 					<div class="modal-content">
 						<InnerBlocks.Content />
-						<ModalGrowBtn/>
 					</div>
 				</div>
 
@@ -352,18 +342,24 @@ registerBlockType('ekiline-collection/ekiline-modal', {
 /**
  * - ekiline-modal-header
  */
-
 registerBlockType( 'ekiline-collection/ekiline-modal-header', {
 	title: __( 'Modal header', 'ekiline-collection' ),
 	parent: ['ekiline-collection/ekiline-modal'],
 	icon: 'feedback',
 	description:__( 'Modal header content. ', 'ekiline-collection' ),
 	category: 'design',
+	usesContext: ['ekiline-modal-item/modalGrow'],
 	supports: {
 		html: false,
 		reusable: false,
 		multiple: false,
 		inserter: true,
+	},
+	attributes: {
+		modalGrow: {
+			type: 'boolean',
+			default: false,
+		},
 	},
 	edit: (props) => {
 
@@ -384,9 +380,14 @@ registerBlockType( 'ekiline-collection/ekiline-modal-header', {
 			className: 'editor-modal-header',
 		} );
 
-		// agregar clase de bootstrap en campo de clase
+		// Agregar clase de bootstrap en campo de clase
 		if ( !attributes.className ){
 			setAttributes( { className: 'justify-content-between' } );
+		}
+
+		// Heredar boton para crecer modal
+		if (!attributes.modalGrow) {
+			setAttributes({ modalGrow: props.context['ekiline-modal-item/modalGrow'] })
 		}
 
 		return (
@@ -399,17 +400,43 @@ registerBlockType( 'ekiline-collection/ekiline-modal-header', {
 		);
 	},
 
-	save: () => {
+	save: ({ attributes }) => {
 
 		// Clases y atributos auxiliares, incluir save.
 		const blockProps = useBlockProps.save( {
 			className: 'modal-header',
 		} );
 
+		// Componente boton crecer ventana.
+		function ModalGrowBtn() {
+			if ( attributes.modalGrow ) {
+				return (
+					<button
+						type="button"
+						class="modal-resize btn btn-md"
+						aria-label={__( 'play btn', 'ekiline-collection' )}>
+							<span class="dashicons dashicons-fullscreen-alt"></span>
+					</button>
+				)
+			}
+		}
+		// Componente boton cerrar ventana.
+		function ModalCloseBtn() {
+			return (
+				<button
+					type="button"
+					class="btn-close"
+					data-bs-dismiss="modal"
+					aria-label={__('Close btn', 'ekiline-collection')}>
+				</button>
+			)
+		}
+
 		return (
 			<div { ...blockProps }>
 				<InnerBlocks.Content />
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
+				<ModalGrowBtn />
+				<ModalCloseBtn />
 			</div>
 		);
 	},
