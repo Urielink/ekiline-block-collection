@@ -226,7 +226,7 @@ function ekiline_collection_transform_carousel (carrusel) {
 
     // Resultado de seleccion por carrusel
     // Carrusel padre. Items para envoltorio.
-    hijosCarrusel = unCarrusel.querySelectorAll('.carousel-item')
+    var hijosCarrusel = unCarrusel.querySelectorAll('.carousel-item')
 
     // Carrusel hijo. Envoltorio por item.
     Array.prototype.forEach.call(hijosCarrusel, function (el, i) {
