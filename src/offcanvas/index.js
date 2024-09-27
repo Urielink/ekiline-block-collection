@@ -3,33 +3,33 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-import { registerBlockType } from '@wordpress/blocks';
-import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, SelectControl, ToggleControl, TextControl } from '@wordpress/components';
+import { registerBlockType } from '@wordpress/blocks'
+import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor'
+import { PanelBody, SelectControl, ToggleControl, TextControl } from '@wordpress/components'
 
 /**
  * Retrieves the translation of text.
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n'
 
 /**
  * Crear un icono.
  * Import the element creator function (React abstraction layer)
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-element/
  */
- import { createElement } from '@wordpress/element';
+import { createElement } from '@wordpress/element'
 const customIcon = createElement(
-	'svg',
-	{ width: 20, height: 20 },
-	createElement(
-		'path',
-		{
-			d: 'M9.46,12.43h1.08v-1.74h-1.08v1.74Zm0,3.12h1.08v-1.74h-1.08v1.74Zm0-6.25h1.08v-1.74h-1.08v1.74ZM13.42,1H1V19H19V1h-5.58Zm0,16.92h-2.88v-.98h-1.08v.98H2.08V2.08h7.38v.97h1.08v-.97h2.88v15.84Zm3.51-6.76l-1.44-1.17,1.44-1.17v2.34Zm-7.47-4.98h1.08v-1.74h-1.08v1.74Z'
-		}
-	)
-);
+  'svg',
+  { width: 20, height: 20 },
+  createElement(
+    'path',
+    {
+      d: 'M9.46,12.43h1.08v-1.74h-1.08v1.74Zm0,3.12h1.08v-1.74h-1.08v1.74Zm0-6.25h1.08v-1.74h-1.08v1.74ZM13.42,1H1V19H19V1h-5.58Zm0,16.92h-2.88v-.98h-1.08v.98H2.08V2.08h7.38v.97h1.08v-.97h2.88v15.84Zm3.51-6.76l-1.44-1.17,1.44-1.17v2.34Zm-7.47-4.98h1.08v-1.74h-1.08v1.74Z'
+    }
+  )
+)
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -82,388 +82,372 @@ const customIcon = createElement(
  *
  */
 registerBlockType('ekiline-collection/ekiline-offcanvas', {
-	/**
+  /**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */
-	apiVersion: 2,
+  apiVersion: 2,
 
-	/**
+  /**
 	 * Parametros de alta.
-	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
+	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/
 	 */
-	title: __( 'Offcanvas', 'ekiline-collection' ),
-	icon: customIcon,
-	description: __( 'Add your content here, then invoque with a link anchor #anchor.', 'ekiline-collection' ),
-	category: 'design',
-	supports: {
-		anchor: true,
-	},
+  title: __('Offcanvas', 'ekiline-collection'),
+  icon: customIcon,
+  description: __('Add your content here, then invoque with a link anchor #anchor.', 'ekiline-collection'),
+  category: 'design',
+  supports: {
+    anchor: true
+  },
 
-	/**
+  /**
 	 * Argumentos para personalizacion.
 	 */
-	attributes:{
-		ocPosition: {
-			type: 'string',
-			default: ' offcanvas-end', // -start, -end, -top, -bottom.
-		},
-		ocWidth: {
-			type: 'string',
-			default: '', // w-25, w-50, w-75, w-100.
-		},
-		ocHeight: {
-			type: 'string',
-			default: '', // h-25, h-50, h-75, h-100.
-		},
-		ocScroll: {
-			type: 'boolean',
-			default: false, // true = data-bs-scroll="true".
-		},
-		ocBackdrop: {
-			type: 'string',
-			default: 'true', // false, static = data-bs-backdrop="false".
-		},
-		ocDisplay: {
-			type: 'string',
-			default: ' offcanvas', // -sm, -md, -lg, -xl, -xxl.
-		},
-		parentAnchor: {
-			type: 'string',
-		},
-	},
+  attributes: {
+    ocPosition: {
+      type: 'string',
+      default: ' offcanvas-end' // -start, -end, -top, -bottom.
+    },
+    ocWidth: {
+      type: 'string',
+      default: '' // w-25, w-50, w-75, w-100.
+    },
+    ocHeight: {
+      type: 'string',
+      default: '' // h-25, h-50, h-75, h-100.
+    },
+    ocScroll: {
+      type: 'boolean',
+      default: false // true = data-bs-scroll="true".
+    },
+    ocBackdrop: {
+      type: 'string',
+      default: 'true' // false, static = data-bs-backdrop="false".
+    },
+    ocDisplay: {
+      type: 'string',
+      default: ' offcanvas' // -sm, -md, -lg, -xl, -xxl.
+    },
+    parentAnchor: {
+      type: 'string'
+    }
+  },
 
-	/**
+  /**
 	 * Se ocupara contexto para pasar valores.
 	 * @link https://developer.wordpress.org/block-editor/reference-guides/block-api/block-context/
 	 */
 	 providesContext: {
-		'ekiline-offcanvas/anchor': 'anchor',
-	},
+    'ekiline-offcanvas/anchor': 'anchor'
+  },
 
-	/**
+  /**
 	 * @see ./edit.js
 	 */
-	// edit: Edit,
-	edit: (props) => {
+  // edit: Edit,
+  edit: (props) => {
+    const { attributes, setAttributes } = props
 
-		const { attributes, setAttributes } = props;
+    // Restringir los bloques, Cargar un preset.
+    const PARENT_ALLOWED_BLOCKS = [
+      'ekiline-collection/ekiline-offcanvas-header',
+      'ekiline-collection/ekiline-offcanvas-body'
+    ]
 
-		// Restringir los bloques, Cargar un preset.
-		const PARENT_ALLOWED_BLOCKS = [
-			'ekiline-collection/ekiline-offcanvas-header',
-			'ekiline-collection/ekiline-offcanvas-body',
-		];
+    const CHILD_TEMPLATE = [
+      ['ekiline-collection/ekiline-offcanvas-header', {
+        lock: {
+          remove: false,
+          move: true
+        }
+      }],
+      ['ekiline-collection/ekiline-offcanvas-body', {
+        lock: {
+          remove: false,
+          move: true
+        }
+      }]
+    ]
 
-		const CHILD_TEMPLATE = [
-			[ 'ekiline-collection/ekiline-offcanvas-header', {
-				lock: {
-					remove: false,
-					move: true,
-				}
-			} ],
-			[ 'ekiline-collection/ekiline-offcanvas-body', {
-				lock: {
-					remove: false,
-					move: true,
-				}
-			} ],
-		];
+    // personalizar clase
+    const blockProps = useBlockProps({
+      className: 'group-offcanvas'
+    })
 
-		// personalizar clase
-		const blockProps = useBlockProps( {
-			className: 'group-offcanvas',
-		} );
-
-		/**
+    /**
 		 * Control personalizado: recordatorio
 		 */
-		function OffcanvasUserRemind(){
+    function OffcanvasUserRemind () {
+      if (attributes.anchor) {
+        return (
+          <div class='editor-offcanvas-route has-anchor'>
+            <pre>
+              {__('Add this anchor: #', 'ekiline-collection')}
+              {attributes.anchor}
+              {__(', in a button link field and in its advanced options.', 'ekiline-collection')}
+            </pre>
+          </div>
+        )
+      }
 
-			if ( attributes.anchor ){
-				return(
-					<div class="editor-offcanvas-route has-anchor">
-						<pre>
-						{ __( 'Add this anchor: #', 'ekiline-collection' ) }
-						{ attributes.anchor }
-						{ __( ', in a button link field and in its advanced options.', 'ekiline-collection' ) }
-						</pre>
-					</div>
-					)
-			}
+      return (
+        <div class='editor-offcanvas-route'>
+          {__('Do not forget to add an #anchor. ', 'ekiline-collection')}
+        </div>
+      )
+    }
 
-			return(
-				<div class="editor-offcanvas-route">
-					{ __( 'Do not forget to add an #anchor. ', 'ekiline-collection' )}
-				</div>
-			)
-		}
+    return (
+      <div {...blockProps}>
+        {/* Inspector controles */}
+        <InspectorControls>
+          <PanelBody title={__('Offcanvas Params', 'ekiline-collection')} initialOpen>
 
-		return (
-			<div { ...blockProps }>
-				{/* Inspector controles */}
-				<InspectorControls>
-					<PanelBody title={ __( 'Offcanvas Params', 'ekiline-collection' ) } initialOpen={ true }>
+            <SelectControl
+              label={__('Position', 'ekiline-collection')}
+              value={attributes.ocPosition}
+              options={[
+						  { label: __('Right', 'ekiline-collection'), value: ' offcanvas-end' },
+						  { label: __('Bottom', 'ekiline-collection'), value: ' offcanvas-bottom' },
+						  { label: __('Left', 'ekiline-collection'), value: ' offcanvas-start' },
+						  { label: __('Top', 'ekiline-collection'), value: ' offcanvas-top' }
+              ]}
+              onChange={(ocPosition) =>
+						  setAttributes({ ocPosition })}
+            />
 
-					<SelectControl
-						label={ __( 'Position', 'ekiline-collection' ) }
-						value={ attributes.ocPosition }
-						options={ [
-							{ label: __( 'Right', 'ekiline-collection' ), value: ' offcanvas-end' },
-							{ label: __( 'Bottom', 'ekiline-collection' ), value: ' offcanvas-bottom' },
-							{ label: __( 'Left', 'ekiline-collection' ), value: ' offcanvas-start' },
-							{ label: __( 'Top', 'ekiline-collection' ), value: ' offcanvas-top' },
-						] }
-						onChange={ ( ocPosition ) =>
-							setAttributes( { ocPosition } )
-						}
-					/>
+            <SelectControl
+              label={__('Width', 'ekiline-collection')}
+              value={attributes.ocWidth}
+              options={[
+						  { label: __('Default', 'ekiline-collection'), value: '' },
+						  { label: __('Small', 'ekiline-collection'), value: ' w-25' },
+						  { label: __('Half', 'ekiline-collection'), value: ' w-50' },
+						  { label: __('Large', 'ekiline-collection'), value: ' w-75' },
+						  { label: __('Full window', 'ekiline-collection'), value: ' w-100' }
+              ]}
+              onChange={(ocWidth) =>
+						  setAttributes({ ocWidth })}
+            />
 
-					<SelectControl
-						label={ __( 'Width', 'ekiline-collection' ) }
-						value={ attributes.ocWidth }
-						options={ [
-							{ label: __( 'Default', 'ekiline-collection' ), value: '' },
-							{ label: __( 'Small', 'ekiline-collection' ), value: ' w-25' },
-							{ label: __( 'Half', 'ekiline-collection' ), value: ' w-50' },
-							{ label: __( 'Large', 'ekiline-collection' ), value: ' w-75' },
-							{ label: __( 'Full window', 'ekiline-collection' ), value: ' w-100' },
-						] }
-						onChange={ ( ocWidth ) =>
-							setAttributes( { ocWidth } )
-						}
-					/>
+            <SelectControl
+              label={__('Height', 'ekiline-collection')}
+              value={attributes.ocHeight}
+              options={[
+						  { label: __('Default', 'ekiline-collection'), value: '' },
+						  { label: __('Small', 'ekiline-collection'), value: ' h-25' },
+						  { label: __('Half', 'ekiline-collection'), value: ' h-50' },
+						  { label: __('Large', 'ekiline-collection'), value: ' h-75' },
+						  { label: __('Full window', 'ekiline-collection'), value: ' h-100' }
+              ]}
+              onChange={(ocHeight) =>
+						  setAttributes({ ocHeight })}
+            />
 
-					<SelectControl
-						label={ __( 'Height', 'ekiline-collection' ) }
-						value={ attributes.ocHeight }
-						options={ [
-							{ label: __( 'Default', 'ekiline-collection' ), value: '' },
-							{ label: __( 'Small', 'ekiline-collection' ), value: ' h-25' },
-							{ label: __( 'Half', 'ekiline-collection' ), value: ' h-50' },
-							{ label: __( 'Large', 'ekiline-collection' ), value: ' h-75' },
-							{ label: __( 'Full window', 'ekiline-collection' ), value: ' h-100' },
-						] }
-						onChange={ ( ocHeight ) =>
-							setAttributes( { ocHeight } )
-						}
-					/>
+            <SelectControl
+              label={__('Display run', 'ekiline-collection')}
+              value={attributes.ocDisplay}
+              options={[
+						  { label: __('All', 'ekiline-collection'), value: ' offcanvas' },
+						  { label: __('Small', 'ekiline-collection'), value: ' offcanvas-sm' },
+						  { label: __('Medium', 'ekiline-collection'), value: ' offcanvas-md' },
+						  { label: __('Large', 'ekiline-collection'), value: ' offcanvas-lg' }
+              ]}
+              onChange={(ocDisplay) =>
+						  setAttributes({ ocDisplay })}
+              help={__('Run only on specific screen sizes', 'ekiline-collection')}
+            />
 
-					<SelectControl
-						label={ __( 'Display run', 'ekiline-collection' ) }
-						value={ attributes.ocDisplay }
-						options={ [
-							{ label: __( 'All', 'ekiline-collection' ), value: ' offcanvas' },
-							{ label: __( 'Small', 'ekiline-collection' ), value: ' offcanvas-sm' },
-							{ label: __( 'Medium', 'ekiline-collection' ), value: ' offcanvas-md' },
-							{ label: __( 'Large', 'ekiline-collection' ), value: ' offcanvas-lg' },
-						] }
-						onChange={ ( ocDisplay ) =>
-							setAttributes( { ocDisplay } )
-						}
-						help={ __( 'Run only on specific screen sizes', 'ekiline-collection' ) }
-					/>
+            <ToggleControl
+              label={__('Keep scroll window', 'ekiline-collection')}
+              checked={attributes.ocScroll}
+              onChange={(ocScroll) =>
+						  setAttributes({ ocScroll })}
+            />
 
-					<ToggleControl
-						label={ __( 'Keep scroll window', 'ekiline-collection' ) }
-						checked={ attributes.ocScroll }
-						onChange={ ( ocScroll ) =>
-							setAttributes( { ocScroll } )
-						}
-					/>
+            <SelectControl
+              label={__('Backdrop behavior', 'ekiline-collection')}
+              value={attributes.ocBackdrop}
+              options={[
+						  { label: __('Default', 'ekiline-collection'), value: 'true' },
+						  { label: __('Static', 'ekiline-collection'), value: 'static' },
+						  { label: __('False', 'ekiline-collection'), value: 'false' }
+              ]}
+              onChange={(ocBackdrop) =>
+						  setAttributes({ ocBackdrop })}
+              help={__('Run only on specific screen sizes', 'ekiline-collection')}
+            />
 
-					<SelectControl
-						label={ __( 'Backdrop behavior', 'ekiline-collection' ) }
-						value={ attributes.ocBackdrop }
-						options={ [
-							{ label: __( 'Default', 'ekiline-collection' ), value: 'true' },
-							{ label: __( 'Static', 'ekiline-collection' ), value: 'static' },
-							{ label: __( 'False', 'ekiline-collection' ), value: 'false' },
-						] }
-						onChange={ ( ocBackdrop ) =>
-							setAttributes( { ocBackdrop } )
-						}
-						help={ __( 'Run only on specific screen sizes', 'ekiline-collection' ) }
-					/>
+          </PanelBody>
+        </InspectorControls>
 
-					</PanelBody>
-				</InspectorControls>
+        {/* El bloque */}
+        <InnerBlocks
+          allowedBlocks={PARENT_ALLOWED_BLOCKS}
+          template={CHILD_TEMPLATE}
+        />
+        <OffcanvasUserRemind />
+      </div>
+    )
+  },
 
-				{/* El bloque */}
-				<InnerBlocks
-				allowedBlocks={ PARENT_ALLOWED_BLOCKS }
-					template={ CHILD_TEMPLATE }
-					// templateLock="all"
-					// templateLock="insert"
-				/>
-				<OffcanvasUserRemind/>
-			</div>
-		);
-	},
-
-	/**
+  /**
 	 * @see ./save.js
 	 */
-	// save,
-	save: ( { attributes } ) => {
+  // save,
+  save: ({ attributes }) => {
+    // Clases y atributos auxiliares, incluir save.
+    const blockProps = useBlockProps.save({
+      className:
+				'group-offcanvas' +
+				attributes.ocDisplay +
+				attributes.ocPosition +
+				attributes.ocWidth +
+				attributes.ocHeight,
+      'data-bs-backdrop': attributes.ocBackdrop,
+      'data-bs-scroll': attributes.ocScroll
+    })
 
-		// Clases y atributos auxiliares, incluir save.
-		const blockProps = useBlockProps.save( {
-			className:
-				'group-offcanvas'
-				+ attributes.ocDisplay
-				+ attributes.ocPosition
-				+ attributes.ocWidth
-				+ attributes.ocHeight
-			,
-			'data-bs-backdrop' : attributes.ocBackdrop,
-			'data-bs-scroll' : attributes.ocScroll,
-		} );
+    return (
+      <div
+        {...blockProps}
+        tabindex='-1'
+        role='dialog'
+        aria-labelledby={blockProps.id + 'Label'}
+        aria-hidden='true'
+      >
+        <InnerBlocks.Content />
+      </div>
+    )
+  }
 
-		return (
-			<div
-				{ ...blockProps }
-				tabindex="-1"
-				role="dialog"
-				aria-labelledby={ blockProps.id + 'Label' }
-				aria-hidden="true"
-			>
-				<InnerBlocks.Content />
-			</div>
-		);
-	},
-
-});
+})
 
 /**
  * - ekiline-offcanvas-header
  */
 
-registerBlockType( 'ekiline-collection/ekiline-offcanvas-header', {
-	title: __( 'Offcanvas header', 'ekiline-collection' ),
-	parent: ['ekiline-collection/ekiline-offcanvas'],
-	icon: 'feedback',
-	description:__( 'Offcanvas header content. ', 'ekiline-collection' ),
-	category: 'design',
-	//Se ocupa contexto para pasar valores desde el padre, en este caso el ID.
-	usesContext: ['ekiline-offcanvas/anchor'],
-	supports: {
-		html: false,
-		reusable: false,
-		multiple: false,
-		inserter: true,
-	},
-	attributes: {
-		parentId: {
-			type: 'string',
-			default: '', // retrive parent Id (Anchor).
-		},
-	},
-	edit: ( props ) => {
+registerBlockType('ekiline-collection/ekiline-offcanvas-header', {
+  title: __('Offcanvas header', 'ekiline-collection'),
+  parent: ['ekiline-collection/ekiline-offcanvas'],
+  icon: 'feedback',
+  description: __('Offcanvas header content. ', 'ekiline-collection'),
+  category: 'design',
+  // Se ocupa contexto para pasar valores desde el padre, en este caso el ID.
+  usesContext: ['ekiline-offcanvas/anchor'],
+  supports: {
+    html: false,
+    reusable: false,
+    multiple: false,
+    inserter: true
+  },
+  attributes: {
+    parentId: {
+      type: 'string',
+      default: '' // retrive parent Id (Anchor).
+    }
+  },
+  edit: (props) => {
+    const { attributes, setAttributes } = props
 
-		const { attributes, setAttributes } = props;
+    // Restringir los bloques, Cargar un preset.
+    const PARENT_ALLOWED_BLOCKS = ['core/heading', 'core/paragraph']
+    // Cargar un preset.
+    const CHILD_TEMPLATE = [
+      ['core/heading', {
+        content: __('Add offcanvas title', 'ekiline-collection'),
+        level: 4
+      }]
+    ]
 
-		// Restringir los bloques, Cargar un preset.
-		const PARENT_ALLOWED_BLOCKS = [ 'core/heading', 'core/paragraph' ];
-		// Cargar un preset.
-		const CHILD_TEMPLATE = [
-			[ 'core/heading', {
-				content: __( 'Add offcanvas title', 'ekiline-collection' ),
-				level: 4,
-			} ],
-		];
+    // personalizar clase
+    const blockProps = useBlockProps({
+      className: 'editor-offcanvas-header'
+    })
 
-		// personalizar clase
-		const blockProps = useBlockProps( {
-			className: 'editor-offcanvas-header',
-		} );
+    // Precargar nombre de ID Padre en objetos internos.
+    if (!attributes.parentId || (attributes.parentId !== props.context['ekiline-offcanvas/anchor'])) {
+      setAttributes({ parentId: props.context['ekiline-offcanvas/anchor'] })
+    }
 
-		// Precargar nombre de ID Padre en objetos internos.
-		if( !attributes.parentId || ( attributes.parentId !== props.context['ekiline-offcanvas/anchor'] )  ){
-			setAttributes( { parentId: props.context['ekiline-offcanvas/anchor'] } )
-		}
+    return (
+      <div {...blockProps}>
+        <InnerBlocks
+          allowedBlocks={PARENT_ALLOWED_BLOCKS}
+          template={CHILD_TEMPLATE}
+        />
+      </div>
+    )
+  },
 
-		return (
-			<div { ...blockProps }>
-				<InnerBlocks
-					allowedBlocks={ PARENT_ALLOWED_BLOCKS }
-					template={ CHILD_TEMPLATE }
-					/>
-			</div>
-		);
-	},
+  save: ({ attributes }) => {
+    // Clases y atributos auxiliares, incluir save.
+    const blockProps = useBlockProps.save({
+      className: 'offcanvas-header'
+    })
 
-	save: ( { attributes } ) => {
+    return (
+      <div {...blockProps}>
+        <InnerBlocks.Content />
+        <button
+          type='button'
+          class='btn-close'
+          data-bs-dismiss='offcanvas'
+          data-bs-target={(attributes.parentId) ? '#' + attributes.parentId : null}
+          aria-label='Close'
+        />
+      </div>
+    )
+  }
 
-		// Clases y atributos auxiliares, incluir save.
-		const blockProps = useBlockProps.save( {
-			className: 'offcanvas-header',
-		} );
-
-		return (
-			<div { ...blockProps }>
-				<InnerBlocks.Content />
-				<button
-					type="button"
-					class="btn-close"
-					data-bs-dismiss="offcanvas"
-					data-bs-target={ (attributes.parentId)?'#' + attributes.parentId:null }
-					aria-label="Close"/>
-			</div>
-		);
-	},
-
-} );
-
+})
 
 /**
  * - ekiline-offcanvas-body
  */
 
-registerBlockType( 'ekiline-collection/ekiline-offcanvas-body', {
-	title: __( 'Offcanvas body content', 'ekiline-collection' ),
-	parent: ['ekiline-collection/ekiline-offcanvas'],
-	icon: 'feedback',
-	description:__( 'Offcanvas body content. ', 'ekiline-collection' ),
-	category: 'design',
-	supports: {
-		html: false,
-		reusable: false,
-		multiple: false,
-		inserter: true,
-	},
-	edit: () => {
+registerBlockType('ekiline-collection/ekiline-offcanvas-body', {
+  title: __('Offcanvas body content', 'ekiline-collection'),
+  parent: ['ekiline-collection/ekiline-offcanvas'],
+  icon: 'feedback',
+  description: __('Offcanvas body content. ', 'ekiline-collection'),
+  category: 'design',
+  supports: {
+    html: false,
+    reusable: false,
+    multiple: false,
+    inserter: true
+  },
+  edit: () => {
+    // Cargar un preset.
+    const CHILD_TEMPLATE = [
+      ['core/paragraph', { content: __('Add offcanvas content blocks', 'ekiline-collection') }]
+    ]
 
-		// Cargar un preset.
-		const CHILD_TEMPLATE = [
-			[ 'core/paragraph', { content: __( 'Add offcanvas content blocks', 'ekiline-collection' ) } ],
-		];
+    // personalizar clase
+    const blockProps = useBlockProps({
+      className: 'editor-offcanvas-body'
+    })
 
-		// personalizar clase
-		const blockProps = useBlockProps( {
-			className: 'editor-offcanvas-body',
-		} );
+    return (
+      <div {...blockProps}>
+        <InnerBlocks
+          template={CHILD_TEMPLATE}
+        />
+      </div>
+    )
+  },
 
-		return (
-			<div { ...blockProps }>
-				<InnerBlocks
-					template={ CHILD_TEMPLATE }
-					/>
-			</div>
-		);
-	},
+  save: () => {
+    // Clases y atributos auxiliares, incluir save.
+    const blockProps = useBlockProps.save({
+      className: 'offcanvas-body'
+    })
 
-	save: () => {
+    return (
+      <div {...blockProps}>
+        <InnerBlocks.Content />
+      </div>
+    )
+  }
 
-		// Clases y atributos auxiliares, incluir save.
-		const blockProps = useBlockProps.save( {
-			className: 'offcanvas-body',
-		} );
-
-		return (
-			<div { ...blockProps }>
-				<InnerBlocks.Content />
-			</div>
-		);
-	},
-
-} );
+})
