@@ -94,7 +94,10 @@ registerBlockType('ekiline-collection/ekiline-modal', {
   description: __('Add your content here, then invoque with a link anchor #anchor.', 'ekiline-collection'),
   category: 'design',
   supports: {
-    anchor: true
+    anchor: true,
+    color: {
+      text: false // Enables the gradients UI control.
+    }
   },
 
   /**
@@ -303,7 +306,6 @@ registerBlockType('ekiline-collection/ekiline-modal', {
 			'modal-dialog' +
 			(attributes.modalAlign ? ' modal-dialog-centered' : '') +
 			(attributes.modalSize != 'default' ? attributes.modalSize : '')
-
     })
 
     return (
