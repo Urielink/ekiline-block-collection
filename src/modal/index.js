@@ -95,9 +95,6 @@ registerBlockType('ekiline-collection/ekiline-modal', {
   category: 'design',
   supports: {
     anchor: true,
-    color: {
-      text: false // Enables the gradients UI control.
-    }
   },
 
   /**
@@ -342,7 +339,8 @@ registerBlockType('ekiline-collection/ekiline-modal-header', {
     html: false,
     reusable: false,
     multiple: false,
-    inserter: true
+    inserter: true,
+    color: true
   },
   attributes: {
     modalGrow: {
@@ -400,7 +398,7 @@ registerBlockType('ekiline-collection/ekiline-modal-header', {
         return (
           <button
             type='button'
-            class='modal-resize btn btn-md'
+            class='modal-resize btn btn-sm mt-2'
             aria-label={__('play btn', 'ekiline-collection')}
           >
             <span class='dashicons dashicons-fullscreen-alt' />
@@ -445,7 +443,8 @@ registerBlockType('ekiline-collection/ekiline-modal-body', {
     html: false,
     reusable: false,
     multiple: false,
-    inserter: true
+    inserter: true,
+    color: true
   },
   edit: () => {
     // Cargar un preset.
@@ -496,7 +495,8 @@ registerBlockType('ekiline-collection/ekiline-modal-footer', {
     html: false,
     reusable: false,
     multiple: false,
-    inserter: true
+    inserter: true,
+    color: true
   },
   edit: (props) => {
     const { attributes, setAttributes } = props
