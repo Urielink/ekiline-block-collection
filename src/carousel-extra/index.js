@@ -175,6 +175,15 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 			type: 'boolean',
 			default: false,
 		},
+		// entradas individuales
+		SetPostSlug: {
+			type: 'array',
+			default: [],
+		},
+		SetPostIds: {
+			type: 'array',
+			default: [],
+		},
 	},
 
 	/**
@@ -274,6 +283,27 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 			return <PostsList posts={ posts }/>;
 		}
 
+		/**
+		 * 01OCT2024 nuevo filtro de entradas individuales.
+		 * Dato, elegir segun el postType: page/post.
+		 * Atributos de query:
+		 * per_page, categories = numero entero
+		 *
+		 * @returns Custom component: EntriesList.
+		 */
+		function SingleEntriesList({attributes}) {
+			const queryPosts = {
+				include: attributes.SetPostIds,
+			}
+			const posts = useSelect(
+				select =>
+					select( coreDataStore ).getEntityRecords( 'postType', 'post', queryPosts ),
+				[]
+			);
+			return <PostsList posts={ posts }/>
+		}
+
+
 		function PostsList( { posts } ) {
 
 			/**
@@ -306,7 +336,6 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		 * Callback para los medios.
 		 * @param {*} media arreglo de imagenes.
 		 */
-
 		const onSelectMedia = (media) => {
 			const theImagesArray = media?.map( media => (
 				// console.log(media)
@@ -323,6 +352,45 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		};
 		// console.log(attributes.SaveImages);
 
+		/**
+		 * 01OCT2024 Selector de entradas, maneja la informacion que se guarda en el bloque.
+		 * @param {*} attributes Accede a los registros en el bloque.
+		 * @param {*} setAttributes Actualiza los registros en el bloque.
+		 * @returns Custom component: FormTokenField.
+		 */
+		const TokenPostsSelect = ()=>{
+			// Array de entradas existentes.
+			const posts = useSelect(
+				select =>
+					select( coreDataStore ).getEntityRecords('postType', 'post', { per_page: -1 }),
+				[]
+			);
+			// Actualizacion de entradas seleccionadas.
+			const [ selectedPosts, setSelectedPosts ] = useState( [] );
+			// Componente, necesita de cambiarNombrePorIds.
+			return(
+				<FormTokenField
+					label={ __('Find and select posts:', 'ekiline-collection') }
+					value={
+						(!attributes.SetPostSlug) ? selectedPosts : attributes.SetPostSlug
+					}
+					// Mostrar sugerencias por nombre de url. (id, name, slug).
+					suggestions={
+						posts?.map( ( el ) => el.slug )
+					}
+					// Varias operaciones: mostrar entradas seleccionadas, actualizar/guardar datos.
+					onChange={ ( tokens ) => {
+						setSelectedPosts( tokens );
+						setAttributes( {
+							SetPostSlug:tokens,
+							SetPostIds: (cambiarNombrePorIds(tokens,posts,'id')),
+							SavePosts: [],
+						} );
+					} }
+				/>
+			);
+		};
+
 		return (
 			<div { ...blockProps }>
 				{/* Inspector controles */}
@@ -336,6 +404,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 							options={ [
 								{ label: __( 'Posts', 'ekiline-collection' ), value: 'posts' },
 								{ label: __( 'Images', 'ekiline-collection' ), value: 'images' },
+								{ label: __( 'Individual posts', 'ekiline-collection' ), value: 'single' },
 							] }
 							onChange={ ( ChooseType ) =>
 								{ setAttributes( { ChooseType, SavePosts: [], SaveImages: [] } ) }
@@ -367,6 +436,10 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 								/>
 							</MediaUploadCheck>
 						) }
+
+						{ 'single' === attributes.ChooseType && (
+							<TokenPostsSelect/>
+						)}
 
 						{ 'posts' === attributes.ChooseType && (
 							<SelectControl
@@ -517,6 +590,11 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 					&& attributes.SaveImages
 					&& ( <CarosuelMarkupHtml attributes={attributes} postsStored={attributes.SaveImages}/> )
 				}
+				{/* En caso de individual */}
+				{ 'single' === attributes.ChooseType
+					&& attributes.SavePosts
+					&& ( <SingleEntriesList attributes={attributes}/> )
+				}
 				{/* las imagenes en un arreglo */}
 				{/* <code>{JSON.stringify(attributes.SaveImages)}</code> */}
 			</div>
@@ -545,6 +623,11 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 				{ 'images' === attributes.ChooseType
 					&& attributes.SaveImages
 					&& ( <CarosuelMarkupHtml attributes={attributes} postsStored={attributes.SaveImages}/> )
+				}
+				{/* En caso de individuales */}
+				{ 'single' === attributes.ChooseType
+					&& attributes.SavePosts
+					&& ( <CarosuelMarkupHtml attributes={attributes} postsStored={attributes.SavePosts}/> )
 				}
 			</div>
 		)
