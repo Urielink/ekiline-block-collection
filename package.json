@@ -15,9 +15,11 @@
 		"start": "wp-scripts start"
 	},
 	"devDependencies": {
+		"@wordpress/babel-preset-default": "^8.8.2",
 		"@wordpress/scripts": "^30.0.2"
 	},
 	"dependencies": {
+		"@wordpress/blocks": "^13.8.0",
 		"@wordpress/escape-html": "^2.14.0"
 	}
 }

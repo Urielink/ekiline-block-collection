@@ -12,7 +12,7 @@
  */
 // Cerrar una ventana modal si está abierta.
 function ekiline_collection_js_close_modal () {
-  // Bucar un modal abierto.
+  // Buscar un modal abierto.
   const ventanasAbiertas = document.querySelectorAll('.modal.show')
   // Si existe cerrar con click.
   if (ventanasAbiertas.length !== 0) {
