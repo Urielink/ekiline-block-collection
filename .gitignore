@@ -32,3 +32,4 @@ node_modules/
 # mantenimiento
 deprecated/
 src/carousel-extra/buscador-entradas.js
+.DS_Store
