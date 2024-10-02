@@ -66,7 +66,7 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 == Changelog ==
 
 = 1.0.5 =
-* Update filter post dynamic carousel.
+* Improve: add individual posts in basic carousel.
 
 = 1.0.4 =
 * Fix classname in dynamic carosuel.
