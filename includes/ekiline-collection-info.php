@@ -6,6 +6,8 @@
  *
  * @link https://codex.wordpress.org/Plugin_API/Action_Reference/wp_before_admin_bar_render
  * @link https://codex.wordpress.org/Javascript_Reference/ThickBox
+ * @link https://medium.com/@hbahonar/how-to-create-wordpress-custom-admin-page-and-menu-from-scratch-ultimate-guide-updated-d7b4d2e57f96
+ * @link https://codex.wordpress.org/index.php?title=Creating_Options_Pages&oldid=97268
  *
  * Estilos agregados.
  *
@@ -18,32 +20,155 @@
  */
 
 /**
- * Ekiline, side menu button.
+ * Nuevo menu de opciones.
  */
-function ekiline_collection_info_page()
+function ekiline_block_collection_menu()
 {
-    add_theme_page(
-        'Ekiline Menu Page Title',
-        __('About Ekiline BC', 'ekiline-collection'),
-        'edit_posts',
-        'ekiline_collection_options',
-        'ekiline_collection_plugin_html_page'
+    // pagina de opciones.
+    add_menu_page(
+        __('Ekiline BC Options', 'ekiline-collection'),		// page_title
+        __('Ekiline BC', 'ekiline-collection'),				// menu_title
+        'manage_options', 									// capability
+        'ekiline-block-collection', 						// menu_slug
+        'ekiline_block_collection_options', 				// function
+        'dashicons-schedule', 								// icon_url
+        100 												// position
     );
+    // subpagina de informacion.
+    add_submenu_page(
+        'ekiline-block-collection',							// parent_slug
+        __('About', 'ekiline-collection'),					// page_title
+        __('About', 'ekiline-collection'),					// menu_title
+        'manage_options',									// capability
+        'ekiline-block-collection-about',					// menu_slug
+        'ekiline_block_collection_about'					// function
+    );
+    // callback de opciones.
+    add_action('admin_init', 'ekiline_block_collection_register_settings');
 }
-add_action('admin_menu', 'ekiline_collection_info_page');
+add_action('admin_menu', 'ekiline_block_collection_menu');
+
+
+
+/**
+ * Opciones.
+ */
+function ekiline_block_collection_register_settings()
+{
+
+    //Poner en cola estilos de administración y scripts para las páginas de Ekiline Block Collection.
+    $allowed_pages = array('ekiline-block-collection', 'ekiline-block-collection-about');
+    $current_page = isset($_GET['page']) ? sanitize_key($_GET['page']) : '';
+
+    // Solo para las páginas de Ekiline Block Collection.
+    if (in_array($current_page, $allowed_pages)) {
+        add_action('admin_print_styles', 'ekiline_collection_options_css', 100);
+        add_action('admin_print_scripts', 'ekiline_collection_options_js', 100);
+    }
+
+    // Argumentos para ekiline_block_collection_bootstrap_css
+    $args_ekiline_block_collection_bootstrap_css = array(
+        'type' 				=> 'string',
+        'sanitize_callback' => 'sanitize_text_field',
+        'default' 			=> '1'
+    );
+    // Argumentos para ekiline_block_collection_bootstrap_js
+    $args_ekiline_block_collection_bootstrap_js = array(
+        'type' 				=> 'string',
+        'sanitize_callback' => 'sanitize_text_field',
+        'default' 			=> '1'
+    );
+
+    //register our settings
+    register_setting('ekiline-block-collection-settings-group', 'ekiline_block_collection_bootstrap_css', $args_ekiline_block_collection_bootstrap_css);
+    register_setting('ekiline-block-collection-settings-group', 'ekiline_block_collection_bootstrap_js', $args_ekiline_block_collection_bootstrap_js);
+}
+
+function ekiline_block_collection_options()
+{
+    ?>
+<div class="wrap">
+	<h1>
+		<span class="dashicons dashicons-layout" aria-hidden="true"></span>
+		<?php esc_html_e('Ekiline Block Collection.', 'ekiline-collection'); ?>
+	</h1>
+	<div id="welcome-panel" class="welcome-panel">
+		<div class="welcome-panel-content">
+
+			<div class="welcome-panel-header">
+				<span style="float:right;"><?php echo (function_exists('get_avatar')) ? get_avatar('uriel@bixnia.com', $size = '100', $default = '') : ''; ?></span>
+				<h2><?php esc_html_e('Configuración', 'ekiline-collection'); ?></h2>
+				<p class="about-description">
+					<?php esc_html_e('Desactiva estilos, scripts o personaliza la colección.', 'ekiline-collection'); ?>
+				</p>
+			</div>
+
+			<div class="welcome-panel-column-container">
+				<div class="welcome-panel-column">
+					<div style="padding:4px;">
+						<h3>
+							<span class="dashicons dashicons-embed-generic"></span>
+							<?php esc_html_e('Desactivar Bootstrap.', 'ekiline-collection'); ?>
+						</h3>
+						<p><?php esc_html_e('En ocasiones tu proyecto cuenta con estilos y scripts duplicados, incorporados en otros temas o plugins.', 'ekiline-collection'); ?></p>
+						<p><?php esc_html_e('Si detectas este conflicto puedes desactivar los estilos y los scripts de este plugin.', 'ekiline-collection'); ?></p>
+						<?php
+                        /**
+                         * Formulario de opciones.
+                         * https://codex.wordpress.org/index.php?title=Creating_Options_Pages&oldid=97268
+                         */
+    ?>
+						<form method="post" action="options.php">
+							<?php settings_fields('ekiline-block-collection-settings-group'); ?>
+							<label>
+								<span>Estilos CSS</span>
+								<?php
+            $option_name_one = 'ekiline_block_collection_bootstrap_css';
+    $current_value_one = get_option($option_name_one, '1');
+    ?>
+								<select name="<?php echo esc_attr($option_name_one); ?>">
+									<option value="1" <?php selected($current_value_one, '1'); ?>><?php _e('CSS Activo', 'ekiline-collection'); ?></option>
+									<option value="0" <?php selected($current_value_one, '0'); ?>><?php _e('CSS Inactivo', 'ekiline-collection'); ?></option>
+								</select>
+							</label>
+							<br>
+							<label>
+								<span>Scripts JS</span>
+								<?php
+    $option_name_two = 'ekiline_block_collection_bootstrap_js';
+    $current_value_two = get_option($option_name_two, '1');
+    ?>
+								<select name="<?php echo esc_attr($option_name_two); ?>">
+									<option value="1" <?php selected($current_value_two, '1'); ?>><?php _e('JS Activo', 'ekiline-collection'); ?></option>
+									<option value="0" <?php selected($current_value_two, '0'); ?>><?php _e('JS Inactivo', 'ekiline-collection'); ?></option>
+								</select>
+							</label>
+							<input type="submit" class="button button-primary button-hero" value="<?php _e('Guardar ajustes Bootstrap.', 'ekiline-collection') ?>" />
+						</form>
+					</div>
+				</div>
+				<div class="welcome-panel-column">
+					<div style="padding:4px;">
+						<h3><span class="dashicons dashicons-block-default"></span>
+							<?php esc_html_e('Oculta o muestra bloques', 'ekiline-collection'); ?></h3>
+						<p><?php esc_html_e('Puedes mostrar solo los bloques necesarios para tu proyecto.', 'ekiline-collection'); ?></p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+</div>
+	<?php
+}
 
 /**
  * Ekiline, info.
  */
-function ekiline_collection_plugin_html_page()
+function ekiline_block_collection_about()
 { ?>
-<style>
-	.ekiline-notice, .ekiline-notice h4, .ekiline-notice ul, .ekiline-notice ul li{ margin:0px 5px 0px 0px !important; padding-bottom:0px !important; display: inline-block; }
-	.ekiline-notice ul li, .welcome-panel::before{ display:none;}
-	.welcome-panel-header{box-sizing:border-box;margin-left:auto;margin-right:auto;max-width:1500px;width:100%;padding:40px;}
-	.welcome-panel-column {display: block;}
-	.welcome-panel .welcome-panel-column-container {margin-top: 0px;}
-</style>
 <div class="wrap">
 	<h1>
 		<span class="dashicons dashicons-layout" aria-hidden="true"></span>
@@ -137,6 +262,7 @@ function ekiline_collection_plugin_html_page()
         'after_widget'  => '</div>',
         'before_title'  => '<h4 class="widgettitle">',
         'after_title'   => '</h4>',
+        'target'        => '_blank',
     );
     the_widget('WP_Widget_RSS', $rss_instance, $rss_args);
     ?>
@@ -157,15 +283,40 @@ function ekiline_collection_plugin_html_page()
                 printf(esc_html__('&copy; Copyright %1$s Ekiline', 'ekiline-collection'), esc_attr(date('Y')));
     ?>
 			<?php esc_html_e('All rights reserved. Ekiline developed by', 'ekiline-collection'); ?>
-			<?php printf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://bixnia.com/'), esc_html__('B I X N I A', 'ekiline-collection')); ?>
+			<?php printf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://bixnia.com/'), esc_html__('BIXNIA', 'ekiline-collection')); ?>
 		</small>
 	</p>
 </div>
-<script type='text/javascript'>
+	<?php
+}
+
+/**
+ * Scripts y estilos para esta pagina.
+ */
+// add_action( 'admin_print_styles', 'ekiline_collection_options_css', 100 );
+function ekiline_collection_options_css()
+{
+    $css = '
+		.ekiline-notice, .ekiline-notice h4, .ekiline-notice ul, .ekiline-notice ul li{ margin:0px 5px 0px 0px !important; padding-bottom:0px !important; display: inline-block; }
+		.ekiline-notice ul li, .welcome-panel::before{ display:none;}
+		.welcome-panel-header{box-sizing:border-box;margin-left:auto;margin-right:auto;max-width:1500px;width:100%;padding:40px;}
+		.welcome-panel-column {display: block;}
+		.welcome-panel .welcome-panel-column-container {margin-top: 0px;}
+		.welcome-panel-column form label {display: flex; justify-content:space-between}
+		.welcome-panel-column form select {width: 60%;}
+		.button {width: 100%; text-align:center;}
+	';
+    echo '<style id="ekiline-block-collection-settings-css">' . $css . '</style>';
+}
+
+// add_action( 'admin_print_scripts', 'ekiline_collection_options_js', 100 );
+function ekiline_collection_options_js()
+{
+    $js = '
 	jQuery(document).ready(function($){
 		var random = Math.floor(Math.random() * 5) + 1;
-		$('.ekiline-notice ul li:nth-child('+random+')').delay(2000).show(100);
+		$(\'.ekiline-notice ul li:nth-child(\' + random + \')\').delay(2000).show(100);
 	});
-</script>
-	<?php
+	';
+    echo '<script type="text/javascript" id="ekiline-block-collection-settings-js">' . $js . '</script>';
 }
