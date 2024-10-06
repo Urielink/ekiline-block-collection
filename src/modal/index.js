@@ -362,7 +362,7 @@ registerBlockType( 'ekiline-collection/ekiline-modal-header', {
 	supports: {
 		html: false,
 		reusable: false,
-		multiple: false,
+		// multiple: false,
 		inserter: true,
 	},
 	edit: () => {
@@ -423,7 +423,7 @@ registerBlockType( 'ekiline-collection/ekiline-modal-body', {
 	supports: {
 		html: false,
 		reusable: false,
-		multiple: false,
+		// multiple: false,
 		inserter: true,
 	},
 	edit: () => {
@@ -477,7 +477,7 @@ registerBlockType( 'ekiline-collection/ekiline-modal-footer', {
 	supports: {
 		html: false,
 		reusable: false,
-		multiple: false,
+		// multiple: false,
 		inserter: true,
 	},
 	edit: () => {
