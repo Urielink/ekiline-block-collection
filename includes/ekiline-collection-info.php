@@ -8,6 +8,7 @@
  * @link https://codex.wordpress.org/Javascript_Reference/ThickBox
  * @link https://medium.com/@hbahonar/how-to-create-wordpress-custom-admin-page-and-menu-from-scratch-ultimate-guide-updated-d7b4d2e57f96
  * @link https://codex.wordpress.org/index.php?title=Creating_Options_Pages&oldid=97268
+ * @link https://codex.wordpress.org/Settings_API
  *
  * Estilos agregados.
  *
@@ -131,8 +132,8 @@ function ekiline_block_collection_options()
 								$current_value_one = get_option($option_name_one, '1');
 								?>
 								<select name="<?php echo esc_attr($option_name_one); ?>">
-									<option value="1" <?php selected($current_value_one, '1'); ?>><?php _e('CSS Activo', 'ekiline-collection'); ?></option>
-									<option value="0" <?php selected($current_value_one, '0'); ?>><?php _e('CSS Inactivo', 'ekiline-collection'); ?></option>
+									<option value="1" <?php selected($current_value_one, '1'); ?>><?php esc_html_e('CSS Activo', 'ekiline-collection'); ?></option>
+									<option value="0" <?php selected($current_value_one, '0'); ?>><?php esc_html_e('CSS Inactivo', 'ekiline-collection'); ?></option>
 								</select>
 							</label>
 							<br>
@@ -143,11 +144,11 @@ function ekiline_block_collection_options()
 								$current_value_two = get_option($option_name_two, '1');
 								?>
 								<select name="<?php echo esc_attr($option_name_two); ?>">
-									<option value="1" <?php selected($current_value_two, '1'); ?>><?php _e('JS Activo', 'ekiline-collection'); ?></option>
-									<option value="0" <?php selected($current_value_two, '0'); ?>><?php _e('JS Inactivo', 'ekiline-collection'); ?></option>
+									<option value="1" <?php selected($current_value_two, '1'); ?>><?php esc_html_e('JS Activo', 'ekiline-collection'); ?></option>
+									<option value="0" <?php selected($current_value_two, '0'); ?>><?php esc_html_e('JS Inactivo', 'ekiline-collection'); ?></option>
 								</select>
 							</label>
-							<input type="submit" class="button button-primary button-hero" value="<?php _e('Guardar ajustes Bootstrap.', 'ekiline-collection') ?>" />
+							<input type="submit" class="button button-primary button-hero" value="<?php esc_html_e('Guardar ajustes Bootstrap.', 'ekiline-collection') ?>" />
 						</form>
 					</div>
 				</div>
@@ -284,7 +285,7 @@ function ekiline_block_collection_about()
 		<small>
 			<?php
 				/* translators: %1$s is replaced with date data */
-				printf(esc_html__('&copy; Copyright %1$s Ekiline', 'ekiline-collection'), esc_attr(date('Y')));
+				printf(esc_html__('&copy; Copyright %1$s Ekiline', 'ekiline-collection'), esc_attr(gmdate('Y')));
 			?>
 			<?php esc_html_e('All rights reserved. Ekiline developed by', 'ekiline-collection'); ?>
 			<?php printf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://bixnia.com/'), esc_html__('BIXNIA', 'ekiline-collection')); ?>
@@ -310,7 +311,7 @@ function ekiline_collection_options_css()
 		.welcome-panel-column form select {width: 60%;}
 		.button {width: 100%; text-align:center;}
 	';
-	echo '<style id="ekiline-block-collection-settings-css">' . $css . '</style>';
+	echo '<style id="ekiline-block-collection-settings-css">' . esc_html($css) . '</style>';
 }
 
 // add_action( 'admin_print_scripts', 'ekiline_collection_options_js', 100 );
@@ -322,5 +323,5 @@ function ekiline_collection_options_js()
 		$(\'.ekiline-notice ul li:nth-child(\' + random + \')\').delay(2000).show(100);
 	});
 	';
-	echo '<script type="text/javascript" id="ekiline-block-collection-settings-js">' . $js . '</script>';
+	echo '<script type="text/javascript" id="ekiline-block-collection-settings-js">' . esc_js($js) . '</script>';
 }
