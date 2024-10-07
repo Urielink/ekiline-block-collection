@@ -6,6 +6,8 @@
  */
 
 /**
+ * 06Oct2024, UPDATE
+ * Ya no es necesario, las actualizaciones de wordpress mejoran el rendimiento.
  * Buscar un bloque y eliminarlo del loop de bloques en el contenido.
  *
  * @param array $content the content.
@@ -38,9 +40,12 @@ function ekiline_collection_remove_blocks($content)
     }
     return $content;
 }
-add_filter('the_content', 'ekiline_collection_remove_blocks');
+// add_filter('the_content', 'ekiline_collection_remove_blocks');
 
 /**
+ * 06Oct2024, UPDATE 
+ * Ya no es necesario, las actualizaciones de wordpress mejoran el rendimiento.
+ * 
  * Modal. Sin argumentos.
  *
  * Prueba, intentar mover el contenido de un bloque al final de la pagina con PHP.
@@ -72,9 +77,9 @@ function ekiline_collection_block_modal_find_and_move()
         foreach ($blocks as $block) {
             if ($find_block === $block['blockName']) {
                 // 13-02-23: permitir el uso de shortcodes dentro del modal.
-                echo esc_html(apply_filters('the_content', render_block($block)));
+                echo apply_filters('the_content', render_block($block));
             }
         }
     }
 }
-add_action('wp_footer', 'ekiline_collection_block_modal_find_and_move', 0);
+// add_action('wp_footer', 'ekiline_collection_block_modal_find_and_move', 0);
