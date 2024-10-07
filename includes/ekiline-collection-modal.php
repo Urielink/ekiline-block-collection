@@ -43,9 +43,9 @@ function ekiline_collection_remove_blocks($content)
 // add_filter('the_content', 'ekiline_collection_remove_blocks');
 
 /**
- * 06Oct2024, UPDATE 
+ * 06Oct2024, UPDATE
  * Ya no es necesario, las actualizaciones de wordpress mejoran el rendimiento.
- * 
+ *
  * Modal. Sin argumentos.
  *
  * Prueba, intentar mover el contenido de un bloque al final de la pagina con PHP.
