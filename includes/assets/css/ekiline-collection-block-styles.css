@@ -465,10 +465,10 @@
 .accordion-button:not(.collapsed)::after {
 	-webkit-mask-image: var(--bs-accordion-btn-icon);
 	mask-image: var(--bs-accordion-btn-icon);
-	background: red;
+	filter: invert(0.5);
 }
 .accordion-button::after {
 	-webkit-mask-image: var(--bs-accordion-btn-icon);
 	mask-image: var(--bs-accordion-btn-icon);
-	background: #f00;
-  }
+	filter: invert(1);
+}

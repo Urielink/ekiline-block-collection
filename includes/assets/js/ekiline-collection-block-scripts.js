@@ -5,6 +5,7 @@
  * - Tabs
  * - Toast
  * - Carousel
+ * - Video extras
  */
 
 /**
@@ -283,3 +284,44 @@ function ekiline_collection_carousel_text_indicators (indicadores) {
   }
 }
 ekiline_collection_carousel_text_indicators('.carousel-text-indicators')
+
+/**
+ * Extension para el uso de videos en modal o en offcanvas.
+ */
+// Desactivar video dentro de un modal al cerrar el modal.
+function ekiline_collection_js_modal_has_video () {
+  const modalVideo = document.querySelectorAll('.modal')
+  if (modalVideo.length !== 0) {
+    modalVideo.forEach(function (videoItem) {
+      videoItem.addEventListener('hidden.bs.modal', function () {
+        // if has almost one video stop all.
+        const video = this.querySelectorAll('video')
+        if (video.length !== 0) {
+          video.forEach(function (video) {
+            video.pause()
+          })
+        }
+      })
+    })
+  }
+}
+ekiline_collection_js_modal_has_video()
+
+// Desactivar video dentro de un offcanvas al cerrar el offcanvas.
+function ekiline_collection_js_offcanvas_has_video () {
+  const offcanvasVideo = document.querySelectorAll('.offcanvas')
+  if (offcanvasVideo.length !== 0) {
+    offcanvasVideo.forEach(function (videoItem) {
+      videoItem.addEventListener('hidden.bs.offcanvas', function () {
+        // if has almost one video stop all.
+        const video = this.querySelectorAll('video')
+        if (video.length !== 0) {
+          video.forEach(function (video) {
+            video.pause()
+          })
+        }
+      })
+    })
+  }
+}
+ekiline_collection_js_offcanvas_has_video()
