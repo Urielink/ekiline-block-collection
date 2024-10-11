@@ -110,7 +110,7 @@ function ekiline_collection_carousel_posts($ppp = 3, $cat = array(), $findblock 
              * Octubre 2024 limpiar shortcodes de contenido.
              */
             $new_excerpt   = '';
-            $clean_content = strip_shortcodes( get_the_content() );
+            $clean_content = strip_shortcodes(get_the_content());
 
             if (strpos($clean_content, '<!--more-->')) {
                 $new_excerpt = $clean_content;
