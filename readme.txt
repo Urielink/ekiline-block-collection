@@ -67,6 +67,7 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 = 1.0.6 =
 * Improve: Video behavior, pause when video was in modal or offcanvas container.
+* Fix: Dynamic Carousel, clean shortcodes from content.
 
 = 1.0.5 =
 * Improve: add individual posts in basic carousel.

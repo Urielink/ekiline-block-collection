@@ -107,12 +107,15 @@ function ekiline_collection_carousel_posts($ppp = 3, $cat = array(), $findblock 
             /**
              * Junio 2 2022, WP6 corregir la salida de extracto.
              * Condiciones nuevas para extracto.
+             * Octubre 2024 limpiar shortcodes de contenido.
              */
-            $new_excerpt = '';
-            if (strpos(get_the_content(), '<!--more-->')) {
-                $new_excerpt = get_the_content();
+            $new_excerpt   = '';
+            $clean_content = strip_shortcodes( get_the_content() );
+
+            if (strpos($clean_content, '<!--more-->')) {
+                $new_excerpt = $clean_content;
             } else {
-                $new_excerpt = wp_trim_words(get_the_content(), 55, '...');
+                $new_excerpt = wp_trim_words($clean_content, 55, '...');
             }
 
             $info            = array();
