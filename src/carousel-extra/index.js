@@ -246,6 +246,8 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 		 * @link https://developer.wordpress.org/block-editor/how-to-guides/data-basics/2-building-a-list-of-pages/
 		 * @link https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/creating-dynamic-blocks/
 		 * @link https://wordpress.stackexchange.com/questions/352323/how-to-return-a-list-of-custom-taxonomy-terms-via-the-gutenberg-getentityrecords
+     * 21Oct2024 Revisar nuevamente docuentacion.
+     * @link https://developer.wordpress.org/block-editor/reference-guides/data/data-core/
 		 *
 		 * @returns Custom component: EntriesList.
 		 */
