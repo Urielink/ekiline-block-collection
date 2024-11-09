@@ -18,7 +18,6 @@
  */
 function ekiline_collection_remove_blocks($content)
 {
-
     // Idetificador de bloque.
     $find_block = 'ekiline-collection/ekiline-modal';
 
@@ -58,7 +57,6 @@ function ekiline_collection_remove_blocks($content)
  */
 function ekiline_collection_block_modal_find_and_move()
 {
-
     // Idetificador de bloque.
     $find_block = 'ekiline-collection/ekiline-modal';
 
@@ -77,7 +75,7 @@ function ekiline_collection_block_modal_find_and_move()
         foreach ($blocks as $block) {
             if ($find_block === $block['blockName']) {
                 // 13-02-23: permitir el uso de shortcodes dentro del modal.
-                echo apply_filters('the_content', render_block($block));
+                echo wp_kses_post(apply_filters('the_content', render_block($block)));
             }
         }
     }
