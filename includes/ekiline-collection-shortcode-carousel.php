@@ -55,6 +55,11 @@ function ekiline_collection_shortcode_carousel($atts = [])
         'ekiline-carousel'
     );
 
+    // Sanitizar los valores del array.
+    foreach ($atts as $key => $value) {
+        $atts[$key] = sanitize_text_field($value);
+    }
+
     // Obtener ids.
     $id_arr = explode(',', $atts['id'] ?? '');
     // Default posts.
@@ -211,13 +216,14 @@ function ekiline_collection_carousel_images($ids = array())
  */
 function ekiline_collection_carousel_html($carousel, $columns, $control, $indicators, $auto, $time, $animation, $height, $showcaption, $setlinks, $indicatorstext, $classname, $anchor)
 {
-
     if ($carousel) {
         $uniq_id   = ($anchor) ? $anchor : 'carousel_module_' . wp_rand(1, 99);
         $auto      = ('false' !== $auto) ? ' data-bs-ride="carousel"' : '';
         $time      = ($time) ? ' data-bs-interval="' . $time . '"' : '';
         $animation = ($animation) ? ' carousel-' . $animation : '';
-        if (null === $height) {
+
+        // Validar height.
+        if (!$height) {
             $height = ' style="min-height:480px;"';
         } elseif ('0' === $height) {
             $height = ' style="min-height:100vh;"';
