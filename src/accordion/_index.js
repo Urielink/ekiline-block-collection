@@ -71,9 +71,9 @@ registerBlockType('ekiline-collection/ekiline-accordion', {
 	 * Parametros de alta.
 	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/
 	 */
-  title: __('Accordion', 'ekiline-collection'),
+  title: __('Accordion', 'ekiline-block-collection'),
   icon: customIcon,
-  description: __('Show your content as an accordion.', 'ekiline-collection'),
+  description: __('Show your content as an accordion.', 'ekiline-block-collection'),
   category: 'design',
   supports: {
     anchor: true
@@ -124,9 +124,9 @@ registerBlockType('ekiline-collection/ekiline-accordion', {
       <div {...blockProps}>
         {/* Inspector controles */}
         <InspectorControls>
-          <PanelBody title={__('Accordion Settings', 'ekiline-collection')} initialOpen>
+          <PanelBody title={__('Accordion Settings', 'ekiline-block-collection')} initialOpen>
             <ToggleControl
-              label={__('Clear style.', 'ekiline-collection')}
+              label={__('Clear style.', 'ekiline-block-collection')}
               checked={attributes.noStyle}
               onChange={(noStyle) =>
 							  setAttributes({ noStyle })}
@@ -169,10 +169,10 @@ registerBlockType('ekiline-collection/ekiline-accordion', {
 
 registerBlockType('ekiline-collection/ekiline-accordion-item', {
 
-  title: __('Accordion item', 'ekiline-collection'),
+  title: __('Accordion item', 'ekiline-block-collection'),
   parent: ['ekiline-collection/ekiline-accordion'],
   icon: 'menu-alt',
-  description: __('Set tittle and content in your accordion container', 'ekiline-collection'),
+  description: __('Set tittle and content in your accordion container', 'ekiline-block-collection'),
   category: 'design',
   // Se ocupa contexto para pasar valores desde el padre, en este caso el ID.
   usesContext: ['ekiline-accordion/anchor'],
@@ -199,7 +199,7 @@ registerBlockType('ekiline-collection/ekiline-accordion-item', {
       type: 'string',
       source: 'html',
       selector: 'button',
-      default: __('Item title.', 'ekiline-collection')
+      default: __('Item title.', 'ekiline-block-collection')
     }
   },
 
@@ -213,7 +213,7 @@ registerBlockType('ekiline-collection/ekiline-accordion-item', {
     // Cargar un preset.
     const CHILD_TEMPLATE = [
       ['core/paragraph',
-        { content: __('Item content.', 'ekiline-collection') }
+        { content: __('Item content.', 'ekiline-block-collection') }
       ]
     ]
 
@@ -239,19 +239,19 @@ registerBlockType('ekiline-collection/ekiline-accordion-item', {
       <div {...blockProps}>
         {/* Inspector controles */}
         <InspectorControls>
-          <PanelBody title={__('Accordion Item Params', 'ekiline-collection')} initialOpen>
+          <PanelBody title={__('Accordion Item Params', 'ekiline-block-collection')} initialOpen>
             <ToggleControl
-              label={__('Show element by default.', 'ekiline-collection')}
+              label={__('Show element by default.', 'ekiline-block-collection')}
               checked={attributes.showDefault}
               onChange={(showDefault) =>
 						  setAttributes({ showDefault })}
             />
             <ToggleControl
-              label={__('Toggle.', 'ekiline-collection')}
+              label={__('Toggle.', 'ekiline-block-collection')}
               checked={attributes.keepOpen}
               onChange={(keepOpen) =>
 						  setAttributes({ keepOpen })}
-              help={__('Close previously active accordion elements.', 'ekiline-collection')}
+              help={__('Close previously active accordion elements.', 'ekiline-block-collection')}
             />
           </PanelBody>
         </InspectorControls>
@@ -264,7 +264,7 @@ registerBlockType('ekiline-collection/ekiline-accordion-item', {
           className='item-title'
           value={attributes.content} // Any existing content, either from the database or an attribute default
           onChange={(content) => setAttributes({ content })} // Store updated content as a block attribute
-          placeholder={__('Accordion Title', 'ekiline-collection')}
+          placeholder={__('Accordion Title', 'ekiline-block-collection')}
         />
         <InnerBlocks
           template={CHILD_TEMPLATE}

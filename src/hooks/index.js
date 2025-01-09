@@ -98,22 +98,22 @@ const withAdvancedControlsBsButtonLink = createHigherOrderComponent( ( BlockEdit
 					 **/}
 					{props.attributes.url && (
 						<InspectorControls>
-							<PanelBody title={ __( 'Link to Block (Ekiline)', 'ekiline-collection' ) } initialOpen={ true }>
+							<PanelBody title={ __( 'Link to Block (Ekiline)', 'ekiline-block-collection' ) } initialOpen={ true }>
 								{/* Anchor */}
 								<TextControl
-									label={ __( 'Anchor block name', 'ekiline-collection'  ) }
+									label={ __( 'Anchor block name', 'ekiline-block-collection'  ) }
 									value={props.attributes.anchorBsComponent}
 									onChange={newData => props.setAttributes({anchorBsComponent: newData})}
 								/>
 								{/* Tipo de componente */}
 								<SelectControl
-									label={ __( 'Choose block', 'ekiline-collection' ) }
+									label={ __( 'Choose block', 'ekiline-block-collection' ) }
 									value={ attributes.selectBsComponent }
 									options={ [
-										{ label: __( 'None', 'ekiline-collection' ), value: '' },
-										{ label: __( 'Collapse', 'ekiline-collection' ), value: 'collapse' },
-										{ label: __( 'Modal', 'ekiline-collection' ), value: 'modal' },
-										{ label: __( 'Offcanvas', 'ekiline-collection' ), value: 'offcanvas' },
+										{ label: __( 'None', 'ekiline-block-collection' ), value: '' },
+										{ label: __( 'Collapse', 'ekiline-block-collection' ), value: 'collapse' },
+										{ label: __( 'Modal', 'ekiline-block-collection' ), value: 'modal' },
+										{ label: __( 'Offcanvas', 'ekiline-block-collection' ), value: 'offcanvas' },
 									] }
 									onChange={ ( selectBsComponent ) =>
 										setAttributes( { selectBsComponent } )
@@ -121,10 +121,10 @@ const withAdvancedControlsBsButtonLink = createHigherOrderComponent( ( BlockEdit
 								/>
 								{/* Cerrar Bslink */}
 								<ToggleControl
-									label={ __( 'Is close button?', 'ekiline-collection'  ) }
+									label={ __( 'Is close button?', 'ekiline-block-collection'  ) }
 									checked={ ! dissmissBsComponent }
 									onChange={ () => setAttributes( {  dissmissBsComponent: ! dissmissBsComponent } ) }
-									help={ ! dissmissBsComponent ? __( 'Yes.', 'ekiline-collection'  ) : __( 'No.', 'ekiline-collection'  ) }
+									help={ ! dissmissBsComponent ? __( 'Yes.', 'ekiline-block-collection'  ) : __( 'No.', 'ekiline-block-collection'  ) }
 								/>
 							</PanelBody>
 						</InspectorControls>
@@ -261,22 +261,22 @@ const withAdvancedControlsBsImageLink = createHigherOrderComponent( ( BlockEdit 
 					 **/}
 					{props.attributes.href && (
 						<InspectorControls>
-							<PanelBody title={ __( 'Link to Ekiline Block', 'ekiline-collection' ) } initialOpen={ true }>
+							<PanelBody title={ __( 'Link to Ekiline Block', 'ekiline-block-collection' ) } initialOpen={ true }>
 								{/* Anchor */}
 								<TextControl
-									label={ __( 'Anchor block name', 'ekiline-collection'  ) }
+									label={ __( 'Anchor block name', 'ekiline-block-collection'  ) }
 									value={props.attributes.anchorBsComponent}
 									onChange={newData => props.setAttributes({anchorBsComponent: newData})}
 								/>
 								{/* Tipo de componente */}
 								<SelectControl
-									label={ __( 'Choose block', 'ekiline-collection' ) }
+									label={ __( 'Choose block', 'ekiline-block-collection' ) }
 									value={ attributes.selectBsComponent }
 									options={ [
-										{ label: __( 'None', 'ekiline-collection' ), value: '' },
-										{ label: __( 'Collapse', 'ekiline-collection' ), value: 'collapse' },
-										{ label: __( 'Modal', 'ekiline-collection' ), value: 'modal' },
-										{ label: __( 'Offcanvas', 'ekiline-collection' ), value: 'offcanvas' },
+										{ label: __( 'None', 'ekiline-block-collection' ), value: '' },
+										{ label: __( 'Collapse', 'ekiline-block-collection' ), value: 'collapse' },
+										{ label: __( 'Modal', 'ekiline-block-collection' ), value: 'modal' },
+										{ label: __( 'Offcanvas', 'ekiline-block-collection' ), value: 'offcanvas' },
 									] }
 									onChange={ ( selectBsComponent ) =>
 										setAttributes( { selectBsComponent } )
@@ -284,10 +284,10 @@ const withAdvancedControlsBsImageLink = createHigherOrderComponent( ( BlockEdit 
 								/>
 								{/* Cerrar Bslink */}
 								<ToggleControl
-									label={ __( 'Is close button?', 'ekiline-collection'  ) }
+									label={ __( 'Is close button?', 'ekiline-block-collection'  ) }
 									checked={ ! dissmissBsComponent }
 									onChange={ () => setAttributes( {  dissmissBsComponent: ! dissmissBsComponent } ) }
-									help={ ! dissmissBsComponent ? __( 'Yes.', 'ekiline-collection'  ) : __( 'No.', 'ekiline-collection'  ) }
+									help={ ! dissmissBsComponent ? __( 'Yes.', 'ekiline-block-collection'  ) : __( 'No.', 'ekiline-block-collection'  ) }
 								/>
 							</PanelBody>
 						</InspectorControls>

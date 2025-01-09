@@ -2,7 +2,7 @@
 /**
  * Dynamic render for blocks
  *
- * @package ekiline-collection
+ * @package ekiline-block-collection
  */
 
 /**

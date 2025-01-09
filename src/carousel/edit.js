@@ -61,7 +61,7 @@ export default function Edit(props) {
 		// Componente, necesita de cambiarNombrePorIds.
 		return(
 			<FormTokenField
-				label={ __( 'Find and select categories:', 'ekiline-collection' ) }
+				label={ __( 'Find and select categories:', 'ekiline-block-collection' ) }
 				value={
 					(!attributes.SetCatSlug) ? selectedCategories : attributes.SetCatSlug
 				}
@@ -95,15 +95,15 @@ export default function Edit(props) {
 	return (
 		<div {...blockProps}>
 			<InspectorControls>
-				<PanelBody title={ __( 'Carousel content', 'ekiline-collection' ) } initialOpen={ true }>
+				<PanelBody title={ __( 'Carousel content', 'ekiline-block-collection' ) } initialOpen={ true }>
 
 					<SelectControl
-						label={ __( 'Content type', 'ekiline-collection' ) }
+						label={ __( 'Content type', 'ekiline-block-collection' ) }
 						value={ attributes.ChooseType }
 						options={ [
-							{ label: __( 'Posts', 'ekiline-collection' ), value: 'posts' },
-							{ label: __( 'Images', 'ekiline-collection' ), value: 'images' },
-							{ label: __( 'Video + Images', 'ekiline-collection' ), value: 'videos' },
+							{ label: __( 'Posts', 'ekiline-block-collection' ), value: 'posts' },
+							{ label: __( 'Images', 'ekiline-block-collection' ), value: 'images' },
+							{ label: __( 'Video + Images', 'ekiline-block-collection' ), value: 'videos' },
 						] }
 						onChange={ ( ChooseType ) =>
 							{ setAttributes( { ChooseType, SetIds: [] } ) }
@@ -117,7 +117,7 @@ export default function Edit(props) {
 					{ 'posts' !== attributes.ChooseType && (
 						<MediaUploadCheck>
 							<MediaUpload
-								title={ ( 'images' === attributes.ChooseType ) ? __( 'Carousel Images', 'ekiline-collection' ) : __( 'Carousel Video and Images', 'ekiline-collection' ) }
+								title={ ( 'images' === attributes.ChooseType ) ? __( 'Carousel Images', 'ekiline-block-collection' ) : __( 'Carousel Video and Images', 'ekiline-block-collection' ) }
 								onSelect={ ( media ) => onSelectMedia( media ) }
 								allowedTypes={ ( 'images' === attributes.ChooseType ) ? [ 'image' ] : [ 'image', 'video' ] }
 								multiple={ true }
@@ -125,8 +125,8 @@ export default function Edit(props) {
 								render={ ( { open } ) => (
 									<Button variant="secondary" onClick={ open }>
 										{ attributes.SetIds.length
-											? __( 'Manage media', 'ekiline-collection' )
-											: __( 'Add media', 'ekiline-collection' ) }
+											? __( 'Manage media', 'ekiline-block-collection' )
+											: __( 'Add media', 'ekiline-block-collection' ) }
 									</Button>
 								) }
 								gallery={ ( 'images' === attributes.ChooseType ) ? true : false }
@@ -137,7 +137,7 @@ export default function Edit(props) {
 
 					{ 'posts' === attributes.ChooseType && (
 						<TextControl
-							label={ __( 'Post amount', 'ekiline-collection' ) }
+							label={ __( 'Post amount', 'ekiline-block-collection' ) }
 							type="number"
 							value={ attributes.SetAmount }
 							onChange={ ( newval ) =>
@@ -150,15 +150,15 @@ export default function Edit(props) {
 
 					{ 'posts' === attributes.ChooseType && (
 						<SelectControl
-							label={ __( 'Sort by', 'ekiline-collection' ) }
+							label={ __( 'Sort by', 'ekiline-block-collection' ) }
 							value={ attributes.SetOrderBy }
 							options={ [
-								{ label: __( 'Date', 'ekiline-collection' ), value: 'date' },
-								{ label: __( 'Modified', 'ekiline-collection' ), value: 'modified' },
-								{ label: __( 'Title', 'ekiline-collection' ), value: 'title' },
-								{ label: __( 'Name', 'ekiline-collection' ), value: 'name' },
-								{ label: __( 'Author', 'ekiline-collection' ), value: 'author' },
-								{ label: __( 'Random', 'ekiline-collection' ), value: 'rand' },
+								{ label: __( 'Date', 'ekiline-block-collection' ), value: 'date' },
+								{ label: __( 'Modified', 'ekiline-block-collection' ), value: 'modified' },
+								{ label: __( 'Title', 'ekiline-block-collection' ), value: 'title' },
+								{ label: __( 'Name', 'ekiline-block-collection' ), value: 'name' },
+								{ label: __( 'Author', 'ekiline-block-collection' ), value: 'author' },
+								{ label: __( 'Random', 'ekiline-block-collection' ), value: 'rand' },
 							] }
 							onChange={ ( SetOrderBy ) =>
 								setAttributes( { SetOrderBy } )
@@ -168,14 +168,14 @@ export default function Edit(props) {
 
 					{ 'posts' === attributes.ChooseType && (
 						<SelectControl
-							label={ __( 'Find a block in content', 'ekiline-collection' ) }
+							label={ __( 'Find a block in content', 'ekiline-block-collection' ) }
 							value={ attributes.FindBlock }
 							options={ [
-								{ label: __( 'None', 'ekiline-collection' ), value: 'none' },
-								{ label: __( 'Cover', 'ekiline-collection' ), value: 'core/cover' },
-								{ label: __( 'Image', 'ekiline-collection' ), value: 'core/image' },
-								{ label: __( 'Media and text', 'ekiline-collection' ), value: 'core/media-text' },
-								{ label: __( 'Video', 'ekiline-collection' ), value: 'core/video' },
+								{ label: __( 'None', 'ekiline-block-collection' ), value: 'none' },
+								{ label: __( 'Cover', 'ekiline-block-collection' ), value: 'core/cover' },
+								{ label: __( 'Image', 'ekiline-block-collection' ), value: 'core/image' },
+								{ label: __( 'Media and text', 'ekiline-block-collection' ), value: 'core/media-text' },
+								{ label: __( 'Video', 'ekiline-block-collection' ), value: 'core/video' },
 							] }
 							onChange={ ( FindBlock ) =>
 								setAttributes( { FindBlock } )
@@ -185,7 +185,7 @@ export default function Edit(props) {
 
 					{ 'none' !== attributes.FindBlock && (
 						<ToggleControl
-							label={ __( 'Show post if there is no block', 'ekiline-collection' ) }
+							label={ __( 'Show post if there is no block', 'ekiline-block-collection' ) }
 							checked={ attributes.AllowMixed }
 							onChange={ ( AllowMixed ) =>
 								setAttributes( { AllowMixed } )
@@ -194,9 +194,9 @@ export default function Edit(props) {
 					) }
 				</PanelBody>
 
-				<PanelBody title={ __( 'Carousel Look', 'ekiline-collection' ) } initialOpen={ false }>
+				<PanelBody title={ __( 'Carousel Look', 'ekiline-block-collection' ) } initialOpen={ false }>
 					<RangeControl
-						label={ __( 'Columns', 'ekiline-collection' ) }
+						label={ __( 'Columns', 'ekiline-block-collection' ) }
 						value={ attributes.SetColumns }
 						onChange={ ( newval ) =>
 							setAttributes( { SetColumns: parseInt( newval ) } )
@@ -206,7 +206,7 @@ export default function Edit(props) {
 					/>
 
 					<ToggleControl
-						label={ __( 'Show controls', 'ekiline-collection' ) }
+						label={ __( 'Show controls', 'ekiline-block-collection' ) }
 						checked={ attributes.AddControls }
 						onChange={ ( AddControls ) =>
 							setAttributes( { AddControls } )
@@ -214,7 +214,7 @@ export default function Edit(props) {
 					/>
 
 					<ToggleControl
-						label={ __( 'Show indicators', 'ekiline-collection' ) }
+						label={ __( 'Show indicators', 'ekiline-block-collection' ) }
 						checked={ attributes.AddIndicators }
 						onChange={ ( AddIndicators ) =>
 							setAttributes( { AddIndicators } )
@@ -224,7 +224,7 @@ export default function Edit(props) {
 				{/* Opcion de controles */}
 				{ attributes.SetColumns === 1
 					&& (<ToggleControl
-						label={ __( 'Show text indicators', 'ekiline-collection' ) }
+						label={ __( 'Show text indicators', 'ekiline-block-collection' ) }
 						checked={ attributes.AddIndicatorsText }
 						onChange={ ( AddIndicatorsText ) =>
 							setAttributes( { AddIndicatorsText } )
@@ -232,13 +232,13 @@ export default function Edit(props) {
 				/>)}
 
 					<ToggleControl
-						label={ __( 'Auto start', 'ekiline-collection' ) }
+						label={ __( 'Auto start', 'ekiline-block-collection' ) }
 						checked={ attributes.SetAuto }
 						onChange={ ( SetAuto ) => setAttributes( { SetAuto } ) }
 					/>
 
 				<ToggleControl
-					label={ __( 'Show caption', 'ekiline-collection' ) }
+					label={ __( 'Show caption', 'ekiline-block-collection' ) }
 					checked={ attributes.ShowCaption }
 					onChange={ ( ShowCaption ) => setAttributes( { ShowCaption } ) }
 				/>
@@ -248,15 +248,15 @@ export default function Edit(props) {
 					&& ( <ToggleControl
 							label={ 
 								'posts' === attributes.ChooseType
-									? __( 'Link titles', 'ekiline-collection' )
-									: __( 'Link images', 'ekiline-collection' )
+									? __( 'Link titles', 'ekiline-block-collection' )
+									: __( 'Link images', 'ekiline-block-collection' )
 							}
 							checked={ attributes.SetLinks }
 							onChange={ ( SetLinks ) => setAttributes( { SetLinks } ) }
 					/> )}
 
 					<TextControl
-						label={ __( 'Transition in milliseconds', 'ekiline-collection' ) }
+						label={ __( 'Transition in milliseconds', 'ekiline-block-collection' ) }
 						type="number"
 						value={ attributes.SetTime }
 						onChange={ ( newval ) =>
@@ -265,12 +265,12 @@ export default function Edit(props) {
 					/>
 
 					<SelectControl
-						label={ __( 'Animation type', 'ekiline-collection' ) }
+						label={ __( 'Animation type', 'ekiline-block-collection' ) }
 						value={ attributes.SetAnimation }
 						options={ [
-							{ label: __( 'Default', 'ekiline-collection' ), value: '' },
-							{ label: __( 'Fade', 'ekiline-collection' ), value: 'fade' },
-							{ label: __( 'Vertical', 'ekiline-collection' ), value: 'vertical' },
+							{ label: __( 'Default', 'ekiline-block-collection' ), value: '' },
+							{ label: __( 'Fade', 'ekiline-block-collection' ), value: 'fade' },
+							{ label: __( 'Vertical', 'ekiline-block-collection' ), value: 'vertical' },
 						] }
 						onChange={ ( SetAnimation ) =>
 							setAttributes( { SetAnimation } )
@@ -278,7 +278,7 @@ export default function Edit(props) {
 					/>
 
 					<TextControl
-						label={ __( 'Height in pixels, set zero to see full display height.', 'ekiline-collection' ) }
+						label={ __( 'Height in pixels, set zero to see full display height.', 'ekiline-block-collection' ) }
 						type="number"
 						value={ attributes.SetHeight }
 						onChange={ ( newval ) =>

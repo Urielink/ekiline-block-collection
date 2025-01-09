@@ -91,9 +91,9 @@ registerBlockType('ekiline-collection/ekiline-offcanvas', {
 	 * Parametros de alta.
 	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
 	 */
-	title: __( 'Offcanvas', 'ekiline-collection' ),
+	title: __( 'Offcanvas', 'ekiline-block-collection' ),
 	icon: customIcon,
-	description: __( 'Add your content here, then invoque with a link anchor #anchor.', 'ekiline-collection' ),
+	description: __( 'Add your content here, then invoque with a link anchor #anchor.', 'ekiline-block-collection' ),
 	category: 'design',
 	supports: {
 		anchor: true,
@@ -183,9 +183,9 @@ registerBlockType('ekiline-collection/ekiline-offcanvas', {
 				return(
 					<div class="editor-offcanvas-route has-anchor">
 						<pre>
-						{ __( 'Add this anchor: #', 'ekiline-collection' ) }
+						{ __( 'Add this anchor: #', 'ekiline-block-collection' ) }
 						{ attributes.anchor }
-						{ __( ', in a button link field and in its advanced options.', 'ekiline-collection' ) }
+						{ __( ', in a button link field and in its advanced options.', 'ekiline-block-collection' ) }
 						</pre>
 					</div>
 					)
@@ -193,7 +193,7 @@ registerBlockType('ekiline-collection/ekiline-offcanvas', {
 
 			return(
 				<div class="editor-offcanvas-route">
-					{ __( 'Do not forget to add an #anchor. ', 'ekiline-collection' )}
+					{ __( 'Do not forget to add an #anchor. ', 'ekiline-block-collection' )}
 				</div>
 			)
 		}
@@ -202,16 +202,16 @@ registerBlockType('ekiline-collection/ekiline-offcanvas', {
 			<div { ...blockProps }>
 				{/* Inspector controles */}
 				<InspectorControls>
-					<PanelBody title={ __( 'Offcanvas Params', 'ekiline-collection' ) } initialOpen={ true }>
+					<PanelBody title={ __( 'Offcanvas Params', 'ekiline-block-collection' ) } initialOpen={ true }>
 
 					<SelectControl
-						label={ __( 'Position', 'ekiline-collection' ) }
+						label={ __( 'Position', 'ekiline-block-collection' ) }
 						value={ attributes.ocPosition }
 						options={ [
-							{ label: __( 'Right', 'ekiline-collection' ), value: ' offcanvas-end' },
-							{ label: __( 'Bottom', 'ekiline-collection' ), value: ' offcanvas-bottom' },
-							{ label: __( 'Left', 'ekiline-collection' ), value: ' offcanvas-start' },
-							{ label: __( 'Top', 'ekiline-collection' ), value: ' offcanvas-top' },
+							{ label: __( 'Right', 'ekiline-block-collection' ), value: ' offcanvas-end' },
+							{ label: __( 'Bottom', 'ekiline-block-collection' ), value: ' offcanvas-bottom' },
+							{ label: __( 'Left', 'ekiline-block-collection' ), value: ' offcanvas-start' },
+							{ label: __( 'Top', 'ekiline-block-collection' ), value: ' offcanvas-top' },
 						] }
 						onChange={ ( ocPosition ) =>
 							setAttributes( { ocPosition } )
@@ -219,14 +219,14 @@ registerBlockType('ekiline-collection/ekiline-offcanvas', {
 					/>
 
 					<SelectControl
-						label={ __( 'Width', 'ekiline-collection' ) }
+						label={ __( 'Width', 'ekiline-block-collection' ) }
 						value={ attributes.ocWidth }
 						options={ [
-							{ label: __( 'Default', 'ekiline-collection' ), value: '' },
-							{ label: __( 'Small', 'ekiline-collection' ), value: ' w-25' },
-							{ label: __( 'Half', 'ekiline-collection' ), value: ' w-50' },
-							{ label: __( 'Large', 'ekiline-collection' ), value: ' w-75' },
-							{ label: __( 'Full window', 'ekiline-collection' ), value: ' w-100' },
+							{ label: __( 'Default', 'ekiline-block-collection' ), value: '' },
+							{ label: __( 'Small', 'ekiline-block-collection' ), value: ' w-25' },
+							{ label: __( 'Half', 'ekiline-block-collection' ), value: ' w-50' },
+							{ label: __( 'Large', 'ekiline-block-collection' ), value: ' w-75' },
+							{ label: __( 'Full window', 'ekiline-block-collection' ), value: ' w-100' },
 						] }
 						onChange={ ( ocWidth ) =>
 							setAttributes( { ocWidth } )
@@ -234,14 +234,14 @@ registerBlockType('ekiline-collection/ekiline-offcanvas', {
 					/>
 
 					<SelectControl
-						label={ __( 'Height', 'ekiline-collection' ) }
+						label={ __( 'Height', 'ekiline-block-collection' ) }
 						value={ attributes.ocHeight }
 						options={ [
-							{ label: __( 'Default', 'ekiline-collection' ), value: '' },
-							{ label: __( 'Small', 'ekiline-collection' ), value: ' h-25' },
-							{ label: __( 'Half', 'ekiline-collection' ), value: ' h-50' },
-							{ label: __( 'Large', 'ekiline-collection' ), value: ' h-75' },
-							{ label: __( 'Full window', 'ekiline-collection' ), value: ' h-100' },
+							{ label: __( 'Default', 'ekiline-block-collection' ), value: '' },
+							{ label: __( 'Small', 'ekiline-block-collection' ), value: ' h-25' },
+							{ label: __( 'Half', 'ekiline-block-collection' ), value: ' h-50' },
+							{ label: __( 'Large', 'ekiline-block-collection' ), value: ' h-75' },
+							{ label: __( 'Full window', 'ekiline-block-collection' ), value: ' h-100' },
 						] }
 						onChange={ ( ocHeight ) =>
 							setAttributes( { ocHeight } )
@@ -249,22 +249,22 @@ registerBlockType('ekiline-collection/ekiline-offcanvas', {
 					/>
 
 					<SelectControl
-						label={ __( 'Display run', 'ekiline-collection' ) }
+						label={ __( 'Display run', 'ekiline-block-collection' ) }
 						value={ attributes.ocDisplay }
 						options={ [
-							{ label: __( 'All', 'ekiline-collection' ), value: ' offcanvas' },
-							{ label: __( 'Small', 'ekiline-collection' ), value: ' offcanvas-sm' },
-							{ label: __( 'Medium', 'ekiline-collection' ), value: ' offcanvas-md' },
-							{ label: __( 'Large', 'ekiline-collection' ), value: ' offcanvas-lg' },
+							{ label: __( 'All', 'ekiline-block-collection' ), value: ' offcanvas' },
+							{ label: __( 'Small', 'ekiline-block-collection' ), value: ' offcanvas-sm' },
+							{ label: __( 'Medium', 'ekiline-block-collection' ), value: ' offcanvas-md' },
+							{ label: __( 'Large', 'ekiline-block-collection' ), value: ' offcanvas-lg' },
 						] }
 						onChange={ ( ocDisplay ) =>
 							setAttributes( { ocDisplay } )
 						}
-						help={ __( 'Run only on specific screen sizes', 'ekiline-collection' ) }
+						help={ __( 'Run only on specific screen sizes', 'ekiline-block-collection' ) }
 					/>
 
 					<ToggleControl
-						label={ __( 'Keep scroll window', 'ekiline-collection' ) }
+						label={ __( 'Keep scroll window', 'ekiline-block-collection' ) }
 						checked={ attributes.ocScroll }
 						onChange={ ( ocScroll ) =>
 							setAttributes( { ocScroll } )
@@ -272,17 +272,17 @@ registerBlockType('ekiline-collection/ekiline-offcanvas', {
 					/>
 
 					<SelectControl
-						label={ __( 'Backdrop behavior', 'ekiline-collection' ) }
+						label={ __( 'Backdrop behavior', 'ekiline-block-collection' ) }
 						value={ attributes.ocBackdrop }
 						options={ [
-							{ label: __( 'Default', 'ekiline-collection' ), value: 'true' },
-							{ label: __( 'Static', 'ekiline-collection' ), value: 'static' },
-							{ label: __( 'False', 'ekiline-collection' ), value: 'false' },
+							{ label: __( 'Default', 'ekiline-block-collection' ), value: 'true' },
+							{ label: __( 'Static', 'ekiline-block-collection' ), value: 'static' },
+							{ label: __( 'False', 'ekiline-block-collection' ), value: 'false' },
 						] }
 						onChange={ ( ocBackdrop ) =>
 							setAttributes( { ocBackdrop } )
 						}
-						help={ __( 'Run only on specific screen sizes', 'ekiline-collection' ) }
+						help={ __( 'Run only on specific screen sizes', 'ekiline-block-collection' ) }
 					/>
 
 					</PanelBody>
@@ -339,10 +339,10 @@ registerBlockType('ekiline-collection/ekiline-offcanvas', {
  */
 
 registerBlockType( 'ekiline-collection/ekiline-offcanvas-header', {
-	title: __( 'Offcanvas header', 'ekiline-collection' ),
+	title: __( 'Offcanvas header', 'ekiline-block-collection' ),
 	parent: ['ekiline-collection/ekiline-offcanvas'],
 	icon: 'feedback',
-	description:__( 'Offcanvas header content. ', 'ekiline-collection' ),
+	description:__( 'Offcanvas header content. ', 'ekiline-block-collection' ),
 	category: 'design',
 	//Se ocupa contexto para pasar valores desde el padre, en este caso el ID.
 	usesContext: ['ekiline-offcanvas/anchor'],
@@ -367,7 +367,7 @@ registerBlockType( 'ekiline-collection/ekiline-offcanvas-header', {
 		// Cargar un preset.
 		const CHILD_TEMPLATE = [
 			[ 'core/heading', {
-				content: __( 'Add offcanvas title', 'ekiline-collection' ),
+				content: __( 'Add offcanvas title', 'ekiline-block-collection' ),
 				level: 4,
 			} ],
 		];
@@ -420,10 +420,10 @@ registerBlockType( 'ekiline-collection/ekiline-offcanvas-header', {
  */
 
 registerBlockType( 'ekiline-collection/ekiline-offcanvas-body', {
-	title: __( 'Offcanvas body content', 'ekiline-collection' ),
+	title: __( 'Offcanvas body content', 'ekiline-block-collection' ),
 	parent: ['ekiline-collection/ekiline-offcanvas'],
 	icon: 'feedback',
-	description:__( 'Offcanvas body content. ', 'ekiline-collection' ),
+	description:__( 'Offcanvas body content. ', 'ekiline-block-collection' ),
 	category: 'design',
 	supports: {
 		html: false,
@@ -435,7 +435,7 @@ registerBlockType( 'ekiline-collection/ekiline-offcanvas-body', {
 
 		// Cargar un preset.
 		const CHILD_TEMPLATE = [
-			[ 'core/paragraph', { content: __( 'Add offcanvas content blocks', 'ekiline-collection' ) } ],
+			[ 'core/paragraph', { content: __( 'Add offcanvas content blocks', 'ekiline-block-collection' ) } ],
 		];
 
 		// personalizar clase

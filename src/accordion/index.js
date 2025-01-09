@@ -71,9 +71,9 @@ registerBlockType('ekiline-collection/ekiline-accordion', {
 	 * Parametros de alta.
 	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/
 	 */
-  title: __('Accordion', 'ekiline-collection'),
+  title: __('Accordion', 'ekiline-block-collection'),
   icon: customIcon,
-  description: __('Show your content as an accordion.', 'ekiline-collection'),
+  description: __('Show your content as an accordion.', 'ekiline-block-collection'),
   category: 'design',
   supports: {
     html: false, // no permitir HTML
@@ -122,9 +122,9 @@ registerBlockType('ekiline-collection/ekiline-accordion', {
       <div {...blockProps}>
         {/* Inspector controles */}
         <InspectorControls>
-          <PanelBody title={__('Accordion Settings', 'ekiline-collection')} initialOpen>
+          <PanelBody title={__('Accordion Settings', 'ekiline-block-collection')} initialOpen>
             <ToggleControl
-              label={__('Use bootstrap default style.', 'ekiline-collection')}
+              label={__('Use bootstrap default style.', 'ekiline-block-collection')}
               checked={attributes.noStyle}
               onChange={(noStyle) => setAttributes({ noStyle })}
             />
@@ -165,10 +165,10 @@ registerBlockType('ekiline-collection/ekiline-accordion', {
  */
 registerBlockType('ekiline-collection/ekiline-accordion-item', {
 
-  title: __('Accordion item', 'ekiline-collection'),
+  title: __('Accordion item', 'ekiline-block-collection'),
   parent: ['ekiline-collection/ekiline-accordion'],
   icon: customIcon,
-  description: __('Set tittle and content in your accordion container', 'ekiline-collection'),
+  description: __('Set tittle and content in your accordion container', 'ekiline-block-collection'),
   category: 'design',
   // Se ocupa contexto para pasar valores desde el padre, en este caso el ID.
   usesContext: ['ekiline-accordion/anchor'],
@@ -193,7 +193,7 @@ registerBlockType('ekiline-collection/ekiline-accordion-item', {
       type: 'string',
       source: 'html',
       selector: 'button',
-      default: __('Item title.', 'ekiline-collection')
+      default: __('Item title.', 'ekiline-block-collection')
     }
   },
   /**
@@ -233,19 +233,19 @@ registerBlockType('ekiline-collection/ekiline-accordion-item', {
       <div {...blockProps}>
         {/* Inspector controles */}
         <InspectorControls>
-          <PanelBody title={__('Accordion Item Params', 'ekiline-collection')} initialOpen>
+          <PanelBody title={__('Accordion Item Params', 'ekiline-block-collection')} initialOpen>
             <ToggleControl
-              label={__('Show element by default.', 'ekiline-collection')}
+              label={__('Show element by default.', 'ekiline-block-collection')}
               checked={attributes.showDefault}
               onChange={(showDefault) =>
 							  setAttributes({ showDefault })}
             />
             <ToggleControl
-              label={__('Toggle.', 'ekiline-collection')}
+              label={__('Toggle.', 'ekiline-block-collection')}
               checked={attributes.keepOpen}
               onChange={(keepOpen) =>
 							  setAttributes({ keepOpen })}
-              help={__('Close previously active accordion elements.', 'ekiline-collection')}
+              help={__('Close previously active accordion elements.', 'ekiline-block-collection')}
             />
           </PanelBody>
         </InspectorControls>
@@ -281,10 +281,10 @@ registerBlockType('ekiline-collection/ekiline-accordion-item', {
  * Bloque interno accordion-item-header
  */
 registerBlockType('ekiline-collection/ekiline-accordion-item-header', {
-  title: __('Accordion item header', 'ekiline-collection'),
+  title: __('Accordion item header', 'ekiline-block-collection'),
   parent: ['ekiline-collection/ekiline-accordion-item'],
   icon: 'button',
-  description: __('Set tittle and content in your accordion container', 'ekiline-collection'),
+  description: __('Set tittle and content in your accordion container', 'ekiline-block-collection'),
   category: 'design',
   // Se ocupa contexto para pasar valores desde el padre, en este caso el ID.
   usesContext: [
@@ -308,7 +308,7 @@ registerBlockType('ekiline-collection/ekiline-accordion-item-header', {
       type: 'string',
       source: 'html',
       selector: 'button',
-      default: __('Item title.', 'ekiline-collection')
+      default: __('Item title.', 'ekiline-block-collection')
     }
   },
 
@@ -379,10 +379,10 @@ registerBlockType('ekiline-collection/ekiline-accordion-item-header', {
  */
 registerBlockType('ekiline-collection/ekiline-accordion-item-body', {
 
-  title: __('Accordion item body', 'ekiline-collection'),
+  title: __('Accordion item body', 'ekiline-block-collection'),
   parent: ['ekiline-collection/ekiline-accordion-item'],
   icon: 'feedback',
-  description: __('Set tittle and content in your accordion container', 'ekiline-collection'),
+  description: __('Set tittle and content in your accordion container', 'ekiline-block-collection'),
   category: 'design',
   // Se ocupa contexto para pasar valores desde el padre, en este caso el ID.
   usesContext: [
@@ -421,7 +421,7 @@ registerBlockType('ekiline-collection/ekiline-accordion-item-body', {
       type: 'string',
       source: 'html',
       selector: 'button',
-      default: __('Item title.', 'ekiline-collection')
+      default: __('Item title.', 'ekiline-block-collection')
     }
   },
 
@@ -435,7 +435,7 @@ registerBlockType('ekiline-collection/ekiline-accordion-item-body', {
     // Cargar un preset.
     const CHILD_TEMPLATE = [
       ['core/paragraph',
-        { content: __('Item content.', 'ekiline-collection') }
+        { content: __('Item content.', 'ekiline-block-collection') }
       ]
     ]
 

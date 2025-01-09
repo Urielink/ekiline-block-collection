@@ -68,9 +68,9 @@ registerBlockType('ekiline-collection/ekiline-progress', {
 	 * Parametros de alta.
 	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
 	 */
-	title: __( 'Progress', 'ekiline-collection' ),
+	title: __( 'Progress', 'ekiline-block-collection' ),
 	icon: customIcon,
-	description: __( 'Show a bootstrap progress bar for your data.', 'ekiline-collection' ),
+	description: __( 'Show a bootstrap progress bar for your data.', 'ekiline-block-collection' ),
 	category: 'design',
 	supports: {
 			anchor: true,
@@ -113,9 +113,9 @@ registerBlockType('ekiline-collection/ekiline-progress', {
 
 				{/* Inspector controles */}
 				<InspectorControls>
-					<PanelBody title={ __( 'Progress bar Settings', 'ekiline-collection' ) } initialOpen={ true }>
+					<PanelBody title={ __( 'Progress bar Settings', 'ekiline-block-collection' ) } initialOpen={ true }>
 						<TextControl
-							label={ __( 'Height bar (pixels)', 'ekiline-collection' ) }
+							label={ __( 'Height bar (pixels)', 'ekiline-block-collection' ) }
 							type="number"
 							value={ attributes.progHeight }
 							onChange={ ( newval ) =>
@@ -164,10 +164,10 @@ registerBlockType('ekiline-collection/ekiline-progress', {
  * Bloque interno
  */
 registerBlockType('ekiline-collection/ekiline-progress-item', {
-	title: __( 'Progress data bar', 'ekiline-collection' ),
+	title: __( 'Progress data bar', 'ekiline-block-collection' ),
 	parent: ['ekiline-collection/ekiline-progress'],
 	icon: 'ellipsis',
-	description: __( 'Progress data, could be multiple bars between 1 to 100.', 'ekiline-collection' ),
+	description: __( 'Progress data, could be multiple bars between 1 to 100.', 'ekiline-block-collection' ),
 	category: 'design',
 	supports: {
 		anchor: false,
@@ -217,9 +217,9 @@ registerBlockType('ekiline-collection/ekiline-progress-item', {
 			<div { ...blockProps } >
 				{/* Inspector controles */}
 				<InspectorControls>
-					<PanelBody title={ __( 'Progress bar Settings', 'ekiline-collection' ) } initialOpen={ true }>
+					<PanelBody title={ __( 'Progress bar Settings', 'ekiline-block-collection' ) } initialOpen={ true }>
 						<TextControl
-							label={ __( 'Data range min 1% max 100%', 'ekiline-collection' ) }
+							label={ __( 'Data range min 1% max 100%', 'ekiline-block-collection' ) }
 							type="number"
 							value={ attributes.progRange }
 							onChange={ ( newval ) =>
@@ -229,21 +229,21 @@ registerBlockType('ekiline-collection/ekiline-progress-item', {
 							max="100"
 						/>
 						<ToggleControl
-							label={ __( 'Hide number in bar.', 'ekiline-collection' ) }
+							label={ __( 'Hide number in bar.', 'ekiline-block-collection' ) }
 							checked={ attributes.progLabel }
 							onChange={ ( progLabel ) =>
 								setAttributes( { progLabel } )
 							}
 						/>
 						<ToggleControl
-							label={ __( 'Show stripes over background.', 'ekiline-collection' ) }
+							label={ __( 'Show stripes over background.', 'ekiline-block-collection' ) }
 							checked={ attributes.progStripes }
 							onChange={ ( progStripes ) =>
 								setAttributes( { progStripes } )
 							}
 						/>
 						<ToggleControl
-							label={ __( 'Show animation.', 'ekiline-collection' ) }
+							label={ __( 'Show animation.', 'ekiline-block-collection' ) }
 							checked={ attributes.progAnimation }
 							onChange={ ( progAnimation ) =>
 								setAttributes( { progAnimation } )

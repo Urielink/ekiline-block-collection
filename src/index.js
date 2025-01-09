@@ -28,7 +28,7 @@ import './hooks/index'
  * Incorporar bloques a coleccion.
  */
 import { registerBlockCollection } from '@wordpress/blocks'
-registerBlockCollection('ekiline-collection', {
+registerBlockCollection('ekiline-block-collection', {
   title: 'Ekiline Collection'
   // icon: customIcon,
 })

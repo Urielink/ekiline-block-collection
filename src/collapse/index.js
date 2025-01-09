@@ -70,9 +70,9 @@ registerBlockType('ekiline-collection/ekiline-collapse', {
 	 * Parametros de alta.
 	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
 	 */
-	title: __( 'Collapse', 'ekiline-collection' ),
+	title: __( 'Collapse', 'ekiline-block-collection' ),
 	icon: customIcon,
-	description: __( 'Set a collapse behavior block. You can activate from any button.', 'ekiline-collection' ),
+	description: __( 'Set a collapse behavior block. You can activate from any button.', 'ekiline-block-collection' ),
 	category: 'design',
 	supports: {
 		anchor: true,
@@ -96,7 +96,7 @@ registerBlockType('ekiline-collection/ekiline-collapse', {
 
 		const { attributes, setAttributes } = props;
 		// const PARENT_ALLOWED_BLOCKS = [ 'core/buttons' ];
-		const CHILD_TEMPLATE = [ [ 'core/paragraph', { content: __( 'Add your content', 'ekiline-collection' ) } ] ];
+		const CHILD_TEMPLATE = [ [ 'core/paragraph', { content: __( 'Add your content', 'ekiline-block-collection' ) } ] ];
 
 		const blockProps = useBlockProps( {
 			className: 'group-collapse',
@@ -113,7 +113,7 @@ registerBlockType('ekiline-collection/ekiline-collapse', {
 						<pre>
 						{ '#' + attributes.anchor }
 						<br></br>
-						{ __( 'Add this #anchor to a button and its advanced options.', 'ekiline-collection' ) }
+						{ __( 'Add this #anchor to a button and its advanced options.', 'ekiline-block-collection' ) }
 						</pre>
 					</div>
 					)
@@ -121,7 +121,7 @@ registerBlockType('ekiline-collection/ekiline-collapse', {
 
 			return(
 				<div class="editor-collapse-route">
-					{ __( 'Do not forget to add an anchor. ', 'ekiline-collection' )}
+					{ __( 'Do not forget to add an anchor. ', 'ekiline-block-collection' )}
 				</div>
 			)
 		}
@@ -130,9 +130,9 @@ registerBlockType('ekiline-collection/ekiline-collapse', {
 			<div {...blockProps}>
 				{/* Inspector controles */}
 				<InspectorControls>
-					<PanelBody title={ __( 'Collapse Params', 'ekiline-collection' ) } initialOpen={ true }>
+					<PanelBody title={ __( 'Collapse Params', 'ekiline-block-collection' ) } initialOpen={ true }>
 					<ToggleControl
-						label={ __( 'Horizontal collapse', 'ekiline-collection' ) }
+						label={ __( 'Horizontal collapse', 'ekiline-block-collection' ) }
 						checked={ attributes.horizontal }
 						onChange={ ( horizontal ) =>
 							setAttributes( { horizontal } )

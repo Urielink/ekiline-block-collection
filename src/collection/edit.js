@@ -34,7 +34,7 @@ export default function Edit() {
 		<p { ...useBlockProps() }>
 			{ __(
 				'Ekiline Block Collection – hello from the editor!',
-				'ekiline-collection'
+				'ekiline-block-collection'
 			) }
 		</p>
 	);

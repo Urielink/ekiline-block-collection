@@ -63,9 +63,9 @@ registerBlockType( 'ekiline-collection/ekiline-toast', {
 	 * Parametros de alta.
 	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/ 
 	 */
-	title: __( 'Toast', 'ekiline-collection' ),
+	title: __( 'Toast', 'ekiline-block-collection' ),
 	icon: customIcon,
-	description: __( 'Show small bootstrap-style notices.', 'ekiline-collection' ),
+	description: __( 'Show small bootstrap-style notices.', 'ekiline-block-collection' ),
 	category: 'design',
 	supports: {
 		anchor: true,
@@ -109,15 +109,15 @@ registerBlockType( 'ekiline-collection/ekiline-toast', {
 			<div {...blockProps}>
 				{/* Inspector controles */}
 				<InspectorControls>
-					<PanelBody title={ __( 'Toast group options', 'ekiline-collection' ) } initialOpen={ true }>
+					<PanelBody title={ __( 'Toast group options', 'ekiline-block-collection' ) } initialOpen={ true }>
 					<SelectControl
-						label={ __( 'Display position', 'ekiline-collection' ) }
+						label={ __( 'Display position', 'ekiline-block-collection' ) }
 						value={ attributes.toastPosition }
 						options={ [
-							{ label: __( 'Bottom right', 'ekiline-collection' ), value: ' bottom-0 end-0' },
-							{ label: __( 'Bottom left', 'ekiline-collection' ), value: ' bottom-0 start-0' },
-							{ label: __( 'Top right', 'ekiline-collection' ), value: ' top-0 end-0' },
-							{ label: __( 'Top left', 'ekiline-collection' ), value: ' top-0 start-0' },
+							{ label: __( 'Bottom right', 'ekiline-block-collection' ), value: ' bottom-0 end-0' },
+							{ label: __( 'Bottom left', 'ekiline-block-collection' ), value: ' bottom-0 start-0' },
+							{ label: __( 'Top right', 'ekiline-block-collection' ), value: ' top-0 end-0' },
+							{ label: __( 'Top left', 'ekiline-block-collection' ), value: ' top-0 start-0' },
 						] }
 						onChange={ ( toastPosition ) =>
 							setAttributes( { toastPosition } )
@@ -157,10 +157,10 @@ registerBlockType( 'ekiline-collection/ekiline-toast', {
  * Toast Item.
  */
 registerBlockType( 'ekiline-collection/ekiline-toast-item', {
-	title: __( 'Ekiline toast item.', 'ekiline-collection' ),
+	title: __( 'Ekiline toast item.', 'ekiline-block-collection' ),
 	parent: ['ekiline-collection/ekiline-toast'],
 	icon: 'lightbulb',
-	description: __( 'Each toast can be executed by time, at the end of scrolling, or with the cursor outside the window. You can stack as many as you need.', 'ekiline-collection' ),
+	description: __( 'Each toast can be executed by time, at the end of scrolling, or with the cursor outside the window. You can stack as many as you need.', 'ekiline-block-collection' ),
 	category: 'design',
 	supports: {
 		anchor: true,
@@ -212,9 +212,9 @@ registerBlockType( 'ekiline-collection/ekiline-toast-item', {
 
 				{/* Inspector controles */}
 				<InspectorControls>
-					<PanelBody title={ __( 'Toast Params', 'ekiline-collection' ) } initialOpen={ true }>
+					<PanelBody title={ __( 'Toast Params', 'ekiline-block-collection' ) } initialOpen={ true }>
 					<TextControl
-						label={ __( 'Run by time', 'ekiline-collection' ) }
+						label={ __( 'Run by time', 'ekiline-block-collection' ) }
 						type="number"
 						value={ attributes.toastTime }
 						onChange={ ( newval ) =>
@@ -222,13 +222,13 @@ registerBlockType( 'ekiline-collection/ekiline-toast-item', {
 						}
 						help={
 							( attributes.toastTime > 0 )
-							? __( 'Run after page load ', 'ekiline-collection' ) + attributes.toastTime + __( ' milliseconds.', 'ekiline-collection' )
-							: attributes.toastTime + __( ' run immediately on page load.', 'ekiline-collection' )
+							? __( 'Run after page load ', 'ekiline-block-collection' ) + attributes.toastTime + __( ' milliseconds.', 'ekiline-block-collection' )
+							: attributes.toastTime + __( ' run immediately on page load.', 'ekiline-block-collection' )
 						}
 						min={ 0 }
 					/>
 					<ToggleControl
-						label={ __( 'Run at end of page scroll.', 'ekiline-collection' ) }
+						label={ __( 'Run at end of page scroll.', 'ekiline-block-collection' ) }
 						checked={ attributes.toastScroll }
 						onChange={ ( toastScroll ) =>
 							setAttributes( { toastScroll } )
@@ -243,7 +243,7 @@ registerBlockType( 'ekiline-collection/ekiline-toast-item', {
 					value={ attributes.content }
 					allowedFormats={ [ 'core/bold', 'core/italic' ] }
 					onChange={ ( content ) => setAttributes( { content } ) }
-					placeholder={ __( 'Add toast title', 'ekiline-collection' ) }
+					placeholder={ __( 'Add toast title', 'ekiline-block-collection' ) }
 					className={'item-title'}
 				/>
 				<InnerBlocks

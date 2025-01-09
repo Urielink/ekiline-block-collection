@@ -55,9 +55,9 @@ const customIcon = createElement(
  */
 registerBlockType('ekiline-collection/ekiline-popovers', {
 	apiVersion: 2,
-	title: __( 'Popover', 'ekiline-collection' ),
+	title: __( 'Popover', 'ekiline-block-collection' ),
 	icon: customIcon,
-	description: __( 'Add popovers to your links or buttons.', 'ekiline-collection' ),
+	description: __( 'Add popovers to your links or buttons.', 'ekiline-block-collection' ),
 	category: 'design',
 
 	/**
@@ -67,10 +67,10 @@ registerBlockType('ekiline-collection/ekiline-popovers', {
 	edit: () => {
 		return (
 			<p {...useBlockProps()}>
-				{__( 'Popovers have rules added to the core buttons.', 'ekiline-collection' )}
-				{__( 'You need to create a button. And then text an anchor (#name) link.', 'ekiline-collection' )}
-				{__( 'This will allow you to use the advanced options for the button.', 'ekiline-collection' )}
-				{__( 'You can remove this notice, it won\'t be published in your content.', 'ekiline-collection' )}
+				{__( 'Popovers have rules added to the core buttons.', 'ekiline-block-collection' )}
+				{__( 'You need to create a button. And then text an anchor (#name) link.', 'ekiline-block-collection' )}
+				{__( 'This will allow you to use the advanced options for the button.', 'ekiline-block-collection' )}
+				{__( 'You can remove this notice, it won\'t be published in your content.', 'ekiline-block-collection' )}
 			</p>
 		);
 	},
@@ -140,22 +140,22 @@ const withAdvancedControlsBtnCollapse = createHigherOrderComponent( ( BlockEdit 
 				<BlockEdit {...props} />
 					{props.attributes.url && (
 						<InspectorControls>
-							<PanelBody title={ __( 'Button to Popover (Ekiline)', 'ekiline-collection' ) } initialOpen={ true }>
+							<PanelBody title={ __( 'Button to Popover (Ekiline)', 'ekiline-block-collection' ) } initialOpen={ true }>
 							<TextControl
-								label={ __( 'Popover text to show.', 'ekiline-collection'  ) }
+								label={ __( 'Popover text to show.', 'ekiline-block-collection'  ) }
 								value={props.attributes.addDataLnkPopover}
 								onChange={newData => props.setAttributes({addDataLnkPopover: newData})}
 							/>
 							{/* Posicion. */}
 							<SelectControl
-								label={ __( 'Popover position', 'ekiline-collection' ) }
+								label={ __( 'Popover position', 'ekiline-block-collection' ) }
 								value={ props.attributes.addPositionLnkPopover }
 								options={ [
-									{ label: __( 'Popover position', 'ekiline-collection' ), value: 'auto' },
-									{ label: __( 'Top', 'ekiline-collection' ), value: 'top' },
-									{ label: __( 'Right', 'ekiline-collection' ), value: 'right' },
-									{ label: __( 'Bottom', 'ekiline-collection' ), value: 'bottom' },
-									{ label: __( 'Left', 'ekiline-collection' ), value: 'left' },
+									{ label: __( 'Popover position', 'ekiline-block-collection' ), value: 'auto' },
+									{ label: __( 'Top', 'ekiline-block-collection' ), value: 'top' },
+									{ label: __( 'Right', 'ekiline-block-collection' ), value: 'right' },
+									{ label: __( 'Bottom', 'ekiline-block-collection' ), value: 'bottom' },
+									{ label: __( 'Left', 'ekiline-block-collection' ), value: 'left' },
 								] }
 								onChange={ ( addPositionLnkPopover ) =>
 									props.setAttributes( { addPositionLnkPopover } )
@@ -163,7 +163,7 @@ const withAdvancedControlsBtnCollapse = createHigherOrderComponent( ( BlockEdit 
 							/>
 							{/* cambiar formato */}
 							<ToggleControl
-								label={ __( 'Is tooltip', 'ekiline-collection' ) }
+								label={ __( 'Is tooltip', 'ekiline-block-collection' ) }
 								checked={ props.attributes.defineTooltip }
 								onChange={ ( defineTooltip ) =>
 									props.setAttributes( { defineTooltip } )

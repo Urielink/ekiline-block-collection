@@ -27,7 +27,7 @@ export default function save() {
 		<p { ...useBlockProps.save() }>
 			{ __(
 				'Ekiline Block Collection – hello from the saved content!',
-				'ekiline-collection'
+				'ekiline-block-collection'
 			) }
 		</p>
 	);

@@ -82,9 +82,9 @@ const customIcon = createElement(
  */
 registerBlockType('ekiline-collection/ekiline-carousel-extra', {
   apiVersion: 2,
-  title: __('Carousel basic', 'ekiline-collection'),
+  title: __('Carousel basic', 'ekiline-block-collection'),
   icon: customIcon,
-  description: __('Add a non dynamic carousel to your posts, choose between posts or images.', 'ekiline-collection'),
+  description: __('Add a non dynamic carousel to your posts, choose between posts or images.', 'ekiline-block-collection'),
   category: 'media',
   supports: {
     // Removes support for an HTML mode.
@@ -216,7 +216,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
       // Componente, necesita de cambiarNombrePorIds.
       return (
         <FormTokenField
-          label={__('Find and select categories:', 'ekiline-collection')}
+          label={__('Find and select categories:', 'ekiline-block-collection')}
           value={
 						(!attributes.SetCatSlug) ? selectedCategories : attributes.SetCatSlug
 					}
@@ -366,7 +366,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
       // Componente, necesita de cambiarNombrePorIds.
       return (
         <FormTokenField
-          label={__('Find and select posts:', 'ekiline-collection')}
+          label={__('Find and select posts:', 'ekiline-block-collection')}
           value={
 						(!attributes.SetPostSlug) ? selectedPosts : attributes.SetPostSlug
 					}
@@ -392,15 +392,15 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
         {/* Inspector controles */}
         <InspectorControls>
           {/* Selector de tipo de contenido, posts o imagenes */}
-          <PanelBody title={__('Carousel content', 'ekiline-collection')} initialOpen>
+          <PanelBody title={__('Carousel content', 'ekiline-block-collection')} initialOpen>
 
             <SelectControl
-              label={__('Content type', 'ekiline-collection')}
+              label={__('Content type', 'ekiline-block-collection')}
               value={attributes.ChooseType}
               options={[
-							  { label: __('Posts', 'ekiline-collection'), value: 'posts' },
-							  { label: __('Images', 'ekiline-collection'), value: 'images' },
-							  { label: __('Individual posts', 'ekiline-collection'), value: 'single' }
+							  { label: __('Posts', 'ekiline-block-collection'), value: 'posts' },
+							  { label: __('Images', 'ekiline-block-collection'), value: 'images' },
+							  { label: __('Individual posts', 'ekiline-block-collection'), value: 'single' }
               ]}
               onChange={(ChooseType) => { setAttributes({ ChooseType, SavePosts: [], SaveImages: [] }) }}
             />
@@ -412,7 +412,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
             {attributes.ChooseType === 'images' && (
               <MediaUploadCheck>
                 <MediaUpload
-                  title={__('Carousel Images', 'ekiline-collection')}
+                  title={__('Carousel Images', 'ekiline-block-collection')}
                   onSelect={(media) => onSelectMedia(media)}
                   allowedTypes={['image', 'video']}
                   multiple
@@ -420,8 +420,8 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
                   render={({ open }) => (
                     <Button variant='secondary' onClick={open}>
                       {attributes.SaveImages.length
-											  ? __('Manage images', 'ekiline-collection')
-											  : __('Add images', 'ekiline-collection')}
+											  ? __('Manage images', 'ekiline-block-collection')
+											  : __('Add images', 'ekiline-block-collection')}
 
                     </Button>
                   )}
@@ -437,11 +437,11 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 
             {attributes.ChooseType === 'posts' && (
               <SelectControl
-                label={__('Show posts by', 'ekiline-collection')}
+                label={__('Show posts by', 'ekiline-block-collection')}
                 value={attributes.ShowPostsBy}
                 options={[
-								  { label: __('Date', 'ekiline-collection'), value: 'date' },
-								  { label: __('Title', 'ekiline-collection'), value: 'title' }
+								  { label: __('Date', 'ekiline-block-collection'), value: 'date' },
+								  { label: __('Title', 'ekiline-block-collection'), value: 'title' }
                 ]}
                 onChange={(ShowPostsBy) => {
 								  setAttributes({ ShowPostsBy, SavePosts: [] })
@@ -451,24 +451,24 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 
             {attributes.ChooseType === 'posts' && (
               <TextControl
-                label={__('Items to show', 'ekiline-collection')}
+                label={__('Items to show', 'ekiline-block-collection')}
                 type='number'
                 min='0'
                 value={attributes.SetAmount}
                 onChange={(newval) => {
 								  setAttributes({ SetAmount: parseInt(newval), SavePosts: [] })
                 }}
-                help={(attributes.SetAmount === 0) ? __('Danger! 0 shows all.', 'ekiline-collection') : ''}
+                help={(attributes.SetAmount === 0) ? __('Danger! 0 shows all.', 'ekiline-block-collection') : ''}
               />
             )}
 
             {attributes.ChooseType === 'posts' && (
               <SelectControl
-                label={__('Sort items', 'ekiline-collection')}
+                label={__('Sort items', 'ekiline-block-collection')}
                 value={attributes.SortPosts}
                 options={[
-								  { label: __('Descend', 'ekiline-collection'), value: 'desc' },
-								  { label: __('Ascend', 'ekiline-collection'), value: 'asc' }
+								  { label: __('Descend', 'ekiline-block-collection'), value: 'desc' },
+								  { label: __('Ascend', 'ekiline-block-collection'), value: 'asc' }
                 ]}
                 onChange={(SortPosts) => {
 								  setAttributes({ SortPosts, SavePosts: [] })
@@ -478,9 +478,9 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
 
           </PanelBody>
 
-          <PanelBody title={__('Carousel Look', 'ekiline-collection')} initialOpen={false}>
+          <PanelBody title={__('Carousel Look', 'ekiline-block-collection')} initialOpen={false}>
             <RangeControl
-              label={__('Columns', 'ekiline-collection')}
+              label={__('Columns', 'ekiline-block-collection')}
               value={attributes.SetColumns}
               onChange={(newval) =>
 								  setAttributes({ SetColumns: parseInt(newval) })}
@@ -489,14 +489,14 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
             />
 
             <ToggleControl
-              label={__('Show controls', 'ekiline-collection')}
+              label={__('Show controls', 'ekiline-block-collection')}
               checked={attributes.AddControls}
               onChange={(AddControls) =>
 								  setAttributes({ AddControls })}
             />
 
             <ToggleControl
-              label={__('Show indicators', 'ekiline-collection')}
+              label={__('Show indicators', 'ekiline-block-collection')}
               checked={attributes.AddIndicators}
               onChange={(AddIndicators) =>
 								  setAttributes({ AddIndicators })}
@@ -504,33 +504,33 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
             {/* Opcion de controles */}
             {attributes.SetColumns === 1 &&
 								(<ToggleControl
-  label={__('Show text indicators', 'ekiline-collection')}
+  label={__('Show text indicators', 'ekiline-block-collection')}
   checked={attributes.AddIndicatorsText}
   onChange={(AddIndicatorsText) =>
 									  setAttributes({ AddIndicatorsText })}
 								/>)}
 
             <ToggleControl
-              label={__('Auto start', 'ekiline-collection')}
+              label={__('Auto start', 'ekiline-block-collection')}
               checked={attributes.SetAuto}
               onChange={(SetAuto) => setAttributes({ SetAuto })}
             />
 
             <ToggleControl
-              label={__('Show caption', 'ekiline-collection')}
+              label={__('Show caption', 'ekiline-block-collection')}
               checked={attributes.ShowCaption}
               onChange={(ShowCaption) => setAttributes({ ShowCaption })}
             />
             {/* Opcion de enlaces */}
             {attributes.ShowCaption &&
 							  (<ToggleControl
-  label={__('Link titles', 'ekiline-collection')}
+  label={__('Link titles', 'ekiline-block-collection')}
   checked={attributes.SetLinks}
   onChange={(SetLinks) => setAttributes({ SetLinks })}
 							  /> )}
 
             <TextControl
-              label={__('Transition in milliseconds', 'ekiline-collection')}
+              label={__('Transition in milliseconds', 'ekiline-block-collection')}
               type='number'
               value={attributes.SetTime}
               onChange={(newval) =>
@@ -539,25 +539,25 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
             />
 
             <SelectControl
-              label={__('Animation type', 'ekiline-collection')}
+              label={__('Animation type', 'ekiline-block-collection')}
               value={attributes.SetAnimation}
               options={[
-								  { label: __('Default', 'ekiline-collection'), value: '' },
-								  { label: __('Fade', 'ekiline-collection'), value: 'fade' },
-								  { label: __('Vertical', 'ekiline-collection'), value: 'vertical' }
+								  { label: __('Default', 'ekiline-block-collection'), value: '' },
+								  { label: __('Fade', 'ekiline-block-collection'), value: 'fade' },
+								  { label: __('Vertical', 'ekiline-block-collection'), value: 'vertical' }
               ]}
               onChange={(SetAnimation) =>
 								  setAttributes({ SetAnimation })}
             />
 
             <TextControl
-              label={__('Height in pixels.', 'ekiline-collection')}
+              label={__('Height in pixels.', 'ekiline-block-collection')}
               type='number'
               value={attributes.SetHeight}
               onChange={(newval) =>
 								  setAttributes({ SetHeight: parseInt(newval) })}
               min={0}
-              help={(attributes.SetHeight === 0) ? __('Zero sets carousel at full display height.', 'ekiline-collection') : ''}
+              help={(attributes.SetHeight === 0) ? __('Zero sets carousel at full display height.', 'ekiline-block-collection') : ''}
             />
           </PanelBody>
           {/* fin nuevos controles  */}
@@ -633,11 +633,11 @@ registerBlockType('ekiline-collection/ekiline-carousel-extra', {
  * @returns HTML code with message.
  */
 export function UserRemind ({ slugname }) {
-  let message = __('No category selected. ', 'ekiline-collection')
+  let message = __('No category selected. ', 'ekiline-block-collection')
   let classname = 'editor-modal-route'
   if (slugname.length != 0) {
     const element = slugname?.map((el) => (el))
-    message = __('Selected categories: ', 'ekiline-collection') + element
+    message = __('Selected categories: ', 'ekiline-block-collection') + element
     classname = classname + ' has-anchor'
   }
   return (

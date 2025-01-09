@@ -52,7 +52,7 @@ import save from './save';
  */
 registerBlockType( 'ekiline-collection/ekiline-collection', {
 	apiVersion: 2,
-	title: __('Ekiline Collection', 'ekiline-collection'),
+	title: __('Ekiline Collection', 'ekiline-block-collection'),
 	icon: customIcon,
 	category: 'design',
 	/**
