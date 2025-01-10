@@ -35,7 +35,7 @@ function ekiline_collection_ekiline_collection_block_init()
     // Idioma plugin para PHP.
     load_plugin_textdomain('ekiline-block-collection', false, basename(dirname(__FILE__)) . '/languages/');
     // Idioma plugin para Bloques JS.
-    wp_set_script_translations('ekiline-collection-ekiline-collection-editor-script', 'ekiline-block-collection', plugin_dir_path(__FILE__) . 'languages');
+    wp_set_script_translations('ekiline-block-collection-ekiline-block-collection-editor-script', 'ekiline-block-collection', plugin_dir_path(__FILE__) . 'languages');
 }
 add_action('init', 'ekiline_collection_ekiline_collection_block_init');
 

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-10T06:03:21+00:00\n"
+"POT-Creation-Date: 2025-01-10T08:21:14+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ekiline-block-collection\n"
@@ -230,21 +230,18 @@ msgstr ""
 
 #: build/index.js:92
 #: src/accordion/index.js:74
-#: src/accordion/_index.js:74
 #: build/index.js:74
 msgid "Accordion"
 msgstr ""
 
 #: build/index.js:94
 #: src/accordion/index.js:76
-#: src/accordion/_index.js:76
 #: build/index.js:76
 msgid "Show your content as an accordion."
 msgstr ""
 
 #: build/index.js:143
 #: src/accordion/index.js:125
-#: src/accordion/_index.js:127
 #: build/index.js:125
 msgid "Accordion Settings"
 msgstr ""
@@ -257,7 +254,6 @@ msgstr ""
 
 #: build/index.js:181
 #: src/accordion/index.js:168
-#: src/accordion/_index.js:172
 #: build/index.js:168
 msgid "Accordion item"
 msgstr ""
@@ -268,7 +264,6 @@ msgstr ""
 #: src/accordion/index.js:171
 #: src/accordion/index.js:287
 #: src/accordion/index.js:385
-#: src/accordion/_index.js:175
 #: build/index.js:171
 #: build/index.js:287
 #: build/index.js:385
@@ -281,7 +276,6 @@ msgstr ""
 #: src/accordion/index.js:196
 #: src/accordion/index.js:311
 #: src/accordion/index.js:424
-#: src/accordion/_index.js:202
 #: build/index.js:196
 #: build/index.js:311
 #: build/index.js:424
@@ -290,28 +284,24 @@ msgstr ""
 
 #: build/index.js:250
 #: src/accordion/index.js:236
-#: src/accordion/_index.js:242
 #: build/index.js:236
 msgid "Accordion Item Params"
 msgstr ""
 
 #: build/index.js:253
 #: src/accordion/index.js:238
-#: src/accordion/_index.js:244
 #: build/index.js:238
 msgid "Show element by default."
 msgstr ""
 
 #: build/index.js:259
 #: src/accordion/index.js:244
-#: src/accordion/_index.js:250
 #: build/index.js:244
 msgid "Toggle."
 msgstr ""
 
 #: build/index.js:264
 #: src/accordion/index.js:248
-#: src/accordion/_index.js:254
 #: build/index.js:248
 msgid "Close previously active accordion elements."
 msgstr ""
@@ -330,7 +320,6 @@ msgstr ""
 
 #: build/index.js:447
 #: src/accordion/index.js:438
-#: src/accordion/_index.js:216
 #: build/index.js:438
 msgid "Item content."
 msgstr ""
@@ -1651,14 +1640,6 @@ msgstr ""
 msgid "Add toast title"
 msgstr ""
 
-#: src/accordion/_index.js:129
-msgid "Clear style."
-msgstr ""
-
-#: src/accordion/_index.js:267
-msgid "Accordion Title"
-msgstr ""
-
 #: src/startup/edit.js:35
 msgid "Ekiline Block Collection – hello from the editor!"
 msgstr ""
@@ -1669,4 +1650,16 @@ msgstr ""
 
 #: src/startup/save.js:28
 msgid "Ekiline Block Collection – hello from the saved content!"
+msgstr ""
+
+#: build/block.json
+#: src/block.json
+msgctxt "block title"
+msgid "Ekiline Block Collection"
+msgstr ""
+
+#: build/block.json
+#: src/block.json
+msgctxt "block description"
+msgid "Actions and blocks based on bootstrap 5."
 msgstr ""
