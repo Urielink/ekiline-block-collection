@@ -10,7 +10,7 @@ import './editor.scss'
 /**
  * Internal dependencies
  */
-// import './collection/index';
+// import './startup/index';
 import './accordion/index'
 import './collapse/index'
 import './popovers/index'
@@ -23,12 +23,13 @@ import './carousel-extra/index'
 import './carousel-blocks/index'
 import './offcanvas/index'
 import './hooks/index'
+import './carousel-dynamic/index'
 
 /**
  * Incorporar bloques a coleccion.
  */
 import { registerBlockCollection } from '@wordpress/blocks'
 registerBlockCollection('ekiline-block-collection', {
-  title: 'Ekiline Collection'
+  title: 'Ekiline Block Collection'
   // icon: customIcon,
 })

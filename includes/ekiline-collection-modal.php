@@ -19,7 +19,7 @@
 function ekiline_collection_remove_blocks($content)
 {
     // Idetificador de bloque.
-    $find_block = 'ekiline-collection/ekiline-modal';
+    $find_block = 'ekiline-block-collection/ekiline-modal';
 
     // Aplicar en publicacion en frontend y solo que tenga el bloque.
     if (!is_admin() && is_singular() && has_block($find_block)) {
@@ -58,7 +58,7 @@ function ekiline_collection_remove_blocks($content)
 function ekiline_collection_block_modal_find_and_move()
 {
     // Idetificador de bloque.
-    $find_block = 'ekiline-collection/ekiline-modal';
+    $find_block = 'ekiline-block-collection/ekiline-modal';
 
     // Aplicar en publicacion en frontend y solo que tenga el bloque.
     if (!is_admin() && is_singular() && has_block($find_block)) {

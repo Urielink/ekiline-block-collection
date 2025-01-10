@@ -289,7 +289,7 @@ export default function Edit(props) {
 			</InspectorControls>
 
 			<ServerSideRender
-				block="ekiline-collection/ekiline-carousel"
+				block="ekiline-block-collection/ekiline-carousel"
 				attributes={ props.attributes }
 			/>
 

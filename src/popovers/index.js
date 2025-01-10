@@ -53,7 +53,7 @@ const customIcon = createElement(
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-registerBlockType('ekiline-collection/ekiline-popovers', {
+registerBlockType('ekiline-block-collection/ekiline-popovers', {
 	apiVersion: 2,
 	title: __( 'Popover', 'ekiline-block-collection' ),
 	icon: customIcon,

@@ -60,7 +60,7 @@ const customIcon = createElement(
  * - collapse, #id
  * - div:{width:opcional}
  */
-registerBlockType('ekiline-collection/ekiline-collapse', {
+registerBlockType('ekiline-block-collection/ekiline-collapse', {
 	/**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */

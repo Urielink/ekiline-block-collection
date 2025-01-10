@@ -66,7 +66,7 @@ const customIcon = createElement(
  * No mostrar en inspector.
  * @ref https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/
  */
-registerBlockType('ekiline-collection/ekiline-carousel-blocks', {
+registerBlockType('ekiline-block-collection/ekiline-carousel-blocks', {
   /**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */
@@ -148,12 +148,12 @@ registerBlockType('ekiline-collection/ekiline-carousel-blocks', {
   edit: (props) => {
     const { attributes, setAttributes } = props
 
-    const PARENT_ALLOWED_BLOCKS = ['ekiline-collection/ekiline-carousel-blocks-content']
+    const PARENT_ALLOWED_BLOCKS = ['ekiline-block-collection/ekiline-carousel-blocks-content']
     const CHILD_TEMPLATE = [
-      ['ekiline-collection/ekiline-carousel-blocks-content', {
+      ['ekiline-block-collection/ekiline-carousel-blocks-content', {
         className: 'carousel-item active'
       }],
-      ['ekiline-collection/ekiline-carousel-blocks-content', {
+      ['ekiline-block-collection/ekiline-carousel-blocks-content', {
         className: 'carousel-item'
       }]
     ]
@@ -325,9 +325,9 @@ registerBlockType('ekiline-collection/ekiline-carousel-blocks', {
  * - - carousel-blocks-content
  */
 
-registerBlockType('ekiline-collection/ekiline-carousel-blocks-content', {
+registerBlockType('ekiline-block-collection/ekiline-carousel-blocks-content', {
   title: __('Carousel Content', 'ekiline-block-collection'),
-  parent: ['ekiline-collection/ekiline-carousel-blocks'],
+  parent: ['ekiline-block-collection/ekiline-carousel-blocks'],
   icon: 'feedback',
   description: __('Inner carousel content.', 'ekiline-block-collection'),
   category: 'design',

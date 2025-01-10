@@ -81,7 +81,7 @@ const customIcon = createElement(
  * @ref https://github.com/WordPress/gutenberg/blob/17baf6f33c391daa44daf8b3465f27aba8cf200d/packages/block-editor/src/components/inner-blocks/README.md#templatelock
  *
  */
-registerBlockType('ekiline-collection/ekiline-offcanvas', {
+registerBlockType('ekiline-block-collection/ekiline-offcanvas', {
 	/**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */
@@ -150,18 +150,18 @@ registerBlockType('ekiline-collection/ekiline-offcanvas', {
 
 		// Restringir los bloques, Cargar un preset.
 		const PARENT_ALLOWED_BLOCKS = [
-			'ekiline-collection/ekiline-offcanvas-header',
-			'ekiline-collection/ekiline-offcanvas-body',
+			'ekiline-block-collection/ekiline-offcanvas-header',
+			'ekiline-block-collection/ekiline-offcanvas-body',
 		];
 
 		const CHILD_TEMPLATE = [
-			[ 'ekiline-collection/ekiline-offcanvas-header', {
+			[ 'ekiline-block-collection/ekiline-offcanvas-header', {
 				lock: {
 					remove: false,
 					move: true,
 				}
 			} ],
-			[ 'ekiline-collection/ekiline-offcanvas-body', {
+			[ 'ekiline-block-collection/ekiline-offcanvas-body', {
 				lock: {
 					remove: false,
 					move: true,
@@ -338,9 +338,9 @@ registerBlockType('ekiline-collection/ekiline-offcanvas', {
  * - ekiline-offcanvas-header
  */
 
-registerBlockType( 'ekiline-collection/ekiline-offcanvas-header', {
+registerBlockType( 'ekiline-block-collection/ekiline-offcanvas-header', {
 	title: __( 'Offcanvas header', 'ekiline-block-collection' ),
-	parent: ['ekiline-collection/ekiline-offcanvas'],
+	parent: ['ekiline-block-collection/ekiline-offcanvas'],
 	icon: 'feedback',
 	description:__( 'Offcanvas header content. ', 'ekiline-block-collection' ),
 	category: 'design',
@@ -419,9 +419,9 @@ registerBlockType( 'ekiline-collection/ekiline-offcanvas-header', {
  * - ekiline-offcanvas-body
  */
 
-registerBlockType( 'ekiline-collection/ekiline-offcanvas-body', {
+registerBlockType( 'ekiline-block-collection/ekiline-offcanvas-body', {
 	title: __( 'Offcanvas body content', 'ekiline-block-collection' ),
-	parent: ['ekiline-collection/ekiline-offcanvas'],
+	parent: ['ekiline-block-collection/ekiline-offcanvas'],
 	icon: 'feedback',
 	description:__( 'Offcanvas body content. ', 'ekiline-block-collection' ),
 	category: 'design',

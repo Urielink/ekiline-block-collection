@@ -79,7 +79,7 @@ const customIcon = createElement(
  * @ref https://github.com/WordPress/gutenberg/blob/17baf6f33c391daa44daf8b3465f27aba8cf200d/packages/block-editor/src/components/inner-blocks/README.md#templatelock
  *
  */
-registerBlockType('ekiline-collection/ekiline-modal', {
+registerBlockType('ekiline-block-collection/ekiline-modal', {
 	/**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */
@@ -141,25 +141,25 @@ registerBlockType('ekiline-collection/ekiline-modal', {
 
 		// Restringir los bloques, Cargar un preset.
 		const PARENT_ALLOWED_BLOCKS = [
-			'ekiline-collection/ekiline-modal-header',
-			'ekiline-collection/ekiline-modal-body',
-			'ekiline-collection/ekiline-modal-footer'
+			'ekiline-block-collection/ekiline-modal-header',
+			'ekiline-block-collection/ekiline-modal-body',
+			'ekiline-block-collection/ekiline-modal-footer'
 		];
 
 		const CHILD_TEMPLATE = [
-			[ 'ekiline-collection/ekiline-modal-header', {
+			[ 'ekiline-block-collection/ekiline-modal-header', {
 				lock: {
 					remove: false,
 					move: true,
 				}
 			} ],
-			[ 'ekiline-collection/ekiline-modal-body', {
+			[ 'ekiline-block-collection/ekiline-modal-body', {
 				lock: {
 					remove: false,
 					move: true,
 				}
 			} ],
-			[ 'ekiline-collection/ekiline-modal-footer', {
+			[ 'ekiline-block-collection/ekiline-modal-footer', {
 				lock: {
 					remove: false,
 					move: true,
@@ -353,9 +353,9 @@ registerBlockType('ekiline-collection/ekiline-modal', {
  * - ekiline-modal-header
  */
 
-registerBlockType( 'ekiline-collection/ekiline-modal-header', {
+registerBlockType( 'ekiline-block-collection/ekiline-modal-header', {
 	title: __( 'Modal header', 'ekiline-block-collection' ),
-	parent: ['ekiline-collection/ekiline-modal'],
+	parent: ['ekiline-block-collection/ekiline-modal'],
 	icon: 'feedback',
 	description:__( 'Modal header content. ', 'ekiline-block-collection' ),
 	category: 'design',
@@ -414,9 +414,9 @@ registerBlockType( 'ekiline-collection/ekiline-modal-header', {
  * - ekiline-modal-body
  */
 
-registerBlockType( 'ekiline-collection/ekiline-modal-body', {
+registerBlockType( 'ekiline-block-collection/ekiline-modal-body', {
 	title: __( 'Modal body content', 'ekiline-block-collection' ),
-	parent: ['ekiline-collection/ekiline-modal'],
+	parent: ['ekiline-block-collection/ekiline-modal'],
 	icon: 'feedback',
 	description:__( 'Modal body content. ', 'ekiline-block-collection' ),
 	category: 'design',
@@ -468,9 +468,9 @@ registerBlockType( 'ekiline-collection/ekiline-modal-body', {
  * - ekiline-modal-footer
  */
 
-registerBlockType( 'ekiline-collection/ekiline-modal-footer', {
+registerBlockType( 'ekiline-block-collection/ekiline-modal-footer', {
 	title: __( 'Modal footer', 'ekiline-block-collection' ),
-	parent: ['ekiline-collection/ekiline-modal'],
+	parent: ['ekiline-block-collection/ekiline-modal'],
 	icon: 'feedback',
 	description:__( 'Inner footer content. ', 'ekiline-block-collection' ),
 	category: 'design',

@@ -60,7 +60,7 @@ const customIcon = createElement(
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-registerBlockType('ekiline-collection/ekiline-accordion', {
+registerBlockType('ekiline-block-collection/ekiline-accordion', {
 
   /**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
@@ -101,11 +101,11 @@ registerBlockType('ekiline-collection/ekiline-accordion', {
     const { attributes, setAttributes } = props
 
     // Restringir los bloques, Cargar un preset.
-    const PARENT_ALLOWED_BLOCKS = ['ekiline-collection/ekiline-accordion-item']
+    const PARENT_ALLOWED_BLOCKS = ['ekiline-block-collection/ekiline-accordion-item']
     const CHILD_TEMPLATE = [
-      ['ekiline-collection/ekiline-accordion-item'],
-      ['ekiline-collection/ekiline-accordion-item'],
-      ['ekiline-collection/ekiline-accordion-item']
+      ['ekiline-block-collection/ekiline-accordion-item'],
+      ['ekiline-block-collection/ekiline-accordion-item'],
+      ['ekiline-block-collection/ekiline-accordion-item']
     ]
 
     // Personalizar clase en editor.
@@ -163,10 +163,10 @@ registerBlockType('ekiline-collection/ekiline-accordion', {
 /**
  * Bloque interno accordion-item
  */
-registerBlockType('ekiline-collection/ekiline-accordion-item', {
+registerBlockType('ekiline-block-collection/ekiline-accordion-item', {
 
   title: __('Accordion item', 'ekiline-block-collection'),
-  parent: ['ekiline-collection/ekiline-accordion'],
+  parent: ['ekiline-block-collection/ekiline-accordion'],
   icon: customIcon,
   description: __('Set tittle and content in your accordion container', 'ekiline-block-collection'),
   category: 'design',
@@ -215,8 +215,8 @@ registerBlockType('ekiline-collection/ekiline-accordion-item', {
 
     // Cargar un preset.
     const CHILD_TEMPLATE = [
-      ['ekiline-collection/ekiline-accordion-item-header'],
-      ['ekiline-collection/ekiline-accordion-item-body']
+      ['ekiline-block-collection/ekiline-accordion-item-header'],
+      ['ekiline-block-collection/ekiline-accordion-item-body']
     ]
 
     // personalizar clase en editor.
@@ -280,9 +280,9 @@ registerBlockType('ekiline-collection/ekiline-accordion-item', {
 /**
  * Bloque interno accordion-item-header
  */
-registerBlockType('ekiline-collection/ekiline-accordion-item-header', {
+registerBlockType('ekiline-block-collection/ekiline-accordion-item-header', {
   title: __('Accordion item header', 'ekiline-block-collection'),
-  parent: ['ekiline-collection/ekiline-accordion-item'],
+  parent: ['ekiline-block-collection/ekiline-accordion-item'],
   icon: 'button',
   description: __('Set tittle and content in your accordion container', 'ekiline-block-collection'),
   category: 'design',
@@ -355,13 +355,13 @@ registerBlockType('ekiline-collection/ekiline-accordion-item-header', {
       className: 'accordion-header'
     })
     // Adecuar clases para boton.
-    const buttonClasses = blockProps.className.replace('wp-block-ekiline-collection-ekiline-accordion-item-header accordion-header', '')
+    const buttonClasses = blockProps.className.replace('wp-block-ekiline-block-collection-ekiline-accordion-item-header accordion-header', 'accordion-button')
 
     return (
       <div {...blockProps}>
         <RichText.Content
           tagName='button'
-          className={'accordion-button' + buttonClasses}
+          className={buttonClasses}
           type='button'
           value={attributes.content}
           data-bs-toggle='collapse'
@@ -377,10 +377,10 @@ registerBlockType('ekiline-collection/ekiline-accordion-item-header', {
 /**
  * Bloque interno accordion-item-body
  */
-registerBlockType('ekiline-collection/ekiline-accordion-item-body', {
+registerBlockType('ekiline-block-collection/ekiline-accordion-item-body', {
 
   title: __('Accordion item body', 'ekiline-block-collection'),
-  parent: ['ekiline-collection/ekiline-accordion-item'],
+  parent: ['ekiline-block-collection/ekiline-accordion-item'],
   icon: 'feedback',
   description: __('Set tittle and content in your accordion container', 'ekiline-block-collection'),
   category: 'design',

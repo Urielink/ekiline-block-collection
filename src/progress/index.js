@@ -57,7 +57,7 @@ const customIcon = createElement(
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-registerBlockType('ekiline-collection/ekiline-progress', {
+registerBlockType('ekiline-block-collection/ekiline-progress', {
 
 	/**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
@@ -96,8 +96,8 @@ registerBlockType('ekiline-collection/ekiline-progress', {
 		const { attributes, setAttributes } = props;
 
 		// Restringir los bloques, Cargar un preset.
-		const PARENT_ALLOWED_BLOCKS = [ 'ekiline-collection/ekiline-progress-item' ];
-		const CHILD_TEMPLATE = [ [ 'ekiline-collection/ekiline-progress-item' ] ];
+		const PARENT_ALLOWED_BLOCKS = [ 'ekiline-block-collection/ekiline-progress-item' ];
+		const CHILD_TEMPLATE = [ [ 'ekiline-block-collection/ekiline-progress-item' ] ];
 
 		// Personalizar clase.
 		const blockProps = useBlockProps( {
@@ -163,9 +163,9 @@ registerBlockType('ekiline-collection/ekiline-progress', {
 /**
  * Bloque interno
  */
-registerBlockType('ekiline-collection/ekiline-progress-item', {
+registerBlockType('ekiline-block-collection/ekiline-progress-item', {
 	title: __( 'Progress data bar', 'ekiline-block-collection' ),
-	parent: ['ekiline-collection/ekiline-progress'],
+	parent: ['ekiline-block-collection/ekiline-progress'],
 	icon: 'ellipsis',
 	description: __( 'Progress data, could be multiple bars between 1 to 100.', 'ekiline-block-collection' ),
 	category: 'design',
@@ -299,7 +299,7 @@ const newWrapperAtts = createHigherOrderComponent( ( BlockListBlock ) => {
 	return ( props ) => {
 
 		// Aplicar solo a bloque item progress.
-		if( props.name === 'ekiline-collection/ekiline-progress-item' ){
+		if( props.name === 'ekiline-block-collection/ekiline-progress-item' ){
 
 			// Hook para maniobrar (wrapperProps).
 			const wrapperProps = {
@@ -325,6 +325,6 @@ const newWrapperAtts = createHigherOrderComponent( ( BlockListBlock ) => {
 
 addFilter(
 	'editor.BlockListBlock',
-	'ekiline-collection/ekiline-progress-item',
+	'ekiline-block-collection/ekiline-progress-item',
 	newWrapperAtts
 );

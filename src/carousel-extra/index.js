@@ -80,7 +80,7 @@ const customIcon = createElement(
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-registerBlockType('ekiline-collection/ekiline-carousel-extra', {
+registerBlockType('ekiline-block-collection/ekiline-carousel-extra', {
   apiVersion: 2,
   title: __('Carousel basic', 'ekiline-block-collection'),
   icon: customIcon,
