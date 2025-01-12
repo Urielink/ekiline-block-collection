@@ -29,18 +29,18 @@ function ekiline_block_collection_menu()
 	add_menu_page(
 		__('Ekiline BC Options', 'ekiline-block-collection'),		// page_title
 		__('Ekiline BC', 'ekiline-block-collection'),				// menu_title
-		'manage_options', 									// capability
-		'ekiline-block-collection', 						// menu_slug
-		'ekiline_block_collection_options', 				// function
-		'dashicons-schedule', 								// icon_url
-		100 												// position
+		'manage_options', 											// capability
+		'ekiline-block-collection', 								// menu_slug
+		'ekiline_block_collection_options', 						// function
+		'dashicons-schedule', 										// icon_url
+		100 														// position
 	);
 
 	// subpagina de informacion.
 	add_submenu_page(
 		'ekiline-block-collection',							// parent_slug
-		__('About', 'ekiline-block-collection'),					// page_title
-		__('About', 'ekiline-block-collection'),					// menu_title
+		__('About', 'ekiline-block-collection'),			// page_title
+		__('About', 'ekiline-block-collection'),			// menu_title
 		'manage_options',									// capability
 		'ekiline-block-collection-about',					// menu_slug
 		'ekiline_block_collection_about'					// function
@@ -298,9 +298,9 @@ function ekiline_block_collection_about()
 			<?php
 				/* translators: %1$s is replaced with date data */
 				printf(esc_html__('&copy; Copyright %1$s Ekiline', 'ekiline-block-collection'), esc_attr(gmdate('Y')));
+				esc_html_e('All rights reserved. Ekiline developed by', 'ekiline-block-collection');
+				printf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://bixnia.com/'), esc_html__('BIXNIA', 'ekiline-block-collection'));
 			?>
-			<?php esc_html_e('All rights reserved. Ekiline developed by', 'ekiline-block-collection'); ?>
-			<?php printf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://bixnia.com/'), esc_html__('BIXNIA', 'ekiline-block-collection')); ?>
 		</small>
 	</p>
 </div>

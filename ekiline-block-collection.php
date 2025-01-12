@@ -41,10 +41,9 @@ add_action('init', 'ekiline_collection_ekiline_collection_block_init');
 
 // Funciones complementarias.
 define('EKILINE_COLLECTION_PATH', plugin_dir_path(__FILE__) . 'includes/');
+require EKILINE_COLLECTION_PATH . 'ekiline-collection-info.php';
 require EKILINE_COLLECTION_PATH . 'ekiline-collection-carousel.php';
 require EKILINE_COLLECTION_PATH . 'ekiline-collection-shortcode-carousel.php';
-require EKILINE_COLLECTION_PATH . 'ekiline-collection-modal.php';
-require EKILINE_COLLECTION_PATH . 'ekiline-collection-info.php';
 
 /**
  * Scripts y estilos en el front.
