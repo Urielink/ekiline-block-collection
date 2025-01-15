@@ -9,7 +9,7 @@
  * Registers all block assets so that they can be enqueued through the block editor
  * in the corresponding context.
  *
- * @see https://developer.wordpress.org/block-editor/tutorials/block-tutorial/applying-styles-with-stylesheets/
+ * @see https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/creating-dynamic-blocks/ 
  * add_action( 'init', 'ekiline_collection_carousel_block_init' )
  */
 function ekiline_collection_carousel_block_init()
@@ -19,6 +19,7 @@ function ekiline_collection_carousel_block_init()
         array(
             'api_version'     => 2,
             // Render dinamico con php.
+            // 'render_callback' => 'ekiline_collection_carousel_dynamic_render_callback_shortcode',
             'render_callback' => 'ekiline_collection_carousel_dynamic_render_callback',
             'attributes'      => [
                 // Clase css.
@@ -114,12 +115,93 @@ function ekiline_collection_carousel_block_init()
 }
 
 /**
+ * Dynamic render callback.
+ *
+ * @param array  $block_attributes The block attributes.
+ * @param string $content          The block content.
+ * @return string
+ */
+function ekiline_collection_carousel_dynamic_render_callback($block_attributes, $content)
+{
+
+    // Sanitizar los valores del array.
+    // foreach ($block_attributes as $key => $value) {
+    //     $block_attributes[$key] = sanitize_text_field($value);
+    // }
+
+    // Modificar classname para bloque.
+    $block_attributes['className'] = (!$block_attributes['className']) ? 'wp-block-ekiline-block-collection-ekiline-carousel' : 'wp-block-ekiline-block-collection-ekiline-carousel ' . $block_attributes['className'];
+
+    if ('' !== $block_attributes['align']) {
+        $block_attributes['className'] .= (!$block_attributes['align']) ? '' : ' align' . $block_attributes['align'];
+    }
+    if ('none' === $block_attributes['FindBlock']){
+        $block_attributes['FindBlock'] = null;
+    }
+    if (false !== $block_attributes['AllowMixed']){
+        $block_attributes['AllowMixed'] = null;
+    }
+    if (false === $block_attributes['AddControls']) {
+        $block_attributes['AddControls'] = 'false';
+    }
+    if (false === $block_attributes['AddIndicators']) {
+        $block_attributes['AddIndicators'] = 'false';
+    }
+    if (false === $block_attributes['AddIndicatorsText']) {
+        $block_attributes['AddIndicatorsText'] = 'false';
+    }
+    if (false === $block_attributes['SetAuto']) {
+        $block_attributes['SetAuto'] = 'false';
+    }
+    if (false === $block_attributes['ShowCaption']) {
+        $block_attributes['ShowCaption'] = 'false';
+    }
+    if (false === $block_attributes['SetLinks']) {
+        $block_attributes['SetLinks'] = 'false';
+    }
+
+
+    // Default posts.
+    $carousel = ekiline_collection_carousel_posts($block_attributes['SetAmount'], $block_attributes['SetIds'], $block_attributes['FindBlock'], $block_attributes['SetOrderBy'], $mixed = null);
+
+    // Condicion para imagenes y video.
+    if ('posts' !== $block_attributes['ChooseType']) {
+        $carousel = ekiline_collection_carousel_images($block_attributes['SetIds']);
+    }
+
+    // Numero de columnas.
+    $columns = (in_array(sanitize_text_field($block_attributes['SetColumns']), [ '2','3','4','6' ], true)) ? ' carousel-multiple x' . $block_attributes['SetColumns'] : '';
+
+    // Obtener HTML y combinar con funciones previas.
+    ob_start();
+    // echo '<code class="bg-white">' . wp_json_encode($block_attributes) . '</code><hr>';
+
+    ekiline_collection_carousel_html(
+        $carousel,
+        $columns,
+        $block_attributes['AddControls'],
+        $block_attributes['AddIndicators'],
+        $block_attributes['SetAuto'],
+        $block_attributes['SetTime'],
+        $block_attributes['SetAnimation'],
+        $block_attributes['SetHeight'],
+        $block_attributes['ShowCaption'],
+        $block_attributes['SetLinks'],
+        $block_attributes['AddIndicatorsText'],
+        $block_attributes['className'],
+        $block_attributes['anchor']
+    );
+    return ob_get_clean();
+}
+
+/**
  * Argumentos de personalizacion.
  *
  * @param array $block_attributes controls from block.
  * @param array $content the content.
+ * @return html code by shortcode function.
  */
-function ekiline_collection_carousel_dynamic_render_callback($block_attributes, $content)
+function ekiline_collection_carousel_dynamic_render_callback_shortcode($block_attributes, $content)
 {
 
     $carousel_args = '';
@@ -193,5 +275,6 @@ function ekiline_collection_carousel_dynamic_render_callback($block_attributes, 
     $carousel_args .= 'classname="' . $default_class_name . '" ';
 
     $carousel = do_shortcode('[ekiline-carousel ' . $carousel_args . ']');
+
     return $carousel;
 }

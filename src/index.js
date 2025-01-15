@@ -23,6 +23,7 @@ import './carousel-extra/index'
 import './carousel-blocks/index'
 import './offcanvas/index'
 import './hooks/index'
+// nuevo carrusel.
 import './carousel-dynamic/index'
 
 /**

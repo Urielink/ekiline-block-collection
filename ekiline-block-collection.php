@@ -44,6 +44,8 @@ define('EKILINE_COLLECTION_PATH', plugin_dir_path(__FILE__) . 'includes/');
 require EKILINE_COLLECTION_PATH . 'ekiline-collection-info.php';
 require EKILINE_COLLECTION_PATH . 'ekiline-collection-carousel.php';
 require EKILINE_COLLECTION_PATH . 'ekiline-collection-shortcode-carousel.php';
+// prueba nuevo carrusel dinamico.
+require EKILINE_COLLECTION_PATH . 'ekiline-collection-carousel-dynamic.php';
 
 /**
  * Scripts y estilos en el front.
