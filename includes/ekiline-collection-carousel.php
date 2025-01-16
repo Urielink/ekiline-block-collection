@@ -8,18 +8,17 @@
 /**
  * Registers all block assets so that they can be enqueued through the block editor
  * in the corresponding context.
- *
  * @see https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/creating-dynamic-blocks/ 
- * add_action( 'init', 'ekiline_collection_carousel_block_init' )
  */
 function ekiline_collection_carousel_block_init()
 {
+    $asset_file = include( plugin_dir_path( __FILE__ ) . '../build/index.asset.php');
+
     register_block_type(
         'ekiline-block-collection/ekiline-carousel',
         array(
             'api_version'     => 2,
             // Render dinamico con php.
-            // 'render_callback' => 'ekiline_collection_carousel_dynamic_render_callback_shortcode',
             'render_callback' => 'ekiline_collection_carousel_dynamic_render_callback',
             'attributes'      => [
                 // Clase css.
@@ -109,10 +108,11 @@ function ekiline_collection_carousel_block_init()
                     'default' => '',
                 ],
             ],
-
         )
     );
 }
+// Inicializado en ekiline-block-collection.php
+add_action( 'init', 'ekiline_collection_carousel_block_init' );
 
 /**
  * Dynamic render callback.
@@ -123,22 +123,17 @@ function ekiline_collection_carousel_block_init()
  */
 function ekiline_collection_carousel_dynamic_render_callback($block_attributes, $content)
 {
-
-    // Sanitizar los valores del array.
-    // foreach ($block_attributes as $key => $value) {
-    //     $block_attributes[$key] = sanitize_text_field($value);
-    // }
-
-    // Modificar classname para bloque.
+    // Ajustar valores de $block_attributes.
+    // Modificar classname.
     $block_attributes['className'] = (!$block_attributes['className']) ? 'wp-block-ekiline-block-collection-ekiline-carousel' : 'wp-block-ekiline-block-collection-ekiline-carousel ' . $block_attributes['className'];
-
     if ('' !== $block_attributes['align']) {
         $block_attributes['className'] .= (!$block_attributes['align']) ? '' : ' align' . $block_attributes['align'];
     }
+    // Normalizar valores para ingresar funcion ekiline_collection_carousel_posts().
     if ('none' === $block_attributes['FindBlock']){
         $block_attributes['FindBlock'] = null;
     }
-    if (false !== $block_attributes['AllowMixed']){
+    if (false === $block_attributes['AllowMixed']){
         $block_attributes['AllowMixed'] = null;
     }
     if (false === $block_attributes['AddControls']) {
@@ -162,7 +157,13 @@ function ekiline_collection_carousel_dynamic_render_callback($block_attributes, 
 
 
     // Default posts.
-    $carousel = ekiline_collection_carousel_posts($block_attributes['SetAmount'], $block_attributes['SetIds'], $block_attributes['FindBlock'], $block_attributes['SetOrderBy'], $mixed = null);
+    $carousel = ekiline_collection_carousel_posts(
+        $block_attributes['SetAmount'],
+        $block_attributes['SetIds'],
+        $block_attributes['FindBlock'],
+        $block_attributes['SetOrderBy'],
+        $mixed = null
+    );
 
     // Condicion para imagenes y video.
     if ('posts' !== $block_attributes['ChooseType']) {
@@ -172,11 +173,8 @@ function ekiline_collection_carousel_dynamic_render_callback($block_attributes, 
     // Numero de columnas.
     $columns = (in_array(sanitize_text_field($block_attributes['SetColumns']), [ '2','3','4','6' ], true)) ? ' carousel-multiple x' . $block_attributes['SetColumns'] : '';
 
-    // Obtener HTML y combinar con funciones previas.
-    ob_start();
-    // echo '<code class="bg-white">' . wp_json_encode($block_attributes) . '</code><hr>';
-
-    ekiline_collection_carousel_html(
+    // Devorlver marcado.
+    return ekiline_collection_carousel_html_v2(
         $carousel,
         $columns,
         $block_attributes['AddControls'],
@@ -191,90 +189,303 @@ function ekiline_collection_carousel_dynamic_render_callback($block_attributes, 
         $block_attributes['className'],
         $block_attributes['anchor']
     );
-    return ob_get_clean();
+
 }
 
 /**
- * Argumentos de personalizacion.
+ * Funcion para carrusel de entradas, por default, ocupa 7 slides y todas las categorias.
+ * En caso de no obtener informacion.
  *
- * @param array $block_attributes controls from block.
- * @param array $content the content.
- * @return html code by shortcode function.
+ * @link ref: https://developer.wordpress.org/reference/functions/render_block/
+ *
+ * @param string $ppp number, of posts to show.
+ * @param array  $cat category ids or slug.
+ * @param string $findblock block/name, to find and parse in slide.
+ * @param string $orderby date/rand/etc, sort slides.
+ * @param string $mixed allow to show thumbnails and blocks.
+ * @return array query data.
  */
-function ekiline_collection_carousel_dynamic_render_callback_shortcode($block_attributes, $content)
+function ekiline_collection_carousel_posts($ppp = 3, $cat = array(), $findblock = null, $orderby = 'date', $mixed = null)
 {
 
-    $carousel_args = '';
+    $carousel = array();
 
-    if ('posts' !== $block_attributes['ChooseType']) {
-        $carousel_args .= 'type="' . $block_attributes['ChooseType'] . '" ';
-    }
+    $args = array(
+        'orderby'        => $orderby,
+        'posts_per_page' => $ppp,
+        'cat'            => $cat,
+    );
 
-    if ($block_attributes['SetIds']) {
-        $array_to_string = implode(',', $block_attributes['SetIds']);
-        $carousel_args  .= 'id="' . $array_to_string . '" ';
-    }
+    $carousel_query = new WP_Query($args);
 
-    if ('3' !== $block_attributes['SetAmount'] && 'posts' === $block_attributes['ChooseType']) {
-        $carousel_args .= 'amount="' . $block_attributes['SetAmount'] . '" ';
-    }
+    if ($carousel_query->have_posts()) {
 
-    if ('date' !== $block_attributes['SetOrderBy'] && 'posts' === $block_attributes['ChooseType']) {
-        $carousel_args .= 'orderby="' . $block_attributes['SetOrderBy'] . '" ';
-    }
+        while ($carousel_query->have_posts()) {
 
-    if ('none' !== $block_attributes['FindBlock'] && 'posts' === $block_attributes['ChooseType']) {
-        $carousel_args .= 'block="' . $block_attributes['FindBlock'] . '" ';
-    }
+            $carousel_query->the_post();
 
-    if ('none' !== $block_attributes['FindBlock'] && false !== $block_attributes['AllowMixed'] && 'posts' === $block_attributes['ChooseType']) {
-        $carousel_args .= 'mixed="true" ';
-    }
+            /**
+             * Junio 2 2022, WP6 corregir la salida de extracto.
+             * Condiciones nuevas para extracto.
+             * Octubre 2024 limpiar shortcodes de contenido.
+             */
+            $new_excerpt   = '';
+            $clean_content = strip_shortcodes( get_the_content() );
 
-    if (1 !== $block_attributes['SetColumns']) {
-        $carousel_args .= 'columns="' . $block_attributes['SetColumns'] . '" ';
-    }
-    if (false === $block_attributes['AddControls']) {
-        $carousel_args .= 'control="false" ';
-    }
-    if (false === $block_attributes['AddIndicators']) {
-        $carousel_args .= 'indicators="false" ';
-    }
-    if (false === $block_attributes['SetAuto']) {
-        $carousel_args .= 'auto="false" ';
-    }
-    if ('5000' !== $block_attributes['SetTime']) {
-        $carousel_args .= 'time="' . $block_attributes['SetTime'] . '" ';
-    }
-    if ('' !== $block_attributes['SetAnimation']) {
-        $carousel_args .= 'animation="' . $block_attributes['SetAnimation'] . '" ';
-    }
-    if ('480' !== $block_attributes['SetHeight']) {
-        $carousel_args .= 'height="' . $block_attributes['SetHeight'] . '" ';
-    }
-    if (false === $block_attributes['ShowCaption']) {
-        $carousel_args .= 'showcaption="false" '; // Nuevas opciones.
-    }
-    if ($block_attributes['ShowCaption'] && false === $block_attributes['SetLinks']) {
-        $carousel_args .= 'setlinks="false" ';
-    }
-    if (false === $block_attributes['AddIndicatorsText']) {
-        $carousel_args .= 'indicatorstext="false" ';
-    }
-    // Nuevas propiedades anchor, align + classname.
-    if ('' !== $block_attributes['anchor']) {
-        $carousel_args .= 'anchor="' . $block_attributes['anchor'] . '" ';
-    }
-    $default_class_name = 'wp-block-ekiline-block-collection-ekiline-carousel';
-    if ('' !== $block_attributes['align']) {
-        $default_class_name .= (!$block_attributes['align']) ? '' : ' align' . $block_attributes['align'];
-    }
-    if ('' !== $block_attributes['className']) {
-        $default_class_name .= (!$block_attributes['className']) ? '' : ' ' . $block_attributes['className'];
-    }
-    $carousel_args .= 'classname="' . $default_class_name . '" ';
+            if (strpos($clean_content, '<!--more-->')) {
+                $new_excerpt = $clean_content;
+            } else {
+                $new_excerpt = wp_trim_words($clean_content, 55, '...');
+            }
 
-    $carousel = do_shortcode('[ekiline-carousel ' . $carousel_args . ']');
+            $info            = array();
+            $info['title']   = get_the_title();
+            $info['plink']   = get_the_permalink();
+            $info['content'] = get_the_content();
+            $info['excerpt'] = (has_excerpt()) ? get_the_excerpt() : $new_excerpt;
+
+            if (has_post_thumbnail()) {
+                $thumb_id        = get_post_thumbnail_id();
+                $thumb_url_array = wp_get_attachment_image_src($thumb_id, 'full', true);
+                $thumb_url       = $thumb_url_array[0];
+                $info['image']   = $thumb_url;
+                $info['alt']     = get_post_meta($thumb_id, '_wp_attachment_image_alt', true);
+            }
+
+            if ($findblock) {
+
+                if ('true' !== $mixed) {
+                    // Reset array, ignorar la informacion acumulada, solo mantener la nueva.
+                    $info = array();
+                }
+
+                $blocks = parse_blocks(get_the_content());
+                foreach ($blocks as $block) {
+                    if ($block['blockName'] === $findblock) {
+                        $info['block'] = render_block($block);
+                    }
+                }
+            }
+
+            if ($info) {
+                $carousel[] = $info;
+            }
+        }
+        wp_reset_postdata();
+    }
 
     return $carousel;
+}
+
+/**
+ * Funcion para carrusel de entradas, por default, ocupa 7 slides y todas las categorias.
+ * En caso de no obtener informacion.
+ *
+ * @link ref: https://developer.wordpress.org/reference/functions/wp_get_attachment_image/
+ * @link ref: https://developer.wordpress.org/reference/functions/wp_get_attachment_image_src/
+ * @link ref: https://developer.wordpress.org/reference/functions/get_post_mime_type/
+ *
+ * 05-03-22: adicion de videos en el carrusel.
+ * $info['image']   = wp_get_attachment_image_src( $image, 'full', true )[0]; // seleccion especifica url de imagen.
+ *
+ * @param array $ids image ids.
+ * @return array images data.
+ */
+function ekiline_collection_carousel_images($ids = array())
+{
+    if (!$ids) {
+        return;
+    }
+    $carousel = array();
+    foreach ($ids as $index => $image) {
+        $info             = array();
+        $info['title']    = get_the_title($image);
+        $info['image']    = wp_get_attachment_url($image); // seleccion general de url de attachment.
+        $info['mimetype'] = get_post_mime_type($image); // conocer tipo de archivo llamado.
+        $info['alt']      = get_post_meta($image, '_wp_attachment_image_alt', true);
+        $info['excerpt']  = get_post($image)->post_excerpt; // Caption.
+        $info['content']  = get_post($image)->post_content; // Description.
+        $carousel[]       = $info;
+    }
+    return $carousel;
+}
+
+
+function ekiline_collection_carousel_html_v2($carousel_data, $columns, $control, $indicators, $auto, $time, $animation, $height, $showcaption, $setlinks, $indicatorstext, $classname, $anchor)
+{
+    if ($carousel_data) {
+        $uniq_id   = ($anchor) ? $anchor : 'carousel_module_' . wp_rand(1, 99);
+        $auto      = ('false' !== $auto) ? ' data-bs-ride="carousel"' : '';
+        $time      = ($time) ? ' data-bs-interval="' . $time . '"' : '';
+        $animation = ($animation) ? ' carousel-' . $animation : '';
+
+        // Validar height.
+        if (!$height) {
+            $height = ' style="min-height:480px;"';
+        } elseif ('0' === $height) {
+            $height = ' style="min-height:100vh;"';
+        } else {
+            $height = ' style="min-height:' . $height . 'px;"';
+        }
+        $hastxtind = ('false' !== $indicatorstext) ? ' has-text-indicators' : '';
+        $classname = ($classname) ? ' ' . $classname : '';
+
+        // Iniciar el HTML para el carrusel
+        $output = sprintf(
+            '<div id="%s" class="carousel slide%s"%s%s>',
+            esc_attr($uniq_id),
+            esc_attr($columns . $animation . $hastxtind . $classname),
+            wp_kses_post($auto . $time . $height),
+            "\n"
+        );
+
+        // Agregar los indicadores si es necesario
+        if ('false' !== $indicators) {
+            $output .= '<div class="carousel-indicators">';
+            foreach ($carousel_data as $index => $indicator) {
+                $active = (0 === $index) ? 'active' : '';
+                $output .= sprintf(
+                    '<button type="button" data-bs-target="#%s" data-bs-slide-to="%d" class="%s"></button>',
+                    esc_html($uniq_id),
+                    esc_attr($index),
+                    esc_attr($active)
+                );
+            }
+            $output .= '</div>';
+        }
+
+        $output .= '<div class="carousel-inner">';
+        foreach ($carousel_data as $index => $slide) {
+            $active  = (0 === $index) ? ' active' : '';
+            $img_load = (0 === $index) ? 'eager' : 'lazy';
+            $img_cap  = (!isset($slide['image'])) ? ' no-image' : '';
+
+            // Agregar las diapositivas
+            $output .= sprintf(
+                '<div class="carousel-item%s"%s>',
+                esc_attr($active),
+                wp_kses_post($height)
+            );
+
+            if (isset($slide['block'])) {
+                $output .= wp_kses_post($slide['block']);
+            } else {
+                if (isset($slide['image'])) {
+                    // 05-03-22: adicion de videos en el carrusel.
+                    if (isset($slide['mimetype']) && str_contains($slide['mimetype'], 'video')) {
+                        $output .= sprintf(
+                            '<video class="carousel-media wp-block-cover__video-background intrinsic-ignore" autoplay muted loop playsinline controls src="%s" data-object-fit="cover"></video>',
+                            esc_url($slide['image'])
+                        );
+                    } else {
+                        // 18-01-23: permitir enlaces solo en imagenes, descartar protocolo https o permitir abrir en nueva ventana.
+                        if ('false' !== $setlinks && $slide['content']) {
+                            $output .= wp_kses_post(ekiline_set_media_link($slide['content'], $slide['image'], $slide['alt'], $slide['title']));
+                        } else {
+                            $output .= sprintf(
+                                '<img class="carousel-media img-fluid" src="%s" alt="%s" title="%s" loading="%s">',
+                                esc_url($slide['image']),
+                                esc_html($slide['alt']),
+                                esc_html($slide['title']),
+                                esc_attr($img_load)
+                            );
+                        }
+                    }
+                }
+
+                if ('false' !== $showcaption) {
+                    $output .= sprintf(
+                        '<div class="carousel-caption%s">',
+                        esc_attr($img_cap)
+                    );
+
+                    if (isset($slide['title']) && $slide['title']) {
+                        $output .= sprintf(
+                            '<h3>%s%s%s</h3>',
+                            isset($slide['plink']) && 'false' !== $setlinks ? '<a href="' . esc_html($slide['plink']) . '">' : '',
+                            esc_html($slide['title']),
+                            isset($slide['plink']) && 'false' !== $setlinks ? '</a>' : ''
+                        );
+                    }
+
+                    if (isset($slide['excerpt']) && $slide['excerpt']) {
+                        $output .= sprintf('<p>%s</p>', wp_kses_post($slide['excerpt']));
+                    }
+
+                    $output .= '</div>';
+                }
+            }
+
+            $output .= '</div>';
+        }
+
+        $output .= '</div>';
+
+        if ('false' !== $control) {
+            $output .= sprintf(
+                '<button type="button" class="carousel-control-prev" data-bs-target="#%s" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>',
+                esc_html($uniq_id)
+            );
+            $output .= sprintf(
+                '<button type="button" class="carousel-control-next" data-bs-target="#%s" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>',
+                esc_html($uniq_id)
+            );
+        }
+
+        if (!$columns && 'false' !== $indicatorstext) {
+            $output .= '<ul class="carousel-text-indicators carousel-caption list-unstyled d-none d-md-flex">';
+            foreach ($carousel_data as $index => $indicator) {
+                $active = (0 === $index) ? 'active' : '';
+                $output .= sprintf(
+                    '<li type="button" data-bs-target="#%s" data-bs-slide-to="%d" class="%s">
+                        <span class="h5">%s</span>
+                    </li>',
+                    esc_html($uniq_id),
+                    esc_attr($index),
+                    esc_attr($active),
+                    esc_html($indicator['title'])
+                );
+            }
+            $output .= '</ul>';
+        }
+
+        // Devolver el HTML generado
+        return $output;
+    }
+}
+
+/**
+ * Funcion auxiliar, detectar url y adaptar a un enlace con o sin atributo.
+ *
+ * @param string $img_desc media description field content.
+ * @param string $img_url media url.
+ * @param string $img_alt media alt content.
+ * @param string $img_title media title content.
+ *
+ * @return string html media code with/without link.
+ */
+function ekiline_set_media_link($img_desc, $img_url, $img_alt, $img_title)
+{
+    $media  = '<img class="carousel-media img-fluid" src="' . esc_url($img_url) . '" alt="' . esc_html($img_alt) . '" title="' . esc_html($img_title) . '" loading="lazy">';
+    $target = '_self';
+    // Verificar el texto en el campo, solo debe existir un enlace.
+    $desc_str = explode(' ', trim($img_desc))[0];
+
+    // Verificar que cuente con protocolo http.
+    if (substr($desc_str, 0, 4) === 'http') {
+        // Verificar si necesita que el enlace se abra en una nueva ventana.
+        if (strpos($desc_str, '/_blank') !== false) {
+            $img_desc = str_replace('/_blank', '', $img_desc);
+            $target   = '_blank';
+        }
+        // Devolver el medio en un enlace.
+        $media = '<a href="' . esc_html($img_desc) . '" target="' . $target . '">' . $media . '</a>';
+    }
+    return $media;
 }

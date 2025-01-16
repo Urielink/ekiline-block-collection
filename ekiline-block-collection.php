@@ -30,22 +30,12 @@ function ekiline_collection_ekiline_collection_block_init()
 {
     // Script de coleccion.
     register_block_type(__DIR__ . '/build');
-    // Bloque carrusel (ekiline-carousel.php).
-    ekiline_collection_carousel_block_init();
     // Idioma plugin para PHP.
     load_plugin_textdomain('ekiline-block-collection', false, basename(dirname(__FILE__)) . '/languages/');
     // Idioma plugin para Bloques JS.
     wp_set_script_translations('ekiline-block-collection-ekiline-block-collection-editor-script', 'ekiline-block-collection', plugin_dir_path(__FILE__) . 'languages');
 }
 add_action('init', 'ekiline_collection_ekiline_collection_block_init');
-
-// Funciones complementarias.
-define('EKILINE_COLLECTION_PATH', plugin_dir_path(__FILE__) . 'includes/');
-require EKILINE_COLLECTION_PATH . 'ekiline-collection-info.php';
-require EKILINE_COLLECTION_PATH . 'ekiline-collection-carousel.php';
-require EKILINE_COLLECTION_PATH . 'ekiline-collection-shortcode-carousel.php';
-// prueba nuevo carrusel dinamico.
-require EKILINE_COLLECTION_PATH . 'ekiline-collection-carousel-dynamic.php';
 
 /**
  * Scripts y estilos en el front.
@@ -93,23 +83,13 @@ function ekiline_collection_required_scripts()
 add_action('wp_enqueue_scripts', 'ekiline_collection_required_scripts', 1);
 
 /**
- * Estilos de apoyo para el editor.
- * Incorporar los estilos de bootstrap.
- * @link https://developer.wordpress.org/reference/functions/add_editor_style/
+ * Otras funciones.
+ * - Pagina de informacion de plugin.
+ * - Script para carrusel v1.
+ * - Shortcode para carrusel dinamico v1.
+ * - Prueba de nuevo carrusel dinamico v2.
  */
-// if ( 'Ekiline' !== wp_get_theme()->name || 'Ekiline' !== wp_get_theme()->parent_theme ) {
-// 	$block_styles = array(
-// 		plugin_dir_url( __FILE__ ) . 'includes/assets/css/bootstrap.min.css',
-// 	);
-// 	add_editor_style( $block_styles );
-// }
-
-/**
- * Deshabilitar WP Auto P
- */
-// function disable_wp_auto_p( $content ) {
-//     remove_filter( 'the_content', 'wpautop' );
-//     remove_filter( 'the_excerpt', 'wpautop' );
-//     return $content;
-// }
-// add_filter( 'the_content', 'disable_wp_auto_p', 0 );
+define('EKILINE_COLLECTION_PATH', plugin_dir_path(__FILE__) . 'includes/');
+require EKILINE_COLLECTION_PATH . 'ekiline-collection-info.php';
+require EKILINE_COLLECTION_PATH . 'ekiline-collection-carousel.php';
+require EKILINE_COLLECTION_PATH . 'ekiline-collection-carousel-dynamic.php';

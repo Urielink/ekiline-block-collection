@@ -35,7 +35,8 @@ function ekiline_bc_carousel_dynamic() {
         'ekiline-carousel-dynamic',
         plugins_url( 'build/block.js', __FILE__ ),
         $asset_file['dependencies'],
-        $asset_file['version']
+        $asset_file['version'],
+        true
     );
 
     register_block_type( 'ekiline-block-collection/ekiline-carousel-dynamic', array(
