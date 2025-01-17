@@ -4,9 +4,9 @@
  * Dynamic render for carousel v2
  *
  * @package ekiline-block-collection
- * 
+ *
  * @link ref https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/creating-dynamic-blocks/
- * @link ref https://rudrastyh.com/gutenberg/dynamic-blocks.html 
+ * @link ref https://rudrastyh.com/gutenberg/dynamic-blocks.html
  */
 
 function ekiline_bc_carousel_dynamic_render_callback( $block_attributes, $content ) {
