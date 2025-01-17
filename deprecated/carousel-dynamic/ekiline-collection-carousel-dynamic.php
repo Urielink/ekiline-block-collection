@@ -9,27 +9,29 @@
  * @link ref https://rudrastyh.com/gutenberg/dynamic-blocks.html
  */
 
-function ekiline_bc_carousel_dynamic_render_callback( $block_attributes, $content ) {
-    $recent_posts = wp_get_recent_posts( array(
+function ekiline_bc_carousel_dynamic_render_callback($block_attributes, $content)
+{
+    $recent_posts = wp_get_recent_posts(array(
         'numberposts' => 1,
         'post_status' => 'publish',
-    ) );
-    if ( count( $recent_posts ) === 0 ) {
+    ));
+    if (count($recent_posts) === 0) {
         return 'No posts';
     }
     $post = $recent_posts[ 0 ];
     $post_id = $post['ID'];
     return sprintf(
         '<a class="wp-block-my-plugin-latest-post" href="%1$s">%2$s</a>',
-        esc_url( get_permalink( $post_id ) ),
-        esc_html( get_the_title( $post_id ) )
+        esc_url(get_permalink($post_id)),
+        esc_html(get_the_title($post_id))
     );
 }
 
-function ekiline_bc_carousel_dynamic() {
+function ekiline_bc_carousel_dynamic()
+{
     // automatically load dependencies and version
     // $asset_file = include( plugin_dir_path( __FILE__ ) . 'build/index.asset.php');
-    $asset_file = include( plugin_dir_path( __FILE__ ) . '../build/index.asset.php');
+    $asset_file = include(plugin_dir_path(__FILE__) . '../build/index.asset.php');
 
     // // Error: No se encuentra el script.
     // // Solucion temporal: desactivar ya está registrado como un grupo.
@@ -42,11 +44,11 @@ function ekiline_bc_carousel_dynamic() {
     //     true
     // );
 
-    register_block_type( 'ekiline-block-collection/ekiline-carousel-dynamic', array(
+    register_block_type('ekiline-block-collection/ekiline-carousel-dynamic', array(
         'api_version' => 3,
         'editor_script' => 'ekiline-carousel-dynamic',
         'render_callback' => 'ekiline_bc_carousel_dynamic_render_callback'
-    ) );
+    ));
 
 }
-add_action( 'init', 'ekiline_bc_carousel_dynamic' );
+add_action('init', 'ekiline_bc_carousel_dynamic');

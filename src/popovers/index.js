@@ -3,33 +3,41 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-import { registerBlockType } from '@wordpress/blocks';
-import { TextControl,SelectControl,ToggleControl,PanelBody } from '@wordpress/components';
-import { useBlockProps } from '@wordpress/block-editor';
+import { registerBlockType } from '@wordpress/blocks'
+import { TextControl, SelectControl, ToggleControl, PanelBody } from '@wordpress/components'
+import { useBlockProps } from '@wordpress/block-editor'
 
 /**
  * Retrieves the translation of text.
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n'
 
 /**
  * Crear un icono.
  * Import the element creator function (React abstraction layer)
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-element/
  */
- import { createElement } from '@wordpress/element';
+import { createElement } from '@wordpress/element'
+
+/**
+ * Importar otras dependencias de WP.
+ */
+import { addFilter } from '@wordpress/hooks' // este permite crear filtros.
+import { Fragment, cloneElement } from '@wordpress/element' // UI.
+import { InspectorControls } from '@wordpress/block-editor' // UI.
+import { createHigherOrderComponent } from '@wordpress/compose'
 const customIcon = createElement(
-	'svg',
-	{ width: 20, height: 20 },
-	createElement(
-		'path',
-		{
-			d: 'M10.57,13.14l1.15-2.18h5.48c.99,0,1.8-.81,1.8-1.8V1.78c0-.99-.81-1.8-1.8-1.8H2.8c-.99,0-1.8,.81-1.8,1.8v7.38c0,.99,.81,1.8,1.8,1.8h5.48l1.15,2.18H1v4.88H19v-4.88H10.57Zm-1.33-2.68l-.3-.57H2.8c-.4,0-.72-.32-.72-.72V1.78c0-.4,.32-.72,.72-.72h14.4c.4,0,.72,.32,.72,.72v7.38c0,.4-.32,.72-.72,.72h-6.13l-.3,.57-.77,1.45-.77-1.45Z'
-		}
-	)
-);
+  'svg',
+  { width: 20, height: 20 },
+  createElement(
+    'path',
+    {
+      d: 'M10.57,13.14l1.15-2.18h5.48c.99,0,1.8-.81,1.8-1.8V1.78c0-.99-.81-1.8-1.8-1.8H2.8c-.99,0-1.8,.81-1.8,1.8v7.38c0,.99,.81,1.8,1.8,1.8h5.48l1.15,2.18H1v4.88H19v-4.88H10.57Zm-1.33-2.68l-.3-.57H2.8c-.4,0-.72-.32-.72-.72V1.78c0-.4,.32-.72,.72-.72h14.4c.4,0,.72,.32,.72,.72v7.38c0,.4-.32,.72-.72,.72h-6.13l-.3,.57-.77,1.45-.77-1.45Z'
+    }
+  )
+)
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -54,73 +62,61 @@ const customIcon = createElement(
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 registerBlockType('ekiline-block-collection/ekiline-popovers', {
-	apiVersion: 2,
-	title: __( 'Popover', 'ekiline-block-collection' ),
-	icon: customIcon,
-	description: __( 'Add popovers to your links or buttons.', 'ekiline-block-collection' ),
-	category: 'design',
+  apiVersion: 2,
+  title: __('Popover', 'ekiline-block-collection'),
+  icon: customIcon,
+  description: __('Add popovers to your links or buttons.', 'ekiline-block-collection'),
+  category: 'design',
 
-	/**
+  /**
 	 * @see ./edit.js
 	 */
-	// edit: Edit,
-	edit: () => {
-		return (
-			<p {...useBlockProps()}>
-				{__( 'Popovers have rules added to the core buttons.', 'ekiline-block-collection' )}
-				{__( 'You need to create a button. And then text an anchor (#name) link.', 'ekiline-block-collection' )}
-				{__( 'This will allow you to use the advanced options for the button.', 'ekiline-block-collection' )}
-				{__( 'You can remove this notice, it won\'t be published in your content.', 'ekiline-block-collection' )}
-			</p>
-		);
-	},
+  // edit: Edit,
+  edit: () => {
+    return (
+      <p {...useBlockProps()}>
+        {__('Popovers have rules added to the core buttons.', 'ekiline-block-collection')}
+        {__('You need to create a button. And then text an anchor (#name) link.', 'ekiline-block-collection')}
+        {__('This will allow you to use the advanced options for the button.', 'ekiline-block-collection')}
+        {__('You can remove this notice, it won\'t be published in your content.', 'ekiline-block-collection')}
+      </p>
+    )
+  }
 
-	/**
+  /**
 	 * @see ./save.js
 	 */
-	// save,
-});
-
-
-/**
- * Importar otras dependencias de WP.
- */
-import { addFilter } from '@wordpress/hooks'; // este permite crear filtros.
-import { Fragment, cloneElement } from '@wordpress/element'; // UI.
-import { InspectorControls } from '@wordpress/block-editor'; // UI.
-import { createHigherOrderComponent } from '@wordpress/compose'; // UI.
+  // save,
+}) // UI.
 
 // Restringir el uso a botones.
-const allowedBlocks = [ 'core/button', 'core/buttons' ];
+const allowedBlocks = ['core/button', 'core/buttons']
 
 /**
  * Asignar nuevos valores.
  * @param {*} settings Valores nuevos a incluir
  * @returns Deveulve los valores modificados.
  */
-function addAttributesLnkPopover( settings ) {
+function addAttributesLnkPopover (settings) {
+  // Restriccion
+  if (allowedBlocks.includes(settings.name)) {
+    settings.attributes = Object.assign(settings.attributes, {
+      addDataLnkPopover: {
+        type: 'string',
+        default: ''
+      },
+      addPositionLnkPopover: {
+        type: 'string', // Posicion de texto (top,right,bottom,left,auto).
+        default: 'auto'
+      },
+      defineTooltip: {
+        type: 'boolean', // Posicion de texto (top,right,bottom,left,auto).
+        default: false
+      }
+    })
+  }
 
-	//Restriccion
-	if( allowedBlocks.includes( settings.name ) ){
-
-		settings.attributes = Object.assign( settings.attributes, {
-			addDataLnkPopover: {
-				type: 'string',
-				default: '',
-			},
-			addPositionLnkPopover: {
-				type: 'string', // Posicion de texto (top,right,bottom,left,auto).
-				default: 'auto',
-			},
-			defineTooltip: {
-				type: 'boolean', // Posicion de texto (top,right,bottom,left,auto).
-				default: false,
-			},
-		});
-
-	}
-
-	return settings;
+  return settings
 }
 /**
  * Control para los nuevos valore del boton.
@@ -129,56 +125,51 @@ function addAttributesLnkPopover( settings ) {
  *
  * @return {function} Devuelve el BlockEdit modificado.
  */
-const withAdvancedControlsBtnCollapse = createHigherOrderComponent( ( BlockEdit ) => {
-	return ( props ) => {
+const withAdvancedControlsBtnCollapse = createHigherOrderComponent((BlockEdit) => {
+  return (props) => {
+    if (allowedBlocks.includes(props.name)) {
+      return (
 
-		if( allowedBlocks.includes( props.name ) ){
-
-			return (
-
-				<Fragment>
-				<BlockEdit {...props} />
-					{props.attributes.url && (
-						<InspectorControls>
-							<PanelBody title={ __( 'Button to Popover (Ekiline)', 'ekiline-block-collection' ) } initialOpen={ true }>
-							<TextControl
-								label={ __( 'Popover text to show.', 'ekiline-block-collection'  ) }
-								value={props.attributes.addDataLnkPopover}
-								onChange={newData => props.setAttributes({addDataLnkPopover: newData})}
-							/>
-							{/* Posicion. */}
-							<SelectControl
-								label={ __( 'Popover position', 'ekiline-block-collection' ) }
-								value={ props.attributes.addPositionLnkPopover }
-								options={ [
-									{ label: __( 'Popover position', 'ekiline-block-collection' ), value: 'auto' },
-									{ label: __( 'Top', 'ekiline-block-collection' ), value: 'top' },
-									{ label: __( 'Right', 'ekiline-block-collection' ), value: 'right' },
-									{ label: __( 'Bottom', 'ekiline-block-collection' ), value: 'bottom' },
-									{ label: __( 'Left', 'ekiline-block-collection' ), value: 'left' },
-								] }
-								onChange={ ( addPositionLnkPopover ) =>
-									props.setAttributes( { addPositionLnkPopover } )
-								}
-							/>
-							{/* cambiar formato */}
-							<ToggleControl
-								label={ __( 'Is tooltip', 'ekiline-block-collection' ) }
-								checked={ props.attributes.defineTooltip }
-								onChange={ ( defineTooltip ) =>
-									props.setAttributes( { defineTooltip } )
-								}
-							/>
-							</PanelBody>
-						</InspectorControls>
-					)}
-				</Fragment>
-			);
-
-		}
-		return <BlockEdit {...props} />;
-	};
-}, 'withAdvancedControlsBtnCollapse');
+        <Fragment>
+          <BlockEdit {...props} />
+          {props.attributes.url && (
+            <InspectorControls>
+              <PanelBody title={__('Button to Popover (Ekiline)', 'ekiline-block-collection')} initialOpen>
+                <TextControl
+                  label={__('Popover text to show.', 'ekiline-block-collection')}
+                  value={props.attributes.addDataLnkPopover}
+                  onChange={newData => props.setAttributes({ addDataLnkPopover: newData })}
+                />
+                {/* Posicion. */}
+                <SelectControl
+                  label={__('Popover position', 'ekiline-block-collection')}
+                  value={props.attributes.addPositionLnkPopover}
+                  options={[
+								  { label: __('Popover position', 'ekiline-block-collection'), value: 'auto' },
+								  { label: __('Top', 'ekiline-block-collection'), value: 'top' },
+								  { label: __('Right', 'ekiline-block-collection'), value: 'right' },
+								  { label: __('Bottom', 'ekiline-block-collection'), value: 'bottom' },
+								  { label: __('Left', 'ekiline-block-collection'), value: 'left' }
+                  ]}
+                  onChange={(addPositionLnkPopover) =>
+								  props.setAttributes({ addPositionLnkPopover })}
+                />
+                {/* cambiar formato */}
+                <ToggleControl
+                  label={__('Is tooltip', 'ekiline-block-collection')}
+                  checked={props.attributes.defineTooltip}
+                  onChange={(defineTooltip) =>
+								  props.setAttributes({ defineTooltip })}
+                />
+              </PanelBody>
+            </InspectorControls>
+          )}
+        </Fragment>
+      )
+    }
+    return <BlockEdit {...props} />
+  }
+}, 'withAdvancedControlsBtnCollapse')
 
 /**
  * Guardar el nuevo valor, en este caso como atributo.
@@ -189,46 +180,42 @@ const withAdvancedControlsBtnCollapse = createHigherOrderComponent( ( BlockEdit 
  *
  * @return {Object} Devuelve los nuevos atributos al bloque.
  */
-function applyExtraClassLnkPopover( element, block, attributes ) {
-
-	if( allowedBlocks.includes( block.name ) ){
-
-		if( attributes.addDataLnkPopover && attributes.url ) {
-
-			return cloneElement(
-				element,
-				{},
-				cloneElement(
-					element.props.children,
-					{
-						'data-bs-content': attributes.addDataLnkPopover,
-						'data-bs-toggle': (attributes.defineTooltip)?'tooltip':'popover',
-						'data-bs-placement': attributes.addPositionLnkPopover,
-						'title': attributes.text,
-						// 'type': 'button',
-					}
-				)
-			);
-		}
-
-	}
-	return element;
+function applyExtraClassLnkPopover (element, block, attributes) {
+  if (allowedBlocks.includes(block.name)) {
+    if (attributes.addDataLnkPopover && attributes.url) {
+      return cloneElement(
+        element,
+        {},
+        cloneElement(
+          element.props.children,
+          {
+            'data-bs-content': attributes.addDataLnkPopover,
+            'data-bs-toggle': (attributes.defineTooltip) ? 'tooltip' : 'popover',
+            'data-bs-placement': attributes.addPositionLnkPopover,
+            title: attributes.text
+            // 'type': 'button',
+          }
+        )
+      )
+    }
+  }
+  return element
 }
 
 addFilter(
-	'blocks.registerBlockType',
-	'ekilineLnkPopoverData/dataAttribute',
-	addAttributesLnkPopover
-);
+  'blocks.registerBlockType',
+  'ekilineLnkPopoverData/dataAttribute',
+  addAttributesLnkPopover
+)
 
 addFilter(
-	'editor.BlockEdit',
-	'ekilineLnkPopoverData/dataInput',
-	withAdvancedControlsBtnCollapse
-);
+  'editor.BlockEdit',
+  'ekilineLnkPopoverData/dataInput',
+  withAdvancedControlsBtnCollapse
+)
 
 addFilter(
-	'blocks.getSaveElement',
-	'ekilineLnkPopoverData/dataModified',
-	applyExtraClassLnkPopover
-);
+  'blocks.getSaveElement',
+  'ekilineLnkPopoverData/dataModified',
+  applyExtraClassLnkPopover
+)

@@ -8,11 +8,11 @@
 /**
  * Registers all block assets so that they can be enqueued through the block editor
  * in the corresponding context.
- * @see https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/creating-dynamic-blocks/ 
+ * @see https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/creating-dynamic-blocks/
  */
 function ekiline_collection_carousel_block_init()
 {
-    $asset_file = include( plugin_dir_path( __FILE__ ) . '../build/index.asset.php');
+    $asset_file = include(plugin_dir_path(__FILE__) . '../build/index.asset.php');
 
     register_block_type(
         'ekiline-block-collection/ekiline-carousel',
@@ -112,7 +112,7 @@ function ekiline_collection_carousel_block_init()
     );
 }
 // Inicializado en ekiline-block-collection.php
-add_action( 'init', 'ekiline_collection_carousel_block_init' );
+add_action('init', 'ekiline_collection_carousel_block_init');
 
 /**
  * Dynamic render callback.
@@ -130,10 +130,10 @@ function ekiline_collection_carousel_dynamic_render_callback($block_attributes, 
         $block_attributes['className'] .= (!$block_attributes['align']) ? '' : ' align' . $block_attributes['align'];
     }
     // Normalizar valores para ingresar funcion ekiline_collection_carousel_posts().
-    if ('none' === $block_attributes['FindBlock']){
+    if ('none' === $block_attributes['FindBlock']) {
         $block_attributes['FindBlock'] = null;
     }
-    if (false === $block_attributes['AllowMixed']){
+    if (false === $block_attributes['AllowMixed']) {
         $block_attributes['AllowMixed'] = null;
     }
     if (false === $block_attributes['AddControls']) {
@@ -230,7 +230,7 @@ function ekiline_collection_carousel_posts($ppp = 3, $cat = array(), $findblock 
              * Octubre 2024 limpiar shortcodes de contenido.
              */
             $new_excerpt   = '';
-            $clean_content = strip_shortcodes( get_the_content() );
+            $clean_content = strip_shortcodes(get_the_content());
 
             if (strpos($clean_content, '<!--more-->')) {
                 $new_excerpt = $clean_content;
@@ -492,7 +492,8 @@ function ekiline_set_media_link($img_desc, $img_url, $img_alt, $img_title)
 
 
 
-function bocaditos(){
+function bocaditos()
+{
     // // wp json
     // $wp_json = json_encode($carousel_content);
     // return $wp_json;

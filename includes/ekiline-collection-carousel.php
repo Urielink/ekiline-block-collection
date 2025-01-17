@@ -8,11 +8,11 @@
 /**
  * Registers all block assets so that they can be enqueued through the block editor
  * in the corresponding context.
- * @see https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/creating-dynamic-blocks/ 
+ * @see https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/creating-dynamic-blocks/
  */
 function ekiline_collection_carousel_block_init()
 {
-    $asset_file = include( plugin_dir_path( __FILE__ ) . '../build/index.asset.php');
+    $asset_file = include(plugin_dir_path(__FILE__) . '../build/index.asset.php');
 
     register_block_type(
         'ekiline-block-collection/ekiline-carousel',
@@ -112,7 +112,7 @@ function ekiline_collection_carousel_block_init()
     );
 }
 // Inicializado en ekiline-block-collection.php
-add_action( 'init', 'ekiline_collection_carousel_block_init' );
+add_action('init', 'ekiline_collection_carousel_block_init');
 
 /**
  * Dynamic render callback.
@@ -127,13 +127,13 @@ function ekiline_collection_carousel_dynamic_render_callback($block_attributes, 
     $carousel_content = ekiline_collection_carousel_posts($block_attributes);
 
     // Condicion para imagenes ó imágenes y video.
-    if ( 'posts' !== $block_attributes['ChooseType'] ) {
+    if ('posts' !== $block_attributes['ChooseType']) {
 
         // Mensaje en caso de no seleccionar medios.
-        if ( ! $block_attributes['SetIds'] ) {
+        if (! $block_attributes['SetIds']) {
             $return_message = sprintf(
                 '<div class="editor-modal-route">%s</div>',
-                esc_html( __( 'Select media.', 'ekiline-block-collection' ) )
+                esc_html(__('Select media.', 'ekiline-block-collection'))
             );
             return $return_message;
         }
@@ -157,7 +157,7 @@ function ekiline_collection_carousel_dynamic_render_callback($block_attributes, 
  * @param string $mixed allow to show thumbnails and blocks.
  * @return array query data.
  */
-function ekiline_collection_carousel_posts( $block_attributes = array() )
+function ekiline_collection_carousel_posts($block_attributes = array())
 {
     $ppp       = $block_attributes['SetAmount'];
     $cat       = $block_attributes['SetIds'];
@@ -186,7 +186,7 @@ function ekiline_collection_carousel_posts( $block_attributes = array() )
              * Octubre 2024 limpiar shortcodes de contenido.
              */
             $new_excerpt   = '';
-            $clean_content = strip_shortcodes( get_the_content() );
+            $clean_content = strip_shortcodes(get_the_content());
 
             if (strpos($clean_content, '<!--more-->')) {
                 $new_excerpt = $clean_content;
@@ -210,7 +210,7 @@ function ekiline_collection_carousel_posts( $block_attributes = array() )
 
             if ('none' !== $findblock) {
 
-                if ( true !== $mixed) {
+                if (true !== $mixed) {
                     // Reset array, ignorar la informacion acumulada, solo mantener la nueva.
                     $info = array();
                 }
@@ -269,10 +269,10 @@ function ekiline_collection_carousel_images($ids = array())
 
 function ekiline_collection_carousel_html_v2($carousel_data = array(), $block_attributes = array())
 {
-    if ( ! $carousel_data && ! $block_attributes ) {
+    if (! $carousel_data && ! $block_attributes) {
         $return_message = sprintf(
             '<div class="editor-modal-route">%s</div>',
-            esc_html( __( 'No content data.', 'ekiline-block-collection' ) )
+            esc_html(__('No content data.', 'ekiline-block-collection'))
         );
         return $return_message;
     }

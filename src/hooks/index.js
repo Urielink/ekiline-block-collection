@@ -36,41 +36,41 @@
 /**
  * Importar otras dependencias de WP.
  */
-import { __ } from '@wordpress/i18n';
-import { ToggleControl, TextControl, SelectControl, PanelBody } from '@wordpress/components';
-import { addFilter } from '@wordpress/hooks'; // este permite crear filtros.
-import { Fragment, cloneElement } from '@wordpress/element'; // UI.
-import { InspectorControls } from '@wordpress/block-editor'; // UI.
-import { createHigherOrderComponent } from '@wordpress/compose'; // UI.
+import { __ } from '@wordpress/i18n'
+import { ToggleControl, TextControl, SelectControl, PanelBody } from '@wordpress/components'
+import { addFilter } from '@wordpress/hooks' // este permite crear filtros.
+import { Fragment, cloneElement } from '@wordpress/element' // UI.
+import { InspectorControls } from '@wordpress/block-editor' // UI.
+import { createHigherOrderComponent } from '@wordpress/compose' // UI.
 
 // Restringir el uso a botones:'core/button, buttons, paragraph, image, gallery, navigation-link'.
-const bsBtnAllowedBlocks = [ 'core/button', 'core/buttons' ];
+const bsBtnAllowedBlocks = ['core/button', 'core/buttons']
 
 /**
  * Asignar nuevos valores.
  * @param {*} settings Valores nuevos a incluir
  * @returns Deveulve los valores modificados.
  */
-function addAttributesBsButtonLink( settings ) {
-	// Restriccion.
-	if( bsBtnAllowedBlocks.includes( settings.name ) ){
-		// Atributos: anchor, componente y dismiss.
-		settings.attributes = Object.assign( settings.attributes, {
-			anchorBsComponent: {
-				type: 'string',
-				default: '',
-			},
-			selectBsComponent: {
-				type: 'string',
-				default: '',
-			},
-			dissmissBsComponent:{
-				type: 'boolean',
-				default: true,
-			},
-		});
-	}
-	return settings;
+function addAttributesBsButtonLink (settings) {
+  // Restriccion.
+  if (bsBtnAllowedBlocks.includes(settings.name)) {
+    // Atributos: anchor, componente y dismiss.
+    settings.attributes = Object.assign(settings.attributes, {
+      anchorBsComponent: {
+        type: 'string',
+        default: ''
+      },
+      selectBsComponent: {
+        type: 'string',
+        default: ''
+      },
+      dissmissBsComponent: {
+        type: 'boolean',
+        default: true
+      }
+    })
+  }
+  return settings
 }
 
 /**
@@ -79,63 +79,59 @@ function addAttributesBsButtonLink( settings ) {
  * @param {function} BlockEdit componente WP.
  * @return {function} Devuelve el BlockEdit modificado.
  */
-const withAdvancedControlsBsButtonLink = createHigherOrderComponent( ( BlockEdit ) => {
-	return ( props ) => {
+const withAdvancedControlsBsButtonLink = createHigherOrderComponent((BlockEdit) => {
+  return (props) => {
+    // Cerrar Bslink.
+    const { attributes, setAttributes } = props
+    const { dissmissBsComponent } = attributes
 
-		// Cerrar Bslink.
-		const{ attributes, setAttributes } = props;
-		const{ dissmissBsComponent } = attributes;
+    if (bsBtnAllowedBlocks.includes(props.name)) {
+      return (
 
-		if( bsBtnAllowedBlocks.includes( props.name ) ){
-
-			return (
-
-				<Fragment>
-				<BlockEdit {...props} />
-					{/**
+        <Fragment>
+          <BlockEdit {...props} />
+          {/**
 					 * Nota: Los botones ocupan: props.attributes.url
 					 * Las imagenes ocupan: props.attributes.href
 					 **/}
-					{props.attributes.url && (
-						<InspectorControls>
-							<PanelBody title={ __( 'Link to Block (Ekiline)', 'ekiline-block-collection' ) } initialOpen={ true }>
-								{/* Anchor */}
-								<TextControl
-									label={ __( 'Anchor block name', 'ekiline-block-collection'  ) }
-									value={props.attributes.anchorBsComponent}
-									onChange={newData => props.setAttributes({anchorBsComponent: newData})}
-								/>
-								{/* Tipo de componente */}
-								<SelectControl
-									label={ __( 'Choose block', 'ekiline-block-collection' ) }
-									value={ attributes.selectBsComponent }
-									options={ [
-										{ label: __( 'None', 'ekiline-block-collection' ), value: '' },
-										{ label: __( 'Collapse', 'ekiline-block-collection' ), value: 'collapse' },
-										{ label: __( 'Modal', 'ekiline-block-collection' ), value: 'modal' },
-										{ label: __( 'Offcanvas', 'ekiline-block-collection' ), value: 'offcanvas' },
-									] }
-									onChange={ ( selectBsComponent ) =>
-										setAttributes( { selectBsComponent } )
-									}
-								/>
-								{/* Cerrar Bslink */}
-								<ToggleControl
-									label={ __( 'Is close button?', 'ekiline-block-collection'  ) }
-									checked={ ! dissmissBsComponent }
-									onChange={ () => setAttributes( {  dissmissBsComponent: ! dissmissBsComponent } ) }
-									help={ ! dissmissBsComponent ? __( 'Yes.', 'ekiline-block-collection'  ) : __( 'No.', 'ekiline-block-collection'  ) }
-								/>
-							</PanelBody>
-						</InspectorControls>
-					)}
-				</Fragment>
-			);
-
-		}
-		return <BlockEdit {...props} />;
-	};
-}, 'withAdvancedControlsBsButtonLink');
+          {props.attributes.url && (
+            <InspectorControls>
+              <PanelBody title={__('Link to Block (Ekiline)', 'ekiline-block-collection')} initialOpen>
+                {/* Anchor */}
+                <TextControl
+                  label={__('Anchor block name', 'ekiline-block-collection')}
+                  value={props.attributes.anchorBsComponent}
+                  onChange={newData => props.setAttributes({ anchorBsComponent: newData })}
+                />
+                {/* Tipo de componente */}
+                <SelectControl
+                  label={__('Choose block', 'ekiline-block-collection')}
+                  value={attributes.selectBsComponent}
+                  options={[
+									  { label: __('None', 'ekiline-block-collection'), value: '' },
+									  { label: __('Collapse', 'ekiline-block-collection'), value: 'collapse' },
+									  { label: __('Modal', 'ekiline-block-collection'), value: 'modal' },
+									  { label: __('Offcanvas', 'ekiline-block-collection'), value: 'offcanvas' }
+                  ]}
+                  onChange={(selectBsComponent) =>
+									  setAttributes({ selectBsComponent })}
+                />
+                {/* Cerrar Bslink */}
+                <ToggleControl
+                  label={__('Is close button?', 'ekiline-block-collection')}
+                  checked={!dissmissBsComponent}
+                  onChange={() => setAttributes({ dissmissBsComponent: !dissmissBsComponent })}
+                  help={!dissmissBsComponent ? __('Yes.', 'ekiline-block-collection') : __('No.', 'ekiline-block-collection')}
+                />
+              </PanelBody>
+            </InspectorControls>
+          )}
+        </Fragment>
+      )
+    }
+    return <BlockEdit {...props} />
+  }
+}, 'withAdvancedControlsBsButtonLink')
 
 /**
  * Guardar el nuevo valor, en este caso como atributo.
@@ -146,60 +142,55 @@ const withAdvancedControlsBsButtonLink = createHigherOrderComponent( ( BlockEdit
  *
  * @return {Object} Devuelve los nuevos atributos al bloque.
  */
-function applyExtraClassBsButtonLink( element, block, attributes ) {
+function applyExtraClassBsButtonLink (element, block, attributes) {
+  // Nuevo: Cerrar Bslink, sobrescribe los atributos.
+  const { dissmissBsComponent } = attributes
 
-	// Nuevo: Cerrar Bslink, sobrescribe los atributos.
-	const { dissmissBsComponent } = attributes;
+  if (bsBtnAllowedBlocks.includes(block.name)) {
+    if (dissmissBsComponent && attributes.anchorBsComponent && attributes.selectBsComponent && attributes.url) {
+      return cloneElement(
+        element,
+        {},
+        cloneElement(element.props.children, {
+          'data-bs-target': attributes.anchorBsComponent,
+          'data-bs-toggle': attributes.selectBsComponent
+        }
+        )
+      )
+    }
 
-	if( bsBtnAllowedBlocks.includes( block.name ) ){
+    if (!dissmissBsComponent && attributes.anchorBsComponent && attributes.selectBsComponent && attributes.url) {
+      return cloneElement(
+        element,
+        {},
+        cloneElement(element.props.children, {
+          'data-bs-dismiss': attributes.selectBsComponent
+        }
+        )
+      )
+    }
+  }
 
-		if( dissmissBsComponent && attributes.anchorBsComponent && attributes.selectBsComponent && attributes.url ) {
-
-			return cloneElement(
-				element,
-				{},
-				cloneElement( element.props.children, {
-						'data-bs-target': attributes.anchorBsComponent,
-						'data-bs-toggle': attributes.selectBsComponent,
-					}
-				)
-			);
-
-		}
-
-		if ( ! dissmissBsComponent && attributes.anchorBsComponent && attributes.selectBsComponent && attributes.url ) {
-			return cloneElement(
-				element,
-				{},
-				cloneElement( element.props.children, {
-						'data-bs-dismiss': attributes.selectBsComponent,
-					}
-				)
-			);
-		}
-
-	}
-
-	return element;
+  return element
 }
 
 addFilter(
-	'blocks.registerBlockType',
-	'ekilineBsButtonLinkData/dataAttribute',
-	addAttributesBsButtonLink
-);
+  'blocks.registerBlockType',
+  'ekilineBsButtonLinkData/dataAttribute',
+  addAttributesBsButtonLink
+)
 
 addFilter(
-	'editor.BlockEdit',
-	'ekilineBsButtonLinkData/dataInput',
-	withAdvancedControlsBsButtonLink
-);
+  'editor.BlockEdit',
+  'ekilineBsButtonLinkData/dataInput',
+  withAdvancedControlsBsButtonLink
+)
 
 addFilter(
-	'blocks.getSaveElement',
-	'ekilineBsButtonLinkData/dataModified',
-	applyExtraClassBsButtonLink
-);
+  'blocks.getSaveElement',
+  'ekilineBsButtonLinkData/dataModified',
+  applyExtraClassBsButtonLink
+)
 
 /**
  * Nuevo complemento:
@@ -207,33 +198,33 @@ addFilter(
  */
 
 // Restringir el uso a botones:'core/button, buttons, paragraph, image, gallery, navigation-link'.
-const bsImgAllowedBlocks = [ 'core/image' ];
+const bsImgAllowedBlocks = ['core/image']
 
 /**
  * Asignar nuevos valores.
  * @param {*} settings Valores nuevos a incluir
  * @returns Deveulve los valores modificados.
  */
-function addAttributesBsImageLink( settings ) {
-	// Restriccion.
-	if( bsImgAllowedBlocks.includes( settings.name ) ){
-		// Atributos: anchor, componente y dismiss.
-		settings.attributes = Object.assign( settings.attributes, {
-			anchorBsComponent: {
-				type: 'string',
-				default: '',
-			},
-			selectBsComponent: {
-				type: 'string',
-				default: '',
-			},
-			dissmissBsComponent:{
-				type: 'boolean',
-				default: true,
-			},
-		});
-	}
-	return settings;
+function addAttributesBsImageLink (settings) {
+  // Restriccion.
+  if (bsImgAllowedBlocks.includes(settings.name)) {
+    // Atributos: anchor, componente y dismiss.
+    settings.attributes = Object.assign(settings.attributes, {
+      anchorBsComponent: {
+        type: 'string',
+        default: ''
+      },
+      selectBsComponent: {
+        type: 'string',
+        default: ''
+      },
+      dissmissBsComponent: {
+        type: 'boolean',
+        default: true
+      }
+    })
+  }
+  return settings
 }
 
 /**
@@ -242,63 +233,59 @@ function addAttributesBsImageLink( settings ) {
  * @param {function} BlockEdit componente WP.
  * @return {function} Devuelve el BlockEdit modificado.
  */
-const withAdvancedControlsBsImageLink = createHigherOrderComponent( ( BlockEdit ) => {
-	return ( props ) => {
+const withAdvancedControlsBsImageLink = createHigherOrderComponent((BlockEdit) => {
+  return (props) => {
+    // Cerrar Bslink.
+    const { attributes, setAttributes } = props
+    const { dissmissBsComponent } = attributes
 
-		// Cerrar Bslink.
-		const{ attributes, setAttributes } = props;
-		const{ dissmissBsComponent } = attributes;
+    if (bsImgAllowedBlocks.includes(props.name)) {
+      return (
 
-		if( bsImgAllowedBlocks.includes( props.name ) ){
-
-			return (
-
-				<Fragment>
-				<BlockEdit {...props} />
-					{/**
+        <Fragment>
+          <BlockEdit {...props} />
+          {/**
 					 * Nota: Los botones ocupan: props.attributes.url
 					 * Las imagenes ocupan: props.attributes.href
 					 **/}
-					{props.attributes.href && (
-						<InspectorControls>
-							<PanelBody title={ __( 'Link to Ekiline Block', 'ekiline-block-collection' ) } initialOpen={ true }>
-								{/* Anchor */}
-								<TextControl
-									label={ __( 'Anchor block name', 'ekiline-block-collection'  ) }
-									value={props.attributes.anchorBsComponent}
-									onChange={newData => props.setAttributes({anchorBsComponent: newData})}
-								/>
-								{/* Tipo de componente */}
-								<SelectControl
-									label={ __( 'Choose block', 'ekiline-block-collection' ) }
-									value={ attributes.selectBsComponent }
-									options={ [
-										{ label: __( 'None', 'ekiline-block-collection' ), value: '' },
-										{ label: __( 'Collapse', 'ekiline-block-collection' ), value: 'collapse' },
-										{ label: __( 'Modal', 'ekiline-block-collection' ), value: 'modal' },
-										{ label: __( 'Offcanvas', 'ekiline-block-collection' ), value: 'offcanvas' },
-									] }
-									onChange={ ( selectBsComponent ) =>
-										setAttributes( { selectBsComponent } )
-									}
-								/>
-								{/* Cerrar Bslink */}
-								<ToggleControl
-									label={ __( 'Is close button?', 'ekiline-block-collection'  ) }
-									checked={ ! dissmissBsComponent }
-									onChange={ () => setAttributes( {  dissmissBsComponent: ! dissmissBsComponent } ) }
-									help={ ! dissmissBsComponent ? __( 'Yes.', 'ekiline-block-collection'  ) : __( 'No.', 'ekiline-block-collection'  ) }
-								/>
-							</PanelBody>
-						</InspectorControls>
-					)}
-				</Fragment>
-			);
-
-		}
-		return <BlockEdit {...props} />;
-	};
-}, 'withAdvancedControlsBsImageLink');
+          {props.attributes.href && (
+            <InspectorControls>
+              <PanelBody title={__('Link to Ekiline Block', 'ekiline-block-collection')} initialOpen>
+                {/* Anchor */}
+                <TextControl
+                  label={__('Anchor block name', 'ekiline-block-collection')}
+                  value={props.attributes.anchorBsComponent}
+                  onChange={newData => props.setAttributes({ anchorBsComponent: newData })}
+                />
+                {/* Tipo de componente */}
+                <SelectControl
+                  label={__('Choose block', 'ekiline-block-collection')}
+                  value={attributes.selectBsComponent}
+                  options={[
+									  { label: __('None', 'ekiline-block-collection'), value: '' },
+									  { label: __('Collapse', 'ekiline-block-collection'), value: 'collapse' },
+									  { label: __('Modal', 'ekiline-block-collection'), value: 'modal' },
+									  { label: __('Offcanvas', 'ekiline-block-collection'), value: 'offcanvas' }
+                  ]}
+                  onChange={(selectBsComponent) =>
+									  setAttributes({ selectBsComponent })}
+                />
+                {/* Cerrar Bslink */}
+                <ToggleControl
+                  label={__('Is close button?', 'ekiline-block-collection')}
+                  checked={!dissmissBsComponent}
+                  onChange={() => setAttributes({ dissmissBsComponent: !dissmissBsComponent })}
+                  help={!dissmissBsComponent ? __('Yes.', 'ekiline-block-collection') : __('No.', 'ekiline-block-collection')}
+                />
+              </PanelBody>
+            </InspectorControls>
+          )}
+        </Fragment>
+      )
+    }
+    return <BlockEdit {...props} />
+  }
+}, 'withAdvancedControlsBsImageLink')
 
 /**
  * Guardar el nuevo valor, en este caso como atributo.
@@ -309,16 +296,13 @@ const withAdvancedControlsBsImageLink = createHigherOrderComponent( ( BlockEdit 
  *
  * @return {Object} Devuelve los nuevos atributos al bloque.
  */
-function applyExtraClassBsImageLink( element, block, attributes ) {
+function applyExtraClassBsImageLink (element, block, attributes) {
+  // Nuevo: Cerrar Bslink, sobrescribe los atributos.
+  const { dissmissBsComponent } = attributes
 
-	// Nuevo: Cerrar Bslink, sobrescribe los atributos.
-	const { dissmissBsComponent } = attributes;
-
-	if( bsImgAllowedBlocks.includes( block.name ) ){
-
-		if( dissmissBsComponent && attributes.anchorBsComponent && attributes.selectBsComponent && attributes.href ) {
-
-			/**
+  if (bsImgAllowedBlocks.includes(block.name)) {
+    if (dissmissBsComponent && attributes.anchorBsComponent && attributes.selectBsComponent && attributes.href) {
+      /**
 			 * Nota: la manipulación del marcado por objetos:
 			 * - cloneElement( element.props, ... ) queda en un nivel superior.
 			 * Se necesita ir a profundidad y encontrar el elemento de marcado requerido:
@@ -328,52 +312,50 @@ function applyExtraClassBsImageLink( element, block, attributes ) {
 			 * Probablemente, debo crear una función que valide la existencia de <a/> con type: 'a'.
 			 * - - Por ello hay una validacion, podria cambiar el metodo.
 			 */
-			if ( ('a' === element.props.children.props.children[0].type)  ){
-				return cloneElement(
-					element,
-					{},
-					cloneElement( element.props.children.props.children[0], {
-							'data-bs-target': attributes.anchorBsComponent,
-							'data-bs-toggle': attributes.selectBsComponent,
-						}
-					)
-				);
-			}
+      if ((element.props.children.props.children[0].type === 'a')) {
+        return cloneElement(
+          element,
+          {},
+          cloneElement(element.props.children.props.children[0], {
+            'data-bs-target': attributes.anchorBsComponent,
+            'data-bs-toggle': attributes.selectBsComponent
+          }
+          )
+        )
+      }
+    }
 
-		}
+    if (!dissmissBsComponent && attributes.anchorBsComponent && attributes.selectBsComponent && attributes.href) {
+      if ((element.props.children.props.children[0].type === 'a')) {
+        return cloneElement(
+          element,
+          {},
+          cloneElement(element.props.children.props.children[0], {
+            'data-bs-dismiss': attributes.selectBsComponent
+          }
+          )
+        )
+      }
+    }
+  }
 
-		if ( ! dissmissBsComponent && attributes.anchorBsComponent && attributes.selectBsComponent && attributes.href ) {
-			if ( ('a' === element.props.children.props.children[0].type)  ){
-				return cloneElement(
-					element,
-					{},
-					cloneElement( element.props.children.props.children[0], {
-							'data-bs-dismiss': attributes.selectBsComponent,
-						}
-					)
-				);
-			}
-		}
-
-	}
-
-	return element;
+  return element
 }
 
 addFilter(
-	'blocks.registerBlockType',
-	'ekilineBsImageLinkData/dataAttribute',
-	addAttributesBsImageLink
-);
+  'blocks.registerBlockType',
+  'ekilineBsImageLinkData/dataAttribute',
+  addAttributesBsImageLink
+)
 
 addFilter(
-	'editor.BlockEdit',
-	'ekilineBsImageLinkData/dataInput',
-	withAdvancedControlsBsImageLink
-);
+  'editor.BlockEdit',
+  'ekilineBsImageLinkData/dataInput',
+  withAdvancedControlsBsImageLink
+)
 
 addFilter(
-	'blocks.getSaveElement',
-	'ekilineBsImageLinkData/dataModified',
-	applyExtraClassBsImageLink
-);
+  'blocks.getSaveElement',
+  'ekilineBsImageLinkData/dataModified',
+  applyExtraClassBsImageLink
+)
