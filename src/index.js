@@ -10,7 +10,6 @@ import './editor.scss'
 /**
  * Internal dependencies
  */
-// import './startup/index';
 import './accordion/index'
 import './collapse/index'
 import './popovers/index'
@@ -23,8 +22,6 @@ import './carousel-extra/index'
 import './carousel-blocks/index'
 import './offcanvas/index'
 import './hooks/index'
-// nuevo carrusel.
-import './carousel-dynamic/index'
 
 /**
  * Incorporar bloques a coleccion.
