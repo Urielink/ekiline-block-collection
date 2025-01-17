@@ -2,7 +2,7 @@
 /**
  * Dynamic render and scripts for blocks
  *
- * @package ekiline-collection
+ * @package ekiline-block-collection
  */
 
 /**
@@ -19,7 +19,7 @@
 function ekiline_collection_remove_blocks($content)
 {
     // Idetificador de bloque.
-    $find_block = 'ekiline-collection/ekiline-modal';
+    $find_block = 'ekiline-block-collection/ekiline-modal';
 
     // Aplicar en publicacion en frontend y solo que tenga el bloque.
     if (!is_admin() && is_singular() && has_block($find_block)) {
@@ -42,9 +42,9 @@ function ekiline_collection_remove_blocks($content)
 // add_filter('the_content', 'ekiline_collection_remove_blocks');
 
 /**
- * 06Oct2024, UPDATE 
+ * 06Oct2024, UPDATE
  * Ya no es necesario, las actualizaciones de wordpress mejoran el rendimiento.
- * 
+ *
  * Modal. Sin argumentos.
  *
  * Prueba, intentar mover el contenido de un bloque al final de la pagina con PHP.
@@ -58,7 +58,7 @@ function ekiline_collection_remove_blocks($content)
 function ekiline_collection_block_modal_find_and_move()
 {
     // Idetificador de bloque.
-    $find_block = 'ekiline-collection/ekiline-modal';
+    $find_block = 'ekiline-block-collection/ekiline-modal';
 
     // Aplicar en publicacion en frontend y solo que tenga el bloque.
     if (!is_admin() && is_singular() && has_block($find_block)) {

@@ -87,7 +87,7 @@ function ekiline_collection_carousel_block_init()
                 ],
                 'SetHeight'         => [
                     'type'    => 'number',
-                    'default' => '500',
+                    'default' => '480',
                 ],
                 // Nuevas opciones.
                 'ShowCaption'       => [
@@ -123,25 +123,73 @@ add_action('init', 'ekiline_collection_carousel_block_init');
  */
 function ekiline_collection_carousel_dynamic_render_callback($block_attributes, $content)
 {
-    // Obtener posts (default).
-    $carousel_content = ekiline_collection_carousel_posts($block_attributes);
-
-    // Condicion para imagenes ó imágenes y video.
-    if ('posts' !== $block_attributes['ChooseType']) {
-
-        // Mensaje en caso de no seleccionar medios.
-        if (! $block_attributes['SetIds']) {
-            $return_message = sprintf(
-                '<div class="editor-modal-route">%s</div>',
-                esc_html(__('Select media.', 'ekiline-block-collection'))
-            );
-            return $return_message;
-        }
-        // devolver arreglo con medios.
-        $carousel_content = ekiline_collection_carousel_images($block_attributes['SetIds']);
+    // Ajustar valores de $block_attributes.
+    // Modificar classname.
+    $block_attributes['className'] = (!$block_attributes['className']) ? 'wp-block-ekiline-block-collection-ekiline-carousel' : 'wp-block-ekiline-block-collection-ekiline-carousel ' . $block_attributes['className'];
+    if ('' !== $block_attributes['align']) {
+        $block_attributes['className'] .= (!$block_attributes['align']) ? '' : ' align' . $block_attributes['align'];
+    }
+    // Normalizar valores para ingresar funcion ekiline_collection_carousel_posts().
+    if ('none' === $block_attributes['FindBlock']) {
+        $block_attributes['FindBlock'] = null;
+    }
+    if (false === $block_attributes['AllowMixed']) {
+        $block_attributes['AllowMixed'] = null;
+    }
+    if (false === $block_attributes['AddControls']) {
+        $block_attributes['AddControls'] = 'false';
+    }
+    if (false === $block_attributes['AddIndicators']) {
+        $block_attributes['AddIndicators'] = 'false';
+    }
+    if (false === $block_attributes['AddIndicatorsText']) {
+        $block_attributes['AddIndicatorsText'] = 'false';
+    }
+    if (false === $block_attributes['SetAuto']) {
+        $block_attributes['SetAuto'] = 'false';
+    }
+    if (false === $block_attributes['ShowCaption']) {
+        $block_attributes['ShowCaption'] = 'false';
+    }
+    if (false === $block_attributes['SetLinks']) {
+        $block_attributes['SetLinks'] = 'false';
     }
 
-    return ekiline_collection_carousel_html_v2($carousel_content, $block_attributes);
+
+    // Default posts.
+    $carousel = ekiline_collection_carousel_posts(
+        $block_attributes['SetAmount'],
+        $block_attributes['SetIds'],
+        $block_attributes['FindBlock'],
+        $block_attributes['SetOrderBy'],
+        $mixed = null
+    );
+
+    // Condicion para imagenes y video.
+    if ('posts' !== $block_attributes['ChooseType']) {
+        $carousel = ekiline_collection_carousel_images($block_attributes['SetIds']);
+    }
+
+    // Numero de columnas.
+    $columns = (in_array(sanitize_text_field($block_attributes['SetColumns']), [ '2','3','4','6' ], true)) ? ' carousel-multiple x' . $block_attributes['SetColumns'] : '';
+
+    // Devorlver marcado.
+    return ekiline_collection_carousel_html_v2(
+        $carousel,
+        $columns,
+        $block_attributes['AddControls'],
+        $block_attributes['AddIndicators'],
+        $block_attributes['SetAuto'],
+        $block_attributes['SetTime'],
+        $block_attributes['SetAnimation'],
+        $block_attributes['SetHeight'],
+        $block_attributes['ShowCaption'],
+        $block_attributes['SetLinks'],
+        $block_attributes['AddIndicatorsText'],
+        $block_attributes['className'],
+        $block_attributes['anchor']
+    );
+
 }
 
 /**
@@ -157,19 +205,15 @@ function ekiline_collection_carousel_dynamic_render_callback($block_attributes, 
  * @param string $mixed allow to show thumbnails and blocks.
  * @return array query data.
  */
-function ekiline_collection_carousel_posts($block_attributes = array())
+function ekiline_collection_carousel_posts($ppp = 3, $cat = array(), $findblock = null, $orderby = 'date', $mixed = null)
 {
-    $ppp       = $block_attributes['SetAmount'];
-    $cat       = $block_attributes['SetIds'];
-    $findblock = $block_attributes['FindBlock'];
-    $orderby   = $block_attributes['SetOrderBy'];
-    $mixed     = $block_attributes['AllowMixed'];
-    $carousel  = array();
-    $args      = array(
-        'orderby'             => $orderby,
-        'posts_per_page'      => $ppp,
-        'cat'                 => $cat,
-        'ignore_sticky_posts' => 1
+
+    $carousel = array();
+
+    $args = array(
+        'orderby'        => $orderby,
+        'posts_per_page' => $ppp,
+        'cat'            => $cat,
     );
 
     $carousel_query = new WP_Query($args);
@@ -208,9 +252,9 @@ function ekiline_collection_carousel_posts($block_attributes = array())
                 $info['alt']     = get_post_meta($thumb_id, '_wp_attachment_image_alt', true);
             }
 
-            if ('none' !== $findblock) {
+            if ($findblock) {
 
-                if (true !== $mixed) {
+                if ('true' !== $mixed) {
                     // Reset array, ignorar la informacion acumulada, solo mantener la nueva.
                     $info = array();
                 }
@@ -267,166 +311,153 @@ function ekiline_collection_carousel_images($ids = array())
 }
 
 
-function ekiline_collection_carousel_html_v2($carousel_data = array(), $block_attributes = array())
+function ekiline_collection_carousel_html_v2($carousel_data, $columns, $control, $indicators, $auto, $time, $animation, $height, $showcaption, $setlinks, $indicatorstext, $classname, $anchor)
 {
-    if (! $carousel_data && ! $block_attributes) {
-        $return_message = sprintf(
-            '<div class="editor-modal-route">%s</div>',
-            esc_html(__('No content data.', 'ekiline-block-collection'))
-        );
-        return $return_message;
-    }
+    if ($carousel_data) {
+        $uniq_id   = ($anchor) ? $anchor : 'carousel_module_' . wp_rand(1, 99);
+        $auto      = ('false' !== $auto) ? ' data-bs-ride="carousel"' : '';
+        $time      = ($time) ? ' data-bs-interval="' . $time . '"' : '';
+        $animation = ($animation) ? ' carousel-' . $animation : '';
 
-    // Atributos de bloque.
-    $columns        = (in_array(sanitize_text_field($block_attributes['SetColumns']), [ '2','3','4','6' ], true)) ? ' carousel-multiple x' . $block_attributes['SetColumns'] : '';
-    $control        = $block_attributes['AddControls'];
-    $indicators     = $block_attributes['AddIndicators'];
-    $auto           = $block_attributes['SetAuto'];
-    $time           = $block_attributes['SetTime'];
-    $animation      = $block_attributes['SetAnimation'];
-    $height         = $block_attributes['SetHeight'];
-    $showcaption    = $block_attributes['ShowCaption'];
-    $setlinks       = $block_attributes['SetLinks'];
-    $indicatorstext = $block_attributes['AddIndicatorsText'];
-    $classname      = $block_attributes['className'];
-    $anchor         = $block_attributes['anchor'];
-
-    // Modificadores de contenido.
-    $uniq_id   = ($anchor) ? $anchor : 'carousel_module_' . wp_rand(1, 99);
-    $auto      = (false !== $auto) ? ' data-bs-ride="carousel"' : '';
-    $time      = ($time) ? ' data-bs-interval="' . $time . '"' : '';
-    $animation = ($animation) ? ' carousel-' . $animation : '';
-    $height    = (0 > $height) ? ' style="height:100vh;"' : ' style="height:' . $height . 'px;"';
-    $hastxtind = (false !== $indicatorstext) ? ' has-text-indicators' : '';
-    $classname = ($classname) ? ' ' . $classname : '';
-
-    // Iniciar el HTML para el carrusel
-    $output = sprintf(
-        '<div id="%s" class="carousel slide%s"%s%s>',
-        esc_attr($uniq_id),
-        esc_attr($columns . $animation . $hastxtind . $classname),
-        wp_kses_post($auto . $time . $height),
-        "\n"
-    );
-
-    // Agregar los indicadores si es necesario
-    if (false !== $indicators) {
-        $output .= '<div class="carousel-indicators">';
-        foreach ($carousel_data as $index => $indicator) {
-            $active = (0 === $index) ? 'active' : '';
-            $output .= sprintf(
-                '<button type="button" data-bs-target="#%s" data-bs-slide-to="%d" class="%s"></button>',
-                esc_html($uniq_id),
-                esc_attr($index),
-                esc_attr($active)
-            );
-        }
-        $output .= '</div>';
-    }
-
-    $output .= '<div class="carousel-inner">';
-    foreach ($carousel_data as $index => $slide) {
-        $active  = (0 === $index) ? ' active' : '';
-        $img_load = (0 === $index) ? 'eager' : 'lazy';
-        $img_cap  = (!isset($slide['image'])) ? ' no-image' : '';
-
-        // Agregar las diapositivas
-        $output .= sprintf(
-            '<div class="carousel-item%s"%s>',
-            esc_attr($active),
-            wp_kses_post($height)
-        );
-
-        if (isset($slide['block'])) {
-            $output .= wp_kses_post($slide['block']);
+        // Validar height.
+        if (!$height) {
+            $height = ' style="min-height:480px;"';
+        } elseif ('0' === $height) {
+            $height = ' style="min-height:100vh;"';
         } else {
-            if (isset($slide['image'])) {
-                // 05-03-22: adicion de videos en el carrusel.
-                if (isset($slide['mimetype']) && str_contains($slide['mimetype'], 'video')) {
-                    $output .= sprintf(
-                        '<video class="carousel-media wp-block-cover__video-background intrinsic-ignore" autoplay muted loop playsinline controls src="%s" data-object-fit="cover"></video>',
-                        esc_url($slide['image'])
-                    );
-                } else {
-                    // 18-01-23: permitir enlaces solo en imagenes, descartar protocolo https o permitir abrir en nueva ventana.
-                    if (false !== $setlinks && $slide['content']) {
-                        $output .= wp_kses_post(ekiline_set_media_link($slide['content'], $slide['image'], $slide['alt'], $slide['title']));
-                    } else {
+            $height = ' style="min-height:' . $height . 'px;"';
+        }
+        $hastxtind = ('false' !== $indicatorstext) ? ' has-text-indicators' : '';
+        $classname = ($classname) ? ' ' . $classname : '';
+
+        // Iniciar el HTML para el carrusel
+        $output = sprintf(
+            '<div id="%s" class="carousel slide%s"%s%s>',
+            esc_attr($uniq_id),
+            esc_attr($columns . $animation . $hastxtind . $classname),
+            wp_kses_post($auto . $time . $height),
+            "\n"
+        );
+
+        // Agregar los indicadores si es necesario
+        if ('false' !== $indicators) {
+            $output .= '<div class="carousel-indicators">';
+            foreach ($carousel_data as $index => $indicator) {
+                $active = (0 === $index) ? 'active' : '';
+                $output .= sprintf(
+                    '<button type="button" data-bs-target="#%s" data-bs-slide-to="%d" class="%s"></button>',
+                    esc_html($uniq_id),
+                    esc_attr($index),
+                    esc_attr($active)
+                );
+            }
+            $output .= '</div>';
+        }
+
+        $output .= '<div class="carousel-inner">';
+        foreach ($carousel_data as $index => $slide) {
+            $active  = (0 === $index) ? ' active' : '';
+            $img_load = (0 === $index) ? 'eager' : 'lazy';
+            $img_cap  = (!isset($slide['image'])) ? ' no-image' : '';
+
+            // Agregar las diapositivas
+            $output .= sprintf(
+                '<div class="carousel-item%s"%s>',
+                esc_attr($active),
+                wp_kses_post($height)
+            );
+
+            if (isset($slide['block'])) {
+                $output .= wp_kses_post($slide['block']);
+            } else {
+                if (isset($slide['image'])) {
+                    // 05-03-22: adicion de videos en el carrusel.
+                    if (isset($slide['mimetype']) && str_contains($slide['mimetype'], 'video')) {
                         $output .= sprintf(
-                            '<img class="carousel-media img-fluid" src="%s" alt="%s" title="%s" loading="%s">',
-                            esc_url($slide['image']),
-                            esc_html($slide['alt']),
-                            esc_html($slide['title']),
-                            esc_attr($img_load)
+                            '<video class="carousel-media wp-block-cover__video-background intrinsic-ignore" autoplay muted loop playsinline controls src="%s" data-object-fit="cover"></video>',
+                            esc_url($slide['image'])
                         );
+                    } else {
+                        // 18-01-23: permitir enlaces solo en imagenes, descartar protocolo https o permitir abrir en nueva ventana.
+                        if ('false' !== $setlinks && $slide['content']) {
+                            $output .= wp_kses_post(ekiline_set_media_link($slide['content'], $slide['image'], $slide['alt'], $slide['title']));
+                        } else {
+                            $output .= sprintf(
+                                '<img class="carousel-media img-fluid" src="%s" alt="%s" title="%s" loading="%s">',
+                                esc_url($slide['image']),
+                                esc_html($slide['alt']),
+                                esc_html($slide['title']),
+                                esc_attr($img_load)
+                            );
+                        }
                     }
                 }
-            }
 
-            if (false !== $showcaption) {
-                $output .= sprintf(
-                    '<div class="carousel-caption%s">',
-                    esc_attr($img_cap)
-                );
-
-                if (isset($slide['title']) && $slide['title']) {
+                if ('false' !== $showcaption) {
                     $output .= sprintf(
-                        '<h3>%s%s%s</h3>',
-                        isset($slide['plink']) && false !== $setlinks ? '<a href="' . esc_html($slide['plink']) . '">' : '',
-                        esc_html($slide['title']),
-                        isset($slide['plink']) && false !== $setlinks ? '</a>' : ''
+                        '<div class="carousel-caption%s">',
+                        esc_attr($img_cap)
                     );
-                }
 
-                if (isset($slide['excerpt']) && $slide['excerpt']) {
-                    $output .= sprintf('<p>%s</p>', wp_kses_post($slide['excerpt']));
-                }
+                    if (isset($slide['title']) && $slide['title']) {
+                        $output .= sprintf(
+                            '<h3>%s%s%s</h3>',
+                            isset($slide['plink']) && 'false' !== $setlinks ? '<a href="' . esc_html($slide['plink']) . '">' : '',
+                            esc_html($slide['title']),
+                            isset($slide['plink']) && 'false' !== $setlinks ? '</a>' : ''
+                        );
+                    }
 
-                $output .= '</div>';
+                    if (isset($slide['excerpt']) && $slide['excerpt']) {
+                        $output .= sprintf('<p>%s</p>', wp_kses_post($slide['excerpt']));
+                    }
+
+                    $output .= '</div>';
+                }
             }
+
+            $output .= '</div>';
         }
 
         $output .= '</div>';
-    }
 
-    $output .= '</div>';
-
-    if (false !== $control) {
-        $output .= sprintf(
-            '<button type="button" class="carousel-control-prev" data-bs-target="#%s" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>',
-            esc_html($uniq_id)
-        );
-        $output .= sprintf(
-            '<button type="button" class="carousel-control-next" data-bs-target="#%s" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>',
-            esc_html($uniq_id)
-        );
-    }
-
-    if (!$columns && false !== $indicatorstext) {
-        $output .= '<ul class="carousel-text-indicators carousel-caption list-unstyled d-none d-md-flex">';
-        foreach ($carousel_data as $index => $indicator) {
-            $active = (0 === $index) ? 'active' : '';
+        if ('false' !== $control) {
             $output .= sprintf(
-                '<li type="button" data-bs-target="#%s" data-bs-slide-to="%d" class="%s">
-                    <span class="h5">%s</span>
-                </li>',
-                esc_html($uniq_id),
-                esc_attr($index),
-                esc_attr($active),
-                esc_html($indicator['title'])
+                '<button type="button" class="carousel-control-prev" data-bs-target="#%s" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>',
+                esc_html($uniq_id)
+            );
+            $output .= sprintf(
+                '<button type="button" class="carousel-control-next" data-bs-target="#%s" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>',
+                esc_html($uniq_id)
             );
         }
-        $output .= '</ul>';
-    }
 
-    // Devolver el HTML generado
-    return $output;
+        if (!$columns && 'false' !== $indicatorstext) {
+            $output .= '<ul class="carousel-text-indicators carousel-caption list-unstyled d-none d-md-flex">';
+            foreach ($carousel_data as $index => $indicator) {
+                $active = (0 === $index) ? 'active' : '';
+                $output .= sprintf(
+                    '<li type="button" data-bs-target="#%s" data-bs-slide-to="%d" class="%s">
+                        <span class="h5">%s</span>
+                    </li>',
+                    esc_html($uniq_id),
+                    esc_attr($index),
+                    esc_attr($active),
+                    esc_html($indicator['title'])
+                );
+            }
+            $output .= '</ul>';
+        }
+
+        // Devolver el HTML generado
+        return $output;
+    }
 }
 
 /**
@@ -457,4 +488,20 @@ function ekiline_set_media_link($img_desc, $img_url, $img_alt, $img_title)
         $media = '<a href="' . esc_html($img_desc) . '" target="' . $target . '">' . $media . '</a>';
     }
     return $media;
+}
+
+
+
+function bocaditos()
+{
+    // // wp json
+    // $wp_json = json_encode($carousel_content);
+    // return $wp_json;
+    // // cont items
+    $cont_items = count($carousel_content);
+    // return $cont_items .' | '. $wp_json;
+
+    // Devolver marcado.
+    $jsonshow = json_encode($block_attributes['SetAmount']);
+    // return $jsonshow . "\n" . $cont_items . "\n" . ekiline_collection_carousel_html_v2($carousel_content, $block_attributes);
 }

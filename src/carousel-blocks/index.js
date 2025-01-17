@@ -66,7 +66,7 @@ const customIcon = createElement(
  * No mostrar en inspector.
  * @ref https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/
  */
-registerBlockType('ekiline-collection/ekiline-carousel-blocks', {
+registerBlockType('ekiline-block-collection/ekiline-carousel-blocks', {
   /**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */
@@ -76,9 +76,9 @@ registerBlockType('ekiline-collection/ekiline-carousel-blocks', {
 	 * Parametros de alta.
 	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/
 	 */
-  title: __('Carousel Blocks', 'ekiline-collection'),
+  title: __('Carousel Blocks', 'ekiline-block-collection'),
   icon: customIcon,
-  description: __('Customize the carousel slide by slide, with existing blocks, full control.', 'ekiline-collection'),
+  description: __('Customize the carousel slide by slide, with existing blocks, full control.', 'ekiline-block-collection'),
   category: 'media',
   supports: {
     inserter: true,
@@ -148,12 +148,12 @@ registerBlockType('ekiline-collection/ekiline-carousel-blocks', {
   edit: (props) => {
     const { attributes, setAttributes } = props
 
-    const PARENT_ALLOWED_BLOCKS = ['ekiline-collection/ekiline-carousel-blocks-content']
+    const PARENT_ALLOWED_BLOCKS = ['ekiline-block-collection/ekiline-carousel-blocks-content']
     const CHILD_TEMPLATE = [
-      ['ekiline-collection/ekiline-carousel-blocks-content', {
+      ['ekiline-block-collection/ekiline-carousel-blocks-content', {
         className: 'carousel-item active'
       }],
-      ['ekiline-collection/ekiline-carousel-blocks-content', {
+      ['ekiline-block-collection/ekiline-carousel-blocks-content', {
         className: 'carousel-item'
       }]
     ]
@@ -183,9 +183,9 @@ registerBlockType('ekiline-collection/ekiline-carousel-blocks', {
         <InspectorControls>
 
           {/* Caracteristicas de carrusel, controles. */}
-          <PanelBody title={__('Carousel Look', 'ekiline-collection')} initialOpen>
+          <PanelBody title={__('Carousel Look', 'ekiline-block-collection')} initialOpen>
             <RangeControl
-              label={__('Columns', 'ekiline-collection')}
+              label={__('Columns', 'ekiline-block-collection')}
               value={attributes.SetColumns}
               onChange={(newval) =>
 							  setAttributes({ SetColumns: parseInt(newval) })}
@@ -194,27 +194,27 @@ registerBlockType('ekiline-collection/ekiline-carousel-blocks', {
             />
 
             <ToggleControl
-              label={__('Show controls', 'ekiline-collection')}
+              label={__('Show controls', 'ekiline-block-collection')}
               checked={attributes.AddControls}
               onChange={(AddControls) =>
 							  setAttributes({ AddControls })}
             />
 
             <ToggleControl
-              label={__('Show indicators', 'ekiline-collection')}
+              label={__('Show indicators', 'ekiline-block-collection')}
               checked={attributes.AddIndicators}
               onChange={(AddIndicators) =>
 							  setAttributes({ AddIndicators })}
             />
 
             <ToggleControl
-              label={__('Auto start', 'ekiline-collection')}
+              label={__('Auto start', 'ekiline-block-collection')}
               checked={attributes.SetAuto}
               onChange={(SetAuto) => setAttributes({ SetAuto })}
             />
 
             <TextControl
-              label={__('Transition in milliseconds', 'ekiline-collection')}
+              label={__('Transition in milliseconds', 'ekiline-block-collection')}
               type='number'
               value={attributes.SetTime}
               onChange={(newval) =>
@@ -223,25 +223,25 @@ registerBlockType('ekiline-collection/ekiline-carousel-blocks', {
             />
 
             <SelectControl
-              label={__('Animation type', 'ekiline-collection')}
+              label={__('Animation type', 'ekiline-block-collection')}
               value={attributes.SetAnimation}
               options={[
-							  { label: __('Default', 'ekiline-collection'), value: '' },
-							  { label: __('Fade', 'ekiline-collection'), value: 'fade' },
-							  { label: __('Vertical', 'ekiline-collection'), value: 'vertical' }
+							  { label: __('Default', 'ekiline-block-collection'), value: '' },
+							  { label: __('Fade', 'ekiline-block-collection'), value: 'fade' },
+							  { label: __('Vertical', 'ekiline-block-collection'), value: 'vertical' }
               ]}
               onChange={(SetAnimation) =>
 							  setAttributes({ SetAnimation })}
             />
 
             <TextControl
-              label={__('Height in pixels.', 'ekiline-collection')}
+              label={__('Height in pixels.', 'ekiline-block-collection')}
               type='number'
               value={attributes.SetHeight}
               onChange={(newval) =>
 							  setAttributes({ SetHeight: parseInt(newval) })}
               min={0}
-              help={(attributes.SetHeight === 0) ? __('Zero sets carousel at full display height.', 'ekiline-collection') : ''}
+              help={(attributes.SetHeight === 0) ? __('Zero sets carousel at full display height.', 'ekiline-block-collection') : ''}
             />
           </PanelBody>
           {/* fin controles  */}
@@ -325,11 +325,11 @@ registerBlockType('ekiline-collection/ekiline-carousel-blocks', {
  * - - carousel-blocks-content
  */
 
-registerBlockType('ekiline-collection/ekiline-carousel-blocks-content', {
-  title: __('Carousel Content', 'ekiline-collection'),
-  parent: ['ekiline-collection/ekiline-carousel-blocks'],
+registerBlockType('ekiline-block-collection/ekiline-carousel-blocks-content', {
+  title: __('Carousel Content', 'ekiline-block-collection'),
+  parent: ['ekiline-block-collection/ekiline-carousel-blocks'],
   icon: 'feedback',
-  description: __('Inner carousel content.', 'ekiline-collection'),
+  description: __('Inner carousel content.', 'ekiline-block-collection'),
   category: 'design',
   // Se ocupa contexto para pasar valores desde el padre, en este caso el ID.
   usesContext: ['ekiline-carousel-blocks/height'],
@@ -352,7 +352,7 @@ registerBlockType('ekiline-collection/ekiline-carousel-blocks-content', {
 
     // Cargar un preset.
     const CHILD_TEMPLATE = [
-      ['core/paragraph', { content: __('Add your blocks', 'ekiline-collection') }]
+      ['core/paragraph', { content: __('Add your blocks', 'ekiline-block-collection') }]
     ]
 
     // Precargar altura Padre en objetos internos.

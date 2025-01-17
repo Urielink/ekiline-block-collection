@@ -25,39 +25,39 @@
 // 	border-radius: 0.1325rem;
 // }
 
-[class*="wp-block-ekiline-collection-"] > .block-editor-inner-blocks {
+[class*="wp-block-ekiline-block-collection-"] > .block-editor-inner-blocks {
 	margin-right: var(--wp--preset--spacing--20);
 	margin-left: var(--wp--preset--spacing--20);
 }
 
 /* Accordion Styles */
-.wp-block-ekiline-collection-ekiline-accordion .child-item-accordion-header,
-.wp-block-ekiline-collection-ekiline-accordion .child-item-accordion-body {
+.wp-block-ekiline-block-collection-ekiline-accordion .child-item-accordion-header,
+.wp-block-ekiline-block-collection-ekiline-accordion .child-item-accordion-body {
 	padding: 1rem;
 }
-.wp-block-ekiline-collection-ekiline-accordion .child-item-accordion-header p,
-.wp-block-ekiline-collection-ekiline-accordion .child-item-accordion-body *:first-child{
+.wp-block-ekiline-block-collection-ekiline-accordion .child-item-accordion-header p,
+.wp-block-ekiline-block-collection-ekiline-accordion .child-item-accordion-body *:first-child{
 	margin: 0px;
 }
 
-.wp-block-ekiline-collection-ekiline-accordion .child-item-accordion-header{
+.wp-block-ekiline-block-collection-ekiline-accordion .child-item-accordion-header{
 	border-bottom: var(--ebc-borde-marco);
 }
 
 
 
-// .wp-block-ekiline-collection-ekiline-accordion .block-editor-inner-blocks > div > [data-type*="ekiline-collection"] {
+// .wp-block-ekiline-block-collection-ekiline-accordion .block-editor-inner-blocks > div > [data-type*="ekiline-collection"] {
 // 	border-left: var(--ebc-borde-modulo);
 // 	border-right: var(--ebc-borde-modulo);
 // 	border-top: var(--ebc-borde-modulo);
 // 	border-bottom: 1px solid transparent;
 // }
-// .wp-block-ekiline-collection-ekiline-accordion .block-editor-inner-blocks > div > [data-type*="ekiline-collection"]:last-child {
+// .wp-block-ekiline-block-collection-ekiline-accordion .block-editor-inner-blocks > div > [data-type*="ekiline-collection"]:last-child {
 // 	border-bottom: var(--ebc-borde-modulo);
 // }
 
 /* Collapse Styles */
-.wp-block-ekiline-collection-ekiline-collapse .item-title {
+.wp-block-ekiline-block-collection-ekiline-collapse .item-title {
 	border-bottom: var(--ebc-borde-titulo);
 }
 
@@ -69,14 +69,17 @@
 .editor-collapse-route.has-anchor {
 	background-color: #efefef;
 }
+.editor-collapse-route.has-anchor *{
+	margin-bottom: 0px;
+}
 
 /* Popover(s) Styles */
-.wp-block-ekiline-collection-ekiline-popovers {
+.wp-block-ekiline-block-collection-ekiline-popovers {
 	border: 2px solid #000;
 	background-color: #ffff00;
 }
 
-.wp-block-ekiline-collection-ekiline-popovers .item-title {
+.wp-block-ekiline-block-collection-ekiline-popovers .item-title {
 	border-bottom: var(--ebc-borde-titulo);
 }
 
@@ -88,18 +91,21 @@
 .editor-popovers-route.has-anchor {
 	background-color: #efefef;
 }
+.editor-popovers-route.has-anchor *{
+	margin-bottom: 0px;
+}
 
 /* Progress */
-.wp-block-ekiline-collection-ekiline-progress.has-child-selected {
+.wp-block-ekiline-block-collection-ekiline-progress.has-child-selected {
 	border: 1px solid #000000;
 }
 
-.wp-block-ekiline-collection-ekiline-progress .block-editor-inner-blocks {
+.wp-block-ekiline-block-collection-ekiline-progress .block-editor-inner-blocks {
 	background-color: #e9ecef;
 	height: 100%;
 }
 
-.wp-block-ekiline-collection-ekiline-progress .block-editor-block-list__layout {
+.wp-block-ekiline-block-collection-ekiline-progress .block-editor-block-list__layout {
 	display: flex;
 	justify-content: flex-start;
 	align-content: stretch !important;
@@ -107,7 +113,7 @@
 	overflow: hidden;
 }
 
-.wp-block-ekiline-collection-ekiline-progress
+.wp-block-ekiline-block-collection-ekiline-progress
 	.block-editor-block-list__layout
 	> .wp-block {
 	border-right: 1px solid #c9c9c9;
@@ -116,7 +122,7 @@
 	max-width: 100% !important;
 }
 
-.wp-block-ekiline-collection-ekiline-progress
+.wp-block-ekiline-block-collection-ekiline-progress
 	.block-editor-block-list__layout
 	> .wp-block
 	> .wp-block.item-progress {
@@ -128,14 +134,14 @@
 	align-items: center;
 	justify-content: center;
 }
-.wp-block-ekiline-collection-ekiline-progress
+.wp-block-ekiline-block-collection-ekiline-progress
 	.block-editor-block-list__layout
 	> .wp-block
 	> .wp-block.item-progress.is-selected {
 	border: 1px solid #000;
 }
 
-.wp-block-ekiline-collection-ekiline-progress
+.wp-block-ekiline-block-collection-ekiline-progress
 	.block-editor-block-list__layout
 	> .wp-block
 	> .wp-block.item-progress
@@ -145,16 +151,16 @@
 }
 
 /* toast */
-.wp-block-ekiline-collection-ekiline-toast .toast-item {
+.wp-block-ekiline-block-collection-ekiline-toast .toast-item {
 	border: 1px solid #c8c8c8;
 }
-.wp-block-ekiline-collection-ekiline-toast .toast-item .item-title {
+.wp-block-ekiline-block-collection-ekiline-toast .toast-item .item-title {
 	border-bottom: var(--ebc-borde-titulo);
   padding-bottom: 1rem;
 }
 
 /* tabs */
-.wp-block-ekiline-collection-ekiline-tabs.tabs-wrapper.wp-block,
+.wp-block-ekiline-block-collection-ekiline-tabs.tabs-wrapper.wp-block,
 .tabs-wrapper.wp-block {
 	margin-top: initial;
 }
@@ -204,21 +210,24 @@
 .editor-modal-route.has-anchor {
 	background-color: #efefef;
 }
+.editor-modal-route.has-anchor *{
+	margin-bottom: 0px;
+}
 .editor-modal-header, .editor-modal-footer, .editor-modal-body{
 	padding: .2rem .5rem;
 }
 .editor-modal-route, .editor-modal-route.has-anchor{
 	padding: .2rem 1rem;
 }
-[class*="wp-block-ekiline-collection-"].group-modal > .block-editor-inner-blocks {
+[class*="wp-block-ekiline-block-collection-"].group-modal > .block-editor-inner-blocks {
 	margin-left: 0px;
 	margin-right: 0px;
 }
 
 /* Carousel */
 
-.wp-block-ekiline-collection-ekiline-carousel,
-.wp-block-ekiline-collection-ekiline-carousel-extra {
+.wp-block-ekiline-block-collection-ekiline-carousel,
+.wp-block-ekiline-block-collection-ekiline-carousel-extra {
 	padding: 1px;
 	background-color: rgba(0, 0, 0, 0.2);
 }
@@ -547,7 +556,7 @@
 }
 .editor-offcanvas-body {
 	padding-top: 10px;
-	padding-bottom: 10px;
+	padding-bottom: 0px;
 }
 
 .editor-offcanvas-route:not(.has-anchor) {
@@ -557,6 +566,9 @@
 
 .editor-offcanvas-route.has-anchor {
 	background-color: #efefef;
+}
+.editor-offcanvas-route.has-anchor *{
+	margin-bottom: 0px;
 }
 
 /* Carrusel de bloques */

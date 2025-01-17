@@ -50,9 +50,9 @@ import save from './save';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-registerBlockType( 'ekiline-collection/ekiline-collection', {
+registerBlockType( 'ekiline-block-collection/ekiline-startup-block', {
 	apiVersion: 2,
-	title: __('Ekiline Collection', 'ekiline-collection'),
+	title: __('Ekiline Startup Block', 'ekiline-block-collection'),
 	icon: customIcon,
 	category: 'design',
 	/**
