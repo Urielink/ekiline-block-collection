@@ -30,6 +30,5 @@ node_modules/
 .env
 
 # mantenimiento
-# deprecated/
-# src/carousel-extra/buscador-entradas.js
+deprecated/
 .DS_Store
