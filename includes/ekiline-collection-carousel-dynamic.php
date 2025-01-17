@@ -31,13 +31,16 @@ function ekiline_bc_carousel_dynamic() {
     // $asset_file = include( plugin_dir_path( __FILE__ ) . 'build/index.asset.php');
     $asset_file = include( plugin_dir_path( __FILE__ ) . '../build/index.asset.php');
 
-    wp_register_script(
-        'ekiline-carousel-dynamic',
-        plugins_url( 'build/block.js', __FILE__ ),
-        $asset_file['dependencies'],
-        $asset_file['version'],
-        true
-    );
+    // // Error: No se encuentra el script.
+    // // Solucion temporal: desactivar ya está registrado como un grupo.
+    // wp_register_script(
+    //     'ekiline-carousel-dynamic',
+    //     // plugins_url( 'build/block.js', __FILE__ ),
+    //     plugins_url( '../build/index.js', __FILE__ ),
+    //     $asset_file['dependencies'],
+    //     $asset_file['version'],
+    //     true
+    // );
 
     register_block_type( 'ekiline-block-collection/ekiline-carousel-dynamic', array(
         'api_version' => 3,

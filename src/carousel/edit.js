@@ -145,6 +145,8 @@ export default function Edit(props) {
 									SetAmount: parseInt( newval ),
 								} )
 							}
+							min={2}
+							max={20}
 						/>
 					) }
 
@@ -183,9 +185,9 @@ export default function Edit(props) {
 						/>
 					) }
 
-					{ 'none' !== attributes.FindBlock && (
+					{ 'posts' === attributes.ChooseType && 'none' !== attributes.FindBlock && (
 						<ToggleControl
-							label={ __( 'Show post if there is no block', 'ekiline-block-collection' ) }
+							label={ __( 'Show posts even if there are no blocks', 'ekiline-block-collection' ) }
 							checked={ attributes.AllowMixed }
 							onChange={ ( AllowMixed ) =>
 								setAttributes( { AllowMixed } )
@@ -224,7 +226,7 @@ export default function Edit(props) {
 				{/* Opcion de controles */}
 				{ attributes.SetColumns === 1
 					&& (<ToggleControl
-						label={ __( 'Show text indicators', 'ekiline-block-collection' ) }
+						label={ __( 'Add text controls', 'ekiline-block-collection' ) }
 						checked={ attributes.AddIndicatorsText }
 						onChange={ ( AddIndicatorsText ) =>
 							setAttributes( { AddIndicatorsText } )
@@ -278,12 +280,13 @@ export default function Edit(props) {
 					/>
 
 					<TextControl
-						label={ __( 'Height in pixels, set zero to see full display height.', 'ekiline-block-collection' ) }
+						label={ __( 'Height in pixels, set -1 to see the full height of the screen on the device.', 'ekiline-block-collection' ) }
 						type="number"
 						value={ attributes.SetHeight }
 						onChange={ ( newval ) =>
 							setAttributes( { SetHeight: parseInt( newval ) } )
 						}
+						min={-1}
 					/>
 				</PanelBody>
 			</InspectorControls>

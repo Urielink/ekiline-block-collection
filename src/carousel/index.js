@@ -151,7 +151,7 @@ registerBlockType( 'ekiline-block-collection/ekiline-carousel', {
 		},
 		SetHeight: {
 			type: 'number',
-			default: '480',
+			default: '500',
 		},
 		ShowCaption: {
 			type: 'boolean',
