@@ -195,6 +195,7 @@ function ekiline_collection_carousel_posts($block_attributes = array())
             }
 
             $info            = array();
+            $info['id']      = get_the_id();
             $info['title']   = get_the_title();
             $info['plink']   = get_the_permalink();
             $info['content'] = get_the_content();
@@ -255,6 +256,7 @@ function ekiline_collection_carousel_images($ids = array())
     $carousel = array();
     foreach ($ids as $index => $image) {
         $info             = array();
+        $info['id']       = $image;
         $info['title']    = get_the_title($image);
         $info['image']    = wp_get_attachment_url($image); // seleccion general de url de attachment.
         $info['mimetype'] = get_post_mime_type($image); // conocer tipo de archivo llamado.
@@ -321,7 +323,7 @@ function ekiline_collection_carousel_html_v2($carousel_data = array(), $block_at
                 esc_attr($active)
             );
         }
-        $output .= '</div>';
+        $output .= '</div><!--carousel-indicators-->';
     }
 
     $output .= '<div class="carousel-inner">';
@@ -348,18 +350,48 @@ function ekiline_collection_carousel_html_v2($carousel_data = array(), $block_at
                         esc_url($slide['image'])
                     );
                 } else {
-                    // 18-01-23: permitir enlaces solo en imagenes, descartar protocolo https o permitir abrir en nueva ventana.
-                    if (false !== $setlinks && $slide['content']) {
-                        $output .= wp_kses_post(ekiline_set_media_link($slide['content'], $slide['image'], $slide['alt'], $slide['title']));
-                    } else {
-                        $output .= sprintf(
-                            '<img class="carousel-media img-fluid" src="%s" alt="%s" title="%s" loading="%s">',
-                            esc_url($slide['image']),
-                            esc_html($slide['alt']),
-                            esc_html($slide['title']),
-                            esc_attr($img_load)
-                        );
+                    // Optimizado, argumentos para imagen.
+                    $carousel_image_args = array(
+                            'class' => 'attachment-full size-full wp-post-image carousel-media img-fluid',
+                            'alt'     => esc_html($slide['alt']),
+                            'title'   => esc_html($slide['title']),
+                            'loading' => esc_attr($img_load)
+                    );
+
+                    // Para posts usar get_the_post_thumbnail.
+                    $img_thumb_obj = get_the_post_thumbnail( $slide['id'], 'full', $carousel_image_args );
+
+                    // Para galerias y medios wp_get_attachment_image.
+                    if ('posts' !== $block_attributes['ChooseType']) {
+
+                        $img_thumb_obj = wp_get_attachment_image( $slide['id'], 'full', true,  $carousel_image_args );
+
+                        if ( false !== $setlinks && $slide['content'] ){
+                            // Agregar enlaces.
+                            $field_img_desc = $slide['content']; // from image description field.
+                            $link_target    = '_self'; // default self.
+                            $desc_string    = explode(' ', trim($field_img_desc))[0]; // find url link.
+
+                            // Verificar que cuente con protocolo http.
+                            if (substr($desc_string, 0, 4) === 'http') {
+                                // Verificar si necesita que el enlace se abra en una nueva ventana.
+                                if (strpos($desc_string, '/_blank') !== false) {
+                                    $field_img_desc = str_replace('/_blank', '', $field_img_desc);
+                                    $link_target   = '_blank';
+                                }
+                                // Devolver el medio en un enlace.
+                                $img_thumb_obj = sprintf(
+                                    '<a href="%s" target="%s">%s</a>',
+                                    esc_html($field_img_desc),
+                                    esc_attr($link_target),
+                                    $img_thumb_obj
+                                );
+                            }
+                        }
                     }
+
+                    $output .= $img_thumb_obj;
+
                 }
             }
 
@@ -382,28 +414,28 @@ function ekiline_collection_carousel_html_v2($carousel_data = array(), $block_at
                     $output .= sprintf('<p>%s</p>', wp_kses_post($slide['excerpt']));
                 }
 
-                $output .= '</div>';
+                $output .= '</div><!--carousel-caption-->';
             }
         }
 
-        $output .= '</div>';
+        $output .= '</div><!--carousel-item-->';
     }
 
-    $output .= '</div>';
+    $output .= '</div><!--carousel-inner-->';
 
     if (false !== $control) {
         $output .= sprintf(
             '<button type="button" class="carousel-control-prev" data-bs-target="#%s" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
-            </button>',
+            </button><!--carousel-control-prev-->',
             esc_html($uniq_id)
         );
         $output .= sprintf(
             '<button type="button" class="carousel-control-next" data-bs-target="#%s" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
-            </button>',
+            </button><!--carousel-control-next-->',
             esc_html($uniq_id)
         );
     }
@@ -422,39 +454,12 @@ function ekiline_collection_carousel_html_v2($carousel_data = array(), $block_at
                 esc_html($indicator['title'])
             );
         }
-        $output .= '</ul>';
+        $output .= '</ul><!--carousel-text-indicators-->';
     }
+
+    $output .= '</div><!--carousel-->';
+
 
     // Devolver el HTML generado
     return $output;
-}
-
-/**
- * Funcion auxiliar, detectar url y adaptar a un enlace con o sin atributo.
- *
- * @param string $img_desc media description field content.
- * @param string $img_url media url.
- * @param string $img_alt media alt content.
- * @param string $img_title media title content.
- *
- * @return string html media code with/without link.
- */
-function ekiline_set_media_link($img_desc, $img_url, $img_alt, $img_title)
-{
-    $media  = '<img class="carousel-media img-fluid" src="' . esc_url($img_url) . '" alt="' . esc_html($img_alt) . '" title="' . esc_html($img_title) . '" loading="lazy">';
-    $target = '_self';
-    // Verificar el texto en el campo, solo debe existir un enlace.
-    $desc_str = explode(' ', trim($img_desc))[0];
-
-    // Verificar que cuente con protocolo http.
-    if (substr($desc_str, 0, 4) === 'http') {
-        // Verificar si necesita que el enlace se abra en una nueva ventana.
-        if (strpos($desc_str, '/_blank') !== false) {
-            $img_desc = str_replace('/_blank', '', $img_desc);
-            $target   = '_blank';
-        }
-        // Devolver el medio en un enlace.
-        $media = '<a href="' . esc_html($img_desc) . '" target="' . $target . '">' . $media . '</a>';
-    }
-    return $media;
 }

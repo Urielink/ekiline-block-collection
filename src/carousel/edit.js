@@ -244,6 +244,12 @@ export default function Edit (props) {
 							}
   checked={attributes.SetLinks}
   onChange={(SetLinks) => setAttributes({ SetLinks })}
+  help={
+    attributes.SetLinks && (attributes.ChooseType === 'posts'
+    ? __('Use default post url', 'ekiline-block-collection')
+    : __('Use "description input" in media attributes for a custom url', 'ekiline-block-collection'))
+  }
+
 					/> )}
 
           <TextControl
