@@ -359,14 +359,14 @@ function ekiline_collection_carousel_html_v2($carousel_data = array(), $block_at
                     );
 
                     // Para posts usar get_the_post_thumbnail.
-                    $img_thumb_obj = get_the_post_thumbnail( $slide['id'], 'full', $carousel_image_args );
+                    $img_thumb_obj = get_the_post_thumbnail($slide['id'], 'full', $carousel_image_args);
 
                     // Para galerias y medios wp_get_attachment_image.
                     if ('posts' !== $block_attributes['ChooseType']) {
 
-                        $img_thumb_obj = wp_get_attachment_image( $slide['id'], 'full', true,  $carousel_image_args );
+                        $img_thumb_obj = wp_get_attachment_image($slide['id'], 'full', true, $carousel_image_args);
 
-                        if ( false !== $setlinks && $slide['content'] ){
+                        if (false !== $setlinks && $slide['content']) {
                             // Agregar enlaces.
                             $field_img_desc = $slide['content']; // from image description field.
                             $link_target    = '_self'; // default self.
