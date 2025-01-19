@@ -65,6 +65,13 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Changelog ==
 
+= 2.0.0 =
+* Major update:
+* Refactoring of dynamic carousel due to XSS vulnerability.
+* Text and language adjustment.
+* New information pages added.
+* New options to disable styles and scripts.
+
 = 1.0.7 =
 * Security Fix: XSS vulnerability in dynamic carousel.
 
