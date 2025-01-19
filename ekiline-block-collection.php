@@ -6,12 +6,29 @@
  * Requires PHP:      7.0
  * Version:           2.0.0
  * Author:            Uri Lazcano (Urielink)
+ * Author URI:        https://ekiline.com/ekiline-block-collection/
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/license-list.html#GPLv2
  * Text Domain:       ekiline-block-collection
  *
  * @package           ekiline-block-collection
  */
+
+/**
+ * Agrega un enlace de configuracion en la pagina de plugins.
+ */
+function ekiline_block_collection_settings_links( $links_array, $plugin_file_name ){
+    // Enlace.
+    $site_admin_plugin_page_url = admin_url('admin.php?page=ekiline-block-collection');
+    $new_link = sprintf('<a href="%s">%s</a>', $site_admin_plugin_page_url, __('Settings', 'ekiline-block-collection'));
+
+    // Agregar al arreglo de enlaces.
+	if( strpos( $plugin_file_name, basename( __FILE__ ) ) ) {
+		array_unshift( $links_array, $new_link );
+	}
+	return $links_array;
+}
+add_filter( 'plugin_action_links', 'ekiline_block_collection_settings_links', 25, 2 );
 
 /**
  * Registers the block using the metadata loaded from the `block.json` file.

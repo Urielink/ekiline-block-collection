@@ -1,0 +1,1084 @@
+# Copyright (C) 2025 Uri Lazcano (Urielink)
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Ekiline Block Collection 2.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ekiline-block-collection\n"
+"POT-Creation-Date: 2025-01-19T06:23:15+00:00\n"
+"PO-Revision-Date: 2025-01-19 00:53-0600\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.5\n"
+"X-Domain: ekiline-block-collection\n"
+
+#. Plugin Name of the plugin
+#: ekiline-block-collection.php
+msgid "Ekiline Block Collection"
+msgstr "Ekiline Block Collection"
+
+#. Description of the plugin
+#: ekiline-block-collection.php
+msgid "Actions and blocks based on bootstrap 5 (carousel, collapse and more). Includes Bootstrap library. Support this project to add new features and expand a customer service branch."
+msgstr "Acciones y bloques basados ​​en bootstrap 5 (carrusel, colapse y más). Incluye la librería Bootstrap. Apoya este proyecto para agregar nuevas características y expandir una rama de servicio al cliente."
+
+#. Author of the plugin
+#: ekiline-block-collection.php
+msgid "Uri Lazcano (Urielink)"
+msgstr "Uri Lazcano (Urielink)"
+
+#. Author URI of the plugin
+#: ekiline-block-collection.php
+msgid "https://ekiline.com/ekiline-block-collection/"
+msgstr "https://ekiline.com/ekiline-block-collection/"
+
+#: ekiline-block-collection.php:23 includes/ekiline-collection-info.php:114
+msgid "Settings"
+msgstr "Configuración"
+
+#: includes/ekiline-collection-carousel.php:136
+msgid "Select media."
+msgstr "Seleccionar medio."
+
+#: includes/ekiline-collection-carousel.php:277
+msgid "No content data."
+msgstr "No hay datos de contenido."
+
+#: includes/ekiline-collection-info.php:30
+msgid "Ekiline BC Options"
+msgstr "Opciones de Ekiline BC"
+
+#: includes/ekiline-collection-info.php:31
+msgid "Ekiline BC"
+msgstr "Ekiline BC"
+
+#: includes/ekiline-collection-info.php:42
+#: includes/ekiline-collection-info.php:43
+msgid "About"
+msgstr "Acerca de"
+
+#: includes/ekiline-collection-info.php:69
+msgid "Unauthorized, invalid nonce."
+msgstr "Nonce no autorizado, no válido."
+
+#: includes/ekiline-collection-info.php:107
+msgid "Ekiline Block Collection."
+msgstr "Ekiline Block Collection."
+
+#: includes/ekiline-collection-info.php:116
+msgid "Disable styles or scripts."
+msgstr "Deshabilitar estilos o scripts."
+
+#: includes/ekiline-collection-info.php:125
+msgid "Disable Bootstrap."
+msgstr "Deshabilitar Bootstrap."
+
+#: includes/ekiline-collection-info.php:127
+msgid "Sometimes your project has duplicate styles and scripts, incorporated into other themes or plugins."
+msgstr "En ocasiones, tu proyecto tiene estilos y scripts duplicados, incorporados en otros temas o plugins."
+
+#: includes/ekiline-collection-info.php:128
+msgid "If you detect this conflict you can disable the styles and scripts of this plugin."
+msgstr "Si detectas este conflicto, puedes deshabilitar los estilos y scripts de este plugin."
+
+#: includes/ekiline-collection-info.php:148
+msgid "Active CSS"
+msgstr "CSS activo"
+
+#: includes/ekiline-collection-info.php:149
+msgid "Inactive CSS"
+msgstr "CSS inactivo"
+
+#: includes/ekiline-collection-info.php:160
+msgid "Active JS"
+msgstr "JS activo"
+
+#: includes/ekiline-collection-info.php:161
+msgid "Inactive JS"
+msgstr "JS inactivo"
+
+#: includes/ekiline-collection-info.php:164
+msgid "Save Bootstrap settings."
+msgstr "Guardar configuración de Bootstrap."
+
+#: includes/ekiline-collection-info.php:171
+#: includes/ekiline-collection-info.php:177
+msgid "Docs"
+msgstr "Documentación"
+
+#: includes/ekiline-collection-info.php:174
+msgid "About this plugin"
+msgstr "Acerca de este plugin"
+
+#: includes/ekiline-collection-info.php:180
+msgid "Website"
+msgstr "Sitio web"
+
+#: includes/ekiline-collection-info.php:203
+msgid "About Ekiline Block Collection"
+msgstr "Acerca de Ekiline Block Collection"
+
+#: includes/ekiline-collection-info.php:211
+msgid "Thanks for using this plugin!"
+msgstr "¡Gracias por usar este plugin!"
+
+#: includes/ekiline-collection-info.php:213
+msgid "Find more information to improve your skills when use it."
+msgstr "Encuentra más información para mejorar tus habilidades al usarlo."
+
+#: includes/ekiline-collection-info.php:220
+msgid "Add an extra to the creation and delivery of your projects."
+msgstr "Agrega un extra a la creación y entrega de tus proyectos."
+
+#: includes/ekiline-collection-info.php:223
+msgid "Quick use guide in Keynote or Powerpoint to freely customize and deliver to your clients."
+msgstr "Guía rápida de uso en Keynote o Powerpoint para personalizar y entregar libremente a tus clientes."
+
+#: includes/ekiline-collection-info.php:225
+msgid "More design elements, CSS, HTML and JS available to grow your project."
+msgstr "Más elementos de diseño, CSS, HTML y JS disponibles para hacer crecer tu proyecto."
+
+#: includes/ekiline-collection-info.php:227
+msgid "Ekiline Blocks, plugin with carousel and more options in page editor."
+msgstr "Ekiline Blocks, plugin con carrusel y más opciones en editor de páginas."
+
+#: includes/ekiline-collection-info.php:229
+msgid "Complete clean theme, no warnings or messages."
+msgstr "Tema completamente limpio, sin advertencias ni mensajes."
+
+#: includes/ekiline-collection-info.php:232
+msgid "Buy and download"
+msgstr "Compra y descarga"
+
+#: includes/ekiline-collection-info.php:233
+msgid "FundMe"
+msgstr "FundMe"
+
+#. translators: %1$s is replaced with links data
+#: includes/ekiline-collection-info.php:239
+msgid "%1$s with Ekiline and %2$s, %3$s."
+msgstr "%1$s con Ekiline y %2$s, %3$s."
+
+#: includes/ekiline-collection-info.php:240
+msgid "Make money"
+msgstr "Gana dinero"
+
+#: includes/ekiline-collection-info.php:241
+msgid "fund its development"
+msgstr "financia su desarrollo"
+
+#: includes/ekiline-collection-info.php:242
+msgid "discover how"
+msgstr "descubre cómo"
+
+#: includes/ekiline-collection-info.php:250
+msgid "About Ekiline"
+msgstr "Acerca de Ekiline"
+
+#: includes/ekiline-collection-info.php:251
+msgid "Ekiline simplifies the creation of a website with WordPress, it is a working method that brings together the standard practices of the internet industry, to facilitate the tasks of planning, design, development and optimization. For more information visit ekiline.com"
+msgstr "Ekiline simplifica la creación de un sitio web con WordPress, es un método de trabajo que reúne las prácticas estándar de la industria de internet, para facilitar las tareas de planeación, diseño, desarrollo y optimización. Para más información visita ekiline.com"
+
+#: includes/ekiline-collection-info.php:252
+msgid "About Uri Lazcano"
+msgstr "Acerca de Uri Lazcano"
+
+#: includes/ekiline-collection-info.php:255
+msgid "Frontend designer established in Mexico City. 10 years developing websites and 10 more years of experience in graphic design for advertising. Check my career and work."
+msgstr "Diseñador frontend establecido en la Ciudad de México. 10 años desarrollando sitios web y 10 años más de experiencia en diseño gráfico para publicidad. Consulta mi trayectoria y trabajo."
+
+#: includes/ekiline-collection-info.php:258
+msgid "WordPress"
+msgstr "WordPress"
+
+#: includes/ekiline-collection-info.php:259
+msgid "Github"
+msgstr "Github"
+
+#: includes/ekiline-collection-info.php:260
+msgid "Linkedin"
+msgstr "Linkedin"
+
+#: includes/ekiline-collection-info.php:261
+msgid "Behance"
+msgstr "Behance"
+
+#: includes/ekiline-collection-info.php:262
+msgid "B I X N I A"
+msgstr "B I X N I A"
+
+#: includes/ekiline-collection-info.php:270
+msgid "Ekiline docs"
+msgstr "Documentación de Ekiline"
+
+#: includes/ekiline-collection-info.php:273
+msgid "Install"
+msgstr "Instalar"
+
+#: includes/ekiline-collection-info.php:274
+msgid "Customize"
+msgstr "Personalizar"
+
+#: includes/ekiline-collection-info.php:275
+msgid "Elements and blocks"
+msgstr "Elementos y bloques"
+
+#: includes/ekiline-collection-info.php:276
+msgid "Compatibility"
+msgstr "Compatibilidad"
+
+#: includes/ekiline-collection-info.php:298
+msgid "Limited liability:"
+msgstr "Responsabilidad limitada:"
+
+#: includes/ekiline-collection-info.php:299
+msgid "As a courtesy, we provide information on how to use certain third-party products, but we do not directly support their use and we are not responsible for the functions, reliability or compatibility of such products. The names, trademarks and logos of third parties are registered trademarks of their respective owners."
+msgstr "Como cortesía, proporcionamos información sobre cómo usar ciertos productos de terceros, pero no apoyamos directamente su uso y no somos responsables de las funciones, confiabilidad o compatibilidad de dichos productos. Los nombres, marcas comerciales y logotipos de terceros son marcas comerciales registradas de sus respectivos propietarios."
+
+#. translators: %1$s is replaced with date data
+#: includes/ekiline-collection-info.php:311
+msgid "&copy; Copyright %1$s Ekiline"
+msgstr "&copy; Copyright %1$s Ekiline"
+
+#: includes/ekiline-collection-info.php:312
+msgid "All rights reserved. Ekiline developed by"
+msgstr "Todos los derechos reservados. Ekiline desarrollado por"
+
+#: includes/ekiline-collection-info.php:313
+msgid "BIXNIA"
+msgstr "BIXNIA"
+
+#: build/index.js:1 src/accordion/index.js:74
+msgid "Accordion"
+msgstr "Acordeón"
+
+#: build/index.js:1 src/accordion/index.js:76
+msgid "Show your content as an accordion."
+msgstr "Muestra tu contenido como un acordeón."
+
+#: build/index.js:1 src/accordion/index.js:125
+msgid "Accordion Settings"
+msgstr "Configuración de acordeón"
+
+#: build/index.js:1 src/accordion/index.js:127
+msgid "Use bootstrap default style."
+msgstr "Usa el estilo predeterminado de bootstrap."
+
+#: build/index.js:1 src/accordion/index.js:168
+msgid "Accordion item"
+msgstr "Elemento de acordeón"
+
+#: build/index.js:1 src/accordion/index.js:171 src/accordion/index.js:287
+#: src/accordion/index.js:385
+msgid "Set tittle and content in your accordion container"
+msgstr "Establece el título y el contenido en tu contenedor de acordeón"
+
+#: build/index.js:1 src/accordion/index.js:196 src/accordion/index.js:311
+#: src/accordion/index.js:424
+msgid "Item title."
+msgstr "Título del elemento."
+
+#: build/index.js:1 src/accordion/index.js:236
+msgid "Accordion Item Params"
+msgstr "Parámetros del elemento de acordeón"
+
+#: build/index.js:1 src/accordion/index.js:238
+msgid "Show element by default."
+msgstr "Mostrar el elemento de forma predeterminada."
+
+#: build/index.js:1 src/accordion/index.js:244
+msgid "Toggle."
+msgstr "Activar/desactivar."
+
+#: build/index.js:1 src/accordion/index.js:248
+msgid "Close previously active accordion elements."
+msgstr "Cerrar elementos de acordeón activos anteriormente."
+
+#: build/index.js:1 src/accordion/index.js:284
+msgid "Accordion item header"
+msgstr "Encabezado del elemento de acordeón"
+
+#: build/index.js:1 src/accordion/index.js:382
+msgid "Accordion item body"
+msgstr "Cuerpo del elemento de acordeón"
+
+#: build/index.js:1 src/accordion/index.js:438
+msgid "Item content."
+msgstr "Contenido del elemento."
+
+#: build/index.js:1 src/collapse/index.js:73 src/hooks/index.js:112
+#: src/hooks/index.js:266
+msgid "Collapse"
+msgstr "Contraer"
+
+#: build/index.js:1 src/collapse/index.js:75
+msgid "Set a collapse behavior block. You can activate from any button."
+msgstr "Establece un bloque de comportamiento de contraer. Puede activarlo desde cualquier botón."
+
+#: build/index.js:1 src/collapse/index.js:98
+msgid "Add your content"
+msgstr "Agregue su contenido"
+
+#: build/index.js:1 src/collapse/index.js:114 src/modal/index.js:184
+msgid "Add this #anchor to a button and its advanced options."
+msgstr "Agregue este #ancla a un botón y sus opciones avanzadas."
+
+#: build/index.js:1 src/collapse/index.js:122 src/modal/index.js:192
+msgid "Do not forget to add an anchor. "
+msgstr "No olvide agregar un ancla. "
+
+#: build/index.js:1 src/collapse/index.js:131
+msgid "Collapse Params"
+msgstr "Parámetros para contraer"
+
+#: build/index.js:1 src/collapse/index.js:133
+msgid "Horizontal collapse"
+msgstr "Contraer horizontal"
+
+#: build/index.js:1 src/popovers/index.js:66
+msgid "Popover"
+msgstr "Ventana emergente"
+
+#: build/index.js:1 src/popovers/index.js:68
+msgid "Add popovers to your links or buttons."
+msgstr "Agregue ventanas emergentes a sus enlaces o botones."
+
+#: build/index.js:1 src/popovers/index.js:78
+msgid "Popovers have rules added to the core buttons."
+msgstr "Las ventanas emergentes tienen reglas agregadas a los botones principales."
+
+#: build/index.js:1 src/popovers/index.js:79
+msgid "You need to create a button. And then text an anchor (#name) link."
+msgstr "Debe crear un botón y luego escribir un enlace de ancla (#name)."
+
+#: build/index.js:1 src/popovers/index.js:80
+msgid "This will allow you to use the advanced options for the button."
+msgstr "Esto le permitirá usar las opciones avanzadas para el botón."
+
+#: build/index.js:1 src/popovers/index.js:81
+msgid "You can remove this notice, it won't be published in your content."
+msgstr "Puede eliminar este aviso, no se publicará en su contenido."
+
+#: build/index.js:1 src/popovers/index.js:137
+msgid "Button to Popover (Ekiline)"
+msgstr "Botón a ventana emergente (Ekiline)"
+
+#: build/index.js:1 src/popovers/index.js:139
+msgid "Popover text to show."
+msgstr "Texto de ventana emergente para mostrar."
+
+#: build/index.js:1 src/popovers/index.js:145 src/popovers/index.js:148
+msgid "Popover position"
+msgstr "Posición de la ventana emergente"
+
+#: build/index.js:1 src/offcanvas/index.js:212 src/popovers/index.js:149
+msgid "Top"
+msgstr "Superior"
+
+#: build/index.js:1 src/modal/index.js:208 src/offcanvas/index.js:209
+#: src/popovers/index.js:150
+msgid "Right"
+msgstr "Derecha"
+
+#: build/index.js:1 src/modal/index.js:209 src/offcanvas/index.js:210
+#: src/popovers/index.js:151
+msgid "Bottom"
+msgstr "Inferior"
+
+#: build/index.js:1 src/modal/index.js:210 src/offcanvas/index.js:211
+#: src/popovers/index.js:152
+msgid "Left"
+msgstr "Izquierda"
+
+#: build/index.js:1 src/popovers/index.js:159
+msgid "Is tooltip"
+msgstr "Es tooltip"
+
+#: build/index.js:1 src/progress/index.js:82
+msgid "Progress"
+msgstr "Progreso"
+
+#: build/index.js:1 src/progress/index.js:84
+msgid "Show a bootstrap progress bar for your data."
+msgstr "Muestra una barra de progreso de arranque para sus datos."
+
+#: build/index.js:1 src/progress/index.js:126 src/progress/index.js:227
+msgid "Progress bar Settings"
+msgstr "Configuración de la barra de progreso"
+
+#: build/index.js:1 src/progress/index.js:128
+msgid "Height bar (pixels)"
+msgstr "Altura de barra (píxeles)"
+
+#: build/index.js:1 src/progress/index.js:175
+msgid "Progress data bar"
+msgstr "Barra de datos de progreso"
+
+#: build/index.js:1 src/progress/index.js:178
+msgid "Progress data, could be multiple bars between 1 to 100."
+msgstr "Datos de progreso, pueden ser múltiples barras entre 1 y 100."
+
+#: build/index.js:1 src/progress/index.js:229
+msgid "Data range min 1% max 100%"
+msgstr "Rango de datos mínimo 1% máximo 100%"
+
+#: build/index.js:1 src/progress/index.js:238
+msgid "Hide number in bar."
+msgstr "Ocultar número en la barra."
+
+#: build/index.js:1 src/progress/index.js:244
+msgid "Show stripes over background."
+msgstr "Mostrar franjas sobre el fondo."
+
+#: build/index.js:1 src/progress/index.js:250
+msgid "Show animation."
+msgstr "Mostrar animación."
+
+#: build/index.js:1 src/toast/index.js:66
+msgid "Toast"
+msgstr "Toast"
+
+#: build/index.js:1 src/toast/index.js:68
+msgid "Show small bootstrap-style notices."
+msgstr "Mostrar pequeños avisos de estilo bootstrap."
+
+#: build/index.js:1 src/toast/index.js:111
+msgid "Toast group options"
+msgstr "Opciones de grupo de Toast"
+
+#: build/index.js:1 src/toast/index.js:113
+msgid "Display position"
+msgstr "Mostrar posición"
+
+#: build/index.js:1 src/toast/index.js:116
+msgid "Bottom right"
+msgstr "Inferior derecha"
+
+#: build/index.js:1 src/toast/index.js:117
+msgid "Bottom left"
+msgstr "Inferior izquierda"
+
+#: build/index.js:1 src/toast/index.js:118
+msgid "Top right"
+msgstr "Superior derecha"
+
+#: build/index.js:1 src/toast/index.js:119
+msgid "Top left"
+msgstr "Superior izquierda"
+
+#: build/index.js:1 src/toast/index.js:157
+msgid "Ekiline toast item."
+msgstr "Elemento de toast de Ekiline."
+
+#: build/index.js:1 src/toast/index.js:160
+msgid "Each toast can be executed by time, at the end of scrolling, or with the cursor outside the window. You can stack as many as you need."
+msgstr "Cada toast se puede ejecutar por tiempo, al final del desplazamiento o con el cursor fuera de la ventana. Puede apilar tantos como necesite."
+
+#: build/index.js:1 src/toast/index.js:211
+msgid "Toast Params"
+msgstr "Parámetros de toast"
+
+#: build/index.js:1 src/toast/index.js:213
+msgid "Run by time"
+msgstr "Ejecutar por tiempo"
+
+#: build/index.js:1 src/modal/index.js:262 src/toast/index.js:220
+msgid "Run after page load "
+msgstr "Ejecutar después de la carga de la página "
+
+#: build/index.js:1 src/modal/index.js:262 src/toast/index.js:220
+msgid " milliseconds."
+msgstr " milisegundos."
+
+#: build/index.js:1 src/toast/index.js:221
+msgid " run immediately on page load."
+msgstr " ejecutar inmediatamente al cargar la página."
+
+#: build/index.js:1 src/toast/index.js:226
+msgid "Run at end of page scroll."
+msgstr "Ejecutar al final del desplazamiento de la página."
+
+#: build/index.js:1 src/toast/index.js:240
+msgid "Add toast title"
+msgstr "Agregar título de toast"
+
+#: build/index.js:1 src/tabs/index.js:96
+msgid "Tabs"
+msgstr "Pestañas"
+
+#: build/index.js:1 src/tabs/index.js:98
+msgid "Add a tabs for your posts, full control."
+msgstr "Agregue una pestaña para sus publicaciones, control total."
+
+#: build/index.js:1 src/tabs/index.js:161
+msgid "Tabs Nav Bar"
+msgstr "Barra de navegación de pestañas"
+
+#: build/index.js:1 src/tabs/index.js:164
+msgid "Tab navigation, add your links."
+msgstr "Navegación de pestañas, agregue sus enlaces."
+
+#: build/index.js:1 src/tabs/index.js:194
+msgid "Tab link 1"
+msgstr "Enlace de pestaña 1"
+
+#: build/index.js:1 src/tabs/index.js:197
+msgid "Tab link 2"
+msgstr "Enlace de pestaña 2"
+
+#: build/index.js:1 src/tabs/index.js:253
+msgid "Tab Link"
+msgstr "Enlace de pestaña"
+
+#: build/index.js:1 src/tabs/index.js:256
+msgid "Tab button link. Copy Anchor text and paste on Tab Content Anchor field."
+msgstr "Enlace de botón de pestaña. Copie el texto de anclaje y péguelo en el campo de anclaje de contenido de pestaña."
+
+#: build/index.js:1 src/tabs/index.js:271
+msgid "Tab link"
+msgstr "Enlace de pestaña"
+
+#: build/index.js:1 src/tabs/index.js:302
+msgid "Tab Link Params"
+msgstr "Parámetros de enlace de pestaña"
+
+#: build/index.js:1 src/tabs/index.js:304
+msgid "Copy this value in a Content Tab HTML anchor field."
+msgstr "Copie este valor en un campo de anclaje HTML de pestaña de contenido."
+
+#: build/index.js:1 src/tabs/index.js:398
+msgid "Tabs container"
+msgstr "Contenedor de pestañas"
+
+#: build/index.js:1 src/tabs/index.js:401
+msgid "All tabs add here."
+msgstr "Agregue todas las pestañas aquí."
+
+#: build/index.js:1 src/tabs/index.js:455
+msgid "Tab Content"
+msgstr "Contenido de pestaña"
+
+#: build/index.js:1 src/tabs/index.js:458
+msgid "Inner tab content. Find Tab Link anchor text, and paste on Anchor field."
+msgstr "Contenido de pestaña interna. Busque el texto de anclaje de enlace de pestaña y péguelo en el campo de anclaje."
+
+#: build/index.js:1 src/tabs/index.js:470
+msgid "Add your content and blocks, then copy anchor name to tab content block"
+msgstr "Agrega tu contenido y bloques, luego copia el nombre del ancla al bloque de contenido de la pestaña"
+
+#: build/index.js:1 src/hooks/index.js:113 src/hooks/index.js:267
+#: src/modal/index.js:92
+msgid "Modal"
+msgstr "Modal"
+
+#: build/index.js:1 src/modal/index.js:94 src/offcanvas/index.js:96
+msgid "Add your content here, then invoque with a link anchor #anchor."
+msgstr "Agrega tu contenido aquí, luego invoca con un ancla de enlace #anchor."
+
+#: build/index.js:1 src/modal/index.js:201
+msgid "Modal Params"
+msgstr "Parámetros del modal"
+
+#: build/index.js:1 src/modal/index.js:204
+msgid "Rise modal"
+msgstr "Lanzar modal"
+
+#: build/index.js:1 src/carousel-blocks/index.js:229
+#: src/carousel-extra/index.js:545 src/carousel/edit.js:267
+#: src/modal/index.js:207 src/modal/index.js:220 src/offcanvas/index.js:222
+#: src/offcanvas/index.js:236 src/offcanvas/index.js:271
+msgid "Default"
+msgstr "Predeterminado"
+
+#: build/index.js:1 src/modal/index.js:217
+msgid "Size modal"
+msgstr "Tamaño del modal"
+
+#: build/index.js:1 src/modal/index.js:221 src/offcanvas/index.js:223
+#: src/offcanvas/index.js:237 src/offcanvas/index.js:251
+msgid "Small"
+msgstr "Pequeño"
+
+#: build/index.js:1 src/modal/index.js:222 src/offcanvas/index.js:225
+#: src/offcanvas/index.js:239 src/offcanvas/index.js:253
+msgid "Large"
+msgstr "Grande"
+
+#: build/index.js:1 src/modal/index.js:223
+msgid "Extra Large"
+msgstr "Extra grande"
+
+#: build/index.js:1 src/modal/index.js:224 src/offcanvas/index.js:226
+#: src/offcanvas/index.js:240
+msgid "Full window"
+msgstr "Ventana completa"
+
+#: build/index.js:1 src/modal/index.js:231
+msgid "Center in window"
+msgstr "Centrar en la ventana"
+
+#: build/index.js:1 src/modal/index.js:237
+msgid "Enable background click to close"
+msgstr "Habilitar clic de fondo para cerrar"
+
+#: build/index.js:1 src/modal/index.js:243
+msgid "Enable ESC key to close"
+msgstr "Habilitar tecla ESC para cerrar"
+
+#: build/index.js:1 src/modal/index.js:249
+msgid "Show resize modal button"
+msgstr "Mostrar botón de cambio de tamaño del modal"
+
+#: build/index.js:1 src/modal/index.js:255
+msgid "Show with timer"
+msgstr "Mostrar con temporizador"
+
+#: build/index.js:1 src/modal/index.js:263
+msgid " do nothing."
+msgstr " no hacer nada."
+
+#: build/index.js:1 src/modal/index.js:310
+msgid "play btn"
+msgstr "botón de reproducción"
+
+#: build/index.js:1 src/modal/index.js:344
+msgid "Modal header"
+msgstr "Encabezado del modal"
+
+#: build/index.js:1 src/modal/index.js:347
+msgid "Modal header content. "
+msgstr "Contenido del encabezado del modal. "
+
+#: build/index.js:1 src/modal/index.js:361
+msgid "Add modal title"
+msgstr "Agregar título del modal"
+
+#: build/index.js:1 src/modal/index.js:402
+msgid "Modal body content"
+msgstr "Contenido del cuerpo del modal"
+
+#: build/index.js:1 src/modal/index.js:405
+msgid "Modal body content. "
+msgstr "Contenido del cuerpo del modal. "
+
+#: build/index.js:1 src/modal/index.js:416
+msgid "Add modal content blocks"
+msgstr "Agregar bloques de contenido modal"
+
+#: build/index.js:1 src/modal/index.js:453
+msgid "Modal footer"
+msgstr "Pie de página del modal"
+
+#: build/index.js:1 src/modal/index.js:456
+msgid "Inner footer content. "
+msgstr "Contenido del pie de página interno. "
+
+#: build/index.js:1 src/modal/index.js:469
+msgid "Add modal footer text"
+msgstr "Agregar texto del pie de página del modal"
+
+#: build/index.js:1 src/carousel/index.js:62
+msgid "Carousel dynamic"
+msgstr "Carrusel dinámico"
+
+#: build/index.js:1 src/carousel/index.js:68
+msgid "Add a dynamic carousel to your posts, choose between posts, images, blocks and more."
+msgstr "Agrega un carrusel dinámico a tus publicaciones, elige entre publicaciones, imágenes, bloques y más."
+
+#: build/index.js:1 src/carousel-extra/index.js:219 src/carousel/edit.js:63
+msgid "Find and select categories:"
+msgstr "Busca y selecciona categorías:"
+
+#: build/index.js:1 src/carousel-extra/index.js:395 src/carousel/edit.js:97
+msgid "Carousel content"
+msgstr "Contenido del carrusel"
+
+#: build/index.js:1 src/carousel-extra/index.js:398 src/carousel/edit.js:100
+msgid "Content type"
+msgstr "Tipo de contenido"
+
+#: build/index.js:1 src/carousel-extra/index.js:401 src/carousel/edit.js:103
+msgid "Posts"
+msgstr "Entradas"
+
+#: build/index.js:1 src/carousel-extra/index.js:402 src/carousel/edit.js:104
+msgid "Images"
+msgstr "Imágenes"
+
+#: build/index.js:1 src/carousel/edit.js:105
+msgid "Video + Images"
+msgstr "Imágenes + Vídeo"
+
+#: build/index.js:1 src/carousel-extra/index.js:415 src/carousel/edit.js:117
+msgid "Carousel Images"
+msgstr "Imágenes del carrusel"
+
+#: build/index.js:1 src/carousel/edit.js:117
+msgid "Carousel Video and Images"
+msgstr "Video e imágenes en carrusel"
+
+#: build/index.js:1 src/carousel/edit.js:125
+msgid "Manage media"
+msgstr "Administrar contenido multimedia"
+
+#: build/index.js:1 src/carousel/edit.js:126
+msgid "Add media"
+msgstr "Agregar contenido multimedia"
+
+#: build/index.js:1 src/carousel/edit.js:137
+msgid "Post amount"
+msgstr "Cantidad de publicaciones"
+
+#: build/index.js:1 src/carousel/edit.js:151
+msgid "Sort by"
+msgstr "Ordenar por"
+
+#: build/index.js:1 src/carousel-extra/index.js:443 src/carousel/edit.js:154
+msgid "Date"
+msgstr "Fecha"
+
+#: build/index.js:1 src/carousel/edit.js:155
+msgid "Modified"
+msgstr "Modificación"
+
+#: build/index.js:1 src/carousel-extra/index.js:444 src/carousel/edit.js:156
+msgid "Title"
+msgstr "Título"
+
+#: build/index.js:1 src/carousel/edit.js:157
+msgid "Name"
+msgstr "Nombre"
+
+#: build/index.js:1 src/carousel/edit.js:158
+msgid "Author"
+msgstr "Autor"
+
+#: build/index.js:1 src/carousel/edit.js:159
+msgid "Random"
+msgstr "Aleatorio"
+
+#: build/index.js:1 src/carousel/edit.js:168
+msgid "Find a block in content"
+msgstr "Buscar un bloque en el contenido"
+
+#: build/index.js:1 src/carousel/edit.js:171 src/hooks/index.js:111
+#: src/hooks/index.js:265
+msgid "None"
+msgstr "Ninguno"
+
+#: build/index.js:1 src/carousel/edit.js:172
+msgid "Cover"
+msgstr "Portada"
+
+#: build/index.js:1 src/carousel/edit.js:173
+msgid "Image"
+msgstr "Imagen"
+
+#: build/index.js:1 src/carousel/edit.js:174
+msgid "Media and text"
+msgstr "Medios y texto"
+
+#: build/index.js:1 src/carousel/edit.js:175
+msgid "Video"
+msgstr "Video"
+
+#: build/index.js:1 src/carousel/edit.js:184
+msgid "Show posts even if there are no blocks"
+msgstr "Mostrar publicaciones incluso si no hay bloques"
+
+#: build/index.js:1 src/carousel-blocks/index.js:186
+#: src/carousel-extra/index.js:481 src/carousel/edit.js:192
+msgid "Carousel Look"
+msgstr "Aspecto de carrusel"
+
+#: build/index.js:1 src/carousel-blocks/index.js:188
+#: src/carousel-extra/index.js:483 src/carousel/edit.js:194
+msgid "Columns"
+msgstr "Columnas"
+
+#: build/index.js:1 src/carousel-blocks/index.js:197
+#: src/carousel-extra/index.js:492 src/carousel/edit.js:203
+msgid "Show controls"
+msgstr "Mostrar controles"
+
+#: build/index.js:1 src/carousel-blocks/index.js:204
+#: src/carousel-extra/index.js:499 src/carousel/edit.js:210
+msgid "Show indicators"
+msgstr "Mostrar indicadores"
+
+#: build/index.js:1 src/carousel/edit.js:219
+msgid "Add text controls"
+msgstr "Agregar controles de texto"
+
+#: build/index.js:1 src/carousel-blocks/index.js:211
+#: src/carousel-extra/index.js:514 src/carousel/edit.js:226
+msgid "Auto start"
+msgstr "Inicio automático"
+
+#: build/index.js:1 src/carousel-extra/index.js:520 src/carousel/edit.js:232
+msgid "Show caption"
+msgstr "Mostrar subtítulo"
+
+#: build/index.js:1 src/carousel-extra/index.js:527 src/carousel/edit.js:242
+msgid "Link titles"
+msgstr "Títulos de enlaces"
+
+#: build/index.js:1 src/carousel/edit.js:243
+msgid "Link images"
+msgstr "Imágenes de enlaces"
+
+#: build/index.js:1 src/carousel/edit.js:249
+msgid "Use default post url"
+msgstr "Usar la URL de publicación predeterminada"
+
+#: build/index.js:1 src/carousel/edit.js:250
+msgid "Use \"description input\" in media attributes for a custom url"
+msgstr "Usar \"entrada de descripción\" en los atributos de contenido multimedia para una URL personalizada"
+
+#: build/index.js:1 src/carousel-blocks/index.js:217
+#: src/carousel-extra/index.js:533 src/carousel/edit.js:256
+msgid "Transition in milliseconds"
+msgstr "Transición en milisegundos"
+
+#: build/index.js:1 src/carousel-blocks/index.js:226
+#: src/carousel-extra/index.js:542 src/carousel/edit.js:264
+msgid "Animation type"
+msgstr "Tipo de animación"
+
+#: build/index.js:1 src/carousel-blocks/index.js:230
+#: src/carousel-extra/index.js:546 src/carousel/edit.js:268
+msgid "Fade"
+msgstr "Desvanecimiento"
+
+#: build/index.js:1 src/carousel-blocks/index.js:231
+#: src/carousel-extra/index.js:547 src/carousel/edit.js:269
+msgid "Vertical"
+msgstr "Vertical"
+
+#: build/index.js:1 src/carousel/edit.js:276
+msgid "Height in pixels, set -1 to see the full height of the screen on the device."
+msgstr "Altura en píxeles, configure -1 para ver la altura completa de la pantalla en el dispositivo."
+
+#: build/index.js:1 src/carousel-extra/index.js:636
+msgid "No category selected. "
+msgstr "Sin seleccionar categoría. "
+
+#: build/index.js:1 src/carousel-extra/index.js:640
+msgid "Selected categories: "
+msgstr "Categorías seleccionadas: "
+
+#: build/index.js:1 src/carousel-extra/index.js:85
+msgid "Carousel basic"
+msgstr "Carrusel básico"
+
+#: build/index.js:1 src/carousel-extra/index.js:87
+msgid "Add a non dynamic carousel to your posts, choose between posts or images."
+msgstr "Agregue un carrusel no dinámico a sus publicaciones, elija entre publicaciones o imágenes."
+
+#: build/index.js:1 src/carousel-extra/index.js:369
+msgid "Find and select posts:"
+msgstr "Buscar y seleccionar publicaciones:"
+
+#: build/index.js:1 src/carousel-extra/index.js:403
+msgid "Individual posts"
+msgstr "Publicaciones individuales"
+
+#: build/index.js:1 src/carousel-extra/index.js:423
+msgid "Manage images"
+msgstr "Administrar imágenes"
+
+#: build/index.js:1 src/carousel-extra/index.js:424
+msgid "Add images"
+msgstr "Agregar imágenes"
+
+#: build/index.js:1 src/carousel-extra/index.js:440
+msgid "Show posts by"
+msgstr "Mostrar publicaciones por"
+
+#: build/index.js:1 src/carousel-extra/index.js:454
+msgid "Items to show"
+msgstr "Elementos para mostrar"
+
+#: build/index.js:1 src/carousel-extra/index.js:461
+msgid "Danger! 0 shows all."
+msgstr "¡Peligro! 0 muestra todo."
+
+#: build/index.js:1 src/carousel-extra/index.js:467
+msgid "Sort items"
+msgstr "Ordenar elementos"
+
+#: build/index.js:1 src/carousel-extra/index.js:470
+msgid "Descend"
+msgstr "Descender"
+
+#: build/index.js:1 src/carousel-extra/index.js:471
+msgid "Ascend"
+msgstr "Ascender"
+
+#: build/index.js:1 src/carousel-extra/index.js:507
+msgid "Show text indicators"
+msgstr "Mostrar indicadores de texto"
+
+#: build/index.js:1 src/carousel-blocks/index.js:238
+#: src/carousel-extra/index.js:554
+msgid "Height in pixels."
+msgstr "Altura en píxeles."
+
+#: build/index.js:1 src/carousel-blocks/index.js:244
+#: src/carousel-extra/index.js:560
+msgid "Zero sets carousel at full display height."
+msgstr "El valor cero establece el carrusel a la altura de visualización completa."
+
+#: build/index.js:1 src/carousel-blocks/index.js:79
+msgid "Carousel Blocks"
+msgstr "Bloques del carrusel"
+
+#: build/index.js:1 src/carousel-blocks/index.js:81
+msgid "Customize the carousel slide by slide, with existing blocks, full control."
+msgstr "Personaliza el carrusel diapositiva por diapositiva, con bloques existentes, control total."
+
+#: build/index.js:1 src/carousel-blocks/index.js:329
+msgid "Carousel Content"
+msgstr "Contenido del carrusel"
+
+#: build/index.js:1 src/carousel-blocks/index.js:332
+msgid "Inner carousel content."
+msgstr "Contenido del carrusel interno."
+
+#: build/index.js:1 src/carousel-blocks/index.js:355
+msgid "Add your blocks"
+msgstr "Agregar sus bloques"
+
+#: build/index.js:1 src/hooks/index.js:114 src/hooks/index.js:268
+#: src/offcanvas/index.js:94
+msgid "Offcanvas"
+msgstr "Offcanvas"
+
+#: build/index.js:1 src/offcanvas/index.js:184
+msgid "Add this anchor: #"
+msgstr "Agregue este ancla: #"
+
+#: build/index.js:1 src/offcanvas/index.js:186
+msgid ", in a button link field and in its advanced options."
+msgstr ", en un campo de enlace de botón y en sus opciones avanzadas."
+
+#: build/index.js:1 src/offcanvas/index.js:194
+msgid "Do not forget to add an #anchor. "
+msgstr "No olvide agregar un #ancla. "
+
+#: build/index.js:1 src/offcanvas/index.js:203
+msgid "Offcanvas Params"
+msgstr "Parámetros Offcanvas"
+
+#: build/index.js:1 src/offcanvas/index.js:206
+msgid "Position"
+msgstr "Posición"
+
+#: build/index.js:1 src/offcanvas/index.js:219
+msgid "Width"
+msgstr "Ancho"
+
+#: build/index.js:1 src/offcanvas/index.js:224 src/offcanvas/index.js:238
+msgid "Half"
+msgstr "Mitad"
+
+#: build/index.js:1 src/offcanvas/index.js:233
+msgid "Height"
+msgstr "Altura"
+
+#: build/index.js:1 src/offcanvas/index.js:247
+msgid "Display run"
+msgstr "Ejecución de visualización"
+
+#: build/index.js:1 src/offcanvas/index.js:250
+msgid "All"
+msgstr "Todos"
+
+#: build/index.js:1 src/offcanvas/index.js:252
+msgid "Medium"
+msgstr "Mediano"
+
+#: build/index.js:1 src/offcanvas/index.js:257 src/offcanvas/index.js:277
+msgid "Run only on specific screen sizes"
+msgstr "Ejecutar solo en tamaños de pantalla específicos"
+
+#: build/index.js:1 src/offcanvas/index.js:261
+msgid "Keep scroll window"
+msgstr "Mantener la ventana de desplazamiento"
+
+#: build/index.js:1 src/offcanvas/index.js:268
+msgid "Backdrop behavior"
+msgstr "Comportamiento del fondo"
+
+#: build/index.js:1 src/offcanvas/index.js:272
+msgid "Static"
+msgstr "Estático"
+
+#: build/index.js:1 src/offcanvas/index.js:273
+msgid "False"
+msgstr "Falso"
+
+#: build/index.js:1 src/offcanvas/index.js:330
+msgid "Offcanvas header"
+msgstr "Encabezado Offcanvas"
+
+#: build/index.js:1 src/offcanvas/index.js:333
+msgid "Offcanvas header content. "
+msgstr "Contenido del encabezado Offcanvas. "
+
+#: build/index.js:1 src/offcanvas/index.js:357
+msgid "Add offcanvas title"
+msgstr "Agregar título Offcanvas"
+
+#: build/index.js:1 src/offcanvas/index.js:409
+msgid "Offcanvas body content"
+msgstr "Contenido del cuerpo Offcanvas"
+
+#: build/index.js:1 src/offcanvas/index.js:412
+msgid "Offcanvas body content. "
+msgstr "Contenido del cuerpo Offcanvas. "
+
+#: build/index.js:1 src/offcanvas/index.js:423
+msgid "Add offcanvas content blocks"
+msgstr "Agregar bloques de contenido fuera del lienzo"
+
+#: build/index.js:1 src/hooks/index.js:99
+msgid "Link to Block (Ekiline)"
+msgstr "Enlace al bloque (Ekiline)"
+
+#: build/index.js:1 src/hooks/index.js:102 src/hooks/index.js:256
+msgid "Anchor block name"
+msgstr "Nombre del bloque de anclaje"
+
+#: build/index.js:1 src/hooks/index.js:108 src/hooks/index.js:262
+msgid "Choose block"
+msgstr "Elegir bloque"
+
+#: build/index.js:1 src/hooks/index.js:121 src/hooks/index.js:275
+msgid "Is close button?"
+msgstr "¿Es un botón de cierre?"
+
+#: build/index.js:1 src/hooks/index.js:124 src/hooks/index.js:278
+msgid "No."
+msgstr "No."
+
+#: build/index.js:1 src/hooks/index.js:124 src/hooks/index.js:278
+msgid "Yes."
+msgstr "Sí."
+
+#: build/index.js:1 src/hooks/index.js:253
+msgid "Link to Ekiline Block"
+msgstr "Enlace al bloque de Ekiline"
+
+#: build/block.json src/block.json
+msgctxt "block title"
+msgid "Ekiline Block Collection"
+msgstr "Ekiline Block Collection"
+
+#: build/block.json src/block.json
+msgctxt "block description"
+msgid "Actions and blocks based on bootstrap 5."
+msgstr "Acciones y bloques basados ​​en bootstrap 5."
