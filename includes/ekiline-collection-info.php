@@ -46,12 +46,8 @@ function ekiline_block_collection_menu()
         'ekiline_block_collection_about'					// function
     );
 
-    // callback de opciones.
-    add_action('admin_init', 'ekiline_block_collection_register_settings');
-
     // ocultar opciones de manera provisional
-    // remove_menu_page( 'ekiline-block-collection' );
-
+    remove_menu_page( 'ekiline-block-collection' );
 }
 add_action('admin_menu', 'ekiline_block_collection_menu');
 
@@ -97,6 +93,8 @@ function ekiline_block_collection_register_settings()
     register_setting('ekiline-block-collection-settings-group', 'ekiline_block_collection_bootstrap_css', $args_ekiline_block_collection_bootstrap_css);
     register_setting('ekiline-block-collection-settings-group', 'ekiline_block_collection_bootstrap_js', $args_ekiline_block_collection_bootstrap_js);
 }
+add_action('admin_init', 'ekiline_block_collection_register_settings');
+
 
 function ekiline_block_collection_options()
 {
@@ -186,8 +184,6 @@ function ekiline_block_collection_options()
 
 		</div>
 	</div>
-
-
 </div>
 	<?php
 }
