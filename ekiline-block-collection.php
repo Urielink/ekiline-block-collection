@@ -85,14 +85,14 @@ function ekiline_collection_required_scripts()
     wp_enqueue_script($text_domain . '-block-scripts', plugin_dir_url(__FILE__) . 'includes/assets/js/ekiline-collection-block-scripts.js', array( $script_handler ), '1.0', true);
 
     // Opciones de plugin.
-    $opcion_plugin_styles  = get_option('ekiline_block_collection_bootstrap_css');
-    $opcion_plugin_scripts = get_option('ekiline_block_collection_bootstrap_js');
+    $opcion_plugin_styles  = get_option('ekiline_block_collection_bootstrap_css', '1');
+    $opcion_plugin_scripts = get_option('ekiline_block_collection_bootstrap_js', '1');
 
-    if ($opcion_plugin_styles == 0) {
+    if ($opcion_plugin_styles == '0') {
         wp_dequeue_style($text_domain . '-bootstrap-style');
         wp_dequeue_style($text_domain . '-block-styles');
     }
-    if ($opcion_plugin_scripts == 0) {
+    if ($opcion_plugin_scripts == '0') {
         wp_dequeue_script($text_domain . '-bootstrap-script');
         wp_dequeue_script($text_domain . '-block-scripts');
     }
