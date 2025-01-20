@@ -268,7 +268,7 @@ registerBlockType('ekiline-block-collection/ekiline-tab-link', {
       type: 'string',
       source: 'html',
       selector: 'button',
-      default: __('Tab link', 'ekiline-block-collection')
+      default: __('Tab Link', 'ekiline-block-collection')
     },
     dataBsTarget: {
       type: 'string',

@@ -2,20 +2,21 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Ekiline Block Collection 2.0.0\n"
+"Project-Id-Version: Ekiline Block Collection 2.0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ekiline-block-collection\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-19T06:23:15+00:00\n"
+"POT-Creation-Date: 2025-01-20T00:55:28+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ekiline-block-collection\n"
 
 #. Plugin Name of the plugin
 #: ekiline-block-collection.php
+#: includes/ekiline-collection-info.php:105
 msgid "Ekiline Block Collection"
 msgstr ""
 
@@ -35,7 +36,7 @@ msgid "https://ekiline.com/ekiline-block-collection/"
 msgstr ""
 
 #: ekiline-block-collection.php:23
-#: includes/ekiline-collection-info.php:114
+#: includes/ekiline-collection-info.php:112
 msgid "Settings"
 msgstr ""
 
@@ -60,194 +61,190 @@ msgstr ""
 msgid "About"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:69
+#: includes/ekiline-collection-info.php:65
 msgid "Unauthorized, invalid nonce."
 msgstr ""
 
-#: includes/ekiline-collection-info.php:107
-msgid "Ekiline Block Collection."
-msgstr ""
-
-#: includes/ekiline-collection-info.php:116
+#: includes/ekiline-collection-info.php:114
 msgid "Disable styles or scripts."
 msgstr ""
 
-#: includes/ekiline-collection-info.php:125
+#: includes/ekiline-collection-info.php:123
 msgid "Disable Bootstrap."
 msgstr ""
 
-#: includes/ekiline-collection-info.php:127
+#: includes/ekiline-collection-info.php:125
 msgid "Sometimes your project has duplicate styles and scripts, incorporated into other themes or plugins."
 msgstr ""
 
-#: includes/ekiline-collection-info.php:128
+#: includes/ekiline-collection-info.php:126
 msgid "If you detect this conflict you can disable the styles and scripts of this plugin."
 msgstr ""
 
-#: includes/ekiline-collection-info.php:148
+#: includes/ekiline-collection-info.php:146
 msgid "Active CSS"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:149
+#: includes/ekiline-collection-info.php:147
 msgid "Inactive CSS"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:160
+#: includes/ekiline-collection-info.php:158
 msgid "Active JS"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:161
+#: includes/ekiline-collection-info.php:159
 msgid "Inactive JS"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:164
+#: includes/ekiline-collection-info.php:162
 msgid "Save Bootstrap settings."
 msgstr ""
 
-#: includes/ekiline-collection-info.php:171
-#: includes/ekiline-collection-info.php:177
+#: includes/ekiline-collection-info.php:169
+#: includes/ekiline-collection-info.php:175
 msgid "Docs"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:174
+#: includes/ekiline-collection-info.php:172
 msgid "About this plugin"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:180
+#: includes/ekiline-collection-info.php:178
 msgid "Website"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:203
+#: includes/ekiline-collection-info.php:199
 msgid "About Ekiline Block Collection"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:211
+#: includes/ekiline-collection-info.php:207
 msgid "Thanks for using this plugin!"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:213
+#: includes/ekiline-collection-info.php:209
 msgid "Find more information to improve your skills when use it."
 msgstr ""
 
-#: includes/ekiline-collection-info.php:220
+#: includes/ekiline-collection-info.php:216
 msgid "Add an extra to the creation and delivery of your projects."
 msgstr ""
 
-#: includes/ekiline-collection-info.php:223
+#: includes/ekiline-collection-info.php:219
 msgid "Quick use guide in Keynote or Powerpoint to freely customize and deliver to your clients."
 msgstr ""
 
-#: includes/ekiline-collection-info.php:225
+#: includes/ekiline-collection-info.php:221
 msgid "More design elements, CSS, HTML and JS available to grow your project."
 msgstr ""
 
-#: includes/ekiline-collection-info.php:227
+#: includes/ekiline-collection-info.php:223
 msgid "Ekiline Blocks, plugin with carousel and more options in page editor."
 msgstr ""
 
-#: includes/ekiline-collection-info.php:229
+#: includes/ekiline-collection-info.php:225
 msgid "Complete clean theme, no warnings or messages."
 msgstr ""
 
-#: includes/ekiline-collection-info.php:232
+#: includes/ekiline-collection-info.php:228
 msgid "Buy and download"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:233
+#: includes/ekiline-collection-info.php:229
 msgid "FundMe"
 msgstr ""
 
 #. translators: %1$s is replaced with links data
-#: includes/ekiline-collection-info.php:239
+#: includes/ekiline-collection-info.php:235
 msgid "%1$s with Ekiline and %2$s, %3$s."
 msgstr ""
 
-#: includes/ekiline-collection-info.php:240
+#: includes/ekiline-collection-info.php:236
 msgid "Make money"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:241
+#: includes/ekiline-collection-info.php:237
 msgid "fund its development"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:242
+#: includes/ekiline-collection-info.php:238
 msgid "discover how"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:250
+#: includes/ekiline-collection-info.php:246
 msgid "About Ekiline"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:251
+#: includes/ekiline-collection-info.php:247
 msgid "Ekiline simplifies the creation of a website with WordPress, it is a working method that brings together the standard practices of the internet industry, to facilitate the tasks of planning, design, development and optimization. For more information visit ekiline.com"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:252
+#: includes/ekiline-collection-info.php:248
 msgid "About Uri Lazcano"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:255
+#: includes/ekiline-collection-info.php:251
 msgid "Frontend designer established in Mexico City. 10 years developing websites and 10 more years of experience in graphic design for advertising. Check my career and work."
 msgstr ""
 
-#: includes/ekiline-collection-info.php:258
+#: includes/ekiline-collection-info.php:254
 msgid "WordPress"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:259
+#: includes/ekiline-collection-info.php:255
 msgid "Github"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:260
+#: includes/ekiline-collection-info.php:256
 msgid "Linkedin"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:261
+#: includes/ekiline-collection-info.php:257
 msgid "Behance"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:262
+#: includes/ekiline-collection-info.php:258
 msgid "B I X N I A"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:270
+#: includes/ekiline-collection-info.php:266
 msgid "Ekiline docs"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:273
+#: includes/ekiline-collection-info.php:269
 msgid "Install"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:274
+#: includes/ekiline-collection-info.php:270
 msgid "Customize"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:275
+#: includes/ekiline-collection-info.php:271
 msgid "Elements and blocks"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:276
+#: includes/ekiline-collection-info.php:272
 msgid "Compatibility"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:298
+#: includes/ekiline-collection-info.php:294
 msgid "Limited liability:"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:299
+#: includes/ekiline-collection-info.php:295
 msgid "As a courtesy, we provide information on how to use certain third-party products, but we do not directly support their use and we are not responsible for the functions, reliability or compatibility of such products. The names, trademarks and logos of third parties are registered trademarks of their respective owners."
 msgstr ""
 
 #. translators: %1$s is replaced with date data
-#: includes/ekiline-collection-info.php:311
+#: includes/ekiline-collection-info.php:307
 msgid "&copy; Copyright %1$s Ekiline"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:312
+#: includes/ekiline-collection-info.php:308
 msgid "All rights reserved. Ekiline developed by"
 msgstr ""
 
-#: includes/ekiline-collection-info.php:313
+#: includes/ekiline-collection-info.php:309
 msgid "BIXNIA"
 msgstr ""
 
@@ -351,6 +348,7 @@ msgstr ""
 #: build/index.js:1
 #: src/collapse/index.js:122
 #: src/modal/index.js:192
+#: src/offcanvas/index.js:194
 msgid "Do not forget to add an anchor. "
 msgstr ""
 
@@ -612,17 +610,13 @@ msgstr ""
 
 #: build/index.js:1
 #: src/tabs/index.js:253
+#: src/tabs/index.js:271
 msgid "Tab Link"
 msgstr ""
 
 #: build/index.js:1
 #: src/tabs/index.js:256
 msgid "Tab button link. Copy Anchor text and paste on Tab Content Anchor field."
-msgstr ""
-
-#: build/index.js:1
-#: src/tabs/index.js:271
-msgid "Tab link"
 msgstr ""
 
 #: build/index.js:1
@@ -825,6 +819,7 @@ msgid "Find and select categories:"
 msgstr ""
 
 #: build/index.js:1
+#: src/carousel-blocks/index.js:329
 #: src/carousel-extra/index.js:395
 #: src/carousel/edit.js:97
 msgid "Carousel content"
@@ -1151,11 +1146,6 @@ msgid "Customize the carousel slide by slide, with existing blocks, full control
 msgstr ""
 
 #: build/index.js:1
-#: src/carousel-blocks/index.js:329
-msgid "Carousel Content"
-msgstr ""
-
-#: build/index.js:1
 #: src/carousel-blocks/index.js:332
 msgid "Inner carousel content."
 msgstr ""
@@ -1180,11 +1170,6 @@ msgstr ""
 #: build/index.js:1
 #: src/offcanvas/index.js:186
 msgid ", in a button link field and in its advanced options."
-msgstr ""
-
-#: build/index.js:1
-#: src/offcanvas/index.js:194
-msgid "Do not forget to add an #anchor. "
 msgstr ""
 
 #: build/index.js:1

@@ -326,7 +326,7 @@ registerBlockType('ekiline-block-collection/ekiline-carousel-blocks', {
  */
 
 registerBlockType('ekiline-block-collection/ekiline-carousel-blocks-content', {
-  title: __('Carousel Content', 'ekiline-block-collection'),
+  title: __('Carousel content', 'ekiline-block-collection'),
   parent: ['ekiline-block-collection/ekiline-carousel-blocks'],
   icon: 'feedback',
   description: __('Inner carousel content.', 'ekiline-block-collection'),

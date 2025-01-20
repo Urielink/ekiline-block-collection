@@ -102,7 +102,7 @@ function ekiline_block_collection_options()
 <div class="wrap">
 	<h1>
 		<span class="dashicons dashicons-layout" aria-hidden="true"></span>
-		<?php esc_html_e('Ekiline Block Collection.', 'ekiline-block-collection'); ?>
+		<?php esc_html_e('Ekiline Block Collection', 'ekiline-block-collection'); ?>
 	</h1>
 	<div id="welcome-panel" class="welcome-panel">
 		<div class="welcome-panel-content">

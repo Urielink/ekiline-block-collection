@@ -191,7 +191,7 @@ registerBlockType('ekiline-block-collection/ekiline-offcanvas', {
 
       return (
         <div class='editor-offcanvas-route'>
-          {__('Do not forget to add an #anchor. ', 'ekiline-block-collection')}
+          {__('Do not forget to add an anchor. ', 'ekiline-block-collection')}
         </div>
       )
     }

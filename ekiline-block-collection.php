@@ -4,7 +4,7 @@
  * Description:       Actions and blocks based on bootstrap 5 (carousel, collapse and more). Includes Bootstrap library. Support this project to add new features and expand a customer service branch.
  * Requires at least: 5.8
  * Requires PHP:      7.0
- * Version:           2.0.0
+ * Version:           2.0.1
  * Author:            Uri Lazcano (Urielink)
  * Author URI:        https://ekiline.com/ekiline-block-collection/
  * License:           GPL-2.0-or-later
@@ -15,14 +15,14 @@
  */
 
 /**
- * Agrega un enlace de configuracion en la pagina de plugins.
+ * Adds a settings link on the plugins page.
  */
 function ekiline_block_collection_settings_links( $links_array, $plugin_file_name ){
-    // Enlace.
+    // New link.
     $site_admin_plugin_page_url = admin_url('admin.php?page=ekiline-block-collection');
     $new_link = sprintf('<a href="%s">%s</a>', $site_admin_plugin_page_url, __('Settings', 'ekiline-block-collection'));
 
-    // Agregar al arreglo de enlaces.
+    // Add to links array.
 	if( strpos( $plugin_file_name, basename( __FILE__ ) ) ) {
 		array_unshift( $links_array, $new_link );
 	}
@@ -45,23 +45,23 @@ add_filter( 'plugin_action_links', 'ekiline_block_collection_settings_links', 25
  */
 function ekiline_collection_ekiline_collection_block_init()
 {
-    // Script de coleccion.
+    // Collection script.
     register_block_type(__DIR__ . '/build');
-    // Idioma plugin para PHP.
+    // Language plugin for PHP.
     load_plugin_textdomain('ekiline-block-collection', false, basename(dirname(__FILE__)) . '/languages/');
-    // Idioma plugin para Bloques JS.
+    // Language plugin for JS Blocks.
     wp_set_script_translations('ekiline-block-collection-ekiline-block-collection-editor-script', 'ekiline-block-collection', plugin_dir_path(__FILE__) . 'languages');
 }
 add_action('init', 'ekiline_collection_ekiline_collection_block_init');
 
 /**
- * Scripts y estilos en el front.
+ * Scripts and styles in the front end.
  *
  * @link https://developer.wordpress.org/reference/functions/wp_script_is/
  */
 function ekiline_collection_required_scripts()
 {
-    // Condicion: Si Ekiline no es su tema, habilitar complementos bootstrap.
+    // Condition: If Ekiline is not your theme, enable bootstrap plugins.
     $theme       = wp_get_theme();
     $text_domain = 'ekiline-block-collection';
 
@@ -74,7 +74,7 @@ function ekiline_collection_required_scripts()
         wp_dequeue_script($text_domain . '-bootstrap-script');
     }
 
-    // Condicion: Si Ekiline no es su tema, habilitar manejador de plugin.
+    // Condition: If Ekiline is not your theme, enable plugin manager.
     $style_handler  = $text_domain . '-bootstrap-style';
     $script_handler = $text_domain . '-bootstrap-script';
     if('Ekiline' === $theme->name || 'Ekiline' === $theme->parent_theme) {
@@ -84,7 +84,7 @@ function ekiline_collection_required_scripts()
     wp_enqueue_style($text_domain . '-block-styles', plugin_dir_url(__FILE__) . 'includes/assets/css/ekiline-collection-block-styles.css', array( $style_handler ), '1.0', 'all');
     wp_enqueue_script($text_domain . '-block-scripts', plugin_dir_url(__FILE__) . 'includes/assets/js/ekiline-collection-block-scripts.js', array( $script_handler ), '1.0', true);
 
-    // Opciones de plugin.
+    // Plugin options.
     $opcion_plugin_styles  = get_option('ekiline_block_collection_bootstrap_css', '1');
     $opcion_plugin_scripts = get_option('ekiline_block_collection_bootstrap_js', '1');
 
@@ -100,11 +100,9 @@ function ekiline_collection_required_scripts()
 add_action('wp_enqueue_scripts', 'ekiline_collection_required_scripts', 1);
 
 /**
- * Otras funciones.
- * - Pagina de informacion de plugin.
- * - Script para carrusel v1.
- * - Shortcode para carrusel dinamico v1.
- * - Prueba de nuevo carrusel dinamico v2.
+ * Other features.
+ * - Plugin information page.
+ * - Carousel script v2.
  */
 define('EKILINE_COLLECTION_PATH', plugin_dir_path(__FILE__) . 'includes/');
 require EKILINE_COLLECTION_PATH . 'ekiline-collection-info.php';
