@@ -415,7 +415,8 @@ registerBlockType('ekiline-block-collection/ekiline-navbar-menu-wrapper', {
 
 	  // personalizar clase
 	  const blockProps = useBlockProps({
-		className: 'collapse navbar-collapse'
+		className: 'collapse navbar-collapse',
+		'data-bs-parent': (attributes.parentAlignItems && attributes.parentAnchor) ? '#' + attributes.parentAnchor : null
 	  })
 
 	  // Precargar nombre ID en hijos y valores heredados de contexto.
