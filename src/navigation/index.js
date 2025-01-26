@@ -85,12 +85,15 @@ registerBlockType('ekiline-block-collection/ekiline-navbar', {
 	 * Parametros de alta.
 	 * @see: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/
 	 */
-	title: __('Nav', 'ekiline-block-collection'),
+	title: __('Navbar', 'ekiline-block-collection'),
 	icon: customIcon,
 	description: __('Customize a navigation bar and experiment with different properties to make the controls on your website more attractive', 'ekiline-block-collection'),
 	category: 'design',
 	supports: {
-		anchor: true
+		anchor: true,
+		color: {
+			gradients: true // Enables the gradients UI control.
+		}
 	},
 
 	/**
@@ -103,7 +106,7 @@ registerBlockType('ekiline-block-collection/ekiline-navbar', {
 		},
 		navStyle: {
 			type: 'string',
-			default: ' collapse' // offcanvas,nav-scroller
+			default: 'collapse' // offcanvas,nav-scroller
 		},
 		navShow: {
 			type: 'string',
@@ -111,21 +114,33 @@ registerBlockType('ekiline-block-collection/ekiline-navbar', {
 		},
 		alignToggler: {
 			type: 'boolean',
-			default: true // markup before-after.
-		},
-		navMenu: {
-			type: 'string',
-			default: '' //id de navegacion *select.
+			default: false // markup before-after.
 		},
 		alignItems: {
 			type: 'string',
 			default: '', // justify-content-md-center
+		},
+		navMenu: {
+			type: 'string',
+			default: '' //id de navegacion *select.
 		}
 	},
-
 	/**
-		 * @see ./edit.js
-		 */
+	 * Se ocupara contexto para pasar valores.
+	 * @link https://developer.wordpress.org/block-editor/reference-guides/block-api/block-context/
+	 */
+	providesContext: {
+		'ekiline-navbar/anchor': 'anchor',
+		'ekiline-navbar/navPosition': 'navPosition',
+		'ekiline-navbar/navStyle': 'navStyle',
+		'ekiline-navbar/navShow': 'navShow',
+		'ekiline-navbar/alignToggler': 'alignToggler',
+		'ekiline-navbar/alignItems': 'alignItems',
+		'ekiline-navbar/navMenu': 'navMenu'
+	},
+	/**
+	 * @see ./edit.js
+	 */
 	// edit: Edit,
 	edit: (props) => {
 		const { attributes, setAttributes } = props
@@ -133,32 +148,35 @@ registerBlockType('ekiline-block-collection/ekiline-navbar', {
 		// Restringir los bloques, Cargar un preset.
 		// @link https://developer.wordpress.org/block-editor/reference-guides/core-blocks/
 		const PARENT_ALLOWED_BLOCKS = [
-			'core/navigation-link',
-			'core/social-links',
-			'core/page-list',
-			'core/spacer',
-			'core/home-link',
-			'core/site-title',
-			'core/site-logo',
-			'core/navigation-submenu',
-			'core/loginout',
-			'core/search',
-			'core/buttons',
-			'core/paragraph',
-			'core/group'
+			'ekiline-block-collection/ekiline-navbar-menu-wrapper'
 		]
 
 		const CHILD_TEMPLATE = [
-			['core/site-logo'],
-			['core/navigation-submenu'],
-			['core/paragraph'],
-			['core/buttons']
+			['ekiline-block-collection/ekiline-navbar-menu-wrapper']
 		]
 
 		// personalizar clase
 		const blockProps = useBlockProps({
-			className: 'group-navbar'
+			className: 'navbar'
 		})
+
+		// Precargar nombre ID (anchor).
+		if (!attributes.anchor) {
+			setAttributes({ anchor: 'customNav' + getRandomArbitrary(10, 150) })
+		}
+
+		// Add new classname validating navPosition attribute
+		if (attributes.navPosition) {
+			blockProps.className += attributes.navPosition
+		}
+		if (attributes.navShow) {
+			blockProps.className += attributes.navShow
+		}
+		if (attributes.alignItems) {
+			blockProps.className += attributes.alignItems
+		}
+
+		// console.log(blockProps.className)
 
 		return (
 		<div {...blockProps}>
@@ -185,9 +203,9 @@ registerBlockType('ekiline-block-collection/ekiline-navbar', {
 						label={__('Nav style', 'ekiline-block-collection')}
 						value={attributes.navStyle}
 						options={[
-							{ label: __('Default', 'ekiline-block-collection'), value: ' collapse' },
-							{ label: __('Offcanvas', 'ekiline-block-collection'), value: ' offcanvas' },
-							{ label: __('Scroller', 'ekiline-block-collection'), value: ' nav-scroller' }
+							{ label: __('Default', 'ekiline-block-collection'), value: 'collapse' },
+							{ label: __('Offcanvas', 'ekiline-block-collection'), value: 'offcanvas' },
+							{ label: __('Scroller', 'ekiline-block-collection'), value: 'nav-scroller' }
 						]}
 						onChange={(navStyle) =>
 							setAttributes({ navStyle })}
@@ -197,9 +215,9 @@ registerBlockType('ekiline-block-collection/ekiline-navbar', {
 						label={__('Nav display show', 'ekiline-block-collection')}
 						value={attributes.navShow}
 						options={[
-							{ label: __('Default', 'ekiline-block-collection'), value: ' navbar-expand-lg' },
-							{ label: __('Offcanvas', 'ekiline-block-collection'), value: ' navbar-expand-md' },
-							{ label: __('Scroller', 'ekiline-block-collection'), value: ' navbar-expand-sm' }
+							{ label: __('All', 'ekiline-block-collection'), value: ' navbar-expand-lg' },
+							{ label: __('Tablet', 'ekiline-block-collection'), value: ' navbar-expand-md' },
+							{ label: __('Smartphone', 'ekiline-block-collection'), value: ' navbar-expand-sm' }
 						]}
 						onChange={(navShow) =>
 							setAttributes({ navShow })}
@@ -211,7 +229,7 @@ registerBlockType('ekiline-block-collection/ekiline-navbar', {
 						onChange={(alignToggler) =>
 								setAttributes({ alignToggler })}
 						help={
-							(attributes.alignToggler)
+							(!attributes.alignToggler)
 							? __('Default right', 'ekiline-block-collection')
 							:__('Align left', 'ekiline-block-collection')
 						}
@@ -229,13 +247,13 @@ registerBlockType('ekiline-block-collection/ekiline-navbar', {
 
 					<SelectControl
 						label={__('Align nav items', 'ekiline-block-collection')}
-						value={attributes.navShow}
+						value={attributes.alignItems}
 						options={[
 							{ label: __('Default', 'ekiline-block-collection'), value: '' },
 							{ label: __('Center', 'ekiline-block-collection'), value: ' justify-content-md-center' },
 						]}
-						onChange={(navShow) =>
-							setAttributes({ navShow })}
+						onChange={(alignItems) =>
+							setAttributes({ alignItems })}
 					/>
 
 				</PanelBody>
@@ -257,9 +275,7 @@ registerBlockType('ekiline-block-collection/ekiline-navbar', {
 	save: ({ attributes }) => {
 		// Clases y atributos auxiliares, incluir save.
 		const blockProps = useBlockProps.save({
-		className:
-			'group-nav navbar' +
-			(attributes.navPosition != 'default' ? attributes.navPosition : ''),
+			className: 'navbar',
 			'data-bs-toggle': attributes.navStyle,
 			'data-bs-target': attributes.anchor,
 			'aria-controls': attributes.anchor,
@@ -267,27 +283,39 @@ registerBlockType('ekiline-block-collection/ekiline-navbar', {
 			'aria-label': 'Toggle navigation'
 		})
 
-		const dialogProps = useBlockProps.save({
-		className:
-				'collapse navbar-collapse' +
-				(attributes.alignToggler ? ' aligntoggler' : '') +
-				(attributes.navStyle != 'default' ? attributes.navStyle : '')
+		// Add new classname validating navPosition attribute
+		if (attributes.navPosition) {
+			blockProps.className += attributes.navPosition
+		}
+		if (attributes.navShow) {
+			blockProps.className += attributes.navShow
+		}
+		if (attributes.alignItems) {
+			blockProps.className += attributes.alignItems
+		}
 
-		})
+		// const innerContainer = useBlockProps.save({
+		// className:
+		// 		'container-fluid' +
+		// 		(attributes.alignToggler ? ' aligntoggler' : '') +
+		// 		(attributes.navStyle != 'default' ? attributes.navStyle : '')
+
+		// })
 
 		// Componente Boton.
 		function NavToggler () {
-		if (attributes.modalGrow) {
-			return (
-			<button
-				type='button'
-				class='navbar-toggler'
-				aria-label={__('Toggle navigation', 'ekiline-block-collection')}
-			>
-				<span class='dashicons dashicons-menu' />
-			</button>
-			)
-		}
+				return (
+					<button
+						className='navbar-toggler'
+						type='button'
+						data-bs-toggle='collapse'
+						data-bs-target={'#' + attributes.anchor + 'Child'}
+						aria-controls={attributes.anchor + 'Child'}
+						aria-expanded='false'
+						aria-label={__('Toggle navigation', 'ekiline-block-collection')}>
+							<span class='dashicons dashicons-menu'></span>
+					</button>
+				)
 		}
 
 		return (
@@ -298,15 +326,152 @@ registerBlockType('ekiline-block-collection/ekiline-navbar', {
 			aria-labelledby={blockProps.id + 'Label'}
 			aria-hidden='true'
 		>
-			<div class={dialogProps.className}>
-				<div class='nav-content'>
-					<InnerBlocks.Content />
-					<NavToggler />
-				</div>
+			<div className='container-fluid'>
+
+				{ !attributes.alignToggler &&
+						<NavToggler />
+				}
+
+				<InnerBlocks.Content />
+
+				{ attributes.alignToggler &&
+						<NavToggler />
+				}
+
+
 			</div>
 
 		</div>
 		)
 	}
-
 })
+
+/**
+ * Bloque interno accordion-item-body
+ * - nav.navbar + navbar-expand-lg + bg-body-tertiary [fixed-top/fixed-bottom/sticky-top/sticky-bottom]
+ * - - div + container-fluid + [container-md/sm/]
+ * - - - a.navbar-brand [href]
+ * - - - button.navbar-toggler [+ data]
+ * - - - - span .navbar-toggler-icon
+ * - - div + collapse navbar-collapse [+ id] variables off canvas [offcanvas offcanvas-end +  otros valores]
+ * - - - - [bloque navegacion UL] intervenir clases css + [navbar-nav-scroll + style="--bs-scroll-height: 100px;"]
+ * - - - - [Permitir otros bloques] intervenir clases css // Funciona para offcanvas.
+ */
+/**
+ * Bloque interno accordion-item-body
+ */
+registerBlockType('ekiline-block-collection/ekiline-navbar-menu-wrapper', {
+	title: __('Navbar menu container', 'ekiline-block-collection'),
+	parent: ['ekiline-block-collection/ekiline-navbar'],
+	icon: 'feedback',
+	description: __('Add items to your navigation bar', 'ekiline-block-collection'),
+	category: 'design',
+	// Se ocupa contexto para pasar valores desde el padre, en este caso el ID.
+	usesContext: [
+		'ekiline-navbar/anchor',
+		'ekiline-navbar/navStyle',
+		'ekiline-navbar/alignItems',
+		'ekiline-navbar/navMenu'
+	],
+	supports: {
+	  anchor: true,
+	  html: false, // no permitir HTML
+	  reusable: false,
+	},
+	attributes: {
+		parentAnchor: {
+		  type: 'string',
+		  default: '' // remove dataset [data-bs-parent].
+		},
+		parentNavStyle: {
+			type: 'string',
+			default: ' collapse' // offcanvas,nav-scroller
+		},
+		parentAlignItems: {
+			type: 'string',
+			default: '', // justify-content-md-center
+		},
+		parentNavMenu: {
+			type: 'string',
+			default: '' //id de navegacion *select.
+		}
+	  },
+	/**
+	 * @see ./edit.js
+	 */
+	// edit: Edit,
+	edit: (props) => {
+
+	  const { attributes, setAttributes } = props
+
+	  // Cargar un preset.
+	  const CHILD_TEMPLATE = [
+		['core/site-logo'],
+		['core/navigation-submenu'],
+		['core/paragraph'],
+		['core/buttons']
+	]
+
+
+	  // personalizar clase
+	  const blockProps = useBlockProps({
+		className: 'collapse navbar-collapse'
+	  })
+
+	  // Precargar nombre ID en hijos y valores heredados de contexto.
+	  if (!attributes.parentAnchor) {
+		setAttributes({ parentAnchor: props.context['ekiline-navbar/anchor'] })
+	  }
+
+	// Precargar nombre ID (anchor).
+	if (!attributes.anchor) {
+		setAttributes({ anchor: props.context['ekiline-navbar/anchor'] + 'Child' })
+	}
+
+
+	  // Actualizar estado parentNavStyle.
+	  setAttributes({ parentNavStyle: props.context['ekiline-navbar/navStyle'] })
+	  // Actualizar estado parentAlignItems.
+	  setAttributes({ parentAlignItems: props.context['ekiline-navbar/alignItems'] })
+	  // Actualizar estado parentNavMenu.
+	  setAttributes({ parentNavMenu: props.context['ekiline-navbar/navMenu'] })
+
+
+	  return (
+		<div {...blockProps}>
+		  {/* El bloque */}
+		  <InnerBlocks
+			template={CHILD_TEMPLATE}
+		  />
+		</div>
+	  )
+	},
+
+	/**
+	   * @see ./save.js
+	   */
+	// save,
+	save: ({ attributes }) => {
+	  // Clases y atributos auxiliares, incluir save.
+	  const blockProps = useBlockProps.save({
+		className: attributes.parentNavStyle + ' navbar-collapse',
+		'data-bs-parent': (attributes.parentAlignItems && attributes.parentAnchor) ? '#' + attributes.parentAnchor : null
+	  })
+
+
+	  return (
+		<div {...blockProps}>
+			<InnerBlocks.Content />
+		</div>
+	  )
+	}
+
+  })
+
+
+/**
+ * Función auxiliar: random para Ids
+ */
+function getRandomArbitrary (min, max) {
+	return Math.floor(Math.random() * (max - min) + min)
+}
