@@ -157,7 +157,7 @@ registerBlockType('ekiline-block-collection/ekiline-navbar', {
 
 		// personalizar clase
 		const blockProps = useBlockProps({
-			className: 'navbar'
+			className: 'editor-navbar'
 		})
 
 		// Precargar nombre ID (anchor).
@@ -330,14 +330,13 @@ registerBlockType('ekiline-block-collection/ekiline-navbar', {
 					<NavToggler />
 					<InnerBlocks.Content />
 				</div>
-
 			</div>
 		)
 	}
 })
 
 /**
- * Bloque interno accordion-item-body
+ * Bloque interno navbar
  * - nav.navbar + navbar-expand-lg + bg-body-tertiary [fixed-top/fixed-bottom/sticky-top/sticky-bottom]
  * - - div + container-fluid + [container-md/sm/]
  * - - - a.navbar-brand [href]
@@ -346,9 +345,6 @@ registerBlockType('ekiline-block-collection/ekiline-navbar', {
  * - - div + collapse navbar-collapse [+ id] variables off canvas [offcanvas offcanvas-end +  otros valores]
  * - - - - [bloque navegacion UL] intervenir clases css + [navbar-nav-scroll + style="--bs-scroll-height: 100px;"]
  * - - - - [Permitir otros bloques] intervenir clases css // Funciona para offcanvas.
- */
-/**
- * Bloque interno accordion-item-body
  */
 registerBlockType('ekiline-block-collection/ekiline-navbar-menu-wrapper', {
 	title: __('Navbar menu container', 'ekiline-block-collection'),
@@ -409,8 +405,8 @@ registerBlockType('ekiline-block-collection/ekiline-navbar-menu-wrapper', {
 
 		// personalizar clase
 		const blockProps = useBlockProps({
-			className: 'collapse navbar-collapse',
-			'data-bs-parent': (attributes.parentAlignItems && attributes.parentAnchor) ? '#' + attributes.parentAnchor : null
+			className: 'editor-collapse editor-navbar-collapse',
+			// 'data-bs-parent': (attributes.parentAlignItems && attributes.parentAnchor) ? '#' + attributes.parentAnchor : null
 		})
 
 		// Precargar nombre ID en hijos y valores heredados de contexto.
@@ -433,13 +429,20 @@ registerBlockType('ekiline-block-collection/ekiline-navbar-menu-wrapper', {
 		setAttributes({ parentNavShow: props.context['ekiline-navbar/navShow'] })
 
 		return (
-			<div {...blockProps}>
-			{/* El bloque */}
 			<InnerBlocks
+				orientation='horizontal'
 				template={CHILD_TEMPLATE}
 			/>
-			</div>
 		)
+
+		// return (
+		// 	<div {...blockProps}>
+		// 		<InnerBlocks
+		// 			orientation='horizontal'
+		// 			template={CHILD_TEMPLATE}
+		// 		/>
+		// 	</div>
+		// )
 	},
 
 	/**
