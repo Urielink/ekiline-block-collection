@@ -5,7 +5,7 @@
  */
 import { registerBlockType } from '@wordpress/blocks'
 import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor'
-import { PanelBody, SelectControl, ToggleControl, TextControl } from '@wordpress/components'
+import { PanelBody, SelectControl, ToggleControl } from '@wordpress/components'
 
 /**
  * Retrieves the translation of text.
@@ -126,35 +126,12 @@ registerBlockType('ekiline-block-collection/ekiline-navbar', {
 		}
 	},
 	/**
-	 * Se ocupara contexto para pasar valores.
-	 * @link https://developer.wordpress.org/block-editor/reference-guides/block-api/block-context/
-	 */
-	providesContext: {
-		'ekiline-navbar/anchor': 'anchor',
-		'ekiline-navbar/navPosition': 'navPosition',
-		'ekiline-navbar/navStyle': 'navStyle',
-		'ekiline-navbar/navShow': 'navShow',
-		'ekiline-navbar/alignToggler': 'alignToggler',
-		'ekiline-navbar/alignItems': 'alignItems',
-		'ekiline-navbar/navMenu': 'navMenu'
-	},
-	/**
 	 * @see ./edit.js
 	 */
 	// edit: Edit,
 	edit: (props) => {
+
 		const { attributes, setAttributes } = props
-
-		// Restringir los bloques con un preset.
-		// @link https://developer.wordpress.org/block-editor/reference-guides/core-blocks/
-		const PARENT_ALLOWED_BLOCKS = [
-			'ekiline-block-collection/ekiline-navbar-menu-wrapper'
-		]
-
-		const CHILD_TEMPLATE = [
-			['ekiline-block-collection/ekiline-navbar-menu-wrapper']
-		]
-
 		// personalizar clase
 		const blockProps = useBlockProps({
 			className: 'editor-navbar'
@@ -176,7 +153,12 @@ registerBlockType('ekiline-block-collection/ekiline-navbar', {
 			blockProps.className += attributes.alignItems
 		}
 
-		// console.log(blockProps.className)
+		// Cargar un preset.
+		const CHILD_TEMPLATE = [
+			['core/site-logo'],
+			['core/paragraph', { placeholder: __('Add a block', 'ekiline-block-collection') }],
+			['core/navigation']
+		]
 
 		// Función separada para determinar el texto de ayuda
 		function getHelpText(data) {
@@ -278,7 +260,7 @@ registerBlockType('ekiline-block-collection/ekiline-navbar', {
 
 			{/* El bloque */}
 			<InnerBlocks
-				allowedBlocks={PARENT_ALLOWED_BLOCKS}
+				orientation='horizontal'
 				template={CHILD_TEMPLATE}
 			/>
 		</div>
@@ -309,7 +291,10 @@ registerBlockType('ekiline-block-collection/ekiline-navbar', {
 		// Componente Boton.
 		function NavToggler () {
 			// Toggler classnames
-			const togglerClassnames = (attributes.navPosition === ' fixed-bottom' || attributes.navPosition === ' sticky-bottom') ? 'navbar-toggler order-5' : 'navbar-toggler';
+			let togglerClassnames = (attributes.navPosition === ' fixed-bottom' || attributes.navPosition === ' sticky-bottom') ? 'navbar-toggler order-5' : 'navbar-toggler';
+			// Toggle alinear botón
+			togglerClassnames += (!attributes.alignToggler) ? ' ms-auto' : '';
+
 			return (
 				<button
 					className={togglerClassnames}
@@ -324,173 +309,54 @@ registerBlockType('ekiline-block-collection/ekiline-navbar', {
 			)
 		}
 
+		// atributos para collapse
+		const collapseProps = {
+			id: attributes.anchor + 'Child',
+			className: (attributes.navStyle === 'offcanvas') ? 'offcanvas offcanvas-end' : attributes.navStyle + ' navbar-collapse'
+		}
+		if (attributes.alignItems) {
+			collapseProps['className'] += attributes.alignItems
+		}
+
+		// Componente Boton cerrar (offcanvas)
+        const BtnClose = () => {
+            if (attributes.navStyle !== 'offcanvas') return null
+            const addClassnamesBtn = (data) => {
+                switch (data) {
+                    case ' navbar-expand-lg':
+                        return ' d-lg-none'
+                    case ' navbar-expand-sm':
+                        return ' d-sm-none'
+                    case ' navbar-expand':
+                        return ' d-none'
+                    default:
+                        return ''
+                }
+            }
+            return (
+                <button
+                    type='button'
+                    className={'btn-close' + addClassnamesBtn(attributes.navShow)}
+                    data-bs-dismiss='offcanvas'
+                    aria-label='Close'
+                ></button>
+            )
+        }
+
 		return (
 			<div {...blockProps}>
 				<div className='container-fluid'>
 					<NavToggler />
-					<InnerBlocks.Content />
+					<div>{'contenido a modificar'}</div>
+					<div {...collapseProps}>
+						<BtnClose />
+						<InnerBlocks.Content />
+					</div>
+
 				</div>
 			</div>
 		)
 	}
-})
-
-/**
- * Bloque interno navbar
- * - nav.navbar + navbar-expand-lg + bg-body-tertiary [fixed-top/fixed-bottom/sticky-top/sticky-bottom]
- * - - div + container-fluid + [container-md/sm/]
- * - - - a.navbar-brand [href]
- * - - - button.navbar-toggler [+ data]
- * - - - - span .navbar-toggler-icon
- * - - div + collapse navbar-collapse [+ id] variables off canvas [offcanvas offcanvas-end +  otros valores]
- * - - - - [bloque navegacion UL] intervenir clases css + [navbar-nav-scroll + style="--bs-scroll-height: 100px;"]
- * - - - - [Permitir otros bloques] intervenir clases css // Funciona para offcanvas.
- */
-registerBlockType('ekiline-block-collection/ekiline-navbar-menu-wrapper', {
-	title: __('Navbar menu container', 'ekiline-block-collection'),
-	parent: ['ekiline-block-collection/ekiline-navbar'],
-	icon: 'feedback',
-	description: __('Add items to your navigation bar', 'ekiline-block-collection'),
-	category: 'design',
-	// Se ocupa contexto para pasar valores desde el padre, en este caso el ID.
-	usesContext: [
-		'ekiline-navbar/anchor',
-		'ekiline-navbar/navStyle',
-		'ekiline-navbar/alignItems',
-		'ekiline-navbar/navMenu',
-		'ekiline-navbar/navShow'
-	],
-	supports: {
-		anchor: true,
-		html: false, // no permitir HTML
-		reusable: false,
-	},
-	attributes: {
-		parentAnchor: {
-		type: 'string',
-		default: '' // remove dataset [data-bs-parent].
-		},
-		parentNavStyle: {
-			type: 'string',
-			default: ' collapse' // offcanvas,nav-scroller
-		},
-		parentAlignItems: {
-			type: 'string',
-			default: '', // justify-content-md-center
-		},
-		parentNavMenu: {
-			type: 'string',
-			default: '' //id de navegacion *select.
-		},
-		parentNavShow: {
-			type: 'string',
-			default: '' // lg,md,sm.
-		}
-	},
-	/**
-	 * @see ./edit.js
-	 */
-	// edit: Edit,
-	edit: (props) => {
-
-		const { attributes, setAttributes } = props
-
-		// Cargar un preset.
-		const CHILD_TEMPLATE = [
-			['core/site-logo'],
-			['core/navigation-submenu'],
-			['core/paragraph'],
-			['core/buttons']
-		]
-
-		// personalizar clase
-		const blockProps = useBlockProps({
-			className: 'editor-collapse editor-navbar-collapse',
-			// 'data-bs-parent': (attributes.parentAlignItems && attributes.parentAnchor) ? '#' + attributes.parentAnchor : null
-		})
-
-		// Precargar nombre ID en hijos y valores heredados de contexto.
-		if (!attributes.parentAnchor) {
-			setAttributes({ parentAnchor: props.context['ekiline-navbar/anchor'] })
-		}
-
-		// Precargar nombre ID (anchor).
-		if (!attributes.anchor) {
-			setAttributes({ anchor: props.context['ekiline-navbar/anchor'] + 'Child' })
-		}
-
-		// Actualizar estado parentNavStyle.
-		setAttributes({ parentNavStyle: props.context['ekiline-navbar/navStyle'] })
-		// Actualizar estado parentAlignItems.
-		setAttributes({ parentAlignItems: props.context['ekiline-navbar/alignItems'] })
-		// Actualizar estado parentNavMenu.
-		setAttributes({ parentNavMenu: props.context['ekiline-navbar/navMenu'] })
-		// Actualizar estado parentNavShow.
-		setAttributes({ parentNavShow: props.context['ekiline-navbar/navShow'] })
-
-		return (
-			<InnerBlocks
-				orientation='horizontal'
-				template={CHILD_TEMPLATE}
-			/>
-		)
-
-		// return (
-		// 	<div {...blockProps}>
-		// 		<InnerBlocks
-		// 			orientation='horizontal'
-		// 			template={CHILD_TEMPLATE}
-		// 		/>
-		// 	</div>
-		// )
-	},
-
-	/**
-	 * @see ./save.js
-	 */
-	// save,
-	save: ({ attributes }) => {
-
-		// Modificar className de bloque.
-		function addClassnames(data) {
-			if (data === 'offcanvas') {
-				return 'offcanvas offcanvas-end'
-			}
-			return data + ' navbar-collapse';
-		}
-
-		const blockProps = useBlockProps.save({
-			className: addClassnames(attributes.parentNavStyle),
-			'data-bs-parent': (attributes.parentAlignItems && attributes.parentAnchor) ? '#' + attributes.parentAnchor : null
-		})
-
-		// Modificar className de boton.
-		function addClassnamesBtn(data) {
-			switch (data) {
-				case ' navbar-expand-lg':
-					return ' d-lg-none'
-				case ' navbar-expand-sm':
-					return ' d-sm-none'
-				case ' navbar-expand':
-					return ' d-none'
-				default:
-					return ''
-			}
-		}
-
-		return (
-			<div {...blockProps}>
-				{attributes.parentNavStyle === 'offcanvas' && (
-					<button type="button" 
-						class={'btn-close' + addClassnamesBtn(attributes.parentNavShow) } 
-						data-bs-dismiss="offcanvas" 
-						aria-label="Close"></button>
-				)}
-				<InnerBlocks.Content />
-			</div>
-		)
-	}
-
 })
 
 /**
