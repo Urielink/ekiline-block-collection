@@ -99,8 +99,22 @@ registerBlockType('ekiline-block-collection/ekiline-navbar', {
 	supports: {
 		anchor: true,
 		color: {
-			gradients: true // Enables the gradients UI control.
+			gradients: true,
+			text: true,
 		},
+		// Uso de bordes
+        __experimentalBorder: {
+            color: true,
+            radius: true,
+            style: true,
+            width: true,
+            __experimentalDefaultControls: {
+                color: true,
+                radius: true,
+                style: true,
+                width: true,
+            },
+        },
 	},
 
 	/**
@@ -122,7 +136,21 @@ registerBlockType('ekiline-block-collection/ekiline-navbar', {
 		alignItems: {
 			type: 'string',
 			default: '', // justify-content-md-center
-		}
+		},
+		style: {
+            type: 'object',
+            default: {
+                border: {
+                    color: '#f5f5f5',
+                    radius: '4px',
+                    style: 'solid',
+                    width: '1px',
+                },
+				color: {
+                    background: '#ffffff'
+                }
+            },
+        },
 	},
 	/**
 	 * Se ocupara contexto para pasar valores.
@@ -317,9 +345,16 @@ registerBlockType('ekiline-block-collection/ekiline-navbar-menu-wrapper', {
 		reusable: false,
 	},
 	attributes: {
+		lock: {
+			type: 'object',
+			default: {
+				move: true,
+				remove: true
+			}
+		},
 		parentAnchor: {
-		type: 'string',
-		default: '' // remove dataset [data-bs-parent].
+			type: 'string',
+			default: '' // remove dataset [data-bs-parent].
 		},
 		parentNavStyle: {
 			type: 'string',
@@ -437,6 +472,7 @@ registerBlockType('ekiline-block-collection/ekiline-navbar-menu-wrapper', {
 
 /**
  * Bloque interno toggler, componente.
+ * estilos https://wordpress.stackexchange.com/questions/404653/how-to-set-defaults-for-border-controls-in-custom-block
  */
 registerBlockType('ekiline-block-collection/ekiline-navbar-toggler', {
 	title: __('Navbar toggler', 'ekiline-block-collection'),
@@ -454,18 +490,53 @@ registerBlockType('ekiline-block-collection/ekiline-navbar-toggler', {
 		anchor: true,
 		html: false,
 		color: {
-			text: false
+			gradients: true,
+			text: true,
 		},
+		// Uso de bordes
+        __experimentalBorder: {
+            color: true,
+            radius: true,
+            style: true,
+            width: true,
+            __experimentalDefaultControls: {
+                color: true,
+                radius: true,
+                style: true,
+                width: true,
+            },
+        },
 	},
 	attributes: {
+		lock: {
+			type: 'object',
+			default: {
+				move: true,
+				remove: true
+			}
+		},
 		parentAnchor: {
-		type: 'string',
-		default: '' // remove dataset [data-bs-parent].
+			type: 'string',
+			default: '' // remove dataset [data-bs-parent].
 		},
 		parentNavStyle: {
 			type: 'string',
 			default: ' collapse' // offcanvas,nav-scroller
-		}
+		},
+		style: {
+            type: 'object',
+            default: {
+                border: {
+                    color: '#f5f5f5',
+                    radius: '4px',
+                    style: 'solid',
+                    width: '1px',
+                },
+				color: {
+                    background: '#f5f5f510'
+                }
+            },
+        },
 	},
 	/**
 	 * @see ./edit.js
