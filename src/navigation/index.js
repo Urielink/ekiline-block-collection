@@ -383,7 +383,7 @@ registerBlockType('ekiline-block-collection/ekiline-navbar-menu-wrapper', {
 
 		// Cargar un preset.
 		const CHILD_TEMPLATE = [
-			['core/navigation',{"overlayMenu":"never","className":"navbar-nav","style":{"typography":{"fontSize":"16px"}}}]
+			['core/navigation',{"overlayMenu":"never","style":{"typography":{"fontSize":"16px"}}}]
 		]
 
 		// personalizar clase
@@ -585,4 +585,3 @@ registerBlockType('ekiline-block-collection/ekiline-navbar-toggler', {
 		)
 	}
 });
-

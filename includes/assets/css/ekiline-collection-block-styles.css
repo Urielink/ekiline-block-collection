@@ -472,3 +472,11 @@
 	mask-image: var(--bs-accordion-btn-icon);
 	filter: invert(1);
 }
+
+/**
+ * Estilos pendientes de ajuste. navbar
+ */
+.dropdown-toggle::after {
+	content: none;
+	display: none;
+}
