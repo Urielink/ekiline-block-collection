@@ -325,3 +325,51 @@ function ekiline_collection_js_offcanvas_has_video () {
   }
 }
 ekiline_collection_js_offcanvas_has_video()
+
+/**
+ * Dropdown anidados en navbar.
+ */
+function ekiline_extend_bootstrap_init_bundle_items(){
+  const dropdownElementList = document.querySelectorAll('.dropdown-toggle');
+  if (dropdownElementList.length !== 0) {
+    dropdownElementList.forEach(dropdownToggleEl => {
+      dropdownToggleEl.addEventListener('click', function (e) {
+        const dropdownMenu = e.target.closest('.dropdown-menu');
+        if (dropdownMenu) {
+          e.stopPropagation();
+        }
+      });
+    });
+  }
+}
+ekiline_extend_bootstrap_init_bundle_items();
+
+
+/**
+ * Cerrar un modal al redimensionar la ventana.
+ */
+function ekiline_collection_js_close_navbar_window_resize () {
+  const navbar = document.querySelector('.navbar-collapse')
+  if (navbar) {
+    window.addEventListener('resize', function () {
+      navbar.classList.remove('show')
+    })
+  }
+}
+ekiline_collection_js_close_navbar_window_resize()
+
+
+/**
+ * Cerra navbar en caso de click en un enlace interno.
+ */
+function ekiline_collection_js_close_navbar () {
+  const navbar = document.querySelector('.navbar-collapse')
+  if (navbar) {
+    navbar.addEventListener('click', function (e) {
+      if (e.target.classList.contains('nav-link')) {
+        navbar.classList.remove('show')
+      }
+    })
+  }
+}
+ekiline_collection_js_close_navbar()

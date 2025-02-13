@@ -40,16 +40,27 @@ function agregar_clase_menu_submenus( $block_content, $block ) {
     $processor = new WP_HTML_Tag_Processor( $block_content );
 
     if ( $processor->next_tag( 'li' ) ) {
-        // $processor->remove_class( 'wp-block-navigation-item' );
-        $processor->add_class( 'nav-item' ); // test: dropdown w-100 flex-wrap
+        $processor->add_class( 'nav-item dropdown' ); // BS aplicar para usar bootstrap
+        $processor->remove_class( 'has-child' ); // BS aplicar para usar bootstrap
+        // $processor->remove_class( '_wp-block-navigation-item' );
+        // $processor->remove_class( '_open-on-hover-click' );
+        // $processor->remove_class( '_wp-block-navigation-submenu' );
+    }
+    if ( $processor->next_tag( 'a' ) ) {
+        $processor->add_class( 'nav-link dropdown-toggle' ); // BS aplicar para usar bootstrap
+        // $processor->remove_class( '_wp-block-navigation-item__content' );
     }
     if ( $processor->next_tag( 'button' ) ) {
-        $processor->add_class( 'nav-link dropdown-toggle ps-1 pe-3' );
-        // $processor->set_attribute( 'data-bs-toggle', 'dropdown' );
-        // $processor->set_attribute('aria-expanded', 'false');
+        $processor->add_class( 'nav-link dropdown-toggle' );
+        $processor->set_attribute( 'data-bs-toggle', 'dropdown' ); // BS aplicar para usar bootstrap
+        $processor->set_attribute('aria-expanded', 'false'); // BS aplicar para usar bootstrap
+        // $processor->remove_class( '_wp-block-navigation__submenu-icon' );
+        // $processor->remove_class( '_wp-block-navigation-submenu__toggle' );
     }
     if ( $processor->next_tag( 'ul' ) ) {
         $processor->add_class( 'dropdown-menu' ); // test: w-100 position-relative
+        // $processor->remove_class( '_wp-block-navigation__submenu-container' );
+        // $processor->remove_class( '_wp-block-navigation-submenu' );
     }
 
     return $processor->get_updated_html();

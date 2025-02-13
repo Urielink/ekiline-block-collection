@@ -480,3 +480,50 @@
 	content: none;
 	display: none;
 }
+.dropdown-menu[data-bs-popper] {
+	left: 10px;
+}
+
+.navbar-collapse.collapsing .navbar-nav *,
+.navbar-collapse.collapse.show .navbar-nav *{
+	width: 80%;
+	border: 0px;
+}
+.navbar-collapse.collapsing .navbar-nav li li,
+.navbar-collapse.collapse.show .navbar-nav li li{
+	width: 90%;
+	padding-left: .25rem;
+	border-left: 1px solid #00000026;
+}
+
+.navbar-collapse.collapsing button.nav-link.dropdown-toggle,
+.navbar-collapse.collapse.show button.nav-link.dropdown-toggle{
+	min-height: 40px;
+	width: 40px;
+}
+
+.navbar-collapse.collapsing .nav-item.dropdown,
+.navbar-collapse.collapse.show .nav-item.dropdown{
+	flex-wrap: wrap;
+}
+
+/*wp vars*/
+.navbar-collapse.collapsing .navbar-nav *,
+.navbar-collapse.collapse.show .navbar-nav *{
+	width: 100%;
+	position: relative;
+	border: 0px;
+}
+.navbar-collapse.collapsing .navbar-nav li li,
+.navbar-collapse.collapse.show .navbar-nav li li{
+	width: 100%;
+}
+
+.navbar-collapse.collapsing button.nav-link.dropdown-toggle,
+.navbar-collapse.collapse.show button.nav-link.dropdown-toggle{
+	min-height: 40px;
+	width: 40px;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
