@@ -585,3 +585,10 @@ registerBlockType('ekiline-block-collection/ekiline-navbar-toggler', {
 		)
 	}
 });
+
+/**
+ * Prueba de filtros.
+ * Nota: por alguna razón no funciona este hook con los bloques de navegacion.
+ * https://developer.wordpress.org/block-editor/reference-guides/filters/block-filters/#blocks-getsavecontent-extraprops
+ * https://css-tricks.com/a-crash-course-in-wordpress-block-filters/
+ */
