@@ -372,4 +372,4 @@ function ekiline_collection_js_close_navbar () {
     })
   }
 }
-ekiline_collection_js_close_navbar()
+// ekiline_collection_js_close_navbar()
