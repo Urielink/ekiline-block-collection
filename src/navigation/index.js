@@ -383,7 +383,13 @@ registerBlockType('ekiline-block-collection/ekiline-navbar-menu-wrapper', {
 
 		// Cargar un preset.
 		const CHILD_TEMPLATE = [
-			['core/navigation',{"overlayMenu":"never","style":{"typography":{"fontSize":"16px"}}}]
+			[ 'core/navigation',{
+					"className":"navbar-nav",
+					"overlayMenu":"never",
+					"style":{
+						"typography":{"fontSize":"16px"}
+					}
+			}]
 		]
 
 		// personalizar clase
@@ -591,4 +597,8 @@ registerBlockType('ekiline-block-collection/ekiline-navbar-toggler', {
  * Nota: por alguna razón no funciona este hook con los bloques de navegacion.
  * https://developer.wordpress.org/block-editor/reference-guides/filters/block-filters/#blocks-getsavecontent-extraprops
  * https://css-tricks.com/a-crash-course-in-wordpress-block-filters/
+ * https://nickdiego.com/programmatically-add-classes-to-blocks-in-the-wordpress-editor-based-on-attributes/
+ * Auxiliar: Detectar un bloque hijo en el dom del editor.
+ * https://developer.wordpress.org/block-editor/reference-guides/data/data-core-blocks/#haschildblocks
  */
+

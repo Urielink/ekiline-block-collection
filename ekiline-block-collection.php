@@ -107,4 +107,4 @@ add_action('wp_enqueue_scripts', 'ekiline_collection_required_scripts', 1);
 define('EKILINE_COLLECTION_PATH', plugin_dir_path(__FILE__) . 'includes/');
 require EKILINE_COLLECTION_PATH . 'ekiline-collection-info.php';
 require EKILINE_COLLECTION_PATH . 'ekiline-collection-carousel.php';
-require EKILINE_COLLECTION_PATH . 'ekiline-collection-navigation.php';
+// require EKILINE_COLLECTION_PATH . 'ekiline-collection-navigation.php';

@@ -2,6 +2,7 @@
 /**
  * Filtros para modificar las clases de los bloques.
  * Version 1  - 2021-09-29
+ * 02152025: problema, aplica estas clases a cualquier navegacion.
  **/
 function agregar_clase_menu( $block_content, $block ) {
 
