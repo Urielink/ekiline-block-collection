@@ -16,6 +16,7 @@
  * @link https://gist.github.com/corvannoorloos/43980115659cb5aee571
  * @link https://wordpress.stackexchange.com/questions/36394/wp-3-3-how-to-add-menu-items-to-the-admin-bar
  * @link https://wordpress.stackexchange.com/questions/266318/how-to-add-custom-submenu-links-in-wp-admin-menus
+ * @link https://fsylum.net/blog/validate-options-on-custom-wordpress-settings-page/
  *
  * @package ekiline-block-collection
  */
