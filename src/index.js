@@ -22,7 +22,7 @@ import './carousel-extra/index'
 import './carousel-blocks/index'
 import './offcanvas/index'
 import './hooks/index'
-// nuevo bloque: navigation 
+// nuevo bloque: navigation
 import './navigation/index'
 
 /**

@@ -326,18 +326,14 @@ function ekiline_collection_js_offcanvas_has_video () {
 }
 ekiline_collection_js_offcanvas_has_video()
 
-
 /**
  * Configurar navegación desde frontend.
  * - Eficaz por la compatibilidad con REACT y el filtrado con PHP.
  */
 function ekiline_collection_js_navbar () {
-
   const navbar = document.querySelectorAll('.wp-block-ekiline-block-collection-ekiline-navbar')
   if (navbar.length !== 0) {
-
     navbar.forEach(function (navbarItem) {
-
       navbarItem.classList.add('navbar')
 
       const navbarUl = navbarItem.querySelector('ul')
@@ -356,7 +352,6 @@ function ekiline_collection_js_navbar () {
       const navbarSubmenus = navbarItem.querySelectorAll('.wp-block-navigation-submenu')
 
       navbarSubmenus.forEach(function (navbarSubmenusItem) {
-
         navbarSubmenusItem.classList.add('nav-item', 'dropdown')
         navbarSubmenusItem.classList.remove('has-child')
 
@@ -374,44 +369,41 @@ function ekiline_collection_js_navbar () {
         navbarSubmenusUl.forEach(function (navbarSubmenusUlItem) {
           navbarSubmenusUlItem.classList.add('dropdown-menu')
         })
-
       })
-
     })
   }
 }
 ekiline_collection_js_navbar()
 
-
 /**
  * Dropdown anidados en navbar.
  */
-function ekiline_extend_bootstrap_init_bundle_items(){
-  const dropdownElementList = document.querySelectorAll('.dropdown-toggle');
+function ekiline_extend_bootstrap_init_bundle_items () {
+  const dropdownElementList = document.querySelectorAll('.dropdown-toggle')
   if (dropdownElementList.length !== 0) {
     dropdownElementList.forEach(dropdownToggleEl => {
       dropdownToggleEl.addEventListener('click', function (e) {
-        const dropdownMenu = e.target.closest('.dropdown-menu');
+        const dropdownMenu = e.target.closest('.dropdown-menu')
         if (dropdownMenu) {
-          e.stopPropagation();
+          e.stopPropagation()
         }
-      });
-    });
+      })
+    })
   }
 }
-ekiline_extend_bootstrap_init_bundle_items();
+ekiline_extend_bootstrap_init_bundle_items()
 
 /**
  * Cerrar un menu al redimensionar la ventana.
  */
-function ekiline_collection_js_close_navbar_window_resize() {
+function ekiline_collection_js_close_navbar_window_resize () {
   const navbars = document.querySelectorAll('.navbar-collapse')
   if (navbars.length > 0) {
-      window.addEventListener('resize', () => {
-          navbars.forEach(navbar => {
-              navbar.classList.remove('show');
-          });
-      });
+    window.addEventListener('resize', () => {
+      navbars.forEach(navbar => {
+        navbar.classList.remove('show')
+      })
+    })
   }
 }
 ekiline_collection_js_close_navbar_window_resize()
@@ -430,4 +422,3 @@ function ekiline_collection_js_close_navbar () {
   }
 }
 // ekiline_collection_js_close_navbar()
-
