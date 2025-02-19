@@ -77,16 +77,16 @@ registerBlockType('ekiline-block-collection/ekiline-popovers', {
       <div {...useBlockProps()}>
         <ol>
           <li>
-            {__('Popovers have rules added to the core buttons.', 'ekiline-block-collection')}<br></br>
+            {__('Popovers have rules added to the core buttons.', 'ekiline-block-collection')}<br />
           </li>
           <li>
-            {__('You need to create a button. And then text an anchor (#name) link.', 'ekiline-block-collection')}<br></br>
-          </li> 
-          <li>
-           {__('This will allow you to use the advanced options for the button.', 'ekiline-block-collection')}<br></br>
+            {__('You need to create a button. And then text an anchor (#name) link.', 'ekiline-block-collection')}<br />
           </li>
           <li>
-          {__('You can remove this notice, it won\'t be published in your content.', 'ekiline-block-collection')}
+            {__('This will allow you to use the advanced options for the button.', 'ekiline-block-collection')}<br />
+          </li>
+          <li>
+            {__('You can remove this notice, it won\'t be published in your content.', 'ekiline-block-collection')}
           </li>
         </ol>
       </div>
