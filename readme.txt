@@ -65,6 +65,13 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Changelog ==
 
+= 2.1.0 =
+* New Navbar Block
+* Merges the wordpress navigator block into the bootstrap navbar.
+* Adds and removes css classes on the frontend with javascript.
+* Adds and removes css classes on the frontend with javascript.
+* In the next version, code refactoring and block updates to use API v3 are planned.
+
 = 2.0.1 =
 * Quick fix: properly initialize loading of plugin styles and scripts
 
