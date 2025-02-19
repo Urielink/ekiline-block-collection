@@ -337,7 +337,7 @@ registerBlockType('ekiline-block-collection/ekiline-offcanvas-header', {
   supports: {
     html: false,
     reusable: false,
-    multiple: false,
+    // multiple: false,
     inserter: true
   },
   attributes: {
@@ -414,7 +414,7 @@ registerBlockType('ekiline-block-collection/ekiline-offcanvas-body', {
   supports: {
     html: false,
     reusable: false,
-    multiple: false,
+    // multiple: false,
     inserter: true
   },
   edit: () => {

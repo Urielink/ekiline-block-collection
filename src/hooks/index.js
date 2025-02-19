@@ -364,18 +364,18 @@ addFilter(
  * los hooks para modificar elementos solo afectan algunos items.
  * es eficiente en elementos simples, pero no en bloques complejos.
  */
-function setBlockCustomClassName (className, blockName) {
-  return blockName === 'core/code' ? 'test-item' : className
-}
+// function setBlockCustomClassName (className, blockName) {
+//   return blockName === 'core/code' ? 'test-item' : className
+// }
 // addFilter('blocks.getBlockDefaultClassName','my-plugin/set-block-custom-class-name',setBlockCustomClassName);
 
-function addBackgroundColorStyle (props, blocktype) {
-  if (blocktype.name !== 'core/code') {
-    return props
-  }
-  return {
-    ...props,
-    style: { backgroundColor: 'white' }
-  }
-}
+// function addBackgroundColorStyle (props, blocktype) {
+//   if (blocktype.name !== 'core/code') {
+//     return props
+//   }
+//   return {
+//     ...props,
+//     style: { backgroundColor: 'white' }
+//   }
+// }
 // addFilter('blocks.getSaveContent.extraProps','my-plugin/add-background-color-style',addBackgroundColorStyle);

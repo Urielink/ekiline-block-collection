@@ -74,12 +74,22 @@ registerBlockType('ekiline-block-collection/ekiline-popovers', {
   // edit: Edit,
   edit: () => {
     return (
-      <p {...useBlockProps()}>
-        {__('Popovers have rules added to the core buttons.', 'ekiline-block-collection')}
-        {__('You need to create a button. And then text an anchor (#name) link.', 'ekiline-block-collection')}
-        {__('This will allow you to use the advanced options for the button.', 'ekiline-block-collection')}
-        {__('You can remove this notice, it won\'t be published in your content.', 'ekiline-block-collection')}
-      </p>
+      <div {...useBlockProps()}>
+        <ol>
+          <li>
+            {__('Popovers have rules added to the core buttons.', 'ekiline-block-collection')}<br></br>
+          </li>
+          <li>
+            {__('You need to create a button. And then text an anchor (#name) link.', 'ekiline-block-collection')}<br></br>
+          </li> 
+          <li>
+           {__('This will allow you to use the advanced options for the button.', 'ekiline-block-collection')}<br></br>
+          </li>
+          <li>
+          {__('You can remove this notice, it won\'t be published in your content.', 'ekiline-block-collection')}
+          </li>
+        </ol>
+      </div>
     )
   }
 
@@ -182,7 +192,7 @@ const withAdvancedControlsBtnCollapse = createHigherOrderComponent((BlockEdit) =
  */
 function applyExtraClassLnkPopover (element, block, attributes) {
   if (allowedBlocks.includes(block.name)) {
-    if (attributes.addDataLnkPopover && attributes.url) {
+    if (attributes.addDataLnkPopover && attributes.url && attributes.text.text) {
       return cloneElement(
         element,
         {},
@@ -192,8 +202,7 @@ function applyExtraClassLnkPopover (element, block, attributes) {
             'data-bs-content': attributes.addDataLnkPopover,
             'data-bs-toggle': (attributes.defineTooltip) ? 'tooltip' : 'popover',
             'data-bs-placement': attributes.addPositionLnkPopover,
-            title: attributes.text
-            // 'type': 'button',
+            title: (attributes.defineTooltip) ? attributes.addDataLnkPopover : attributes.text.text
           }
         )
       )

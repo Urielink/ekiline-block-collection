@@ -162,8 +162,8 @@ registerBlockType('ekiline-block-collection/ekiline-toast-item', {
   supports: {
     anchor: true,
     html: false,
-    multiple: false,
-    reusable: true
+    // multiple: false,
+    reusable: false
     // inserter: false,
   },
   /**

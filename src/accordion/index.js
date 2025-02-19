@@ -183,7 +183,7 @@ registerBlockType('ekiline-block-collection/ekiline-accordion-item', {
     },
     keepOpen: {
       type: 'boolean',
-      default: false // remove dataset [data-bs-parent].
+      default: true // remove dataset [data-bs-parent].
     },
     itemTarget: {
       type: 'string',

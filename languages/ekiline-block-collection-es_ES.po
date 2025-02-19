@@ -6,7 +6,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ekiline-block-"
 "collection\n"
 "POT-Creation-Date: 2025-02-19T02:24:46+00:00\n"
-"PO-Revision-Date: 2025-02-18 22:13-0600\n"
+"PO-Revision-Date: 2025-02-19 00:39-0600\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -353,7 +353,7 @@ msgstr "Contenido del elemento."
 #: build/index.js:1 src/collapse/index.js:73 src/hooks/index.js:112
 #: src/hooks/index.js:266
 msgid "Collapse"
-msgstr "Collpase"
+msgstr "Collapse"
 
 #: build/index.js:1 src/collapse/index.js:75
 msgid "Set a collapse behavior block. You can activate from any button."
@@ -408,7 +408,7 @@ msgstr "Puedes eliminar este aviso, no se publicará en tu contenido."
 
 #: build/index.js:1 src/popovers/index.js:137
 msgid "Button to Popover (Ekiline)"
-msgstr "Botón para ventana emergente (Ekiline)"
+msgstr "Botón para Popover (Ekiline)"
 
 #: build/index.js:1 src/popovers/index.js:139
 msgid "Popover text to show."
@@ -416,7 +416,7 @@ msgstr "Texto a mostrar en Popover."
 
 #: build/index.js:1 src/popovers/index.js:145 src/popovers/index.js:148
 msgid "Popover position"
-msgstr "Posición de la ventana modal"
+msgstr "Posición de popover"
 
 #: build/index.js:1 src/offcanvas/index.js:212 src/popovers/index.js:149
 msgid "Top"
@@ -634,7 +634,7 @@ msgstr "Parámetros de modal"
 
 #: build/index.js:1 src/modal/index.js:204
 msgid "Rise modal"
-msgstr "Modal de ascenso"
+msgstr "Ascenso de Modal"
 
 #: build/index.js:1 src/carousel-blocks/index.js:229
 #: src/carousel-extra/index.js:545 src/carousel/edit.js:267

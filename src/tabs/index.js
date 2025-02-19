@@ -49,6 +49,18 @@ const customIcon = createElement(
   )
 )
 
+// limpiar tambien caracteres especiales. anchor + replace/lowercase.
+// https://ricardometring.com/javascript-replace-special-characters
+const replaceSpecialChars = (str) => {
+  return str.normalize('NFD').replace(/(<([^>]+)>)/gi, '') // Eliminar HTML
+    .replace(/[\u0300-\u036f]/g, '') // Remove accents
+    .replace(/([^\w]+|\s+)/g, '-') // Replace space and other characters by hyphen
+    .replace(/\-\-+/g, '-')	// Replaces multiple hyphens by one hyphen
+    .replace(/(^-+|-+$)/, '') // Remove extra hyphens from beginning or end of the string
+    .toLowerCase() // convierte a minusculas
+}
+
+
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * All files containing `style` keyword are bundled together. The code used
@@ -166,7 +178,7 @@ registerBlockType('ekiline-block-collection/ekiline-tabs-navbar', {
   supports: {
     html: false,
     reusable: false,
-    multiple: false,
+    // multiple: false,
     inserter: false
   },
   // Register block styles.
@@ -284,17 +296,6 @@ registerBlockType('ekiline-block-collection/ekiline-tab-link', {
       className: 'tab-link'
     })
 
-    // limpiar tambien caracteres especiales. anchor + replace/lowercase.
-    // https://ricardometring.com/javascript-replace-special-characters
-    const replaceSpecialChars = (str) => {
-      return str.normalize('NFD').replace(/(<([^>]+)>)/gi, '') // Eliminar HTML
-        .replace(/[\u0300-\u036f]/g, '') // Remove accents
-        .replace(/([^\w]+|\s+)/g, '-') // Replace space and other characters by hyphen
-        .replace(/\-\-+/g, '-')	// Replaces multiple hyphens by one hyphen
-        .replace(/(^-+|-+$)/, '') // Remove extra hyphens from beginning or end of the string
-        .toLowerCase() // convierte a minusculas
-    }
-
     return (
       <div>
         {/* Inspector controles */}
@@ -349,18 +350,7 @@ const findAnchorButton = (props) => {
       icon='code-standards'
       title='Find anchor'
       onClick={() => {
-			  // console.log( props.value.text );
-			  // limpiar tambien caracteres especiales. anchor + replace/lowercase.
-			  const replaceSpecialChars = (str) => {
-			    return str.normalize('NFD').replace(/(<([^>]+)>)/gi, '') // Eliminar HTML
-			      .replace(/[\u0300-\u036f]/g, '') // Remove accents
-			      .replace(/([^\w]+|\s+)/g, '-') // Replace space and other characters by hyphen
-			      .replace(/\-\-+/g, '-')	// Replaces multiple hyphens by one hyphen
-			      .replace(/(^-+|-+$)/, '') // Remove extra hyphens from beginning or end of the string
-			      .toLowerCase() // convierte a minusculas
-        }
 			  const linkToTab = replaceSpecialChars(props.value.text)
-
 			  alert(__('Tab-Content Anchor: ' + linkToTab, 'ekiline-block-collection'))
       }}
     />
@@ -403,7 +393,7 @@ registerBlockType('ekiline-block-collection/ekiline-tabs-container', {
   supports: {
     html: false,
     reusable: false,
-    multiple: false,
+    // multiple: false,
     inserter: false
   },
 
@@ -413,12 +403,15 @@ registerBlockType('ekiline-block-collection/ekiline-tabs-container', {
     const CHILD_TEMPLATE = [
       ['ekiline-block-collection/ekiline-tab-content', {
         className: 'active show',
-        anchor: 'tab-link-1'
+        // anchor: 'tab-link-1'
+        anchor: replaceSpecialChars(__('Tab link 1', 'ekiline-block-collection'))
       }],
       ['ekiline-block-collection/ekiline-tab-content', {
-        anchor: 'tab-link-2'
+        // anchor: 'tab-link-2'
+        anchor: replaceSpecialChars(__('Tab link 2', 'ekiline-block-collection'))
       }]
     ]
+
     // personalizar clase
     const blockProps = useBlockProps({
       className: 'tabs-container'
