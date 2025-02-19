@@ -575,3 +575,16 @@
 .editor-styles-wrapper .carousel-content {
 	border-bottom: var(--ebc-borde-titulo);
 }
+
+/* Navegador */
+.wp-block-ekiline-block-collection-ekiline-navbar .block-editor-inner-blocks .block-editor-block-list__layout{
+	display: flex;
+	align-items: center;
+	gap: .5rem;
+}
+.wp-block-ekiline-block-collection-ekiline-navbar [data-type*="ekiline-block-collection/ekiline-navbar-toggler"]{
+	order: 1;
+	margin-left: auto;
+	border: none;
+	display: flex;
+}
