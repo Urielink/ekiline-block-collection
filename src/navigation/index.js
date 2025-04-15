@@ -435,7 +435,7 @@ registerBlockType('ekiline-block-collection/ekiline-navbar-menu-wrapper', {
     }
     // Modificar className de bloque.
     const blockProps = useBlockProps.save({
-      className: addClassnames(attributes.parentNavStyle) + attributes.parentAlignItems,
+      className: addClassnames(attributes.parentNavStyle) + attributes.parentAlignItems
       // 'data-bs-parent': (attributes.parentAlignItems && attributes.parentAnchor) ? '#' + attributes.parentAnchor : null,
       // 'data-bs-parent': '#' + attributes.parentAnchor
     })
