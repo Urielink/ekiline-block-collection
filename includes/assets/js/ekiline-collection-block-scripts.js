@@ -352,6 +352,10 @@ function ekiline_collection_js_navbar () {
       const navbarSubmenus = navbarItem.querySelectorAll('.wp-block-navigation-submenu')
 
       navbarSubmenus.forEach(function (navbarSubmenusItem) {
+        // Si navbar tiene la clase fixed-bottom ó  sticky-bottom cambia de .dropdown a .dropup
+        if (navbarItem.classList.contains('fixed-bottom') || navbarItem.classList.contains('sticky-bottom')) {
+          navbarSubmenusItem.classList.add('dropup')
+        }
         navbarSubmenusItem.classList.add('nav-item', 'dropdown')
         navbarSubmenusItem.classList.remove('has-child')
 

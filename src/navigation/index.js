@@ -433,11 +433,13 @@ registerBlockType('ekiline-block-collection/ekiline-navbar-menu-wrapper', {
       }
       return data + ' navbar-collapse'
     }
-
+    // Modificar className de bloque.
     const blockProps = useBlockProps.save({
-      className: addClassnames(attributes.parentNavStyle),
-      'data-bs-parent': (attributes.parentAlignItems && attributes.parentAnchor) ? '#' + attributes.parentAnchor : null
+      className: addClassnames(attributes.parentNavStyle) + attributes.parentAlignItems,
+      // 'data-bs-parent': (attributes.parentAlignItems && attributes.parentAnchor) ? '#' + attributes.parentAnchor : null,
+      // 'data-bs-parent': '#' + attributes.parentAnchor
     })
+
     // En caso de fixed-bottom o sticky-bottom.
     if (attributes.parentNavPosition === ' fixed-bottom' || attributes.parentNavPosition === ' sticky-bottom') {
       blockProps.className += ' order-first'
@@ -596,4 +598,20 @@ registerBlockType('ekiline-block-collection/ekiline-navbar-toggler', {
  * https://nickdiego.com/programmatically-add-classes-to-blocks-in-the-wordpress-editor-based-on-attributes/
  * Auxiliar: Detectar un bloque hijo en el dom del editor.
  * https://developer.wordpress.org/block-editor/reference-guides/data/data-core-blocks/#haschildblocks
+ */
+
+/**
+ * Por extender
+ *
+ * 3. el menu se contrae muy rápido: 991/992px
+ *
+ * 4.  revisar el uso de data-bs-parent en navbar, probablemente no se ocupe L#439/440.
+ * - quizá solo lo mantuve como ejemplo o para uso en la extensión de offcanvas.
+ *
+ * 5. Agregar más opciones de alineacion.
+ * alignItems: {
+      type: 'string',
+      default: '' // justify-content-md-center
+    },
+    mejorar opciones de color y bordes y espacios.
  */

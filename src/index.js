@@ -12,7 +12,6 @@ import './editor.scss'
  */
 import './accordion/index'
 import './collapse/index'
-import './popovers/index'
 import './progress/index'
 import './toast/index'
 import './tabs/index'
@@ -22,7 +21,7 @@ import './carousel-extra/index'
 import './carousel-blocks/index'
 import './offcanvas/index'
 import './hooks/index'
-// nuevo bloque: navigation
+import './popovers/index'
 import './navigation/index'
 
 /**

@@ -2,9 +2,9 @@
 Contributors:      urielink
 Requires at least: 5.8
 Tags:              block, collection, bootstrap
-Tested up to:      6.7
+Tested up to:      6.8
 Requires PHP:      7.0
-Stable tag:        2.1.0
+Stable tag:        2.1.1
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/license-list.html#GPLv2
 Donate link:       https://www.paypal.com/paypalme/urielink
@@ -25,7 +25,8 @@ Bootstrap components turned into WordPress editor blocks. Add new functionality 
 - **Toast**.
 - **Static carousel**.
 - **Dynamic carousel**.
-- **Offcanvas (new!)**.
+- **Offcanvas**.
+- **Navigation (new!)**.
 
 
 HTML markup as well as classes and attributes have been respected to work with Bootstrap in its most recent version (5.2.X).
@@ -64,6 +65,11 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 2. This is the second screen shot
 
 == Changelog ==
+
+= 2.1.0 =
+* Check new wordpress version (6.8).
+* Bootstrap update (v5.3.5)
+
 
 = 2.1.0 =
 * New Navbar Block
