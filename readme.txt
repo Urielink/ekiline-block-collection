@@ -168,3 +168,29 @@ As well as to maintain this development and incorporate new features in each new
 Uri Lazcano.
 
 DevIm: [node v19.1.0, npm 8.19.3, nvm 0.39.3]
+
+
+
+
+### prueba de crear bloques independientes
+
+#Actulizar node
+
+Error: Wanted node version >=20.10.0 (>=20.10.0)
+Error: Wanted npm version >=10.2.3 (>=10.2.3)
+
+#Registrar bloques.
+
+npx @wordpress/create-block@latest accordion --no-plugin
+npx @wordpress/create-block@latest collapse --no-plugin
+npx @wordpress/create-block@latest progress --no-plugin
+npx @wordpress/create-block@latest toast --no-plugin
+npx @wordpress/create-block@latest tabs --no-plugin
+npx @wordpress/create-block@latest modal --no-plugin
+npx @wordpress/create-block@latest carousel --no-plugin
+npx @wordpress/create-block@latest carousel-extra --no-plugin
+npx @wordpress/create-block@latest carousel-blocks --no-plugin
+npx @wordpress/create-block@latest offcanvas --no-plugin
+npx @wordpress/create-block@latest hooks --no-plugin
+npx @wordpress/create-block@latest popovers --no-plugin
+npx @wordpress/create-block@latest navigation --no-plugin
