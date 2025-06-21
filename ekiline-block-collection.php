@@ -29,7 +29,7 @@ function ekiline_block_collection_settings_links($links_array, $plugin_file_name
     }
     return $links_array;
 }
-add_filter('plugin_action_links', 'ekiline_block_collection_settings_links', 25, 2);
+// add_filter('plugin_action_links', 'ekiline_block_collection_settings_links', 25, 2);
 
 /**
  * Registers the block using the metadata loaded from the `block.json` file.
@@ -47,11 +47,16 @@ add_filter('plugin_action_links', 'ekiline_block_collection_settings_links', 25,
 function ekiline_collection_ekiline_collection_block_init()
 {
     // Collection script.
-    register_block_type(__DIR__ . '/build');
-    // Language plugin for PHP.
-    load_plugin_textdomain('ekiline-block-collection', false, basename(dirname(__FILE__)) . '/languages/');
-    // Language plugin for JS Blocks.
-    wp_set_script_translations('ekiline-block-collection-ekiline-block-collection-editor-script', 'ekiline-block-collection', plugin_dir_path(__FILE__) . 'languages');
+    // register_block_type(__DIR__ . '/build');
+
+    // Colección de bloques.
+    register_block_type(__DIR__ . '/build/components/accordion');
+    register_block_type(__DIR__ . '/build/components/collapse');
+
+    // // Language plugin for PHP.
+    // load_plugin_textdomain('ekiline-block-collection', false, basename(dirname(__FILE__)) . '/languages/');
+    // // Language plugin for JS Blocks.
+    // wp_set_script_translations('ekiline-block-collection-ekiline-block-collection-editor-script', 'ekiline-block-collection', plugin_dir_path(__FILE__) . 'languages');
 }
 add_action('init', 'ekiline_collection_ekiline_collection_block_init');
 
@@ -98,13 +103,13 @@ function ekiline_collection_required_scripts()
         wp_dequeue_script($text_domain . '-block-scripts');
     }
 }
-add_action('wp_enqueue_scripts', 'ekiline_collection_required_scripts', 1);
+// add_action('wp_enqueue_scripts', 'ekiline_collection_required_scripts', 1);
 
 /**
  * Other features.
  * - Plugin information page.
  * - Carousel script v2.
  */
-define('EKILINE_COLLECTION_PATH', plugin_dir_path(__FILE__) . 'includes/');
-require EKILINE_COLLECTION_PATH . 'ekiline-collection-info.php';
-require EKILINE_COLLECTION_PATH . 'ekiline-collection-carousel.php';
+// define('EKILINE_COLLECTION_PATH', plugin_dir_path(__FILE__) . 'includes/');
+// require EKILINE_COLLECTION_PATH . 'ekiline-collection-info.php';
+// require EKILINE_COLLECTION_PATH . 'ekiline-collection-carousel.php';

@@ -174,12 +174,24 @@ DevIm: [node v19.1.0, npm 8.19.3, nvm 0.39.3]
 
 ### prueba de crear bloques independientes
 
-#Actulizar node
+referencias:
+- https://wordpress.stackexchange.com/questions/407748/how-to-register-two-blocks-in-the-same-plugin
+- https://developer.wordpress.org/news/2024/09/how-to-build-a-multi-block-plugin/
+* https://developer.wordpress.org/news/2024/05/setting-up-a-multi-block-using-inner-blocks-and-post-meta/
+* https://github.com/WordPress/gutenberg/blob/trunk/packages/blocks/README.md
+
+# Actulizar node
 
 Error: Wanted node version >=20.10.0 (>=20.10.0)
 Error: Wanted npm version >=10.2.3 (>=10.2.3)
 
-#Registrar bloques.
+# Registrar bloques.
+
+1. Organizar carpeta contendora para esta coleccion
+ - layout
+ - components
+
+2. generar cada nuevo bloque.
 
 npx @wordpress/create-block@latest accordion --no-plugin
 npx @wordpress/create-block@latest collapse --no-plugin
@@ -194,3 +206,8 @@ npx @wordpress/create-block@latest offcanvas --no-plugin
 npx @wordpress/create-block@latest hooks --no-plugin
 npx @wordpress/create-block@latest popovers --no-plugin
 npx @wordpress/create-block@latest navigation --no-plugin
+
+
+3. registrar cada bloque en index.php
+
+`register_block_type(__DIR__ . '/build/components/accordion')`
