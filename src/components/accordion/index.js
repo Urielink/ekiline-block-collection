@@ -5,14 +5,15 @@
  */
 import { registerBlockType, registerBlockCollection } from '@wordpress/blocks';
 
-// Register the block collection
-registerBlockCollection('ekiline-block-collection', {
-  title: 'Ekiline Block Collection',
-  icon: 'star-filled'
-});
+/**
+ * Imports the icons used in the block.
+ * These icons are used in the block editor interface.
+ */
+import icons from '../../shared/icons';
+const { collectionIcon, accordionIcon } = icons;
 
 /**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
+ * Lets webpack process CSS,  SASS or SCSS files referenced in JavaScript files.
  * All files containing `style` keyword are bundled together. The code used
  * gets applied both to the front of your site and to the editor.
  *
@@ -32,7 +33,13 @@ import metadata from './block.json';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
+registerBlockCollection('ekiline-block-collection', {
+  title: 'Ekiline Block Collection',
+  icon: collectionIcon,
+});
+
 registerBlockType( metadata.name, {
+	icon: accordionIcon,
 	/**
 	 * @see ./edit.js
 	 */

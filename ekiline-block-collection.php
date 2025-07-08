@@ -51,7 +51,7 @@ function ekiline_collection_ekiline_collection_block_init()
 
     // Colección de bloques.
     register_block_type(__DIR__ . '/build/components/accordion');
-    register_block_type(__DIR__ . '/build/components/collapse');
+    // register_block_type(__DIR__ . '/build/components/collapse');
 
     // // Language plugin for PHP.
     // load_plugin_textdomain('ekiline-block-collection', false, basename(dirname(__FILE__)) . '/languages/');
