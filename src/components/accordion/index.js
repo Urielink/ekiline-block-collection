@@ -3,14 +3,15 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-import { registerBlockType, registerBlockCollection } from '@wordpress/blocks';
+import { registerBlockType } from '@wordpress/blocks';
+import { registerEkilineCollection } from '../../shared/collection';
 
 /**
  * Imports the icons used in the block.
- * These icons are used in the block editor interface.
  */
 import icons from '../../shared/icons';
 const { collectionIcon, accordionIcon } = icons;
+registerEkilineCollection(collectionIcon);
 
 /**
  * Lets webpack process CSS,  SASS or SCSS files referenced in JavaScript files.
@@ -29,15 +30,9 @@ import save from './save';
 import metadata from './block.json';
 
 /**
- * Every block starts by registering a new block type definition.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
+ * Se ocupara contexto para pasar valores: "providesContext"
+ * @link https://developer.wordpress.org/block-editor/reference-guides/block-api/block-context/
  */
-registerBlockCollection('ekiline-block-collection', {
-  title: 'Ekiline Block Collection',
-  icon: collectionIcon,
-});
-
 registerBlockType( metadata.name, {
 	icon: accordionIcon,
 	/**

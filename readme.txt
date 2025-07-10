@@ -66,6 +66,11 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Changelog ==
 
+= 3.0.0 =
+* Cambios mayores, nuevo planteamiento de uso de bootstrap.
+* Optimización de vista de bloques en el editor y frontend.
+
+
 = 2.1.1 =
 * Check new wordpress version (6.8).
 * Bootstrap update (v5.3.5)
@@ -211,3 +216,8 @@ npx @wordpress/create-block@latest navigation --no-plugin
 3. registrar cada bloque en index.php
 
 `register_block_type(__DIR__ . '/build/components/accordion')`
+
+
+#### pendientes:
+Los scripts funcionan en el editor sin problema.
+Averiguar la separación de tareas.
