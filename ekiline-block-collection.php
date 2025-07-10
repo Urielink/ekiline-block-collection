@@ -106,6 +106,27 @@ function ekiline_collection_required_scripts()
 // add_action('wp_enqueue_scripts', 'ekiline_collection_required_scripts', 1);
 
 /**
+ * Enqueue block editor assets.
+ * This function is used to enqueue scripts and styles for the block editor.
+ *
+ * @see https://developer.wordpress.org/block-editor/how-to-guides/enqueueing-assets-in-the-editor/
+ */
+function ekiline_block_editor_assets() {
+    wp_enqueue_script(
+        'bootstrap-editor-js',
+        plugin_dir_url(__FILE__) . 'includes/assets/js/bootstrap.bundle.min.js',
+        array( 'wp-blocks', 'wp-element', 'wp-editor' ),
+        null,
+        true
+    );
+    wp_enqueue_style(
+        'bootstrap-editor-css',
+        plugins_url( 'includes/assets/css/bootstrap.css', __FILE__ )
+    );
+}
+add_action( 'enqueue_block_assets', 'ekiline_block_editor_assets' );
+
+/**
  * Other features.
  * - Plugin information page.
  * - Carousel script v2.
