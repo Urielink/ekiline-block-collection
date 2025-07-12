@@ -48,7 +48,7 @@ function ekiline_block_collection_menu()
     );
 
     // ocultar opciones de manera provisional
-    remove_menu_page('ekiline-block-collection');
+    // remove_menu_page('ekiline-block-collection');
 }
 add_action('admin_menu', 'ekiline_block_collection_menu');
 
@@ -138,26 +138,26 @@ function ekiline_block_collection_options()
     settings_fields('ekiline-block-collection-settings-group');
     ?>
 							<label>
-								<span>Estilos CSS</span>
+								<span><?php esc_html_e('Styles', 'ekiline-block-collection'); ?></span>
 								<?php
             $option_name_one = 'ekiline_block_collection_bootstrap_css';
     $current_value_one = get_option($option_name_one, '1');
     ?>
 								<select name="<?php echo esc_attr($option_name_one); ?>">
-									<option value="1" <?php selected($current_value_one, '1'); ?>><?php esc_html_e('Active CSS', 'ekiline-block-collection'); ?></option>
-									<option value="0" <?php selected($current_value_one, '0'); ?>><?php esc_html_e('Inactive CSS', 'ekiline-block-collection'); ?></option>
+									<option value="1" <?php selected($current_value_one, '1'); ?>><?php esc_html_e('Activate CSS', 'ekiline-block-collection'); ?></option>
+									<option value="0" <?php selected($current_value_one, '0'); ?>><?php esc_html_e('Deactivate CSS', 'ekiline-block-collection'); ?></option>
 								</select>
 							</label>
 							<br>
 							<label>
-								<span>Scripts JS</span>
+								<span><?php esc_html_e('Scripts', 'ekiline-block-collection'); ?></span>
 								<?php
         $option_name_two = 'ekiline_block_collection_bootstrap_js';
     $current_value_two = get_option($option_name_two, '1');
     ?>
 								<select name="<?php echo esc_attr($option_name_two); ?>">
-									<option value="1" <?php selected($current_value_two, '1'); ?>><?php esc_html_e('Active JS', 'ekiline-block-collection'); ?></option>
-									<option value="0" <?php selected($current_value_two, '0'); ?>><?php esc_html_e('Inactive JS', 'ekiline-block-collection'); ?></option>
+									<option value="1" <?php selected($current_value_two, '1'); ?>><?php esc_html_e('Activate JS', 'ekiline-block-collection'); ?></option>
+									<option value="0" <?php selected($current_value_two, '0'); ?>><?php esc_html_e('Deactivate JS', 'ekiline-block-collection'); ?></option>
 								</select>
 							</label>
 							<input type="submit" class="button button-primary button-hero" value="<?php esc_html_e('Save Bootstrap settings.', 'ekiline-block-collection') ?>" />
