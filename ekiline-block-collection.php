@@ -28,7 +28,7 @@ function ekiline_block_collection_settings_links($links_array, $plugin_file_name
     }
     return $links_array;
 }
-// add_filter('plugin_action_links', 'ekiline_block_collection_settings_links', 25, 2);
+add_filter('plugin_action_links', 'ekiline_block_collection_settings_links', 25, 2);
 
 /**
  * Registers the block using the metadata loaded from the `block.json` file.
@@ -122,6 +122,7 @@ function ekiline_block_collection_editor_assets() {
     if ( ! is_admin() ) {
         return;
     }
+
     // Nombres de los manejadores de estilos y scripts.
     $text_domain        = 'ekiline-block-collection';
     $bs_style_handler   = $text_domain . '-editor-bootstrap-style';
@@ -129,11 +130,24 @@ function ekiline_block_collection_editor_assets() {
 
     // Registrar siempre, encolar condicionalmente.
     wp_register_style( $bs_style_handler, plugin_dir_url(__FILE__) . 'includes/assets/css/bootstrap.min.css', array(), '5', 'all' );
-    wp_register_script( $bs_script_handler, plugin_dir_url(__FILE__) . 'includes/assets/js/bootstrap.bundle.min.js', array( 'wp-blocks', 'wp-element', 'wp-editor' ), null, true );
+    wp_register_script( $bs_script_handler, plugin_dir_url(__FILE__) . 'includes/assets/js/bootstrap.bundle.min.js', array(), '5', true );
 
-    // Enqueue editor styles and scripts only in the admin area.
-    wp_enqueue_style( $bs_style_handler );
-    wp_enqueue_script( $bs_script_handler );
+    // Obtener opciones de administracion (../wp-admin/admin.php?page=ekiline-block-collection).
+    $load_bs_css = get_option('ekiline_block_collection_bootstrap_css_editor', '1') === '1';
+    $load_bs_js  = get_option('ekiline_block_collection_bootstrap_js_editor', '1') === '1';
+
+    // Inicializar arrays de dependencias.
+    $style_deps  = $load_bs_css ? array( $bs_style_handler ) : array();
+    $script_deps = $load_bs_js  ? array( $bs_script_handler ) : array();
+
+    // Encolar si el usuario no ha deshabilitado.
+    if ( $load_bs_css ) {
+        wp_enqueue_style( $bs_style_handler );
+    }
+
+    if ( $load_bs_js ) {
+        wp_enqueue_script( $bs_script_handler );
+    }
 }
 add_action( 'enqueue_block_assets', 'ekiline_block_collection_editor_assets' );
 
