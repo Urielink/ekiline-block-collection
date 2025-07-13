@@ -1,0 +1,29 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ekiline-block-collection/ekiline-accordion",
+  "version": "0.1.0",
+  "title": "Accordion",
+  "category": "design",
+  "icon": "star",
+  "description": "Show your content as an accordion.",
+  "example": {},
+  "supports": {
+    "html": false,
+    "anchor": true
+  },
+  "textdomain": "ekiline-block-collection",
+  "attributes": {
+    "noStyle": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "providesContext": {
+    "ekiline-accordion/anchor": "anchor"
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js"
+}
