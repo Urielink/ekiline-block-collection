@@ -3,13 +3,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-import { registerBlockType, registerBlockCollection } from '@wordpress/blocks';
-
-// Register the block collection
-registerBlockCollection('ekiline-block-collection', {
-  title: 'Ekiline Block Collection',
-  icon: 'star-filled'
-});
+import { registerBlockType } from '@wordpress/blocks';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.

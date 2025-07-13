@@ -32,7 +32,7 @@ function ekiline_block_collection_menu(){
 		'manage_options', 											// capability
 		'ekiline-block-collection', 								// menu_slug
 		'ekiline_block_collection_options', 						// function
-		'dashicons-schedule', 										// icon_url
+		'dashicons-block-default', 										// icon_url
 		100 														// position
 	);
 
@@ -232,7 +232,7 @@ function ekiline_block_collection_options(){
 				<!-- Información rápida. -->
 				<div class="welcome-panel-column">
 					<div style="padding:4px;">
-					<h3><span class="dashicons dashicons-block-default"></span>
+					<h3><span class="dashicons dashicons-book-alt"></span>
 						<?php esc_html_e('Docs', 'ekiline-block-collection'); ?></h3>
 						<ol>
 							<li>
