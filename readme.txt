@@ -199,6 +199,8 @@ Error: Wanted npm version >=10.2.3 (>=10.2.3)
 2. generar cada nuevo bloque.
 
 npx @wordpress/create-block@latest accordion --no-plugin
+  npx @wordpress/create-block@latest accordion-item --no-plugin
+
 npx @wordpress/create-block@latest collapse --no-plugin
 npx @wordpress/create-block@latest progress --no-plugin
 npx @wordpress/create-block@latest toast --no-plugin
@@ -221,3 +223,32 @@ npx @wordpress/create-block@latest navigation --no-plugin
 #### pendientes:
 Los scripts funcionan en el editor sin problema.
 Averiguar la separación de tareas.
+
+
+### prompt para separar plugin.
+
+🧩 Tengo un plugin de bloques para WordPress. Cada bloque está registrado en un solo archivo grande, pero quiero separar cada uno en su carpeta con archivos index.js, edit.js, save.js y block.json.
+
+Aquí está el nombre del bloque (como está registrado):
+	•	'ekiline-block-collection/ekiline-accordion-item-header'
+
+Su código fuente actual está en formato completo con registerBlockType(...).
+
+Quiero que:
+	1.	Separes ese bloque en su propia carpeta llamada accordion-item-header/.
+	2.	Generes los 4 archivos (index.js, edit.js, save.js, block.json) con el contenido correspondiente.
+	3.	Empaquetes todos los archivos generados en un .zip descargable.
+
+
+### Prompt v2
+
+Tengo un plugin de bloques para WordPress. Cada bloque está registrado en un solo archivo grande, pero quiero separar cada uno en su carpeta con archivos index.js, edit.js, save.js y block.json.
+
+Aquí está el nombre del bloque (como está registrado):
+ekiline-block-collection/ekiline-NOMBRE_DEL_BLOQUE
+
+Quiero que:
+	1.	Crees una carpeta con el nombre que aparece después de la diagonal, por ejemplo ekiline-accordion-item → carpeta accordion-item.
+	2.	Genere dentro de esa carpeta los archivos: index.js, edit.js, save.js y block.json.
+	3.	En el archivo block.json, usa "apiVersion": 3 en lugar del 2.
+	4.	Empaqueta los archivos en un .zip descargable.

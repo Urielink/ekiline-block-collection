@@ -1,0 +1,44 @@
+{
+  "apiVersion": 3,
+  "name": "ekiline-block-collection/ekiline-modal",
+  "title": "Modal",
+  "category": "design",
+  "icon": "feedback",
+  "description": "Add your content here, then invoke with a link anchor #anchor.",
+  "supports": {
+    "anchor": true
+  },
+  "attributes": {
+    "modalShow": {
+      "type": "string",
+      "default": "default"
+    },
+    "modalSize": {
+      "type": "string",
+      "default": "default"
+    },
+    "modalAlign": {
+      "type": "boolean",
+      "default": true
+    },
+    "modalBackdrop": {
+      "type": "boolean",
+      "default": true
+    },
+    "modalKeyboard": {
+      "type": "boolean",
+      "default": true
+    },
+    "modalGrow": {
+      "type": "boolean",
+      "default": false
+    },
+    "modalTime": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css"
+}

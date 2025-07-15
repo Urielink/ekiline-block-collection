@@ -1,0 +1,24 @@
+{
+  "apiVersion": 3,
+  "name": "ekiline-block-collection/ekiline-offcanvas",
+  "title": "Offcanvas",
+  "icon": "feedback",
+  "description": "Add your content here, then invoque with a link anchor #anchor.",
+  "category": "design",
+  "supports": {
+    "anchor": true
+  },
+  "attributes": {
+    "ocPosition": { "type": "string", "default": " offcanvas-end" },
+    "ocWidth": { "type": "string", "default": "" },
+    "ocHeight": { "type": "string", "default": "" },
+    "ocScroll": { "type": "boolean", "default": false },
+    "ocBackdrop": { "type": "string", "default": "true" },
+    "ocDisplay": { "type": "string", "default": " offcanvas" },
+    "parentAnchor": { "type": "string" }
+  },
+  "providesContext": {
+    "ekiline-offcanvas/anchor": "anchor"
+  },
+  "editorScript": "file:./index.js"
+}

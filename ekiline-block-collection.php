@@ -49,8 +49,18 @@ function ekiline_block_collection_ekiline_collection_block_init()
     // register_block_type(__DIR__ . '/build');
 
     // Colección de bloques.
-    register_block_type(__DIR__ . '/build/components/accordion');
-    // register_block_type(__DIR__ . '/build/components/collapse');
+    register_block_type(__DIR__ . '/build/components/accordion/ekiline-accordion');
+    register_block_type(__DIR__ . '/build/components/accordion/ekiline-accordion-item');
+    register_block_type(__DIR__ . '/build/components/accordion/ekiline-accordion-item-header');
+    register_block_type(__DIR__ . '/build/components/accordion/ekiline-accordion-item-body');
+    register_block_type(__DIR__ . '/build/components/collapse/ekiline-collapse');
+    register_block_type(__DIR__ . '/build/components/modal/ekiline-modal');
+    register_block_type(__DIR__ . '/build/components/modal/ekiline-modal-header');
+    register_block_type(__DIR__ . '/build/components/modal/ekiline-modal-body');
+    register_block_type(__DIR__ . '/build/components/modal/ekiline-modal-footer');
+    register_block_type(__DIR__ . '/build/components/offcanvas/ekiline-offcanvas');
+    register_block_type(__DIR__ . '/build/components/offcanvas/ekiline-offcanvas-header');
+    register_block_type(__DIR__ . '/build/components/offcanvas/ekiline-offcanvas-body');
 
     // // Language plugin for PHP.
     // load_plugin_textdomain('ekiline-block-collection', false, basename(dirname(__FILE__)) . '/languages/');

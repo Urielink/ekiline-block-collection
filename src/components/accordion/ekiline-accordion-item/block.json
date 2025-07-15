@@ -1,0 +1,42 @@
+{
+  "apiVersion": 3,
+  "name": "ekiline-block-collection/ekiline-accordion-item",
+  "title": "Accordion item",
+  "category": "design",
+  "icon": "list-view",
+  "description": "Set title and content in your accordion container.",
+  "parent": ["ekiline-block-collection/ekiline-accordion"],
+  "usesContext": ["ekiline-accordion/anchor"],
+  "providesContext": {
+    "ekiline-accordion-item/showDefault": "showDefault",
+    "ekiline-accordion-item/keepOpen": "keepOpen",
+    "ekiline-accordion-item/itemTarget": "itemTarget"
+  },
+  "supports": {
+    "html": false,
+    "reusable": false
+  },
+  "attributes": {
+    "showDefault": {
+      "type": "boolean",
+      "default": false
+    },
+    "keepOpen": {
+      "type": "boolean",
+      "default": true
+    },
+    "itemTarget": {
+      "type": "string",
+      "default": ""
+    },
+    "content": {
+      "type": "string",
+      "source": "html",
+      "selector": "button",
+      "default": "Item title."
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css"
+}

@@ -1,0 +1,24 @@
+{
+  "apiVersion": 3,
+  "name": "ekiline-block-collection/ekiline-accordion",
+  "title": "Accordion",
+  "category": "design",
+  "icon": "list-view",
+  "description": "Show your content as an accordion.",
+  "supports": {
+    "html": false,
+    "anchor": true
+  },
+  "attributes": {
+    "noStyle": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "providesContext": {
+    "ekiline-accordion/anchor": "anchor"
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css"
+}

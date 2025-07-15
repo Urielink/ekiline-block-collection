@@ -1,0 +1,26 @@
+{
+  "apiVersion": 3,
+  "name": "ekiline-block-collection/ekiline-offcanvas-header",
+  "title": "Offcanvas header",
+  "parent": [
+    "ekiline-block-collection/ekiline-offcanvas"
+  ],
+  "icon": "feedback",
+  "description": "Offcanvas header content.",
+  "category": "design",
+  "usesContext": [
+    "ekiline-offcanvas/anchor"
+  ],
+  "supports": {
+    "html": false,
+    "reusable": false,
+    "inserter": true
+  },
+  "attributes": {
+    "parentId": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "editorScript": "file:./index.js"
+}

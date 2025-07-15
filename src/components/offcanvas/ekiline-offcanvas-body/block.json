@@ -1,0 +1,17 @@
+{
+  "apiVersion": 3,
+  "name": "ekiline-block-collection/ekiline-offcanvas-body",
+  "title": "Offcanvas body content",
+  "parent": [
+    "ekiline-block-collection/ekiline-offcanvas"
+  ],
+  "icon": "feedback",
+  "description": "Offcanvas body content.",
+  "category": "design",
+  "supports": {
+    "html": false,
+    "reusable": false,
+    "inserter": true
+  },
+  "editorScript": "file:./index.js"
+}

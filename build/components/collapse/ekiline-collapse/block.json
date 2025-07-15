@@ -1,0 +1,20 @@
+{
+  "apiVersion": 3,
+  "name": "ekiline-block-collection/ekiline-collapse",
+  "title": "Collapse",
+  "category": "design",
+  "icon": "feedback",
+  "description": "Set a collapse behavior block. You can activate from any button.",
+  "supports": {
+    "anchor": true
+  },
+  "attributes": {
+    "horizontal": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css"
+}
