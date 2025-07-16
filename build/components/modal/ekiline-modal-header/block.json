@@ -1,19 +1,24 @@
 {
+  "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "ekiline-block-collection/ekiline-modal-header",
+  "version": "0.1.0",
+  "textdomain": "ekiline-block-collection",
   "title": "Modal header",
   "category": "design",
-  "icon": "feedback",
-  "description": "Modal header content.",
   "parent": [
     "ekiline-block-collection/ekiline-modal"
   ],
+  "icon": "star",
+  "description": "Modal header content.",
+  "example": {},
   "supports": {
     "html": false,
     "reusable": false,
     "inserter": true
   },
   "editorScript": "file:./index.js",
-  "editorStyle": "file:./editor.css",
-  "style": "file:./style.css"
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js"
 }

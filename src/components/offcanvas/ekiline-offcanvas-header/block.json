@@ -1,16 +1,15 @@
 {
+	"$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "ekiline-block-collection/ekiline-offcanvas-header",
+  "version": "0.1.0",
+	"textdomain": "ekiline-block-collection",
   "title": "Offcanvas header",
-  "parent": [
-    "ekiline-block-collection/ekiline-offcanvas"
-  ],
+  "category": "design",
+  "parent": [ "ekiline-block-collection/ekiline-offcanvas" ],
   "icon": "feedback",
   "description": "Offcanvas header content.",
-  "category": "design",
-  "usesContext": [
-    "ekiline-offcanvas/anchor"
-  ],
+  "example": {},
   "supports": {
     "html": false,
     "reusable": false,
@@ -22,5 +21,11 @@
       "default": ""
     }
   },
-  "editorScript": "file:./index.js"
+  "usesContext": [
+    "ekiline-offcanvas/anchor"
+  ],
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js"
 }

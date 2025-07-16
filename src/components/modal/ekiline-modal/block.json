@@ -1,10 +1,14 @@
 {
+	"$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "ekiline-block-collection/ekiline-modal",
+  "version": "0.1.0",
+  "textdomain": "ekiline-block-collection",
   "title": "Modal",
   "category": "design",
-  "icon": "feedback",
+	"icon": "star",
   "description": "Add your content here, then invoke with a link anchor #anchor.",
+  "example": {},
   "supports": {
     "anchor": true
   },
@@ -38,7 +42,8 @@
       "default": 0
     }
   },
-  "editorScript": "file:./index.js",
-  "editorStyle": "file:./editor.css",
-  "style": "file:./style.css"
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js"
 }

@@ -1,0 +1,26 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ekiline-block-collection/ekiline-toast",
+	"version": "0.1.0",
+	"textdomain": "ekiline-block-collection",
+  "title": "Toast",
+  "category": "design",
+  "icon": "lightbulb",
+  "description": "Show small bootstrap-style notices.",
+  "example": {},
+  "supports": {
+    "anchor": true,
+    "html": false
+  },
+  "attributes": {
+    "toastPosition": {
+      "type": "string",
+      "default": " bottom-0 end-0"
+    }
+  },
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js"
+}

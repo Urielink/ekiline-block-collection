@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ekiline-block-collection/ekiline-tabs-navbar",
+  "version": "0.1.0",
+  "textdomain": "ekiline-block-collection",
+  "title": "Tabs Nav Bar",
+  "category": "design",
+  "parent": [
+    "ekiline-block-collection/ekiline-tabs"
+  ],
+  "icon": "star",
+  "description": "Tab navigation, add your links.",
+  "example": {},
+  "supports": {
+    "html": false,
+    "reusable": false,
+    "inserter": false
+  },
+  "styles": [
+    {
+      "name": "nav-tabs",
+      "label": "Tabs",
+      "isDefault": true
+    },
+    {
+      "name": "nav-pills",
+      "label": "Pills"
+    }
+  ],
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js"
+}

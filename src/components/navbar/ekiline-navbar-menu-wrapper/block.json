@@ -1,0 +1,58 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ekiline-block-collection/ekiline-navbar-menu-wrapper",
+  "version": "0.1.0",
+  "textdomain": "ekiline-block-collection",
+  "title": "Navbar menu container",
+  "category": "design",
+  "parent": [ "ekiline-block-collection/ekiline-navbar" ],
+  "icon": "menu",
+  "description": "Add items to your navigation bar",
+  "example": {},
+  "supports": {
+    "anchor": true,
+    "html": false,
+    "reusable": false
+  },
+  "attributes": {
+    "lock": {
+      "type": "object",
+      "default": {
+        "move": true,
+        "remove": true
+      }
+    },
+    "parentAnchor": {
+      "type": "string",
+      "default": ""
+    },
+    "parentNavStyle": {
+      "type": "string",
+      "default": " collapse"
+    },
+    "parentAlignItems": {
+      "type": "string",
+      "default": ""
+    },
+    "parentNavShow": {
+      "type": "string",
+      "default": ""
+    },
+    "parentNavPosition": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "usesContext": [
+    "ekiline-navbar/anchor",
+    "ekiline-navbar/navStyle",
+    "ekiline-navbar/alignItems",
+    "ekiline-navbar/navShow",
+    "ekiline-navbar/navPosition"
+  ],
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js"
+}

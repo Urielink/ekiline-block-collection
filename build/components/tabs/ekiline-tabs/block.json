@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ekiline-block-collection/ekiline-tabs",
+  "version": "0.1.0",
+  "textdomain": "ekiline-block-collection",
+  "title": "Tabs",
+  "category": "design",
+  "icon": "star",
+  "description": "Add a tabs for your posts, full control.",
+  "example": {},
+  "supports": {
+    "inserter": true,
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "html": false,
+    "color": {
+      "background": true
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js"
+}

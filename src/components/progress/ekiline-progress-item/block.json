@@ -1,0 +1,43 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ekiline-block-collection/ekiline-progress-item",
+  "version": "0.1.0",
+  "textdomain": "ekiline-block-collection",
+  "title": "Progress data bar",
+  "category": "design",
+  "parent": ["ekiline-block-collection/ekiline-progress"],
+  "icon": "star",
+  "description": "Progress data, could be multiple bars between 1 to 100.",
+	"example": {},
+  "supports": {
+    "anchor": false,
+    "color": {
+      "background": true,
+      "gradients": true,
+      "text": true
+    }
+  },
+  "attributes": {
+    "progRange": {
+      "type": "number",
+      "default": 10
+    },
+    "progLabel": {
+      "type": "boolean",
+      "default": false
+    },
+    "progStripes": {
+      "type": "boolean",
+      "default": false
+    },
+    "progAnimation": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js"
+}

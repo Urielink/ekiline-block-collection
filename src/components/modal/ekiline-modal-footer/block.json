@@ -1,17 +1,22 @@
 {
+	"$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "ekiline-block-collection/ekiline-modal-footer",
+  "version": "0.1.0",
+  "textdomain": "ekiline-block-collection",
   "title": "Modal footer",
   "category": "design",
-  "icon": "feedback",
-  "description": "Inner footer content.",
   "parent": ["ekiline-block-collection/ekiline-modal"],
+  "icon": "star",
+  "description": "Inner footer content.",
+  "example": {},
   "supports": {
     "html": false,
     "reusable": false,
     "inserter": true
   },
-  "editorScript": "file:./index.js",
-  "editorStyle": "file:./editor.css",
-  "style": "file:./style.css"
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js"
 }

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ekiline-block-collection/ekiline-toast-item",
+  "version": "0.1.0",
+  "textdomain": "ekiline-block-collection",
+  "title": "Ekiline toast item.",
+  "category": "design",
+  "parent": [
+    "ekiline-block-collection/ekiline-toast"
+  ],
+  "icon": "star",
+  "description": "Each toast can be executed by time, at the end of scrolling, or with the cursor outside the window. You can stack as many as you need.",
+  "example": {},
+  "supports": {
+    "anchor": true,
+    "html": false,
+    "reusable": false
+  },
+  "attributes": {
+    "content": {
+      "type": "string",
+      "source": "html",
+      "selector": "p"
+    },
+    "toastTime": {
+      "type": "number",
+      "default": 0
+    },
+    "toastScroll": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js"
+}

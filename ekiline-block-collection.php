@@ -61,6 +61,18 @@ function ekiline_block_collection_ekiline_collection_block_init()
     register_block_type(__DIR__ . '/build/components/offcanvas/ekiline-offcanvas');
     register_block_type(__DIR__ . '/build/components/offcanvas/ekiline-offcanvas-header');
     register_block_type(__DIR__ . '/build/components/offcanvas/ekiline-offcanvas-body');
+    register_block_type(__DIR__ . '/build/components/tabs/ekiline-tabs');
+    register_block_type(__DIR__ . '/build/components/tabs/ekiline-tabs-container');
+    register_block_type(__DIR__ . '/build/components/tabs/ekiline-tabs-navbar');
+    register_block_type(__DIR__ . '/build/components/tabs/ekiline-tab-link');
+    register_block_type(__DIR__ . '/build/components/tabs/ekiline-tab-content');
+    register_block_type(__DIR__ . '/build/components/toast/ekiline-toast');
+    register_block_type(__DIR__ . '/build/components/toast/ekiline-toast-item');
+    register_block_type(__DIR__ . '/build/components/progress/ekiline-progress');
+    register_block_type(__DIR__ . '/build/components/progress/ekiline-progress-item');
+    register_block_type(__DIR__ . '/build/components/navbar/ekiline-navbar');
+    register_block_type(__DIR__ . '/build/components/navbar/ekiline-navbar-toggler');
+    register_block_type(__DIR__ . '/build/components/navbar/ekiline-navbar-menu-wrapper');
 
     // // Language plugin for PHP.
     // load_plugin_textdomain('ekiline-block-collection', false, basename(dirname(__FILE__)) . '/languages/');
