@@ -173,7 +173,6 @@ function ekiline_block_collection_editor_assets() {
 }
 add_action( 'enqueue_block_assets', 'ekiline_block_collection_editor_assets' );
 
-
 /**
  * Other features.
  * - Plugin information page.
