@@ -70,6 +70,19 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 * Cambios mayores, nuevo planteamiento de uso de bootstrap.
 * Optimización de vista de bloques en el editor y frontend.
 
+## 📦 Compilación de filtros JavaScript (`addFilter`) con @wordpress/scripts
+Este plugin utiliza el sistema de hooks de WordPress (`@wordpress/hooks`) para extender bloques existentes como `core/button`, sin necesidad de registrar nuevos bloques personalizados.
+
+### 📌 Contexto
+Cuando usas funciones como `addFilter()` para modificar bloques existentes (por ejemplo, para agregar atributos o cambiar su comportamiento), estos scripts no se asocian directamente a un `block.json`. Por tanto, **no se compilan automáticamente** mediante `wp-scripts build` como lo hacen los bloques tradicionales.
+
+### ✅ Solución
+Para compilar estos scripts personalizados, se debe crear un archivo de entrada (por ejemplo, `src/index.js`) que importe los filtros deseados:
+
+```js
+// src/index.js
+import './filters/core-button-mods.js';
+
 
 = 2.1.1 =
 * Check new wordpress version (6.8).

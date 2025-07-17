@@ -174,6 +174,23 @@ function ekiline_block_collection_editor_assets() {
 add_action( 'enqueue_block_assets', 'ekiline_block_collection_editor_assets' );
 
 /**
+ * Enqueue block editor assets, hooks and filters.
+ *
+ * @see https://developer.wordpress.org/news/2024/09/how-to-build-a-multi-block-plugin/
+ */
+function ekiline_block_collection_editor_filters(){
+	wp_register_script(
+		'ekiline-global-hooks',
+		plugins_url( 'build/index.js', __FILE__ ),
+		array('wp-hooks', 'wp-blocks'),
+		filemtime( plugin_dir_path( __FILE__ ) . 'build/index.js' ),
+		true
+	);
+    wp_enqueue_script('ekiline-global-hooks');
+}
+add_action( 'enqueue_block_editor_assets', 'ekiline_block_collection_editor_filters' );
+
+/**
  * Other features.
  * - Plugin information page.
  * - Carousel script v2.
