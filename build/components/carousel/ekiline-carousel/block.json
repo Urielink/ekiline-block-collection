@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ekiline-block-collection/ekiline-carousel",
+  "version": "0.1.0",
+  "textdomain": "ekiline-block-collection",
+  "title": "Ekiline Carousel",
+  "category": "design",
+  "icon": "star",
+  "description": "A flexible and extensible carousel block.",
+  "example": {},
+  "supports": {
+    "html": false
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js"
+}
