@@ -73,7 +73,12 @@ function ekiline_block_collection_ekiline_collection_block_init()
     register_block_type(__DIR__ . '/build/components/navbar/ekiline-navbar');
     register_block_type(__DIR__ . '/build/components/navbar/ekiline-navbar-toggler');
     register_block_type(__DIR__ . '/build/components/navbar/ekiline-navbar-menu-wrapper');
-    register_block_type(__DIR__ . '/build/components/carousel/ekiline-carousel');
+    // Caso especial, el carrusel es un bloque hibrido.
+    register_block_type(
+        __DIR__ . '/build/components/carousel/ekiline-carousel',
+        array('render_callback' => 'ekiline_carousel_dynamic_render')
+    );
+
 
     // // Language plugin for PHP.
     // load_plugin_textdomain('ekiline-block-collection', false, basename(dirname(__FILE__)) . '/languages/');
@@ -197,5 +202,5 @@ add_action( 'enqueue_block_editor_assets', 'ekiline_block_collection_editor_filt
  * - Carousel script v2.
  */
 define('EKILINE_COLLECTION_PATH', plugin_dir_path(__FILE__) . 'includes/');
+require EKILINE_COLLECTION_PATH . 'ekiline-carousel-dynamic-render.php';
 require EKILINE_COLLECTION_PATH . 'ekiline-collection-info.php';
-// require EKILINE_COLLECTION_PATH . 'ekiline-collection-carousel.php';
