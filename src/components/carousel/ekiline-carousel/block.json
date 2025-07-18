@@ -12,8 +12,31 @@
 	"supports": {
 		"html": false
 	},
+	"attributes": {
+		"carouselId": {
+			"type": "string",
+			"default": ""
+		},
+		"carouselClass": {
+			"type": "string",
+			"default": ""
+		},
+		"carouselStyle": {
+			"type": "string",
+			"default": ""
+		},
+		"carouselItems": {
+			"type": "array",
+			"default": []
+		},
+		"carouselOptions": {
+			"type": "object",
+			"default": {}
+		}
+	},
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
-	"viewScript": "file:./view.js"
+	"viewScript": "file:./view.js",
+	"render": "file:./render.php"
 }

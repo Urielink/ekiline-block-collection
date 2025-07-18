@@ -22,6 +22,7 @@
 	},
 	"dependencies": {
 		"@wordpress/blocks": "^13.8.0",
-		"@wordpress/escape-html": "^2.14.0"
+		"@wordpress/escape-html": "^2.14.0",
+		"@wordpress/server-side-render": "^6.2.0"
 	}
 }

@@ -32,6 +32,32 @@ const sharedAttributes = {
   SetHeight: {
     type: 'number',
     default: 480
+  },
+  // galeria.
+  GalleryImages: {
+    type: 'array',
+    default: []
+  },
+  // contenidos.
+  contentPostType: {
+    type: 'string',
+    default: 'post'
+  },
+  contentCategory: {
+    type: 'string',
+    default: ''
+  },
+  contentPostsPerPage: {
+    type: 'number',
+    default: 6
+  },
+  contentOrder: {
+    type: 'string',
+    default: 'desc'
+  },
+  contentOrderBy: {
+    type: 'string',
+    default: 'date'
   }
 }
 
