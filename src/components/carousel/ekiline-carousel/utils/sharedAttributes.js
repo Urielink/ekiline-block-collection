@@ -58,6 +58,15 @@ const sharedAttributes = {
   contentOrderBy: {
     type: 'string',
     default: 'date'
+  },
+  // atributos para guardar contenido en carrusel.
+  contentIsDynamic: {
+    type: 'boolean',
+    default: false
+  },
+  posts: {
+    type: 'array',
+    default: []
   }
 }
 

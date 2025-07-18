@@ -1,3 +1,7 @@
+/**
+ * Reference dyanmic blocks.
+ * @see https://rudrastyh.com/gutenberg/dynamic-blocks.html
+ */
 import { registerBlockType } from '@wordpress/blocks'
 import { __ } from '@wordpress/i18n'
 import Edit from './edit'

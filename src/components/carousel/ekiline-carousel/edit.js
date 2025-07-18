@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n'
 import { InspectorControls } from '@wordpress/block-editor'
-import { PanelBody, SelectControl } from '@wordpress/components'
+import { PanelBody, SelectControl, ToggleControl } from '@wordpress/components'
 // manual
 import { ManualEdit } from './variations/manual'
 // galeria
@@ -21,9 +21,9 @@ export default function Edit ({ attributes, setAttributes }) {
       case 'gallery':
         return <GalleryEdit attributes={attributes} setAttributes={setAttributes} />
       case 'content':
-        return <ContentEdit attributes={attributes} setAttributes={setAttributes} />
-      case 'dynamic':
-        return <DynamicEdit/>
+        return attributes.contentIsDynamic
+          ? <DynamicEdit attributes={attributes} setAttributes={setAttributes} />
+          : <ContentEdit attributes={attributes} setAttributes={setAttributes} />
       default:
         return <ManualEdit attributes={attributes} setAttributes={setAttributes} />
     }
@@ -40,8 +40,7 @@ export default function Edit ({ attributes, setAttributes }) {
             options={[
               { label: __('Manual (free design)', 'ekiline-block-collection'), value: 'manual' },
               { label: __('Gallery', 'ekiline-block-collection'), value: 'gallery' },
-              { label: __('Content', 'ekiline-block-collection'), value: 'content' },
-              { label: __('Dynamic', 'ekiline-block-collection'), value: 'dynamic' }
+              { label: __('Content', 'ekiline-block-collection'), value: 'content' }
             ]}
             onChange={(newVal) => setAttributes({ ChooseType: newVal })}
           />
@@ -104,6 +103,12 @@ export default function Edit ({ attributes, setAttributes }) {
               value={attributes.contentPostsPerPage}
               options={[3, 6, 9, 12].map((n) => ({ label: String(n), value: n }))}
               onChange={(value) => setAttributes({ contentPostsPerPage: parseInt(value, 10) })}
+            />
+
+            <ToggleControl
+              label={__('Use dynamic loading (PHP)', 'ekiline-block-collection')}
+              checked={attributes.contentIsDynamic}
+              onChange={(value) => setAttributes({ contentIsDynamic: value })}
             />
           </PanelBody>
         )}
