@@ -7,3 +7,9 @@
 .wp-block-create-block-ekiline-carousel {
 	border: 1px dotted #f00;
 }
+
+.carousel, .carousel-item {
+  min-height: 50px;
+  min-height: 50vh !important;
+  background: red !important;
+}
