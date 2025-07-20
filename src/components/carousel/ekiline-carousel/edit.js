@@ -9,7 +9,7 @@ import { GalleryEdit } from './variations/gallery'
 import { ContentEdit } from './variations/content'
 import { useSelect } from '@wordpress/data'
 // dinamico
-import { DynamicEdit } from './variations/dynamic'
+// Removed DynamicEdit import as per instructions
 
 export default function Edit ({ attributes, setAttributes }) {
   const { ChooseType } = attributes
@@ -21,9 +21,7 @@ export default function Edit ({ attributes, setAttributes }) {
       case 'gallery':
         return <GalleryEdit attributes={attributes} setAttributes={setAttributes} />
       case 'content':
-        return attributes.contentIsDynamic
-          ? <DynamicEdit attributes={attributes} setAttributes={setAttributes} />
-          : <ContentEdit attributes={attributes} setAttributes={setAttributes} />
+        return <ContentEdit attributes={attributes} setAttributes={setAttributes} />
       default:
         return <ManualEdit attributes={attributes} setAttributes={setAttributes} />
     }

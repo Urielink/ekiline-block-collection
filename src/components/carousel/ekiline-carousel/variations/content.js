@@ -14,7 +14,7 @@ export function ContentEdit({ attributes, setAttributes }) {
     contentOrder = 'desc',
     contentOrderBy = 'date',
     AddControls = true,
-    AddIndicators = true,
+    AddIndicators = true
   } = attributes
 
   const blockProps = useBlockProps({ className: 'carousel-content' })

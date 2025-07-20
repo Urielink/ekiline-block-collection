@@ -4,8 +4,10 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
-.carousel, .carousel-item, [class*="carousel"] {
-  min-height: 50px;
-  min-height: 50vh;
+.wp-block-ekiline-block-collection-ekiline-carousel{
   background: cyan;
+  .carousel, .carousel-item {
+    min-height: 50px;
+    min-height: 400px;
+  }
 }

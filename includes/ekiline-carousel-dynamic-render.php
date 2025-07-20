@@ -16,14 +16,19 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
     $orderby    = $attributes['contentOrderBy'] ?? 'date';
 
     $args = [
-        'post_type'      => $post_type,
-        'posts_per_page' => $limit,
-        'order'          => $order,
-        'orderby'        => $orderby,
+        'post_type'             => $post_type,
+        'posts_per_page'        => $limit,
+        'order'                 => $order,
+        'orderby'               => $orderby,
+        'ignore_sticky_posts'   => true,
     ];
 
-    if ( $category ) {
-        $args['cat'] = (int) $category;
+    if ( ! empty( $category ) ) {
+        if ( is_array( $category ) ) {
+            $args['category__in'] = array_map( 'intval', $category );
+        } else {
+            $args['cat'] = (int) $category;
+        }
     }
 
     $query = new WP_Query( $args );
@@ -31,7 +36,16 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
         return '<p>' . esc_html__( 'No content found for carousel.', 'ekiline-block-collection' ) . '</p>';
     }
 
-    $html = '<div class="wp-block-ekiline-block-collection-ekiline-carousel carousel-content-dynamic">';
+    $html = '<div class="wp-block-ekiline-block-collection-ekiline-carousel carousel-content-dynamic carousel">';
+    // Carousel indicators.
+    $html .= '<div class="carousel-indicators">';
+    for ( $i = 0; $i < $query->post_count; $i++ ) {
+        $active = ( $i === 0 ) ? ' class="active" aria-current="true"' : '';
+        $html .= '<button type="button"' . $active . ' aria-label="Slide ' . ( $i + 1 ) . '"></button>';
+    }
+    $html .= '</div>';
+    // Carousel content.
+    $html .= '<div class="carousel-content">';
     $html .= '<div class="carousel-inner">';
 
     while ( $query->have_posts() ) {
@@ -54,9 +68,20 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
 
     $html .= '</div></div>'; // .carousel-inner / .carousel-content
 
-    // Mostrar los atributos.
+    // Carousel controls.
+    $html .= '<button class="carousel-control-prev" type="button">';
+    $html .= '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
+    $html .= '<span class="visually-hidden">' . esc_html__( 'Previous', 'ekiline-block-collection' ) . '</span>';
+    $html .= '</button>';
+
+    $html .= '<button class="carousel-control-next" type="button">';
+    $html .= '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
+    $html .= '<span class="visually-hidden">' . esc_html__( 'Next', 'ekiline-block-collection' ) . '</span>';
+    $html .= '</button>';
+
+    // Mostrar los atributos seleccionados.
     // $html .= '<pre class="ekiline-carousel-attributes">';
-    // $html .= esc_html( print_r( $attributes, true ) );
+    // $html .= esc_html( print_r( $args, true ) );
     // $html .= '</pre>';
 
     wp_reset_postdata();
