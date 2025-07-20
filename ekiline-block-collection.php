@@ -202,5 +202,6 @@ add_action( 'enqueue_block_editor_assets', 'ekiline_block_collection_editor_filt
  * - Carousel script v2.
  */
 define('EKILINE_COLLECTION_PATH', plugin_dir_path(__FILE__) . 'includes/');
+require EKILINE_COLLECTION_PATH . 'ekiline-wp-api-extend.php';
 require EKILINE_COLLECTION_PATH . 'ekiline-carousel-dynamic-render.php';
 require EKILINE_COLLECTION_PATH . 'ekiline-collection-info.php';
