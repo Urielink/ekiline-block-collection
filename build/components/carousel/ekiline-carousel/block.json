@@ -10,9 +10,18 @@
   "description": "A flexible and extensible carousel block.",
   "example": {},
   "supports": {
-    "html": false
+    "html": false,
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ]
   },
   "attributes": {
+    "anchor": {
+      "type": "string",
+      "default": ""
+    },
     "carouselId": {
       "type": "string",
       "default": ""

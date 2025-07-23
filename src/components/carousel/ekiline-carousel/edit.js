@@ -11,8 +11,16 @@ import { useSelect } from '@wordpress/data'
 // dinamico
 // Removed DynamicEdit import as per instructions
 
+// Random function for IDs.
+import { getRandomArbitrary } from '../../../shared/collection'
+
 export default function Edit ({ attributes, setAttributes }) {
   const { ChooseType } = attributes
+
+  // Precargar nombre ID.
+  if (!attributes.anchor) {
+    setAttributes({ anchor: 'carousel' + getRandomArbitrary(10, 150) })
+  }
 
   const renderVariation = () => {
     switch (ChooseType) {

@@ -36,7 +36,16 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
         return '<p>' . esc_html__( 'No content found for carousel.', 'ekiline-block-collection' ) . '</p>';
     }
 
-    $html = '<div class="wp-block-ekiline-block-collection-ekiline-carousel carousel-content-dynamic carousel">';
+    // Atributos de envoltorio con propiedades de editor.
+    $anchor = isset( $attributes['anchor'] ) ? sanitize_title( $attributes['anchor'] ) : 'carousel' . wp_rand();
+	$wrapper_attributes = get_block_wrapper_attributes(
+        array(
+            'class' => 'carousel-content-dynamic carousel',
+            'id' => $anchor
+        )
+    );
+    $html = '<div ' . $wrapper_attributes . '>';
+
     // Carousel indicators.
     $html .= '<div class="carousel-indicators">';
     for ( $i = 0; $i < $query->post_count; $i++ ) {
@@ -80,9 +89,10 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
     $html .= '</button>';
 
     // Mostrar los atributos seleccionados.
-    // $html .= '<pre class="ekiline-carousel-attributes">';
+    $html .= '<pre class="ekiline-carousel-attributes">';
     // $html .= esc_html( print_r( $args, true ) );
-    // $html .= '</pre>';
+    $html .= esc_html( print_r( $attributes, true ) );
+    $html .= '</pre>';
 
     wp_reset_postdata();
 
