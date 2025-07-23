@@ -3,7 +3,6 @@
 import { InnerBlocks, useBlockProps } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 
-const ALLOWED_BLOCKS = ['core/image', 'core/heading', 'core/paragraph', 'core/buttons']
 const SLIDE_TEMPLATE = [
   ['core/image'],
   ['core/heading', { level: 4, placeholder: 'Slide title' }],
@@ -20,7 +19,7 @@ export function ManualEdit () {
         {__('Add one or more slides. Each slide is a block group (image + text + button).', 'ekiline-block-collection')}
       </p>
       <InnerBlocks
-        allowedBlocks={['core/group']}
+        allowedBlocks={['core/group','core/cover']}
         template={[['core/group', {}, SLIDE_TEMPLATE]]}
         templateLock={false}
       />
