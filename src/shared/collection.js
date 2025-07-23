@@ -17,7 +17,7 @@ export const registerEkilineCollection = (icon) => {
  * @param {*} max 
  * @returns número aleatorio entre min y max.
  * 
- * import { getRandomArbitrary } from '../../shared/utils';
+ * import { getRandomArbitrary } from '../../../shared/collection';
  * 
  * if (!attributes.anchor) {
  *  setAttributes({ anchor: 'accordion' + getRandomArbitrary(10, 150) });
