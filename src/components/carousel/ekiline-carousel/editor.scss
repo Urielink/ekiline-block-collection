@@ -1,13 +1,49 @@
-/**
+/****
  * The following styles get applied inside the editor only.
  *
  * Replace them with your own styles or remove the file completely.
  */
 
-.wp-block-ekiline-block-collection-ekiline-carousel{
-  background: red;
-  .carousel, .carousel-item {
-    min-height: 50px;
-    min-height: 400px;
+// .wp-block-ekiline-block-collection-ekiline-carousel{
+//   background: red;
+//   .carousel, .carousel-item {
+//     min-height: 50px;
+//     min-height: 400px;
+//   }
+// }
+
+.carousel-manual > .block-editor-inner-blocks > .block-editor-block-list__layout {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  overflow-x: scroll;
+  scrollbar-width: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  gap: 1rem;
+  padding-bottom: 4rem;
+
+  &::-webkit-scrollbar {
+    height: 10px;
   }
+
+  &::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f0f0f0;
+  }
+}
+
+  .carousel-manual .block-list-appender {
+    bottom: 2rem;
+  }
+
+.carousel-manual .wp-block-group.preview-carousel-item {
+  width: 100%;
+  scroll-snap-align: start;
+  border: 1px dashed #ccc;
+  padding: 1rem;
 }

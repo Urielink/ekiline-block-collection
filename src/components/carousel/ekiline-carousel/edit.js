@@ -8,8 +8,6 @@ import { GalleryEdit } from './variations/gallery'
 // contenido
 import { ContentEdit } from './variations/content'
 import { useSelect } from '@wordpress/data'
-// dinamico
-// Removed DynamicEdit import as per instructions
 
 // Random function for IDs.
 import { getRandomArbitrary } from '../../../shared/collection'

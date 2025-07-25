@@ -79,7 +79,7 @@
 			"type": "array",
 			"default": []
 		},
-		
+
 		"contentPostType": {
 			"type": "string",
 			"default": "post"

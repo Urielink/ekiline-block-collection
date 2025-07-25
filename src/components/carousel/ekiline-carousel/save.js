@@ -4,9 +4,6 @@ import { ManualSave } from './variations/manual'
 import { GallerySave } from './variations/gallery'
 // contenido.
 import { ContentSave } from './variations/content'
-// dinamico
-// import { DynamicSave } from './variations/dynamic'
-
 
 export default function save ({ attributes }) {
   const { ChooseType } = attributes

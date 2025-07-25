@@ -1,26 +1,31 @@
 // src/components/ekiline-carousel/variations/manual.js
 
-import { InnerBlocks, useBlockProps } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
+import { InnerBlocks, useBlockProps } from '@wordpress/block-editor'
 
-const SLIDE_TEMPLATE = [
-  ['core/image'],
-  ['core/heading', { level: 4, placeholder: 'Slide title' }],
-  ['core/paragraph', { placeholder: 'Slide description' }],
-  ['core/buttons']
-]
+  const PARENT_ALLOWED_BLOCKS = [
+    'ekiline-block-collection/ekiline-carousel-slide'
+  ];
+
+  // first element appends active classname.
+  const CHILD_TEMPLATE = [
+    ['ekiline-block-collection/ekiline-carousel-slide', {
+        className: 'active'
+    }],
+    ['ekiline-block-collection/ekiline-carousel-slide']
+  ];
 
 export function ManualEdit () {
   const blockProps = useBlockProps({ className: 'carousel-manual' })
-
   return (
     <div {...blockProps}>
-      <p style={{ fontStyle: 'italic', marginBottom: '10px' }}>
+      <mark style={{ fontStyle: 'italic', marginBottom: '1rem', display: 'block' }}>
         {__('Add one or more slides. Each slide is a block group (image + text + button).', 'ekiline-block-collection')}
-      </p>
-      <InnerBlocks
-        allowedBlocks={['core/group','core/cover']}
-        template={[['core/group', {}, SLIDE_TEMPLATE]]}
+      </mark>
+      <InnerBlocks 
+        orientation="horizontal"
+        allowedBlocks={PARENT_ALLOWED_BLOCKS} 
+        template={CHILD_TEMPLATE} 
         templateLock={false}
       />
     </div>
@@ -28,13 +33,11 @@ export function ManualEdit () {
 }
 
 export function ManualSave () {
-  const blockProps = useBlockProps.save({ className: 'carousel-manual' })
+  const blockProps = useBlockProps.save({ className: 'carousel-manual carousel' })
 
   return (
     <div {...blockProps}>
-      <div className="carousel-inner">
         <InnerBlocks.Content />
-      </div>
     </div>
   )
 }

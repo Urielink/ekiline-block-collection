@@ -88,11 +88,11 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
     $html .= '<span class="visually-hidden">' . esc_html__( 'Next', 'ekiline-block-collection' ) . '</span>';
     $html .= '</button>';
 
-    // Mostrar los atributos seleccionados.
-    $html .= '<pre class="ekiline-carousel-attributes">';
-    // $html .= esc_html( print_r( $args, true ) );
-    $html .= esc_html( print_r( $attributes, true ) );
-    $html .= '</pre>';
+    // LOG ATRIBUTOS.
+    // $html .= '<pre class="ekiline-carousel-attributes">';
+    // // $html .= esc_html( print_r( $args, true ) );
+    // $html .= esc_html( print_r( $attributes, true ) );
+    // $html .= '</pre>';
 
     wp_reset_postdata();
 

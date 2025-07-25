@@ -222,6 +222,9 @@ npx @wordpress/create-block@latest modal --no-plugin
 npx @wordpress/create-block@latest carousel --no-plugin
 npx @wordpress/create-block@latest carousel-extra --no-plugin
 npx @wordpress/create-block@latest carousel-blocks --no-plugin
+  npx @wordpress/create-block@latest ekiline-carousel-slide --no-plugin
+
+
 npx @wordpress/create-block@latest offcanvas --no-plugin
 npx @wordpress/create-block@latest hooks --no-plugin
 npx @wordpress/create-block@latest popovers --no-plugin
