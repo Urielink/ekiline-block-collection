@@ -1,20 +1,28 @@
 import { __ } from '@wordpress/i18n'
 
-export default function CarouselMarkup({ posts = [], controls = true, indicators = true }) {
-  if (!Array.isArray(posts) || posts.length === 0) return null
+export default function CarouselMarkup({ attributes = {}, posts = [], disabledControls = false }) {
+  const {
+    AddControls = true,
+    AddIndicators = true,
+    anchor = '',
+  } = attributes;
+
+  if (!Array.isArray(posts) || posts.length === 0) return null;
 
   return (
     <>
-      {indicators && (
+      {AddIndicators && (
         <div className="carousel-indicators">
           {posts.map((_, i) => (
             <button
               key={i}
               type="button"
+              data-bs-target={`#${anchor}`}
+              data-bs-slide-to={i}
               className={i === 0 ? 'active' : ''}
               aria-current={i === 0 ? 'true' : undefined}
               aria-label={`Slide ${i + 1}`}
-              disabled
+              disabled={disabledControls}
             />
           ))}
         </div>
@@ -44,18 +52,19 @@ export default function CarouselMarkup({ posts = [], controls = true, indicators
         ))}
       </div>
 
-      {controls && (
+      {AddControls && (
         <>
-          <button className="carousel-control-prev" type="button" disabled>
+          <button className="carousel-control-prev" type="button" data-bs-target={`#${anchor}`} data-bs-slide="prev" disabled={disabledControls}>
             <span className="carousel-control-prev-icon" aria-hidden="true" />
             <span className="visually-hidden">{__('Previous', 'ekiline-block-collection')}</span>
           </button>
-          <button className="carousel-control-next" type="button" disabled>
+          <button className="carousel-control-next" type="button" data-bs-target={`#${anchor}`} data-bs-slide="next" disabled={disabledControls}>
             <span className="carousel-control-next-icon" aria-hidden="true" />
             <span className="visually-hidden">{__('Next', 'ekiline-block-collection')}</span>
           </button>
         </>
       )}
+
     </>
   )
 }

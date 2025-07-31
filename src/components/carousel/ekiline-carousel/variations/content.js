@@ -12,9 +12,7 @@ export function ContentEdit({ attributes, setAttributes }) {
     contentCategory = '',
     contentPostsPerPage = 6,
     contentOrder = 'desc',
-    contentOrderBy = 'date',
-    AddControls = true,
-    AddIndicators = true
+    contentOrderBy = 'date'
   } = attributes
 
   const blockProps = useBlockProps({ className: 'carousel-content' })
@@ -50,23 +48,33 @@ export function ContentEdit({ attributes, setAttributes }) {
 
   return (
     <div {...blockProps}>
-      <CarouselMarkup
-        posts={hasPosts ? posts.map((post) => ({
-          id: post.id,
-          title: post.title?.rendered || '',
-          excerpt: post.excerpt?.rendered || '',
-          link: post.link || '',
-          featuredImage: post._embedded?.['wp:featuredmedia']?.[0]?.source_url || ''
-        })) : []}
-        controls={AddControls}
-        indicators={AddIndicators}
-      />
+      {
+        posts && posts.length > 0 && attributes.posts
+        ? <CarouselMarkup attributes={attributes} posts={attributes.posts} disabledControls={true} />
+        : <p>{__('Loading preview…', 'ekiline-block-collection')}</p>
+      }
     </div>
   )
 }
 
 export function ContentSave({ attributes }) {
-  const blockProps = useBlockProps.save({ className: 'carousel-content' })
+
+  // Al inicio del componente, todas las variables.
+  const carColumns = attributes.SetColumns > 1 ? ` carousel-multiple x${attributes.SetColumns}` : ''
+  const carAnimation = attributes.SetAnimation ? ` carousel-${attributes.SetAnimation}` : ''
+  const carAutoplay = attributes.SetAuto ? 'carousel' : undefined
+  const carInterval = attributes.SetTime || undefined
+  // pendiente mejorar la altura de carrusel.
+  const minHeight = attributes.SetHeight ? `${attributes.SetHeight}px` : '100vh'
+
+  // Personalizar attributos.
+  const blockProps = useBlockProps.save({
+    className: 'carousel-content carousel' + carColumns + carAnimation,
+    'data-bs-ride': carAutoplay,
+    'data-bs-interval': carInterval,
+    style: { height: minHeight },
+  })
+
   const posts = attributes.posts || []
 
   if (!Array.isArray(posts) || posts.length === 0) {
@@ -79,11 +87,7 @@ export function ContentSave({ attributes }) {
 
   return (
     <div {...blockProps}>
-      <CarouselMarkup
-        posts={posts}
-        controls={attributes.AddControls}
-        indicators={attributes.AddIndicators}
-      />
+      <CarouselMarkup attributes={attributes} posts={posts} />
     </div>
   )
 }

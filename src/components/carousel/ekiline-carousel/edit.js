@@ -37,7 +37,7 @@ export default function Edit ({ attributes, setAttributes }) {
     <>
       <InspectorControls>
         {/* Seleccionar tipo de carrusel: */}
-        <PanelBody title={__('Carousel Type', 'ekiline-block-collection')} initialOpen={false}>
+        <PanelBody title={__('Carousel Type', 'ekiline-block-collection')} initialOpen={true}>
           <SelectControl
             label={__('Choose the carousel mode', 'ekiline-block-collection')}
             value={ChooseType}
@@ -181,7 +181,6 @@ export default function Edit ({ attributes, setAttributes }) {
           />
 
         </PanelBody>
-
 
       </InspectorControls>
       {renderVariation()}

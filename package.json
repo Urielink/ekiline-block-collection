@@ -18,11 +18,11 @@
 		"@testing-library/jest-dom": "^6.6.3",
 		"@types/testing-library__jest-dom": "^6.0.0",
 		"@wordpress/babel-preset-default": "^8.8.2",
-		"@wordpress/scripts": "^30.19.0"
+		"@wordpress/scripts": "^30.20.0"
 	},
 	"dependencies": {
 		"@wordpress/blocks": "^13.8.0",
 		"@wordpress/escape-html": "^2.14.0",
-		"@wordpress/server-side-render": "^6.2.0"
+		"@wordpress/server-side-render": "^5.9.0"
 	}
 }

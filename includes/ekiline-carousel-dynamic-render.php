@@ -38,21 +38,50 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
 
     // Atributos de envoltorio con propiedades de editor.
     $anchor = isset( $attributes['anchor'] ) ? sanitize_title( $attributes['anchor'] ) : 'carousel' . wp_rand();
-	$wrapper_attributes = get_block_wrapper_attributes(
-        array(
-            'class' => 'carousel-content-dynamic carousel',
-            'id' => $anchor
-        )
+
+    // Wrapper args.
+    $wrapper_args = array(
+        'id' => $anchor,
+        'class' => 'carousel-content-dynamic carousel',
     );
+    // Atributos extra de envoltorio.
+    if ( $attributes['SetAuto'] ) {
+        $wrapper_args['data-bs-ride'] = 'carousel';
+    }
+    if ( $attributes['SetTime'] ) {
+        $wrapper_args['data-bs-interval'] = $attributes['SetTime'];
+    }
+    // Nuevas clases, columnas y animacion
+    if ( ! empty( $attributes['SetColumns'] ) ) {
+        $wrapper_args['class'] .= ' carousel-multiple x' . esc_attr( $attributes['SetColumns'] );
+    }
+    if ( ! empty( $attributes['SetAnimation'] ) ) {
+        $wrapper_args['class'] .= ' carousel-' . esc_attr( $attributes['SetAnimation'] );
+    }
+    // pendiente mejorar la altura del carrusel.
+    if ( $attributes['SetHeight'] ) {
+        $minheight = $attributes['SetHeight'] ? $attributes['SetHeight'].'px' : '100vh';
+        $wrapper_args['style'] = 'height:' . $minheight ;
+    }
+
+	$wrapper_attributes = get_block_wrapper_attributes( $wrapper_args );
+
+
+    $dataTarget = ' data-bs-target="#' . $anchor . '"';
     $html = '<div ' . $wrapper_attributes . '>';
 
     // Carousel indicators.
-    $html .= '<div class="carousel-indicators">';
-    for ( $i = 0; $i < $query->post_count; $i++ ) {
-        $active = ( $i === 0 ) ? ' class="active" aria-current="true"' : '';
-        $html .= '<button type="button"' . $active . ' aria-label="Slide ' . ( $i + 1 ) . '"></button>';
+    if ( ! empty( $attributes['AddIndicators'] ) && $attributes['AddIndicators'] ) {
+        $html .= '<div class="carousel-indicators">';
+        for ( $i = 0; $i < $query->post_count; $i++ ) {
+            $active = ( $i === 0 ) ? ' class="active" aria-current="true"' : '';
+            $dataSlideTo = ' data-bs-slide-to="' . $i . '"';
+            $html .= '<button type="button"' . $active . $dataTarget . $dataSlideTo . ' aria-label="Slide ' . $i . '"></button>';
+        }
+        $html .= '</div>';
     }
-    $html .= '</div>';
+
+
     // Carousel content.
     $html .= '<div class="carousel-content">';
     $html .= '<div class="carousel-inner">';
@@ -78,17 +107,19 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
     $html .= '</div></div>'; // .carousel-inner / .carousel-content
 
     // Carousel controls.
-    $html .= '<button class="carousel-control-prev" type="button">';
-    $html .= '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
-    $html .= '<span class="visually-hidden">' . esc_html__( 'Previous', 'ekiline-block-collection' ) . '</span>';
-    $html .= '</button>';
+    if ( ! empty( $attributes['AddControls'] ) && $attributes['AddControls'] ) {
+        $html .= '<button class="carousel-control-prev" type="button" '. $dataTarget .' data-bs-slide="prev">';
+        $html .= '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
+        $html .= '<span class="visually-hidden">' . esc_html__( 'Previous', 'ekiline-block-collection' ) . '</span>';
+        $html .= '</button>';
 
-    $html .= '<button class="carousel-control-next" type="button">';
-    $html .= '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
-    $html .= '<span class="visually-hidden">' . esc_html__( 'Next', 'ekiline-block-collection' ) . '</span>';
-    $html .= '</button>';
+        $html .= '<button class="carousel-control-next" type="button" '. $dataTarget .' data-bs-slide="next">';
+        $html .= '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
+        $html .= '<span class="visually-hidden">' . esc_html__( 'Next', 'ekiline-block-collection' ) . '</span>';
+        $html .= '</button>';
+    }
 
-    // LOG ATRIBUTOS.
+    // // LOG ATRIBUTOS.
     // $html .= '<pre class="ekiline-carousel-attributes">';
     // // $html .= esc_html( print_r( $args, true ) );
     // $html .= esc_html( print_r( $attributes, true ) );

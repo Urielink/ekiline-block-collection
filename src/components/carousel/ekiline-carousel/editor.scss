@@ -21,7 +21,7 @@
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   gap: 1rem;
-  padding-bottom: 4rem;
+  padding-bottom: 3rem;
 
   &::-webkit-scrollbar {
     height: 10px;
@@ -37,8 +37,16 @@
   }
 }
 
-  .carousel-manual .block-list-appender {
-    bottom: 2rem;
+  .carousel-manual > .block-editor-inner-blocks >.block-editor-block-list__layout > .block-list-appender {
+    top: 100%;
+    width: 32px;
+    height: 32px;
+    position: sticky;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px 0px 0px 0px;
+    margin-bottom: -30px;
   }
 
 .carousel-manual .wp-block-group.preview-carousel-item {
