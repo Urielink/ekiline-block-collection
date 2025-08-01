@@ -58,10 +58,9 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
     if ( ! empty( $attributes['SetAnimation'] ) ) {
         $wrapper_args['class'] .= ' carousel-' . esc_attr( $attributes['SetAnimation'] );
     }
-    // pendiente mejorar la altura del carrusel.
-    if ( $attributes['SetHeight'] ) {
-        $minheight = $attributes['SetHeight'] ? $attributes['SetHeight'].'px' : '100vh';
-        $wrapper_args['style'] = 'height:' . $minheight ;
+    // Altura del carrusel.
+    if ( ! empty( $attributes['SetHeight'] ) ) {
+        $wrapper_args['style'] = 'min-height:' . esc_attr( $attributes['SetHeight'] );
     }
 
 	$wrapper_attributes = get_block_wrapper_attributes( $wrapper_args );

@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n'
 import { InspectorControls } from '@wordpress/block-editor'
-import { PanelBody, SelectControl, ToggleControl, TextControl, RangeControl, FormTokenField } from '@wordpress/components'
+import { PanelBody, SelectControl, ToggleControl, TextControl, RangeControl, FormTokenField, FontSizePicker } from '@wordpress/components'
 
 // manual
 import { ManualEdit } from './variations/manual'
@@ -47,8 +47,6 @@ export default function Edit ({ attributes, setAttributes }) {
         },
         [ChooseType, attributes.contentPostType, attributes.contentCategory] // ⬅ Aquí se incluye
       )
-
-        console.log('cats',attributes.contentCategory)
 
     return (
       <FormTokenField
@@ -165,13 +163,20 @@ export default function Edit ({ attributes, setAttributes }) {
             onChange={(SetAuto) => setAttributes({ SetAuto })}
           />
 
-          <TextControl
-            label={__('Height in pixels, set -1 to see the full height of the screen on the device.', 'ekiline-block-collection')}
-            type='number'
-            value={attributes.SetHeight}
-            onChange={(newval) =>
-              setAttributes({ SetHeight: parseInt(newval) })}
-            min={-1}
+          <FontSizePicker
+            label={__('Carrusel: Altura', 'ekiline-block-collection')}
+            fontSizes={[
+              { name: 'Default', slug: 'default', size: '480px' },
+              { name: 'Medio', slug: 'medium', size: '800px' },
+              { name: 'Full', slug: 'full', size: '100vh' }
+            ]}
+            fallbackFontSize={ parseInt(attributes.SetHeight) || 480 }
+            units={[ 'px', 'vh', '%' ]}
+            value={ attributes.SetHeight }
+            onChange={( newSize ) => {
+              setAttributes({ SetHeight: newSize || '480px' })
+            }}
+            withSlider
           />
 
           <TextControl

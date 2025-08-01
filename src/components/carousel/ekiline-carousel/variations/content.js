@@ -78,7 +78,7 @@ export function ContentSave({ attributes }) {
   const carAutoplay = attributes.SetAuto ? 'carousel' : undefined
   const carInterval = attributes.SetTime || undefined
   // pendiente mejorar la altura de carrusel.
-  const minHeight = attributes.SetHeight ? `${attributes.SetHeight}px` : '100vh'
+  const minHeight = attributes.SetHeight || '480px'
 
   // Personalizar attributos.
   const blockProps = useBlockProps.save({
