@@ -83,8 +83,8 @@
       "default": "post"
     },
     "contentCategory": {
-      "type": "string",
-      "default": ""
+      "type": "array",
+      "default": []
     },
     "contentPostsPerPage": {
       "type": "number",

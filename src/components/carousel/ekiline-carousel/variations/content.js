@@ -35,7 +35,7 @@ export function ContentEdit({ attributes, setAttributes }) {
         per_page: contentPostsPerPage,
         order: contentOrder,
         orderby: contentOrderBy,
-        categories: contentCategory ? [contentCategory] : undefined,
+        categories: contentCategory && contentCategory.length ? contentCategory : undefined,
         _embed: true,
       })
     },
@@ -45,17 +45,19 @@ export function ContentEdit({ attributes, setAttributes }) {
   const hasPosts = Array.isArray(posts) && posts.length > 0
 
   useEffect(() => {
-    if (!hasPosts || attributes.contentIsDynamic) return;
+    // Nota: Validación para evitar sobreescritura cuando contentIsDynamic está activo.
+    // En observación: considerar si debe sincronizar siempre o solo en modo estático.
+    // Agregar: || attributes.contentIsDynamic.
+    if (!hasPosts) return;
 
     const simplifiedPosts = getSimplifiedPosts(posts);
-
     // Comparar con los posts actuales en atributos
     const hasChanged = JSON.stringify(simplifiedPosts) !== JSON.stringify(attributes.contentPosts);
 
     if (hasChanged) {
       setAttributes({ contentPosts: simplifiedPosts });
     }
-  }, [posts, attributes.contentIsDynamic]);
+  }, [posts, attributes.contentIsDynamic, attributes.contentPosts, attributes.contentCategory]);
 
   return (
     <div {...blockProps}>

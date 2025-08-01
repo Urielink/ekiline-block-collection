@@ -119,10 +119,10 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
     }
 
     // // LOG ATRIBUTOS.
-    // $html .= '<pre class="ekiline-carousel-attributes">';
-    // // $html .= esc_html( print_r( $args, true ) );
-    // $html .= esc_html( print_r( $attributes, true ) );
-    // $html .= '</pre>';
+    $html .= '<pre class="ekiline-carousel-attributes">';
+    // $html .= esc_html( print_r( $args, true ) );
+    $html .= esc_html( print_r( $attributes, true ) );
+    $html .= '</pre>';
 
     wp_reset_postdata();
 

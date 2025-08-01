@@ -1,6 +1,7 @@
 import { __ } from '@wordpress/i18n'
 import { InspectorControls } from '@wordpress/block-editor'
-import { PanelBody, SelectControl, ToggleControl, TextControl, RangeControl } from '@wordpress/components'
+import { PanelBody, SelectControl, ToggleControl, TextControl, RangeControl, FormTokenField } from '@wordpress/components'
+
 // manual
 import { ManualEdit } from './variations/manual'
 // galeria
@@ -31,6 +32,42 @@ export default function Edit ({ attributes, setAttributes }) {
       default:
         return <ManualEdit attributes={attributes} setAttributes={setAttributes} />
     }
+  }
+
+  // Render function for category selector
+  const RenderCategorySelector = () => {
+
+    // Get allCategories using useSelect hook.
+      const allCategories = useSelect(
+        (select) => {
+          if (ChooseType === 'content' && attributes.contentPostType === 'post') {
+            return select('core').getEntityRecords('taxonomy', 'category', { per_page: -1 }) || []
+          }
+          return []
+        },
+        [ChooseType, attributes.contentPostType, attributes.contentCategory] // ⬅ Aquí se incluye
+      )
+
+        console.log('cats',attributes.contentCategory)
+
+    return (
+      <FormTokenField
+        label={__('Categories', 'ekiline-block-collection')}
+        value={
+          attributes.contentCategory?.map((id) => {
+            const term = allCategories.find((term) => term.id === id)
+            return term?.name
+          }).filter(Boolean) || []
+        }
+        suggestions={allCategories.map((term) => term.name)}
+        onChange={(selectedNames) => {
+          const selectedIDs = allCategories
+            .filter((term) => selectedNames.includes(term.name))
+            .map((term) => term.id)
+          setAttributes({ contentCategory: selectedIDs })
+        }}
+      />
+    )
   }
 
   return (
@@ -65,20 +102,7 @@ export default function Edit ({ attributes, setAttributes }) {
             />
 
             {attributes.contentPostType === 'post' && (
-              <SelectControl
-                label={__('Category', 'ekiline-block-collection')}
-                value={attributes.contentCategory}
-                options={[
-                  { label: __('All categories', 'ekiline-block-collection'), value: '' },
-                  ...useSelect((select) => {
-                    const terms = select('core').getEntityRecords('taxonomy', 'category', { per_page: -1 })
-                    return terms
-                      ? terms.map((term) => ({ label: term.name, value: term.id }))
-                      : []
-                  }, [])
-                ]}
-                onChange={(value) => setAttributes({ contentCategory: value })}
-              />
+              <RenderCategorySelector/>
             )}
 
             <SelectControl
