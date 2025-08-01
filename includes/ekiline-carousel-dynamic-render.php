@@ -52,7 +52,7 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
         $wrapper_args['data-bs-interval'] = $attributes['SetTime'];
     }
     // Nuevas clases, columnas y animacion
-    if ( ! empty( $attributes['SetColumns'] ) ) {
+    if ( ! empty( $attributes['SetColumns'] ) && $attributes['SetColumns'] > '1' ) {
         $wrapper_args['class'] .= ' carousel-multiple x' . esc_attr( $attributes['SetColumns'] );
     }
     if ( ! empty( $attributes['SetAnimation'] ) ) {
@@ -83,7 +83,6 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
 
 
     // Carousel content.
-    $html .= '<div class="carousel-content">';
     $html .= '<div class="carousel-inner">';
 
     while ( $query->have_posts() ) {
@@ -104,7 +103,7 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
         $html .= '</div>'; // .carousel-item
     }
 
-    $html .= '</div></div>'; // .carousel-inner / .carousel-content
+    $html .= '</div>'; // .carousel-inner / .carousel-content
 
     // Carousel controls.
     if ( ! empty( $attributes['AddControls'] ) && $attributes['AddControls'] ) {

@@ -6,6 +6,18 @@ import { __ } from '@wordpress/i18n'
 import { useEffect } from '@wordpress/element'
 import CarouselMarkup from '../utils/CarouselMarkup'
 
+// Utility function to simplify posts array
+function getSimplifiedPosts(posts) {
+  if (!Array.isArray(posts)) return []
+  return posts.map((post) => ({
+    id: post.id,
+    title: post.title?.rendered || '',
+    excerpt: post.excerpt?.rendered || '',
+    link: post.link || '',
+    featuredImage: post._embedded?.['wp:featuredmedia']?.[0]?.source_url || ''
+  }))
+}
+
 export function ContentEdit({ attributes, setAttributes }) {
   const {
     contentPostType = 'post',
@@ -35,22 +47,21 @@ export function ContentEdit({ attributes, setAttributes }) {
   useEffect(() => {
     if (!hasPosts || attributes.contentIsDynamic) return;
 
-    const simplifiedPosts = posts.map((post) => ({
-      id: post.id,
-      title: post.title?.rendered || '',
-      excerpt: post.excerpt?.rendered || '',
-      link: post.link || '',
-      featuredImage: post._embedded?.['wp:featuredmedia']?.[0]?.source_url || ''
-    }));
+    const simplifiedPosts = getSimplifiedPosts(posts);
 
-    setAttributes && setAttributes({ posts: simplifiedPosts });
+    // Comparar con los posts actuales en atributos
+    const hasChanged = JSON.stringify(simplifiedPosts) !== JSON.stringify(attributes.contentPosts);
+
+    if (hasChanged) {
+      setAttributes({ contentPosts: simplifiedPosts });
+    }
   }, [posts, attributes.contentIsDynamic]);
 
   return (
     <div {...blockProps}>
       {
-        posts && posts.length > 0 && attributes.posts
-        ? <CarouselMarkup attributes={attributes} posts={attributes.posts} disabledControls={true} />
+        posts && posts.length > 0 && attributes.contentPosts
+        ? <CarouselMarkup attributes={attributes} posts={attributes.contentPosts} disabledControls={true} />
         : <p>{__('Loading preview…', 'ekiline-block-collection')}</p>
       }
     </div>
@@ -75,7 +86,7 @@ export function ContentSave({ attributes }) {
     style: { height: minHeight },
   })
 
-  const posts = attributes.posts || []
+  const posts = attributes.contentPosts || []
 
   if (!Array.isArray(posts) || posts.length === 0) {
     return (

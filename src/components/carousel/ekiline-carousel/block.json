@@ -104,7 +104,7 @@
 			"type": "boolean",
 			"default": false
 		},
-		"posts": {
+		"contentPosts": {
 			"type": "array",
 			"default": []
 		}
