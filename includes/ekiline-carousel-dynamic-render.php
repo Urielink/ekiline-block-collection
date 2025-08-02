@@ -59,12 +59,14 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
         $wrapper_args['class'] .= ' carousel-' . esc_attr( $attributes['SetAnimation'] );
     }
     // Altura del carrusel.
+    $carouselHeight = '';
     if ( ! empty( $attributes['SetHeight'] ) ) {
-        $wrapper_args['style'] = 'min-height:' . esc_attr( $attributes['SetHeight'] );
+        $style = 'height:' . esc_attr( $attributes['SetHeight'] );
+        $wrapper_args['style'] = $style;
+        $carouselHeight = 'style="' . $style . '"';
     }
 
 	$wrapper_attributes = get_block_wrapper_attributes( $wrapper_args );
-
 
     $dataTarget = ' data-bs-target="#' . $anchor . '"';
     $html = '<div ' . $wrapper_attributes . '>';
@@ -82,15 +84,17 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
 
 
     // Carousel content.
-    $html .= '<div class="carousel-inner">';
+    $html .= '<div class="carousel-inner" '. $carouselHeight .'>';
 
     while ( $query->have_posts() ) {
         $query->the_post();
         $active = ( $query->current_post === 0 ) ? ' active' : '';
-        $html .= '<div class="carousel-item' . esc_attr( $active ) . '">';
+        $html .= '<div class="carousel-item' . esc_attr( $active ) . '" '. $carouselHeight .'>';
 
         if ( has_post_thumbnail() ) {
-            $html .= get_the_post_thumbnail( null, 'full', [ 'class' => 'd-block w-100' ] );
+            $image = get_the_post_thumbnail( null, 'full', [ 'class' => 'd-block w-100' ] );
+            // remove width and height attributes from the img tag
+            $html .= preg_replace('/(width|height)="\d+"/', '', $image);
         }
 
         $html .= '<div class="carousel-caption">';
@@ -118,10 +122,10 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
     }
 
     // // LOG ATRIBUTOS.
-    $html .= '<pre class="ekiline-carousel-attributes">';
-    // $html .= esc_html( print_r( $args, true ) );
-    $html .= esc_html( print_r( $attributes, true ) );
-    $html .= '</pre>';
+    // $html .= '<pre class="ekiline-carousel-attributes">';
+    // // $html .= esc_html( print_r( $args, true ) );
+    // $html .= esc_html( print_r( $attributes, true ) );
+    // $html .= '</pre>';
 
     wp_reset_postdata();
 

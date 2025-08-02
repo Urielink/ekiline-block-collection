@@ -1,10 +1,12 @@
 import { __ } from '@wordpress/i18n'
+import ResponsiveImage from './ResponsiveImage'
 
 export default function CarouselMarkup({ attributes = {}, posts = [], disabledControls = false }) {
   const {
     AddControls = true,
     AddIndicators = true,
     anchor = '',
+    SetHeight = '540px'
   } = attributes;
 
   if (!Array.isArray(posts) || posts.length === 0) return null;
@@ -28,19 +30,21 @@ export default function CarouselMarkup({ attributes = {}, posts = [], disabledCo
         </div>
       )}
 
-      <div className="carousel-inner">
+      <div className="carousel-inner" style={{ height: SetHeight }}>
         {posts.map((post, index) => (
           <div
             key={post.id || index}
             className={`carousel-item${index === 0 ? ' active' : ''}`}
+            style={{ height: SetHeight }}
           >
-            {post.featuredImage && (
-              <img
-                src={post.featuredImage}
-                alt={post.title}
-                className="d-block w-100"
-              />
-            )}
+          {post.featuredImageSizes && (
+            <ResponsiveImage
+              image={{ source_url: post.featuredImage, media_details: { sizes: post.featuredImageSizes } }}
+              alt={post.title}
+              className="d-block w-100"
+            />
+          )}
+
             <div className="carousel-caption">
               <h3 dangerouslySetInnerHTML={{ __html: post.title }} />
               <p dangerouslySetInnerHTML={{ __html: post.excerpt }} />

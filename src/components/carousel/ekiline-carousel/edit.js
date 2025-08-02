@@ -166,15 +166,15 @@ export default function Edit ({ attributes, setAttributes }) {
           <FontSizePicker
             label={__('Carrusel: Altura', 'ekiline-block-collection')}
             fontSizes={[
-              { name: 'Default', slug: 'default', size: '480px' },
-              { name: 'Medio', slug: 'medium', size: '800px' },
+              { name: 'Default', slug: 'default', size: '540px' },
+              { name: 'Medio', slug: 'medium', size: '720px' },
               { name: 'Full', slug: 'full', size: '100vh' }
             ]}
-            fallbackFontSize={ parseInt(attributes.SetHeight) || 480 }
+            fallbackFontSize={ parseInt(attributes.SetHeight) || 540 }
             units={[ 'px', 'vh', '%' ]}
             value={ attributes.SetHeight }
             onChange={( newSize ) => {
-              setAttributes({ SetHeight: newSize || '480px' })
+              setAttributes({ SetHeight: newSize || '540px' })
             }}
             withSlider
           />

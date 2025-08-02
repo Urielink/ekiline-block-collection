@@ -14,7 +14,8 @@ function getSimplifiedPosts(posts) {
     title: post.title?.rendered || '',
     excerpt: post.excerpt?.rendered || '',
     link: post.link || '',
-    featuredImage: post._embedded?.['wp:featuredmedia']?.[0]?.source_url || ''
+    featuredImage: post._embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
+    featuredImageSizes: post._embedded?.['wp:featuredmedia']?.[0]?.media_details?.sizes || {}
   }))
 }
 

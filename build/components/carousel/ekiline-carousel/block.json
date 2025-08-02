@@ -72,7 +72,7 @@
     },
     "SetHeight": {
       "type": "string",
-      "default": "480px"
+      "default": "540px"
     },
     "GalleryImages": {
       "type": "array",
