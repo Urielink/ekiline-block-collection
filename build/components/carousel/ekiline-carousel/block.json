@@ -74,6 +74,10 @@
       "type": "string",
       "default": "540px"
     },
+    "GalleryImagesIds": {
+      "type": "array",
+      "default": []
+    },
     "GalleryImages": {
       "type": "array",
       "default": []
