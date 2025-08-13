@@ -109,6 +109,10 @@
     "contentPosts": {
       "type": "array",
       "default": []
+    },
+    "contentSelectedIds": {
+      "type": "array",
+      "default": []
     }
   },
   "editorScript": "file:./index.js",

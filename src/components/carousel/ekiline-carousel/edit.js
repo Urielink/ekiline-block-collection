@@ -1,6 +1,8 @@
 import { __ } from '@wordpress/i18n'
 import { InspectorControls } from '@wordpress/block-editor'
 import { PanelBody, SelectControl, ToggleControl, TextControl, RangeControl, FormTokenField, FontSizePicker } from '@wordpress/components'
+// import { useState } from 'react'
+import { useState } from '@wordpress/element'
 
 // manual
 import { ManualEdit } from './variations/manual'
@@ -9,6 +11,7 @@ import { GalleryEdit } from './variations/gallery'
 // contenido
 import { ContentEdit } from './variations/content'
 import { useSelect } from '@wordpress/data'
+
 
 // Random function for IDs.
 import { getRandomArbitrary } from '../../../shared/collection'
@@ -68,6 +71,63 @@ export default function Edit ({ attributes, setAttributes }) {
     )
   }
 
+  // Funcion para buscar posts y pages y guardar IDs
+  const RenderPostsSearch = () => {
+    const [searchQuery, setSearchQuery] = useState('')
+
+    // Sugerencias dinámicas según el término de búsqueda
+    const suggestions = useSelect((select) => {
+      if (!searchQuery) return []
+      const args = { search: searchQuery, per_page: 20, status: 'publish', _embed: true }
+      const posts = select('core').getEntityRecords('postType', 'post', args) || []
+      const pages = select('core').getEntityRecords('postType', 'page', args) || []
+      const items = [...posts, ...pages]
+      return items.map((item) => {
+        const title = item.title?.rendered?.replace(/<[^>]+>/g, '') || __('(no title)', 'ekiline-block-collection')
+        return `${title} #${item.id}`
+      })
+    }, [searchQuery])
+
+    // Resolver títulos para los IDs seleccionados actualmente
+    const selectedRecords = useSelect((select) => {
+      const ids = attributes.contentSelectedIds || []
+      if (!ids.length) return []
+      const args = { include: ids, per_page: ids.length, _embed: true }
+      const posts = select('core').getEntityRecords('postType', 'post', args) || []
+      const pages = select('core').getEntityRecords('postType', 'page', args) || []
+      // Mantener el orden según IDs
+      const order = new Map(ids.map((id, i) => [id, i]))
+      return [...posts, ...pages].sort((a, b) => (order.get(a.id) ?? 0) - (order.get(b.id) ?? 0))
+    }, [attributes.contentSelectedIds])
+
+    const valueTokens = (selectedRecords || []).map((item) => {
+      const title = item.title?.rendered?.replace(/<[^>]+>/g, '') || __('(no title)', 'ekiline-block-collection')
+      return `${title} #${item.id}`
+    })
+
+    return (
+      <FormTokenField
+        label={__('Search & Pick (posts/pages)', 'ekiline-block-collection')}
+        value={valueTokens}
+        suggestions={suggestions}
+        onInputChange={setSearchQuery}
+        onChange={(tokens) => {
+          // Extraer IDs desde tokens del tipo "Title #123"
+          const ids = Array.from(new Set(
+            tokens
+              .map((t) => {
+                const m = t.match(/#(\d+)$/)
+                return m ? parseInt(m[1], 10) : null
+              })
+              .filter(Boolean)
+          ))
+          setAttributes({ contentSelectedIds: ids })
+        }}
+        __experimentalShowHowTo={false}
+      />
+    )
+  }
+
   return (
     <>
       <InspectorControls>
@@ -93,7 +153,8 @@ export default function Edit ({ attributes, setAttributes }) {
               value={attributes.contentPostType}
               options={[
                 { label: 'Post', value: 'post' },
-                { label: 'Page', value: 'page' }
+                { label: 'Page', value: 'page' },
+                { label: 'Search & Pick', value: 'search' } // nuevo modo manual
                 // Puedes agregar más post types si están registrados
               ]}
               onChange={(value) => setAttributes({ contentPostType: value })}
@@ -103,39 +164,47 @@ export default function Edit ({ attributes, setAttributes }) {
               <RenderCategorySelector/>
             )}
 
-            <SelectControl
-              label={__('Order by', 'ekiline-block-collection')}
-              value={attributes.contentOrderBy}
-              options={[
-                { label: 'Date', value: 'date' },
-                { label: 'Title', value: 'title' },
-                { label: 'Random', value: 'rand' }
-              ]}
-              onChange={(value) => setAttributes({ contentOrderBy: value })}
-            />
+            {attributes.contentPostType !== 'search' && (
+              <>
+                <SelectControl
+                  label={__('Order by', 'ekiline-block-collection')}
+                  value={attributes.contentOrderBy}
+                  options={[
+                    { label: 'Date', value: 'date' },
+                    { label: 'Title', value: 'title' },
+                    { label: 'Random', value: 'rand' }
+                  ]}
+                  onChange={(value) => setAttributes({ contentOrderBy: value })}
+                />
 
-            <SelectControl
-              label={__('Order', 'ekiline-block-collection')}
-              value={attributes.contentOrder}
-              options={[
-                { label: 'Descending', value: 'desc' },
-                { label: 'Ascending', value: 'asc' }
-              ]}
-              onChange={(value) => setAttributes({ contentOrder: value })}
-            />
+                <SelectControl
+                  label={__('Order', 'ekiline-block-collection')}
+                  value={attributes.contentOrder}
+                  options={[
+                    { label: 'Descending', value: 'desc' },
+                    { label: 'Ascending', value: 'asc' }
+                  ]}
+                  onChange={(value) => setAttributes({ contentOrder: value })}
+                />
 
-            <SelectControl
-              label={__('Number of posts', 'ekiline-block-collection')}
-              value={attributes.contentPostsPerPage}
-              options={[3, 6, 9, 12].map((n) => ({ label: String(n), value: n }))}
-              onChange={(value) => setAttributes({ contentPostsPerPage: parseInt(value, 10) })}
-            />
+                <SelectControl
+                  label={__('Number of posts', 'ekiline-block-collection')}
+                  value={attributes.contentPostsPerPage}
+                  options={[3, 6, 9, 12].map((n) => ({ label: String(n), value: n }))}
+                  onChange={(value) => setAttributes({ contentPostsPerPage: parseInt(value, 10) })}
+                />
 
-            <ToggleControl
-              label={__('Use dynamic loading (PHP)', 'ekiline-block-collection')}
-              checked={attributes.contentIsDynamic}
-              onChange={(value) => setAttributes({ contentIsDynamic: value })}
-            />
+                <ToggleControl
+                  label={__('Use dynamic loading (PHP)', 'ekiline-block-collection')}
+                  checked={attributes.contentIsDynamic}
+                  onChange={(value) => setAttributes({ contentIsDynamic: value })}
+                />
+              </>
+            )}
+
+            {attributes.contentPostType === 'search' && (
+              <RenderPostsSearch/>
+            )}
 
           </PanelBody>
         )}
