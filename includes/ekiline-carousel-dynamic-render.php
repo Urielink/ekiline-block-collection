@@ -14,20 +14,30 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
     $limit      = $attributes['contentPostsPerPage'] ?? 6;
     $order      = $attributes['contentOrder'] ?? 'DESC';
     $orderby    = $attributes['contentOrderBy'] ?? 'date';
+    $selected_ids = $attributes['contentSelectedIds'] ?? array();
 
-    $args = [
-        'post_type'             => $post_type,
-        'posts_per_page'        => $limit,
-        'order'                 => $order,
-        'orderby'               => $orderby,
-        'ignore_sticky_posts'   => true,
-    ];
-
-    if ( ! empty( $category ) ) {
-        if ( is_array( $category ) ) {
-            $args['category__in'] = array_map( 'intval', $category );
-        } else {
-            $args['cat'] = (int) $category;
+    if ( 'search' === $post_type && ! empty( $selected_ids ) && is_array( $selected_ids ) ) {
+        $args = array(
+            'post_type'      => array( 'post', 'page' ),
+            'post__in'       => array_map( 'intval', $selected_ids ),
+            'orderby'        => 'post__in',
+            'posts_per_page' => count( $selected_ids ),
+            'ignore_sticky_posts' => true,
+        );
+    } else {
+        $args = array(
+            'post_type'             => $post_type,
+            'posts_per_page'        => $limit,
+            'order'                 => $order,
+            'orderby'               => $orderby,
+            'ignore_sticky_posts'   => true,
+        );
+        if ( ! empty( $category ) ) {
+            if ( is_array( $category ) ) {
+                $args['category__in'] = array_map( 'intval', $category );
+            } else {
+                $args['cat'] = (int) $category;
+            }
         }
     }
 
@@ -69,7 +79,8 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
 	$wrapper_attributes = get_block_wrapper_attributes( $wrapper_args );
 
     $dataTarget = ' data-bs-target="#' . $anchor . '"';
-    $html = '<div ' . $wrapper_attributes . '>';
+    
+    $html = '<div ' . $wrapper_attributes . '>'; // .carousel
 
     // Carousel indicators.
     if ( ! empty( $attributes['AddIndicators'] ) && $attributes['AddIndicators'] ) {
@@ -120,6 +131,9 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
         $html .= '<span class="visually-hidden">' . esc_html__( 'Next', 'ekiline-block-collection' ) . '</span>';
         $html .= '</button>';
     }
+
+    $html .= '</div>'; // .carousel
+
 
     // // LOG ATRIBUTOS.
     // $html .= '<pre class="ekiline-carousel-attributes">';

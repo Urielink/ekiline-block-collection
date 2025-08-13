@@ -25,14 +25,32 @@ export function ContentEdit({ attributes, setAttributes }) {
     contentCategory = '',
     contentPostsPerPage = 6,
     contentOrder = 'desc',
-    contentOrderBy = 'date'
+    contentOrderBy = 'date',
+    contentSelectedIds = []
   } = attributes
 
   const blockProps = useBlockProps({ className: 'carousel-content' })
 
   const posts = useSelect(
     (select) => {
-      return select('core').getEntityRecords('postType', contentPostType, {
+      const core = select('core')
+
+      // Modo búsqueda manual: usar IDs seleccionados (post y page)
+      if (contentPostType === 'search') {
+        const ids = Array.isArray(contentSelectedIds) ? contentSelectedIds : []
+        if (!ids.length) return []
+
+        const args = { include: ids, per_page: ids.length, _embed: true, status: 'publish' }
+        const postsArr = core.getEntityRecords('postType', 'post', args) || []
+        const pagesArr = core.getEntityRecords('postType', 'page', args) || []
+
+        // Ordenar según el orden de IDs
+        const order = new Map(ids.map((id, i) => [id, i]))
+        return [...postsArr, ...pagesArr].sort((a, b) => (order.get(a.id) ?? 0) - (order.get(b.id) ?? 0))
+      }
+
+      // Modo consulta (query) tradicional
+      return core.getEntityRecords('postType', contentPostType, {
         per_page: contentPostsPerPage,
         order: contentOrder,
         orderby: contentOrderBy,
@@ -40,25 +58,21 @@ export function ContentEdit({ attributes, setAttributes }) {
         _embed: true,
       })
     },
-    [contentPostType, contentCategory, contentPostsPerPage, contentOrder, contentOrderBy]
+    [contentPostType, contentCategory, contentPostsPerPage, contentOrder, contentOrderBy, contentSelectedIds]
   )
 
   const hasPosts = Array.isArray(posts) && posts.length > 0
 
   useEffect(() => {
-    // Nota: Validación para evitar sobreescritura cuando contentIsDynamic está activo.
-    // En observación: considerar si debe sincronizar siempre o solo en modo estático.
-    // Agregar: || attributes.contentIsDynamic.
-    if (!hasPosts) return;
+    if (!hasPosts) return
 
-    const simplifiedPosts = getSimplifiedPosts(posts);
-    // Comparar con los posts actuales en atributos
-    const hasChanged = JSON.stringify(simplifiedPosts) !== JSON.stringify(attributes.contentPosts);
+    const simplifiedPosts = getSimplifiedPosts(posts)
+    const hasChanged = JSON.stringify(simplifiedPosts) !== JSON.stringify(attributes.contentPosts)
 
     if (hasChanged) {
-      setAttributes({ contentPosts: simplifiedPosts });
+      setAttributes({ contentPosts: simplifiedPosts })
     }
-  }, [posts, attributes.contentIsDynamic, attributes.contentPosts, attributes.contentCategory]);
+  }, [posts, attributes.contentIsDynamic, attributes.contentPosts, contentPostType, contentSelectedIds])
 
   return (
     <div {...blockProps}>

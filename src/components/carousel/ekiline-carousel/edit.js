@@ -193,18 +193,20 @@ export default function Edit ({ attributes, setAttributes }) {
                   options={[3, 6, 9, 12].map((n) => ({ label: String(n), value: n }))}
                   onChange={(value) => setAttributes({ contentPostsPerPage: parseInt(value, 10) })}
                 />
-
-                <ToggleControl
-                  label={__('Use dynamic loading (PHP)', 'ekiline-block-collection')}
-                  checked={attributes.contentIsDynamic}
-                  onChange={(value) => setAttributes({ contentIsDynamic: value })}
-                />
               </>
             )}
 
             {attributes.contentPostType === 'search' && (
               <RenderPostsSearch/>
             )}
+
+            <ToggleControl
+              label={__('Use dynamic loading (PHP)', 'ekiline-block-collection')}
+              checked={attributes.contentIsDynamic}
+              onChange={(v) => setAttributes({ contentIsDynamic: v })}
+              disabled={attributes.contentPostType === 'search' && (!attributes.contentSelectedIds?.length)}
+              help={attributes.contentPostType === 'search' && (!attributes.contentSelectedIds?.length) ? __('Select at least one item', 'ekiline-block-collection') : undefined}
+            />
 
           </PanelBody>
         )}
