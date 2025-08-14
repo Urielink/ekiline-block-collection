@@ -115,6 +115,10 @@
 		"contentSelectedIds": {
 			"type": "array",
 			"default": []
+		},
+		"contentLinkSlide": {
+			"type": "boolean",
+			"default": false
 		}
 	},
 	"editorScript": "file:./index.js",
