@@ -208,6 +208,12 @@ export default function Edit ({ attributes, setAttributes }) {
               help={attributes.contentPostType === 'search' && (!attributes.contentSelectedIds?.length) ? __('Select at least one item', 'ekiline-block-collection') : undefined}
             />
 
+            <ToggleControl
+              label={__('Link full slide', 'ekiline-block-collection')}
+              checked={attributes.contentLinkSlide}
+              onChange={(v) => setAttributes({ contentLinkSlide: v })}
+            />
+
           </PanelBody>
         )}
 
