@@ -80,6 +80,23 @@ export default function CarouselMarkup({ attributes = {}, posts = [], disabledCo
     </div>
   );
 
+  /**
+   * ButtonEl
+   * @param {string} direction - 'prev' o 'next'
+   * @returns {JSX.Element} Botón de control del carrusel
+   */
+  const ButtonEl = ({ direction }) => (
+    <button
+      className={`carousel-control-${direction}`}
+      type="button"
+      data-bs-target={`#${anchor}`}
+      data-bs-slide={direction}
+      disabled={disabledControls}
+    >
+      <span className={`carousel-control-${direction}-icon`} aria-hidden="true" />
+      <span className="visually-hidden">{__( direction === 'prev' ? 'Previous' : 'Next' , 'ekiline-block-collection')}</span>
+    </button>
+  );
 
   return (
     <>
@@ -126,14 +143,8 @@ export default function CarouselMarkup({ attributes = {}, posts = [], disabledCo
 
       {AddControls && (
         <>
-          <button className="carousel-control-prev" type="button" data-bs-target={`#${anchor}`} data-bs-slide="prev" disabled={disabledControls}>
-            <span className="carousel-control-prev-icon" aria-hidden="true" />
-            <span className="visually-hidden">{__('Previous', 'ekiline-block-collection')}</span>
-          </button>
-          <button className="carousel-control-next" type="button" data-bs-target={`#${anchor}`} data-bs-slide="next" disabled={disabledControls}>
-            <span className="carousel-control-next-icon" aria-hidden="true" />
-            <span className="visually-hidden">{__('Next', 'ekiline-block-collection')}</span>
-          </button>
+          <ButtonEl direction="prev" />
+          <ButtonEl direction="next" />
         </>
       )}
 
