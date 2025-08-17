@@ -1,4 +1,19 @@
 <?php
+/**
+ * Plantilla para botones de carrusel.
+ */
+function ekiline_carousel_button_template($dataTarget, $position = 'prev'){
+    $text = ($position === 'prev') ? 'Previous' : 'Next';
+    $markup = '<button class="carousel-control-'.$position.'" type="button" '. $dataTarget .' data-bs-slide="'.$position.'">';
+    $markup .= '<span class="carousel-control-'.$position.'-icon" aria-hidden="true"></span>';
+    $markup .= '<span class="visually-hidden">' . esc_html__( $text, 'ekiline-block-collection' ) . '</span>';
+    $markup .= '</button>';
+    return $markup;
+}
+
+/**
+ * Carrusel.
+ */
 function ekiline_carousel_dynamic_render( $attributes, $content ) {
 
     if (
@@ -48,6 +63,8 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
 
     // Atributos de envoltorio con propiedades de editor.
     $anchor = isset( $attributes['anchor'] ) ? sanitize_title( $attributes['anchor'] ) : 'carousel' . wp_rand();
+    // Complemento en enlaces
+    $dataTarget = ' data-bs-target="#' . $anchor . '"';
 
     // Wrapper args.
     $wrapper_args = array(
@@ -75,11 +92,8 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
         $wrapper_args['style'] = $style;
         $carouselHeight = 'style="' . $style . '"';
     }
-
 	$wrapper_attributes = get_block_wrapper_attributes( $wrapper_args );
 
-    $dataTarget = ' data-bs-target="#' . $anchor . '"';
-    
     $html = '<div ' . $wrapper_attributes . '>'; // .carousel
 
     // Carousel indicators.
@@ -102,6 +116,11 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
         $active = ( $query->current_post === 0 ) ? ' active' : '';
         $html .= '<div class="carousel-item' . esc_attr( $active ) . '" '. $carouselHeight .'>';
 
+        // Condición envoltorio contentLinkSlide true.
+        if ( ! empty( $attributes['contentLinkSlide'] ) && $attributes['contentLinkSlide'] ) {
+            $html .= '<a href="' . esc_url( get_permalink() ) . '" class="carousel-link">';
+        }
+
         if ( has_post_thumbnail() ) {
             $image = get_the_post_thumbnail( null, 'full', [ 'class' => 'd-block w-100' ] );
             // remove width and height attributes from the img tag
@@ -110,9 +129,19 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
 
         $html .= '<div class="carousel-caption">';
         $html .= '<h3>' . esc_html( get_the_title() ) . '</h3>';
-        $html .= '<p>' . esc_html( get_the_excerpt() ) . '</p>';
-        $html .= '<a href="' . esc_url( get_permalink() ) . '">' . esc_html__( 'Read more', 'ekiline-block-collection' ) . '</a>';
+
+        // Condición envoltorio contentLinkSlide true.
+        $link = '<a href="' . esc_url( get_permalink() ) . '">' . esc_html__( 'Read more', 'ekiline-block-collection' ) . '</a>';
+        if ( ! empty( $attributes['contentLinkSlide'] ) && $attributes['contentLinkSlide'] ) {
+            $link = '<span class="read-more as-link">' . esc_html__( 'Read more', 'ekiline-block-collection' ) . '</span>';
+        }
+
+        $html .= '<p>' . esc_html( get_the_excerpt() ) . ' ' . $link . '</p>';
         $html .= '</div>'; // .carousel-caption
+
+        if ( ! empty( $attributes['contentLinkSlide'] ) && $attributes['contentLinkSlide'] ) {
+            $html .= '</a>'; // .carousel-link
+        }
 
         $html .= '</div>'; // .carousel-item
     }
@@ -121,15 +150,8 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
 
     // Carousel controls.
     if ( ! empty( $attributes['AddControls'] ) && $attributes['AddControls'] ) {
-        $html .= '<button class="carousel-control-prev" type="button" '. $dataTarget .' data-bs-slide="prev">';
-        $html .= '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
-        $html .= '<span class="visually-hidden">' . esc_html__( 'Previous', 'ekiline-block-collection' ) . '</span>';
-        $html .= '</button>';
-
-        $html .= '<button class="carousel-control-next" type="button" '. $dataTarget .' data-bs-slide="next">';
-        $html .= '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
-        $html .= '<span class="visually-hidden">' . esc_html__( 'Next', 'ekiline-block-collection' ) . '</span>';
-        $html .= '</button>';
+        $html .= ekiline_carousel_button_template( $dataTarget, 'prev' );
+        $html .= ekiline_carousel_button_template( $dataTarget, 'next' );
     }
 
     $html .= '</div>'; // .carousel
@@ -145,3 +167,4 @@ function ekiline_carousel_dynamic_render( $attributes, $content ) {
 
     return $html;
 }
+
