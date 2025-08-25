@@ -50,31 +50,34 @@ export function GalleryEdit({ attributes, setAttributes }) {
 
   return (
     <div {...blockProps}>
-      <MediaUploadCheck>
-        <MediaUpload
-          onSelect={onSelectImages}
-          allowedTypes={['image']}
-          multiple
-          gallery
-          value={GalleryImagesIds}
-          render={({ open }) => (
-            <Button onClick={open} variant="secondary">
-              {GalleryImagesIds.length > 0
-                ? __('Edit Gallery', 'ekiline-block-collection')
-                : __('Select Images for Gallery', 'ekiline-block-collection')}
-            </Button>
-          )}
-        />
-      </MediaUploadCheck>
-      <div className="gallery-preview">
-        {richImages && richImages.map((img, i) => (
-          <img
-            key={i}
-            src={img.featuredImageSizes.thumbnail?.source_url || img.featuredImage}
-            alt={img.alt}
-            style={{ maxWidth: '60px', margin: '5px' }}
+      {/* Miniaturas encapsuladas */}
+      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', paddingLeft: '5px' }}>
+        <MediaUploadCheck>
+          <MediaUpload
+            onSelect={onSelectImages}
+            allowedTypes={['image']}
+            multiple
+            gallery
+            value={GalleryImagesIds}
+            render={({ open }) => (
+              <Button onClick={open} variant="primary">
+                {GalleryImagesIds.length > 0
+                  ? __('Edit Gallery', 'ekiline-block-collection')
+                  : __('Select Images for Gallery', 'ekiline-block-collection')}
+              </Button>
+            )}
           />
-        ))}
+        </MediaUploadCheck>
+        <div className="gallery-preview">
+          {richImages && richImages.map((img, i) => (
+            <img
+              key={i}
+              src={img.featuredImageSizes.thumbnail?.source_url || img.featuredImage}
+              alt={img.alt}
+              style={{ maxWidth: '40px', margin: '4px' }}
+            />
+          ))}
+        </div>
       </div>
       {/* previsualizar encapsulado. */}
       <div style={{ position: 'relative' }}>

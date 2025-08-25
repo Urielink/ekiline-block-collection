@@ -7,7 +7,8 @@ export default function CarouselMarkup({ attributes = {}, posts = [], disabledCo
     AddIndicators = true,
     anchor = '',
     SetHeight = '540px',
-    contentLinkSlide = false
+    contentLinkSlide = false,
+    ChooseType
   } = attributes;
 
   if (!Array.isArray(posts) || posts.length === 0) return null;
@@ -29,6 +30,9 @@ export default function CarouselMarkup({ attributes = {}, posts = [], disabledCo
     const text = String(html).replace(/<[^>]*>/g, ' ')
     return text.replace(/\s+/g, ' ').trim() + '...'
   }
+
+  // Mostrar elementos solo en modo contenidos (no en galería)
+  const isContentMode = ChooseType === 'content';
 
   // --- Helpers estilo plantilla (tipo PHP) ---
   const hasImage = (p) => !!p?.featuredImageSizes;
@@ -63,19 +67,21 @@ export default function CarouselMarkup({ attributes = {}, posts = [], disabledCo
         {/* Texto plano del excerpt */}
         {toPlainText(p.excerpt)}{' '}
         {/* Enlace "Read more" condicionado para evitar enlaces anidados */}
-        {wrapWholeSlide(p)
-          ? (
-            // Evitar anchors anidados cuando todo el slide es enlace
-            <span className="read-more as-link" aria-hidden={disabledControls ? 'true' : undefined}>
-              {__('Read more', 'ekiline-block-collection')}
-            </span>
-          ) : (
-            hasLink(p) && (
-              <a href={p.link} {...linkAttributes}>
+        {isContentMode && (
+          wrapWholeSlide(p)
+            ? (
+              // Evitar anchors anidados cuando todo el slide es enlace
+              <span className="read-more as-link" aria-hidden={disabledControls ? 'true' : undefined}>
                 {__('Read more', 'ekiline-block-collection')}
-              </a>
+              </span>
+            ) : (
+              hasLink(p) && (
+                <a href={p.link} {...linkAttributes}>
+                  {__('Read more', 'ekiline-block-collection')}
+                </a>
+              )
             )
-          )}
+        )}
       </p>
     </div>
   );
