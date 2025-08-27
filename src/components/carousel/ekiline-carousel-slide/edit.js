@@ -34,11 +34,17 @@ const ALLOWED_BLOCKS = [ 'core/cover', 'core/group' ];
  *
  * @return {Element} Element to render.
  */
-export default function Edit() {
+export default function Edit(props) {
+	const { attributes, setAttributes, context } = props;
 
     const blockProps = useBlockProps({
       className: 'carousel-slide preview-carousel-item'
     })
+
+	// Add style to block
+	setAttributes({ parentSetHeight: context['ekiline-carousel/SetHeight'] });
+	blockProps.style = { height: attributes.parentSetHeight };
+
 
 	return (
 		<div { ...blockProps }>
