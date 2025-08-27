@@ -12,7 +12,15 @@
     "html": false,
     "anchor": true
   },
-  "usesContext": [],
+  "attributes": {
+    "parentSetHeight": {
+      "type": "string",
+      "default": "540px"
+    }
+  },
+  "usesContext": [
+    "ekiline-carousel/SetHeight"
+  ],
   "textdomain": "ekiline-block-collection",
   "parent": [
     "ekiline-block-collection/ekiline-carousel"

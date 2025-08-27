@@ -120,11 +120,14 @@
     },
     "slidesCount": {
       "type": "number",
-      "default": 0
+      "default": 2
     }
   },
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css",
-  "viewScript": "file:./view.js"
+  "viewScript": "file:./view.js",
+  "providesContext": {
+    "ekiline-carousel/SetHeight": "SetHeight"
+  }
 }
