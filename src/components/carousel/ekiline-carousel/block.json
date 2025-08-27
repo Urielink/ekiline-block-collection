@@ -119,6 +119,10 @@
 		"contentLinkSlide": {
 			"type": "boolean",
 			"default": false
+		},
+		"slidesCount": { 
+			"type": "number", 
+			"default": 0 
 		}
 	},
 	"editorScript": "file:./index.js",

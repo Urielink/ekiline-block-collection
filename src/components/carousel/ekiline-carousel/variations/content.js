@@ -92,7 +92,7 @@ export function ContentSave({ attributes }) {
   const carAnimation = attributes.SetAnimation ? ` carousel-${attributes.SetAnimation}` : ''
   const carAutoplay = attributes.SetAuto ? 'carousel' : undefined
   const carInterval = attributes.SetTime || undefined
-  const minHeight = attributes.SetHeight || '480px'
+  const minHeight = attributes.SetHeight || '540px'
 
   // Personalizar attributos.
   const blockProps = useBlockProps.save({
