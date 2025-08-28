@@ -122,7 +122,7 @@
 		},
 		"slidesCount": { 
 			"type": "number", 
-			"default": 2 
+			"default": 0
 		}
 	},
 	"editorScript": "file:./index.js",

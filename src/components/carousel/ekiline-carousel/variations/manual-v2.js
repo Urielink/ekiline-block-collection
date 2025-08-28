@@ -147,3 +147,20 @@ export function ManualSave ({ attributes }) {
     </div>
   )
 }
+
+// Función auxiliar para debuggear.
+function debugUseEffect( clientId, thisBlock, innerBlocks, attributes ){
+  useEffect(() => {
+    // Identifica el bloque padre e hijos
+    // (ojo: thisBlock puede ser undefined al primer render)
+    // No rompe nada si es undefined.
+    // eslint-disable-next-line no-console
+    console.log('[ManualEdit] clientId:', clientId);
+    // eslint-disable-next-line no-console
+    console.log('[ManualEdit] thisBlock:', thisBlock);
+    // eslint-disable-next-line no-console
+    console.log('[ManualEdit] innerBlocks.length:', innerBlocks.length);
+    // eslint-disable-next-line no-console
+    console.log('[ManualEdit] attributes.slidesCount:', attributes.slidesCount);
+  }, [clientId, thisBlock, innerBlocks.length, attributes.slidesCount]);
+}
