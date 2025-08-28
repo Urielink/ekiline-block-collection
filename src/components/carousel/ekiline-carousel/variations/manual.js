@@ -40,7 +40,7 @@ import { useEffect } from 'react'
 
   /**
    * BsIndicatorsLoop 
-   * @returns componenet loop indicators
+   * @returns component loop indicators
    */
   const BsIndicatorsLoop = ({ slidesCount, anchorId }) => {
     if (slidesCount <= 1) return null
@@ -79,16 +79,13 @@ export function ManualEdit ({ attributes, setAttributes }) {
     if (attributes.slidesCount !== count) {
       setAttributes({ slidesCount: count })
     }
-  }, [innerBlocks.length])
+  }, [innerBlocks.length, attributes.slidesCount])
 
   return (
     <div {...blockProps}>
       <mark style={{ fontStyle: 'italic', marginBottom: '1rem', display: 'block' }}>
-        {__('Add one or more slides. Each slide is a block group (image + text + button).', 'ekiline-block-collection')}
-      </mark>
-      <small style={{ opacity: 0.7, display: 'block', margin: '0.25rem 0 0.75rem' }}>
         {__('Slides:', 'ekiline-block-collection')} {innerBlocks.length}
-      </small>
+      </mark>
       <InnerBlocks 
         orientation="horizontal"
         allowedBlocks={PARENT_ALLOWED_BLOCKS} 
@@ -109,12 +106,16 @@ export function ManualSave ({ attributes }) {
     anchor = '',
     SetHeight = '540px',
     slidesCount = 0,
+    SetColumns = 1,
+    SetAnimation = '',
+    SetAuto = false,
+    SetTime = undefined,
   } = attributes;
 
-  const carColumns = attributes.SetColumns > 1 ? ` carousel-multiple x${attributes.SetColumns}` : ''
-  const carAnimation = attributes.SetAnimation ? ` carousel-${attributes.SetAnimation}` : ''
-  const carAutoplay = attributes.SetAuto ? 'carousel' : undefined
-  const carInterval = attributes.SetTime || undefined
+  const carColumns = SetColumns > 1 ? ` carousel-multiple x${SetColumns}` : ''
+  const carAnimation = SetAnimation ? ` carousel-${SetAnimation}` : ''
+  const carAutoplay = SetAuto ? 'carousel' : undefined
+  const carInterval = SetTime || undefined
 
   // Personalizar attributos.
   const blockProps = useBlockProps.save({
