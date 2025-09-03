@@ -83,7 +83,8 @@ export function ManualEdit ({ attributes, setAttributes }) {
 
   const blockProps = useBlockProps({ 
     className: 'carousel-manual', 
-    'data-slides-count': innerBlocks.length 
+    'data-slides-count': innerBlocks.length,
+    style: { '--ekiline-carousel-h': attributes.SetHeight }
   })
 
   return (
@@ -124,7 +125,7 @@ export function ManualSave ({ attributes }) {
     className: 'carousel-manual carousel' + carColumns + carAnimation,
     'data-bs-ride': carAutoplay,
     'data-bs-interval': carInterval,
-    style: { height: SetHeight },
+    style: { height: SetHeight, '--ekiline-carousel-h': SetHeight },
   })
 
   return (

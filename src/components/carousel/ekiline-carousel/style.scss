@@ -3,11 +3,14 @@
  * and in the editor.
  *
  * Replace them with your own styles or remove the file completely.
+ * Clasename base: .wp-block-ekiline-block-collection-ekiline-carousel
  */
-// .wp-block-ekiline-block-collection-ekiline-carousel{
-//   background: cyan;
-//   .carousel, .carousel-item {
-//     min-height: 50px;
-//     min-height: 400px;
-//   }
-// }
+
+/**
+ * Ajuste de altura, elemento cover.
+ * Editor + Front (mismo selector).
+ * llenar sin deformar
+ */
+.carousel-manual .wp-block-cover {
+  min-height: var(--ekiline-carousel-h);
+}
