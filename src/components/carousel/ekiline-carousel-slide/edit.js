@@ -45,7 +45,6 @@ export default function Edit(props) {
 	setAttributes({ parentSetHeight: context['ekiline-carousel/SetHeight'] });
 	blockProps.style = { height: attributes.parentSetHeight };
 
-
 	return (
 		<div { ...blockProps }>
 			<InnerBlocks

@@ -18,6 +18,7 @@ import { useEffect } from 'react'
     ['ekiline-block-collection/ekiline-carousel-slide', {
         className: 'active'
     }],
+    ['ekiline-block-collection/ekiline-carousel-slide'],
     ['ekiline-block-collection/ekiline-carousel-slide']
   ];
 
@@ -63,7 +64,6 @@ import { useEffect } from 'react'
 
 // Visulizacion en editor (preview).
 export function ManualEdit ({ attributes, setAttributes }) {
-  const blockProps = useBlockProps({ className: 'carousel-manual' })
   const { clientId } = useBlockEditContext(); // obtener id de bloque asignado por editor.
 
   // Contar slides (innerBlocks) dinámicamente en el editor
@@ -81,11 +81,13 @@ export function ManualEdit ({ attributes, setAttributes }) {
     }
   }, [innerBlocks.length, attributes.slidesCount])
 
+  const blockProps = useBlockProps({ 
+    className: 'carousel-manual', 
+    'data-slides-count': innerBlocks.length 
+  })
+
   return (
     <div {...blockProps}>
-      <mark style={{ fontStyle: 'italic', marginBottom: '1rem', display: 'block' }}>
-        {__('Slides:', 'ekiline-block-collection')} {innerBlocks.length}
-      </mark>
       <InnerBlocks 
         orientation="horizontal"
         allowedBlocks={PARENT_ALLOWED_BLOCKS} 
