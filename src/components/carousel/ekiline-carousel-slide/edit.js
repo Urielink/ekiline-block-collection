@@ -57,7 +57,11 @@ export default function Edit(props) {
 							[ 'core/image' ],
 							[ 'core/heading', { placeholder: __('Slide title', 'ekiline-block-collection') } ],
 							[ 'core/paragraph', { placeholder: __('Slide description', 'ekiline-block-collection') } ],
-							[ 'core/buttons' ]
+							[ 'core/buttons', {},
+								[
+									[ 'core/button', { placeholder: __('Slide Button', 'ekiline-block-collection') } ]
+								]
+							]
 						]
 					]
 				] }
