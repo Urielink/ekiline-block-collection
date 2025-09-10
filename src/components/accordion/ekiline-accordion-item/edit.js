@@ -13,7 +13,7 @@ export default function Edit({ attributes, setAttributes, context }) {
   ];
 
   const blockProps = useBlockProps({
-    className: 'child-item-accordion'
+    className: 'child-accordion-item'
   });
 
   if (!attributes.itemTarget) {
