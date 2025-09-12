@@ -4,9 +4,6 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
-
-.wp-block-create-block-prueba {
-	background-color: #21759b;
-	color: #fff;
-	padding: 2px;
+.accordion-button:focus {
+  box-shadow: 0 0 0 0.25rem rgba(232, 232, 232, 0.25) !important;
 }
