@@ -28,3 +28,25 @@ export function getRandomArbitrary(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
+/**
+ * Transformar colores hexadecimales a rgb o rgba
+ * @param {*} hex
+ * @param {*} alpha
+ * @returns
+ *
+ * import { hexToRgb } from '../../../shared/collection';
+ */
+export function hexToRgb(hex, alpha) {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result
+    ? 'rgba(' +
+        parseInt(result[1], 16) +
+        ', ' +
+        parseInt(result[2], 16) +
+        ', ' +
+        parseInt(result[3], 16) +
+        ', ' +
+        alpha +
+        ')'
+    : null;
+}
