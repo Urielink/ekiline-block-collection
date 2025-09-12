@@ -7,7 +7,7 @@ export default function Edit({ attributes, setAttributes, context }) {
   ];
 
   const blockProps = useBlockProps({
-    className: 'child-item-accordion-body'
+    className: 'child-item-accordion-body accordion-body'
   });
 
   if (!attributes.itemParent) {
@@ -19,6 +19,10 @@ export default function Edit({ attributes, setAttributes, context }) {
 
   if (!attributes.anchor) {
     setAttributes({ anchor: context['ekiline-accordion-item/itemTarget'] });
+  }
+  // Reemplazar ID con id personalizado.
+  if (attributes.anchor) {
+    blockProps.id = attributes.anchor;
   }
 
   return (

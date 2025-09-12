@@ -15,7 +15,8 @@ export default function Edit({ attributes, setAttributes }) {
   ];
 
   const blockProps = useBlockProps({
-    className: 'group-accordion'
+    // className: 'group-accordion accordion',
+    className: (!attributes.noStyle ? 'group-accordion accordion accordion-flush' : 'group-accordion accordion')
   });
 
   if (!attributes.anchor) {
@@ -27,7 +28,7 @@ export default function Edit({ attributes, setAttributes }) {
       <InspectorControls>
         <PanelBody title={__('Accordion Settings', 'ekiline-block-collection')} initialOpen>
           <ToggleControl
-            label={__('Use bootstrap default style.', 'ekiline-block-collection')}
+            label={__('Enable borders.', 'ekiline-block-collection')}
             checked={attributes.noStyle}
             onChange={(noStyle) => setAttributes({ noStyle })}
           />
