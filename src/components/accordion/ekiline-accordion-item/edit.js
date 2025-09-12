@@ -8,12 +8,17 @@ function getRandomArbitrary(min, max) {
 
 export default function Edit({ attributes, setAttributes, context }) {
   const CHILD_TEMPLATE = [
-    ['ekiline-block-collection/ekiline-accordion-item-header'],
+    ['ekiline-block-collection/ekiline-accordion-item-header', 
+      {
+        "backgroundColor":"black",
+        "textColor":"white"
+      }
+    ],
     ['ekiline-block-collection/ekiline-accordion-item-body']
   ];
 
   const blockProps = useBlockProps({
-    className: 'child-accordion-item'
+    className: 'child-accordion-item accordion-item'
   });
 
   if (!attributes.itemTarget) {
