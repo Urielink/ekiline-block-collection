@@ -16,6 +16,7 @@ export default function Edit({ attributes, setAttributes }) {
     className: (!attributes.noStyle ? 'group-accordion accordion accordion-flush' : 'group-accordion accordion')
   });
 
+  // generar ID anchor dinamico
   if (!attributes.anchor) {
     setAttributes({ anchor: 'accordion' + getRandomArbitrary(10, 150) });
   }

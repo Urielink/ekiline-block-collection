@@ -33,6 +33,7 @@
     }
   },
   "usesContext": [
+    "ekiline-accordion/anchor",
     "ekiline-accordion-item/anchor",
     "ekiline-accordion-item/itemTarget"
   ],

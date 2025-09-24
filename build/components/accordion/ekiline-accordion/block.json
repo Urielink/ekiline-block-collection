@@ -10,8 +10,8 @@
   "description": "Show your content as an accordion.",
   "example": {},
   "supports": {
-    "html": false,
-    "anchor": true
+    "anchor": true,
+    "html": false
   },
   "attributes": {
     "noStyle": {

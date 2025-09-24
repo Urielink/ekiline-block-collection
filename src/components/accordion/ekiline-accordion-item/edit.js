@@ -18,8 +18,14 @@ export default function Edit({ attributes, setAttributes, context }) {
     className: 'child-accordion-item accordion-item'
   });
 
-  if (!attributes.itemTarget) {
-    setAttributes({ itemTarget: context['ekiline-accordion/anchor'] + 'item' + getRandomArbitrary(10, 150) });
+  // generar Id anchor + item
+  if (!attributes.anchor) {
+    setAttributes({ anchor: context['ekiline-accordion/anchor'] + 'item' + getRandomArbitrary(10, 150) });
+  }
+
+  // generar Id target + collapse
+  if (!attributes.itemTarget && attributes.anchor) {
+    setAttributes({ itemTarget: attributes.anchor + 'collapse' });
   }
 
   return (

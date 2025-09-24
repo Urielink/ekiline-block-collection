@@ -7,6 +7,7 @@ export default function Edit({ attributes, setAttributes, context }) {
     className: 'child-item-accordion-header accordion-header'
   });
 
+  // Item target reemplaza el uso de ID.
   if (!attributes.itemTarget) {
     setAttributes({ itemTarget: context['ekiline-accordion-item/itemTarget'] });
   }

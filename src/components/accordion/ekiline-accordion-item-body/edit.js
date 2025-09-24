@@ -10,19 +10,20 @@ export default function Edit({ attributes, setAttributes, context }) {
     className: 'child-item-accordion-body accordion-body'
   });
 
+  setAttributes({ showDefault: context['ekiline-accordion-item/showDefault'] });
+  setAttributes({ keepOpen: context['ekiline-accordion-item/keepOpen'] });
+
   if (!attributes.itemParent) {
     setAttributes({ itemParent: context['ekiline-accordion/anchor'] });
   }
 
-  setAttributes({ showDefault: context['ekiline-accordion-item/showDefault'] });
-  setAttributes({ keepOpen: context['ekiline-accordion-item/keepOpen'] });
-
-  if (!attributes.anchor) {
-    setAttributes({ anchor: context['ekiline-accordion-item/itemTarget'] });
+  if (!attributes.itemTarget) {
+    setAttributes({ itemTarget: context['ekiline-accordion-item/itemTarget'] });
   }
-  // Reemplazar ID con id personalizado.
-  if (attributes.anchor) {
-    blockProps.id = attributes.anchor;
+
+  // Reemplazar ID con Item target.
+  if (attributes.itemTarget) {
+    blockProps.id = attributes.itemTarget;
   }
 
   return (

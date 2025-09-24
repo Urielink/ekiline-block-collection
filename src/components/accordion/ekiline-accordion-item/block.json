@@ -11,6 +11,7 @@
   "description": "Set title and content in your accordion container.",
 	"example": {},
   "supports": {
+    "anchor": true,
     "html": false,
     "reusable": false
   },
@@ -36,9 +37,10 @@
   },
   "usesContext": ["ekiline-accordion/anchor"],
   "providesContext": {
+    "ekiline-accordion-item/anchor": "anchor",
+    "ekiline-accordion-item/itemTarget": "itemTarget",
     "ekiline-accordion-item/showDefault": "showDefault",
-    "ekiline-accordion-item/keepOpen": "keepOpen",
-    "ekiline-accordion-item/itemTarget": "itemTarget"
+    "ekiline-accordion-item/keepOpen": "keepOpen"
   },
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
