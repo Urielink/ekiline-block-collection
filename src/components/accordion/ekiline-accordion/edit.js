@@ -1,10 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, ToggleControl } from '@wordpress/components';
-
-function getRandomArbitrary(min, max) {
-  return Math.floor(Math.random() * (max - min) + min);
-}
+import { getRandomArbitrary } from '../../../shared/collection';
 
 export default function Edit({ attributes, setAttributes }) {
   const PARENT_ALLOWED_BLOCKS = ['ekiline-block-collection/ekiline-accordion-item'];
@@ -28,7 +25,7 @@ export default function Edit({ attributes, setAttributes }) {
       <InspectorControls>
         <PanelBody title={__('Accordion Settings', 'ekiline-block-collection')} initialOpen>
           <ToggleControl
-            label={__('Enable borders.', 'ekiline-block-collection')}
+            label={__('Enable default borders.', 'ekiline-block-collection')}
             checked={attributes.noStyle}
             onChange={(noStyle) => setAttributes({ noStyle })}
           />
