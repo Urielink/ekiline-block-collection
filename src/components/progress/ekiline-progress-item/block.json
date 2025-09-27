@@ -16,6 +16,9 @@
       "background": true,
       "gradients": true,
       "text": true
+    },
+    "typography": {
+      "fontSize": true
     }
   },
   "attributes": {

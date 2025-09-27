@@ -4,6 +4,17 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-.wp-block-create-block-prueba {
-	border: 1px dotted #f00;
+.group-progress.progress-stacked .block-editor-inner-blocks,
+.progress-stacked .block-editor-block-list__layout{
+	width: 100%;
+	height: 100%;
+}
+
+.group-progress.progress-stacked .block-editor-block-list__layout{
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+.group-progress.progress-stacked p{
+	margin: 0;
 }

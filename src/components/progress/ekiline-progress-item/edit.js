@@ -39,14 +39,17 @@ export default function Edit({ attributes, setAttributes }) {
             checked={attributes.progStripes}
             onChange={(progStripes) => setAttributes({ progStripes })}
           />
-          <ToggleControl
-            label={__('Show animation.', 'ekiline-block-collection')}
-            checked={attributes.progAnimation}
-            onChange={(progAnimation) => setAttributes({ progAnimation })}
-          />
+          { /* if progStripes show control */}
+          {attributes.progStripes &&
+            <ToggleControl
+              label={__('Animate stripes.', 'ekiline-block-collection')}
+              checked={attributes.progAnimation}
+              onChange={(progAnimation) => setAttributes({ progAnimation })}
+            />
+          }
         </PanelBody>
       </InspectorControls>
-      <p>{attributes.progRange}</p>
+      <p>{ (!attributes.progLabel) ? attributes.progRange + '%' : null}</p>
     </div>
   );
 }

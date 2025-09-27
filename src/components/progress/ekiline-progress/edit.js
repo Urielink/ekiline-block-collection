@@ -11,7 +11,7 @@ import {
 
 export default function Edit({ attributes, setAttributes }) {
   const blockProps = useBlockProps({
-    className: 'group-progress',
+    className: 'group-progress progress-stacked',
     style: {
       height: (attributes.progHeight + 22) + 'px'
     }
