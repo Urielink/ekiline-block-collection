@@ -1,18 +1,11 @@
 import { __ } from '@wordpress/i18n';
-import {
-  useBlockProps,
-  InspectorControls,
-  InnerBlocks,
-  RichText
-} from '@wordpress/block-editor';
-import {
-  PanelBody,
-  TextControl,
-  ToggleControl
-} from '@wordpress/components';
+import { useBlockProps, InspectorControls, InnerBlocks, RichText } from '@wordpress/block-editor';
+import { PanelBody, TextControl, ToggleControl } from '@wordpress/components';
 
 export default function Edit({ attributes, setAttributes }) {
-  const blockProps = useBlockProps({ className: 'toast-item' });
+  const blockProps = useBlockProps({ 
+    className: 'toast-item toast' 
+  });
 
   const CHILD_TEMPLATE = [
     ['core/paragraph', {
@@ -44,15 +37,19 @@ export default function Edit({ attributes, setAttributes }) {
         </PanelBody>
       </InspectorControls>
 
-      <RichText
-        tagName='p'
-        value={attributes.content}
-        allowedFormats={['core/bold', 'core/italic']}
-        onChange={(content) => setAttributes({ content })}
-        placeholder={__('Add toast title', 'ekiline-block-collection')}
-        className='item-title'
-      />
-      <InnerBlocks template={CHILD_TEMPLATE} />
+      <div className='toast-header'>
+        <RichText
+          tagName='p'
+          value={attributes.content}
+          allowedFormats={['core/bold', 'core/italic']}
+          onChange={(content) => setAttributes({ content })}
+          placeholder={__('Add toast title', 'ekiline-block-collection')}
+          className='item-title'
+        />
+      </div>
+      <div className='toast-body'>
+        <InnerBlocks template={CHILD_TEMPLATE} />
+      </div>
     </div>
   );
 }
