@@ -16,16 +16,16 @@ export const DEFAULT_BORDER = {
 export const DEFAULT_BORDER_RADIUS = '.375rem';
 
 // Ensures a flat border object always contains the three CSS parts.
-const ensureSimpleBorder = (borderValue = {}) => ({
+const ensureSimpleBorder = (borderValue = {}, fallback = DEFAULT_BORDER) => ({
   color: hasDefinedValue(borderValue.color)
     ? borderValue.color
-    : DEFAULT_BORDER.color,
+    : fallback.color,
   style: hasDefinedValue(borderValue.style)
     ? borderValue.style
-    : DEFAULT_BORDER.style,
+    : fallback.style,
   width: hasDefinedValue(borderValue.width)
     ? borderValue.width
-    : DEFAULT_BORDER.width,
+    : fallback.width,
 });
 
 const isSplitBorderValue = (borderValue) =>
@@ -34,9 +34,12 @@ const isSplitBorderValue = (borderValue) =>
   BORDER_SIDES.some((side) => borderValue?.[side]);
 
 // Harmonises the value emitted by BorderBoxControl so it never stores holes.
-export const sanitizeBorderValue = (borderValue) => {
+export const sanitizeBorderValue = (
+  borderValue,
+  fallback = DEFAULT_BORDER
+) => {
   if (!borderValue || typeof borderValue !== 'object') {
-    return { ...DEFAULT_BORDER };
+    return { ...fallback };
   }
 
   if (isSplitBorderValue(borderValue)) {
@@ -49,27 +52,27 @@ export const sanitizeBorderValue = (borderValue) => {
 
       return {
         ...accumulator,
-        [side]: ensureSimpleBorder(sideValue),
+        [side]: ensureSimpleBorder(sideValue, fallback),
       };
     }, {});
 
     return Object.keys(sanitizedSides).length
       ? sanitizedSides
-      : { ...DEFAULT_BORDER };
+      : { ...fallback };
   }
 
-  return ensureSimpleBorder(borderValue);
+  return ensureSimpleBorder(borderValue, fallback);
 };
 
 // Turns a normalised border value into the usual shorthand declaration.
-const formatBorderString = (borderValue) => {
-  const simpleBorder = ensureSimpleBorder(borderValue);
+const formatBorderString = (borderValue, fallback = DEFAULT_BORDER) => {
+  const simpleBorder = ensureSimpleBorder(borderValue, fallback);
 
   return `${simpleBorder.width} ${simpleBorder.style} ${simpleBorder.color}`;
 };
 
 // Generates the inline style object expected by the block wrapper.
-export const getBorderStyles = (borderValue) => {
+export const getBorderStyles = (borderValue, fallback = DEFAULT_BORDER) => {
   if (isSplitBorderValue(borderValue)) {
     const styles = BORDER_SIDES.reduce((accumulator, side) => {
       const sideValue = borderValue[side];
@@ -80,22 +83,42 @@ export const getBorderStyles = (borderValue) => {
 
       return {
         ...accumulator,
-        [`border${capitalizeSide(side)}`]: formatBorderString(sideValue),
+        [`border${capitalizeSide(side)}`]: formatBorderString(
+          sideValue,
+          fallback
+        ),
       };
     }, {});
 
     return Object.keys(styles).length
       ? styles
-      : { border: formatBorderString(DEFAULT_BORDER) };
+      : { border: formatBorderString(fallback, fallback) };
   }
 
   if (!borderValue) {
-    return { border: formatBorderString(DEFAULT_BORDER) };
+    return { border: formatBorderString(fallback, fallback) };
   }
 
-  return { border: formatBorderString(borderValue) };
+  return { border: formatBorderString(borderValue, fallback) };
 };
 
 // Gives preference to a specific bottom border, falling back to the all-round one.
 export const getHeaderBorderBottom = (styles = {}) =>
   styles.borderBottom ?? styles.border ?? undefined;
+
+export const sanitizeBorderRadiusValue = (
+  radiusValue,
+  allowEmpty = true,
+  fallback = DEFAULT_BORDER_RADIUS
+) => {
+  if (!hasDefinedValue(radiusValue)) {
+    return allowEmpty ? undefined : fallback;
+  }
+
+  return radiusValue;
+};
+
+export const getRadiusWithDefaults = (
+  radiusValue,
+  fallback = DEFAULT_BORDER_RADIUS
+) => sanitizeBorderRadiusValue(radiusValue, false, fallback);

@@ -4,7 +4,8 @@ import { PanelBody, SelectControl } from '@wordpress/components';
 
 export default function Edit({ attributes, setAttributes }) {
   const blockProps = useBlockProps({ 
-    className: 'group-toast'
+    className: 'group-toast',
+    style: { zIndex: 1080, minHeight: '180px', backgroundColor: '#f9f9f9' }
   });
   const PARENT_ALLOWED_BLOCKS = ['ekiline-block-collection/ekiline-toast-item'];
   const CHILD_TEMPLATE = [
@@ -35,7 +36,12 @@ export default function Edit({ attributes, setAttributes }) {
           />
         </PanelBody>
       </InspectorControls>
-      <InnerBlocks allowedBlocks={PARENT_ALLOWED_BLOCKS} template={CHILD_TEMPLATE} />
+
+      {/* previsualizacion en editor */}
+      <pre className='text-center p-1'>{ __( 'Display reference', 'ekiline-block-collection') }</pre>
+      <div className={'toast-container' + attributes.toastPosition}>
+        <InnerBlocks allowedBlocks={PARENT_ALLOWED_BLOCKS} template={CHILD_TEMPLATE} />
+      </div>
     </div>
   );
 }

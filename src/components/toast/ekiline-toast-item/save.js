@@ -4,8 +4,11 @@ import {
   DEFAULT_BORDER_RADIUS,
   getBorderStyles,
   getHeaderBorderBottom,
+  getRadiusWithDefaults,
   sanitizeBorderValue,
-} from './utils';
+} from '../../../shared/border-box';
+
+import { hexToRgb } from '../../../shared/collection';
 
 export default function save({ attributes }) {
 
@@ -15,7 +18,10 @@ export default function save({ attributes }) {
   const normalizedBorder = sanitizeBorderValue(border);
   const borderStyles = getBorderStyles(normalizedBorder);
   const headerBorderBottom = getHeaderBorderBottom(borderStyles);
-  const appliedBorderRadius = borderRadius || DEFAULT_BORDER_RADIUS;
+  const appliedBorderRadius = getRadiusWithDefaults(
+    borderRadius,
+    DEFAULT_BORDER_RADIUS
+  );
 
   const blockProps = useBlockProps.save({
     className:
@@ -29,15 +35,32 @@ export default function save({ attributes }) {
     }
   });
 
+  // En caso de color de texto en header.
+  // obtener backgroundColor de blockProps.style y sobreescribir el valor --bs-toast-header-color.
+  if (blockProps.style && blockProps.style.color) {
+    blockProps.style = {
+      ...blockProps.style,
+      '--bs-toast-header-color': blockProps.style.color
+    }
+  }
+
   const headerStyles = {
     borderBottom: headerBorderBottom,
     borderTopLeftRadius: appliedBorderRadius,
     borderTopRightRadius: appliedBorderRadius,
+    backgroundColor: hexToRgb(border.color, 0.20)
   };
+
+  // Función para pintar el color del texto en header. Filtrar clases por tipo 'has-'.
+  function filterClassNames(string) {
+    return string.split(' ').filter(function(className) {
+      return className.startsWith('has-');
+    }).join(' ');
+  }
 
   return (
     <div {...blockProps}>
-      <div className='toast-header' style={headerStyles}>
+      <div className={['toast-header', filterClassNames(blockProps.className)].filter(Boolean).join(' ')} style={headerStyles}>
         <RichText.Content
           tagName='p'
           value={attributes.content}

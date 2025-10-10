@@ -1,34 +1,30 @@
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls, InnerBlocks, RichText } from '@wordpress/block-editor';
-import { useSelect } from '@wordpress/data';
-import { PanelBody, TextControl, ToggleControl, BorderBoxControl } from '@wordpress/components';
-import { __experimentalUnitControl as UnitControl } from '@wordpress/components';
+import { PanelBody, TextControl, ToggleControl } from '@wordpress/components';
 
 import {
+  BorderBoxField,
+  BorderRadiusField,
   DEFAULT_BORDER_RADIUS,
   getBorderStyles,
   getHeaderBorderBottom,
+  getRadiusWithDefaults,
   sanitizeBorderValue,
-} from './utils';
+  sanitizeBorderRadiusValue,
+} from '../../../shared/border-box';
+
+import { hexToRgb } from '../../../shared/collection';
 
 export default function Edit({ attributes, setAttributes }) {
 
   const { border, borderRadius } = attributes;
 
-  const { colors, disableCustomColors, enableAlpha } = useSelect((select) => {
-    const settings = select('core/block-editor').getSettings?.() || {};
-    return {
-      colors: settings.colors || [],
-      disableCustomColors: settings.disableCustomColors,
-      enableAlpha: settings.disableCustomColors ? false : true,
-    };
-  }, []);
-
-  // Normalise the current border so the inspector always receives complete data.
+  // Sanitize current border so both inspector and preview always receive valid CSS values
+  // while still respecting theme palettes, defaults, and per-side overrides.
   const normalizedBorder = sanitizeBorderValue(border);
   const borderStyles = getBorderStyles(normalizedBorder);
   const headerBorderBottom = getHeaderBorderBottom(borderStyles);
-  const appliedBorderRadius = borderRadius || DEFAULT_BORDER_RADIUS;
+  const appliedBorderRadius = getRadiusWithDefaults(borderRadius, DEFAULT_BORDER_RADIUS);
 
   // Persist only the sanitised border values to avoid undefined pieces after reset.
   const onChangeBorder = (newBorder) => {
@@ -41,11 +37,23 @@ export default function Edit({ attributes, setAttributes }) {
     setAttributes({ border: sanitizedBorder });
   };
 
+  // Persist only the sanitized radius value to avoid undefined pieces after reset.
   const onChangeBorderRadius = (newRadius) => {
-    setAttributes({ borderRadius: newRadius || undefined });
+    const sanitizedRadius = sanitizeBorderRadiusValue(
+      newRadius,
+      true,
+      DEFAULT_BORDER_RADIUS
+    );
+
+    if (sanitizedRadius === borderRadius) {
+      return;
+    }
+
+    setAttributes({ borderRadius: sanitizedRadius });
   };
 
-  const blockProps = useBlockProps({ 
+  // Block container styles.
+  const blockProps = useBlockProps({
     className: 'toast-item toast',
     style:{
       ...borderStyles,
@@ -53,12 +61,30 @@ export default function Edit({ attributes, setAttributes }) {
     }
   });
 
+  // En caso de color de texto en header.
+  if (blockProps.style.color){
+    blockProps.style = {
+      ...blockProps.style,
+      '--bs-toast-header-color': blockProps.style.color
+    }
+  }
+
+  // Función para pintar el color del texto en header. Filtrar clases por tipo 'has-'.
+  function filterClassNames(string) {
+    return string.split(' ').filter(function(className) {
+      return className.startsWith('has-');
+    }).join(' ');
+  }
+
+  // Header styles.
   const headerStyles = {
     borderBottom: headerBorderBottom,
     borderTopLeftRadius: appliedBorderRadius,
     borderTopRightRadius: appliedBorderRadius,
+    backgroundColor: hexToRgb(border.color, 0.20)
   };
 
+  // Child block template.
   const CHILD_TEMPLATE = [
     ['core/paragraph', {
       content: __('Add toast content.', 'ekiline-block-collection')
@@ -90,31 +116,22 @@ export default function Edit({ attributes, setAttributes }) {
       </InspectorControls>
       <InspectorControls group='styles'>
         <PanelBody>
-          <BorderBoxControl
+          {/* Shared field that wraps Gutenberg's BorderBoxControl to consume theme palettes
+              and sanitize the per-side colors/styles before persisting them. */}
+          <BorderBoxField
               label={__('Border', 'ekiline-block-collection')}
               value={normalizedBorder}
               onChange={onChangeBorder}
-              colors={colors}
-              disableCustomColors={disableCustomColors}
-              enableAlpha={enableAlpha}
               __experimentalIsRenderedInSidebar
           />
-          <UnitControl
-            label={__('Border radius', 'ekiline-block-collection')}
-            value={borderRadius}
-            onChange={onChangeBorderRadius}
-            units={[
-              { value: 'px', label: 'px', default: 6 },
-              { value: 'em', label: 'em' },
-              { value: 'rem', label: 'rem' },
-              { value: '%', label: '%' },
-            ]}
-            isResetValueOnUnitChange={false}
+          <BorderRadiusField
+              value={borderRadius}
+              onChange={onChangeBorderRadius}
           />
         </PanelBody>
       </InspectorControls>
 
-      <div className='toast-header' style={headerStyles}>
+      <div className={['toast-header',filterClassNames(blockProps.className)].filter(Boolean).join(' ')} style={headerStyles} >
         <RichText
           tagName='p'
           value={attributes.content}
