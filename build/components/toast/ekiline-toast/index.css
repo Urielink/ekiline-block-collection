@@ -1,1 +1,1 @@
-.toast-header p{margin:0;width:100%}.group-toast{background-color:#e5e5f7;background-image:repeating-linear-gradient(45deg,#fff 25%,transparent 0,transparent 75%,#fff 0,#fff),repeating-linear-gradient(45deg,#fff 25%,#e5e5f7 0,#e5e5f7 75%,#fff 0,#fff);background-position:0 0,10px 10px;background-size:20px 20px;opacity:.8}
+.toast-header p{margin:0;width:100%}.group-toast{min-height:160px;z-index:1080}
