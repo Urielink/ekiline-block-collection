@@ -12,10 +12,14 @@ const replaceSpecialChars = (str) => {
 };
 
 export default function Edit({ attributes, setAttributes }) {
-  const blockProps = useBlockProps({ className: 'tab-link' });
+  const blockProps = useBlockProps({ 
+    className: 'tab-link nav-link',
+    'data-bs-target': (attributes.dataBsTarget) ? '#' + attributes.dataBsTarget : null,
+    'data-bs-toggle': 'pill'
+  });
 
   return (
-    <div>
+    <div {...blockProps}>
       <InspectorControls>
         <PanelBody title={__('Tab Link Params', 'ekiline-block-collection')} initialOpen>
           <TextControl
@@ -31,7 +35,7 @@ export default function Edit({ attributes, setAttributes }) {
         withoutInteractiveFormatting
         allowedFormats={['core/bold', 'core/italic', 'core/image', 'core/align', 'ekiline-format/find-anchor']}
         tagName="p"
-        className={blockProps.className}
+        className='m-0'
         value={attributes.content}
         onChange={(content) => setAttributes({ content })}
       />

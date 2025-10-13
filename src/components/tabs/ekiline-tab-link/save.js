@@ -3,7 +3,7 @@ import { useBlockProps, RichText } from '@wordpress/block-editor';
 export default function save({ attributes }) {
   const blockProps = useBlockProps.save({
     className: 'tab-link nav-link',
-    anchorData: '#' + attributes.dataBsTarget,
+    anchorData: '#' + attributes.dataBsTarget
   });
 
   return (

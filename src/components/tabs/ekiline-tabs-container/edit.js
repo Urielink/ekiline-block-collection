@@ -12,7 +12,7 @@ const replaceSpecialChars = (str) => {
 
 export default function Edit() {
   const blockProps = useBlockProps({
-    className: 'tabs-container'
+    className: 'tabs-container tab-content'
   });
 
   const allowedBlocks = ['ekiline-block-collection/ekiline-tab-content'];

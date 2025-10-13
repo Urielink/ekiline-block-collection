@@ -15,7 +15,7 @@ export default function Edit(props) {
   ];
 
   const blockProps = useBlockProps({
-    className: 'tabs-navbar'
+    className: 'tabs-navbar nav mb-3'
   });
 
   if (attributes.className) {

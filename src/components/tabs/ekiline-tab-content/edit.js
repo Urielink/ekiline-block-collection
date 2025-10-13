@@ -1,10 +1,16 @@
 import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 
-export default function Edit() {
+export default function Edit(attributes) {
   const blockProps = useBlockProps({
-    className: 'tab-content'
+    className: 'tab-content tab-pane fade',
   });
+
+  // Obtener el anchor de este objeto.
+  // por alguna razon que desconozco requiere doble llamdo: attributes.attributes...
+  if (attributes.attributes.anchor) {
+    blockProps.id = attributes.attributes.anchor;
+  }
 
   const template = [
     ['core/paragraph', {
