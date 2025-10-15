@@ -1,14 +1,6 @@
 import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-
-const replaceSpecialChars = (str) => {
-  return str.normalize('NFD').replace(/(<([^>]+)>)/gi, '')
-    .replace(/[̀-ͯ]/g, '')
-    .replace(/([^\w]+|\s+)/g, '-')
-    .replace(/\-\-+/g, '-')
-    .replace(/(^-+|-+$)/, '')
-    .toLowerCase();
-};
+import { replaceSpecialChars } from '../../../shared/collection';
 
 export default function Edit() {
   const blockProps = useBlockProps({

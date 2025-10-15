@@ -3,15 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { compose, ifCondition } from '@wordpress/compose';
 import { registerFormatType } from '@wordpress/rich-text';
 import { withSelect } from '@wordpress/data';
-
-const replaceSpecialChars = (str) => {
-  return str.normalize('NFD').replace(/(<([^>]+)>)/gi, '')
-    .replace(/[̀-ͯ]/g, '')
-    .replace(/([^\w]+|\s+)/g, '-')
-    .replace(/\-\-+/g, '-')
-    .replace(/(^-+|-+$)/, '')
-    .toLowerCase();
-};
+import { replaceSpecialChars } from '../../../shared/collection';
 
 const findAnchorButton = (props) => {
   return (

@@ -50,3 +50,15 @@ export function hexToRgb(hex, alpha) {
         ')'
     : null;
 }
+
+/**
+ * Transformar cadena de texto en slug
+ */
+export const replaceSpecialChars = (str) => {
+  return str.normalize('NFD').replace(/(<([^>]+)>)/gi, '')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/([^\w]+|\s+)/g, '-')
+    .replace(/\-\-+/g, '-')
+    .replace(/(^-+|-+$)/, '')
+    .toLowerCase();
+};

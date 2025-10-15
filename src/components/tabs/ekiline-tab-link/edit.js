@@ -1,21 +1,13 @@
 import { useBlockProps, InspectorControls, RichText } from '@wordpress/block-editor';
 import { PanelBody, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-
-const replaceSpecialChars = (str) => {
-  return str.normalize('NFD').replace(/(<([^>]+)>)/gi, '')
-    .replace(/[̀-ͯ]/g, '')
-    .replace(/([^\w]+|\s+)/g, '-')
-    .replace(/\-\-+/g, '-')
-    .replace(/(^-+|-+$)/, '')
-    .toLowerCase();
-};
+import { replaceSpecialChars } from '../../../shared/collection';
 
 export default function Edit({ attributes, setAttributes }) {
   const blockProps = useBlockProps({ 
     className: 'tab-link nav-link',
-    'data-bs-target': (attributes.dataBsTarget) ? '#' + attributes.dataBsTarget : null,
-    'data-bs-toggle': 'pill'
+    // 'data-bs-target': (attributes.dataBsTarget) ? '#' + attributes.dataBsTarget : null,
+    // 'data-bs-toggle': 'pill'
   });
 
   return (
