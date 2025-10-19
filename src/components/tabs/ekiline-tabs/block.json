@@ -21,6 +21,20 @@
       "background": true
     }
   },
+  "attributes": {
+    "numberTabs": {
+      "type": "number",
+      "default": 3
+    },
+    "template": {
+      "type": "array",
+      "default": []
+    },
+    "isConfigured":{
+      "type": "boolean",
+      "default": false
+    }
+  },
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
