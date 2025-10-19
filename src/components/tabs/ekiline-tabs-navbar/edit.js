@@ -16,31 +16,32 @@ export default function Edit(props) {
     }]
   ];
 
-  const blockProps = useBlockProps({
-    className: 'nav mb-3' + attributes.alignTabs
-  });
-
-  if (attributes.className) {
-    function addnewClassName(clase) {
-      if (clase.includes('is-style-nav-tabs')) {
-        clase = clase.replaceAll('nav-pills', '');
-        clase = clase.replaceAll('nav-underline', '');
-        clase = clase.replace('is-style-nav-tabs', 'nav-tabs');
-      }
-      if (clase.includes('is-style-nav-pills')) {
-        clase = clase.replaceAll('nav-tabs', '');
-        clase = clase.replaceAll('nav-underline', '');
-        clase = clase.replace('is-style-nav-pills', 'nav-pills');
-      }
-      if (clase.includes('is-style-nav-underline')) {
-        clase = clase.replaceAll('nav-tabs', '');
-        clase = clase.replaceAll('nav-pills', '');
-        clase = clase.replace('is-style-nav-underline', 'nav-underline');
-      }
-      return clase;
+  function saveStyleNav(newClassName){
+    if (!newClassName) return;
+    if (newClassName.includes('is-style-nav-tabs')) {
+      setAttributes({ styleNav: 'nav-tabs' });
     }
-    setAttributes({ className: addnewClassName(attributes.className) });
+    if (newClassName.includes('is-style-nav-pills')) {
+      setAttributes({ styleNav: 'nav-pills' });
+    }
+    if (newClassName.includes('is-style-nav-underline')) {
+      setAttributes({ styleNav: 'nav-underline' });
+    }
   }
+  saveStyleNav(attributes.className);
+
+  // Convertir clasnames en string, 
+  // filter(Boolean) elimina valores falsy (como '', undefined, null).
+  const addClassNames = [
+    'nav',
+    'mb-3',
+    attributes.alignTabs,
+    attributes.styleNav
+  ].filter(Boolean).join(' ');
+
+  const blockProps = useBlockProps({
+    className: addClassNames
+  });
 
   return (
     <div {...blockProps}>
@@ -51,9 +52,9 @@ export default function Edit(props) {
             value={attributes.alignTabs}
             options={[
               { label: __('Select align', 'ekiline-block-collection'), value: '' },
-              { label: __('Justify center', 'ekiline-block-collection'), value: ' justify-content-center' },
-              { label: __('Justify end', 'ekiline-block-collection'), value: ' justify-content-end' },
-              { label: __('Fill', 'ekiline-block-collection'), value: ' nav-fill' }
+              { label: __('Justify center', 'ekiline-block-collection'), value: 'justify-content-center' },
+              { label: __('Justify end', 'ekiline-block-collection'), value: 'justify-content-end' },
+              { label: __('Fill', 'ekiline-block-collection'), value: 'nav-fill' }
             ]}
             onChange={(alignTabs) => setAttributes({ alignTabs })}
           />

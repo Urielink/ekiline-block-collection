@@ -48,7 +48,7 @@ export default function Edit({ attributes, setAttributes }) {
         Array.from({ length: numberTabs }, (_, index) => [
           'ekiline-block-collection/ekiline-tab-link',
           {
-            content: `Tab link x${index + 1}`,
+            content: `Tab link ${index + 1}`,
             className: index === 0 ? 'active' : ''
           }
         ])
@@ -59,15 +59,14 @@ export default function Edit({ attributes, setAttributes }) {
         Array.from({ length: numberTabs }, (_, index) => [
           'ekiline-block-collection/ekiline-tab-content',
           {
-            className: index === 0 ? 'active show' : 'active',
-            anchor: replaceSpecialChars(`Tab link x${index + 1}`),
-            content: `Tab link x${index + 1}`
+            className: index === 0 ? 'active show' : '',
+            anchor: replaceSpecialChars(`Tab link ${index + 1}`)
           },
           [
             [
               'core/paragraph',
               {
-                content: `Tab link x${index + 1}`
+                content: `Tab link ${index + 1} content`
               }
             ]
           ]

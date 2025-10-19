@@ -36,6 +36,10 @@
     "alignTabs": {
       "type": "string",
       "default": ""
+    },
+    "styleNav": {
+      "type": "string",
+      "default": "nav-tabs"
     }
   },
   "editorScript": "file:./index.js",
