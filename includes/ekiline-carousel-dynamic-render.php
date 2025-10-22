@@ -3,10 +3,12 @@
  * Plantilla para botones de carrusel.
  */
 function ekiline_carousel_button_template($dataTarget, $position = 'prev'){
-    $text = ($position === 'prev') ? 'Previous' : 'Next';
+    $text = ( $position === 'prev' )
+        ? esc_html__( 'Previous', 'ekiline-block-collection' )
+        : esc_html__( 'Next', 'ekiline-block-collection' );
     $markup = '<button class="carousel-control-'.$position.'" type="button" '. $dataTarget .' data-bs-slide="'.$position.'">';
     $markup .= '<span class="carousel-control-'.$position.'-icon" aria-hidden="true"></span>';
-    $markup .= '<span class="visually-hidden">' . esc_html__( $text, 'ekiline-block-collection' ) . '</span>';
+    $markup .= '<span class="visually-hidden">' . $text . '</span>';
     $markup .= '</button>';
     return $markup;
 }

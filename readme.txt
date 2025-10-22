@@ -2,7 +2,7 @@
 Contributors:      urielink
 Requires at least: 5.8
 Tags:              block, collection, bootstrap
-Tested up to:      6.8
+Tested up to:      6.9
 Requires PHP:      7.0
 Stable tag:        2.1.1
 License:           GPL-2.0-or-later
