@@ -9,7 +9,6 @@ import { TextControl, Button } from '@wordpress/components';
 import icons from '../../../shared/icons';
 const { tabsIcon } = icons;
 
-
 export default function Edit({ attributes, setAttributes }) {
 
   // variables predeterminadas.
@@ -59,7 +58,7 @@ export default function Edit({ attributes, setAttributes }) {
         Array.from({ length: numberTabs }, (_, index) => [
           'ekiline-block-collection/ekiline-tab-content',
           {
-            className: index === 0 ? 'active show' : '',
+            className: index === 0 ? 'active show' : 'active',
             anchor: replaceSpecialChars(`Tab link ${index + 1}`)
           },
           [

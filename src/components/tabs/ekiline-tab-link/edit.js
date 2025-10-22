@@ -7,7 +7,7 @@ export default function Edit({ attributes, setAttributes }) {
   const blockProps = useBlockProps({ 
     className: 'tab-link nav-link',
     // 'data-bs-target': (attributes.dataBsTarget) ? '#' + attributes.dataBsTarget : null,
-    // 'data-bs-toggle': 'pill'
+    // 'data-bs-toggle': 'tabs'
   });
 
   return (
