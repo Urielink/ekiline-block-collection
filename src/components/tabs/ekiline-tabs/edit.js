@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
+import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor';
 import { replaceSpecialChars } from '../../../shared/collection';
-import { TextControl, Button } from '@wordpress/components';
+import { TextControl, Button, PanelBody, SelectControl } from '@wordpress/components';
 
 /**
  * Imports the icons used in the block.
@@ -9,10 +9,11 @@ import { TextControl, Button } from '@wordpress/components';
 import icons from '../../../shared/icons';
 const { tabsIcon } = icons;
 
-export default function Edit({ attributes, setAttributes }) {
+export default function Edit(props) {
+  const { attributes, setAttributes } = props;
 
   // variables predeterminadas.
-  const { numberTabs = 3, template, isConfigured = false } = attributes;
+  const { tabsNumber = 3, template, isConfigured = false } = attributes;
   // clase de envoltorio.
   const blockProps = useBlockProps({ className: 'tabs-wrapper' });
   // bloques permitidos.
@@ -39,12 +40,12 @@ export default function Edit({ attributes, setAttributes }) {
   // Función para crear la plantilla dinámica.
   // Devuelve un arreglo de contenidos.
   // Se guarda en attributes.template
-  function createTemplate(numberTabs) {
+  function createTemplate(tabsNumber) {
     const newTemplate = [
       [
         'ekiline-block-collection/ekiline-tabs-navbar',
         { className: 'is-style-nav-tabs' },
-        Array.from({ length: numberTabs }, (_, index) => [
+        Array.from({ length: tabsNumber }, (_, index) => [
           'ekiline-block-collection/ekiline-tab-link',
           {
             content: `Tab link ${index + 1}`,
@@ -55,7 +56,7 @@ export default function Edit({ attributes, setAttributes }) {
       [
         'ekiline-block-collection/ekiline-tabs-container',
         { className: 'tabs-container tab-content' },
-        Array.from({ length: numberTabs }, (_, index) => [
+        Array.from({ length: tabsNumber }, (_, index) => [
           'ekiline-block-collection/ekiline-tab-content',
           {
             className: index === 0 ? 'active show' : 'active',
@@ -84,7 +85,7 @@ export default function Edit({ attributes, setAttributes }) {
             {tabsIcon}
             <label>{__('Tabs', 'ekiline-block-collection')}</label>
           </div>
-          <div class="components-placeholder__instructions">
+          <div className="components-placeholder__instructions">
             {__('Displays content in tab format.', 'ekiline-block-collection')}
           </div>
           <div className='tabs-form'>
@@ -93,20 +94,20 @@ export default function Edit({ attributes, setAttributes }) {
               type="number"
               min={2}
               max={30}
-              value={numberTabs}
-              onChange={(val) => setAttributes({ numberTabs: parseInt(val) || 1 })}
+              value={tabsNumber}
+              onChange={(val) => setAttributes({ tabsNumber: parseInt(val) || 1 })}
               className="number-tabs"
             />
             <Button
               variant="primary"
               onClick={() => {
-                const newTemplate = createTemplate(numberTabs);
+                const newTemplate = createTemplate(tabsNumber);
                 setAttributes({
                   template: newTemplate,
                   isConfigured: true
                 });
               }}
-              disabled={numberTabs < 2 || numberTabs > 30}
+              disabled={tabsNumber < 2 || tabsNumber > 30}
               className="create-tabs"
             >
               {__('Create tabs', 'ekiline-block-collection')}
@@ -114,7 +115,7 @@ export default function Edit({ attributes, setAttributes }) {
           </div>
           <label>
             {
-              numberTabs < 2 || numberTabs > 30
+              tabsNumber < 2 || tabsNumber > 30
                 ? __('Please enter a number between 2 and 30', 'ekiline-block-collection')
                 : __('You can change the number of tabs later by adding or removing tab link and tab content blocks.', 'ekiline-block-collection')
             }
@@ -127,6 +128,41 @@ export default function Edit({ attributes, setAttributes }) {
   // Si ya está configurado, mostrar el contenido real
   return (
     <div {...blockProps}>
+      <InspectorControls>
+        <PanelBody title={__('Tabs design', 'ekiline-block-collection')} initialOpen>
+          <SelectControl
+            label={__('Tabs style', 'ekiline-block-collection')}
+            value={attributes.tabsStyle}
+            options={[
+              { label: __('Tabs', 'ekiline-block-collection'), value: 'nav-tabs' },
+              { label: __('Pills', 'ekiline-block-collection'), value: 'nav-pills' },
+              { label: __('Underline', 'ekiline-block-collection'), value: 'nav-underline' },
+            ]}
+            onChange={(tabsStyle) => setAttributes({ tabsStyle })}
+          />
+          <SelectControl
+            label={__('Tabs alignment', 'ekiline-block-collection')}
+            value={attributes.tabsAlign}
+            options={[
+              { label: __('Select', 'ekiline-block-collection'), value: '' },
+              { label: __('Justify center', 'ekiline-block-collection'), value: 'justify-content-center' },
+              { label: __('Justify end', 'ekiline-block-collection'), value: 'justify-content-end' },
+              { label: __('Nav fill', 'ekiline-block-collection'), value: 'nav-fill' },
+            ]}
+            onChange={(tabsAlign) => setAttributes({ tabsAlign })}
+          />
+          <SelectControl
+            label={__('Distribution', 'ekiline-block-collection')}
+            value={attributes.tabsDesign}
+            options={[
+              { label: __('Select', 'ekiline-block-collection'), value: '' },
+              { label: __('Horizontal', 'ekiline-block-collection'), value: 'd-flex align-items-start' },
+              { label: __('Horizontal end', 'ekiline-block-collection'), value: 'd-flex align-items-end' },
+            ]}
+            onChange={(tabsDesign) => setAttributes({ tabsDesign })}
+          />
+        </PanelBody>
+      </InspectorControls>
       <InnerBlocks
         allowedBlocks={allowedBlocks}
         template={resolvedTemplate}

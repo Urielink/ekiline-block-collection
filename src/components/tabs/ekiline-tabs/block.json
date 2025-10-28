@@ -22,7 +22,7 @@
     }
   },
   "attributes": {
-    "numberTabs": {
+    "tabsNumber": {
       "type": "number",
       "default": 3
     },
@@ -33,6 +33,18 @@
     "isConfigured":{
       "type": "boolean",
       "default": false
+    },
+    "tabsStyle":{
+      "type": "string",
+      "default": "nav-tabs"
+    },
+    "tabsAlign":{
+      "type": "string",
+      "default": ""
+    },
+    "tabsDesign":{
+      "type": "string",
+      "default": ""
     }
   },
 	"editorScript": "file:./index.js",
