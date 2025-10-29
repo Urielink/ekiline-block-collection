@@ -15,7 +15,14 @@ export default function Edit(props) {
   // variables predeterminadas.
   const { tabsNumber = 3, template, isConfigured = false } = attributes;
   // clase de envoltorio.
-  const blockProps = useBlockProps({ className: 'tabs-wrapper' });
+  const addClassNames = [
+    'tabs-wrapper',
+    attributes.tabsDesign
+  ].filter(Boolean).join(' ');
+
+  const blockProps = useBlockProps({
+    className: addClassNames
+  });
   // bloques permitidos.
   const allowedBlocks = [
     'ekiline-block-collection/ekiline-tabs-navbar',
@@ -44,7 +51,7 @@ export default function Edit(props) {
     const newTemplate = [
       [
         'ekiline-block-collection/ekiline-tabs-navbar',
-        { className: 'is-style-nav-tabs' },
+        {},
         Array.from({ length: tabsNumber }, (_, index) => [
           'ekiline-block-collection/ekiline-tab-link',
           {
@@ -55,7 +62,7 @@ export default function Edit(props) {
       ],
       [
         'ekiline-block-collection/ekiline-tabs-container',
-        { className: 'tabs-container tab-content' },
+        {},
         Array.from({ length: tabsNumber }, (_, index) => [
           'ekiline-block-collection/ekiline-tab-content',
           {
@@ -156,8 +163,7 @@ export default function Edit(props) {
             value={attributes.tabsDesign}
             options={[
               { label: __('Select', 'ekiline-block-collection'), value: '' },
-              { label: __('Horizontal', 'ekiline-block-collection'), value: 'd-flex align-items-start' },
-              { label: __('Horizontal end', 'ekiline-block-collection'), value: 'd-flex align-items-end' },
+              { label: __('Vertical', 'ekiline-block-collection'), value: 'd-flex align-items-start' },
             ]}
             onChange={(tabsDesign) => setAttributes({ tabsDesign })}
           />

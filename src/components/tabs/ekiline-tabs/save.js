@@ -1,7 +1,14 @@
 import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
 
-export default function save() {
-  const blockProps = useBlockProps.save({ className: 'tabs-wrapper' });
+export default function save({attributes}) {
+
+  // clase de envoltorio.
+  const addClassNames = [
+    'tabs-wrapper',
+    attributes.tabsDesign
+  ].filter(Boolean).join(' ');
+
+  const blockProps = useBlockProps.save({ className: addClassNames });
 
   return (
     <div {...blockProps}>

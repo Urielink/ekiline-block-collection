@@ -55,3 +55,25 @@
 .setup-tabs .components-button.create-tabs {
 	height: 40px;
 }
+
+.tabs-wrapper.d-flex.align-items-start > .block-editor-inner-blocks,
+.tabs-wrapper.d-flex.align-items-start > .block-editor-inner-blocks > .block-editor-block-list__layout{
+  width: 100%;
+}
+
+.tabs-wrapper.d-flex.align-items-start .tabs-container.tab-content{
+  width: 100%;
+}
+
+.tabs-wrapper.d-flex.align-items-start > .block-editor-inner-blocks > .block-editor-block-list__layout{
+  align-items: flex-start !important;
+  display: flex !important;
+}
+
+.flex-column.wp-block-ekiline-block-collection-ekiline-tabs-navbar > .block-editor-inner-blocks > .block-editor-block-list__layout{
+  flex-direction: column !important;
+}
+
+.flex-column {
+  flex-direction: column !important;
+}

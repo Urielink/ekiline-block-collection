@@ -15,31 +15,25 @@
     "reusable": false,
     "inserter": false
   },
-  "styles": [
-    {
-      "name": "nav-tabs",
-      "label": "Tabs",
-      "isDefault": true
-    },
-    {
-      "name": "nav-pills",
-      "label": "Pills"
-    },
-    {
-      "name": "nav-underline",
-      "label": "Underline"
-    }
-  ],
   "attributes": {
-    "alignTabs": {
+    "tabsStyle":{
       "type": "string",
       "default": ""
     },
-    "styleNav": {
+    "tabsAlign":{
       "type": "string",
-      "default": "nav-tabs"
+      "default": ""
+    },
+    "tabsDesign":{
+      "type": "string",
+      "default": ""
     }
   },
+  "usesContext": [
+    "ekiline-tabs/tabsStyle",
+    "ekiline-tabs/tabsAlign",
+    "ekiline-tabs/tabsDesign"
+  ],
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",

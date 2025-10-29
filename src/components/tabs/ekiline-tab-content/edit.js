@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 export default function Edit(attributes) {
   const blockProps = useBlockProps({
     // className: 'tab-content tab-pane fade',
-    className: 'tab-pane',
+    className: 'tab-pane active',
   });
 
   // // Obtener el anchor de este objeto.

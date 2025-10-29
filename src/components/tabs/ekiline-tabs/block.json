@@ -47,6 +47,15 @@
       "default": ""
     }
   },
+  "providesContext": {
+    "ekiline-tabs/anchor": "anchor",
+    "ekiline-tabs/tabsNumber": "tabsNumber",
+    "ekiline-tabs/template": "template",
+    "ekiline-tabs/isConfigured": "isConfigured",
+    "ekiline-tabs/tabsStyle": "tabsStyle",
+    "ekiline-tabs/tabsAlign": "tabsAlign",
+    "ekiline-tabs/tabsDesign": "tabsDesign"
+  },
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",

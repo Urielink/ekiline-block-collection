@@ -10,7 +10,7 @@ export default function Edit() {
   const allowedBlocks = ['ekiline-block-collection/ekiline-tab-content'];
   const template = [
     ['ekiline-block-collection/ekiline-tab-content', {
-      className: 'active show',
+      // className: 'active show',
       anchor: replaceSpecialChars(__('Tab link 1', 'ekiline-block-collection'))
     }],
     ['ekiline-block-collection/ekiline-tab-content', {

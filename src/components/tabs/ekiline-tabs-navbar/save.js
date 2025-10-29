@@ -4,8 +4,9 @@ export default function save({attributes}) {
 
   const addClassNames = [
     'nav',
-    attributes.alignTabs,
-    attributes.styleNav
+    attributes.tabsAlign,
+    attributes.tabsStyle,
+    !attributes.tabsDesign ? '' : 'flex-column'
   ].filter(Boolean).join(' ');
 
 
