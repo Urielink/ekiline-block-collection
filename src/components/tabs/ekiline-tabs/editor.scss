@@ -3,11 +3,6 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
-
-.wp-block-create-block-prueba {
-	border: 1px dotted #f00;
-}
-
 .setup-tabs {
   align-items: flex-start;
   box-sizing: border-box;
@@ -56,6 +51,16 @@
 	height: 40px;
 }
 
+/** Playground de bloques UX **/
+.tabs-container > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-list-appender.block-list-appender {
+  line-height: 0;
+  margin: 0;
+  bottom: -50px;
+}
+
+
+
+/*UX visualización de tabs vertical*/
 .tabs-wrapper.d-flex.align-items-start > .block-editor-inner-blocks,
 .tabs-wrapper.d-flex.align-items-start > .block-editor-inner-blocks > .block-editor-block-list__layout{
   width: 100%;

@@ -2,18 +2,29 @@ import { useBlockProps, InspectorControls, RichText } from '@wordpress/block-edi
 import { PanelBody, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { replaceSpecialChars } from '../../../shared/collection';
+import { useEffect } from '@wordpress/element';
 
-export default function Edit({ attributes, setAttributes, isSelected }) {
+
+export default function Edit(props) {
+  const { attributes, setAttributes, isSelected, clientId } = props;
   const blockProps = useBlockProps({ 
     className: 'tab-link nav-link',
     // 'data-bs-target': (attributes.dataBsTarget) ? '#' + attributes.dataBsTarget : null,
     // 'data-bs-toggle': 'tabs'
   });
 
-  // mostrar interaccionm en link con base en bootstrap isSelected.
+  // mostrar interaccion en link con base en bootstrap isSelected.
   if (isSelected) {
     blockProps.className += ' active';
   }
+
+  // Sincronizar el dataBsTarget cuando el contenido cambie.
+  useEffect(() => {
+    const newTarget = replaceSpecialChars(attributes.content) || `tab-${clientId.substring(0, 8)}`;
+    if (attributes.dataBsTarget !== newTarget) {
+      setAttributes({ dataBsTarget: newTarget });
+    }
+  }, [attributes.content, clientId, setAttributes]);
 
   return (
     <div {...blockProps}>
@@ -22,8 +33,7 @@ export default function Edit({ attributes, setAttributes, isSelected }) {
           <TextControl
             label={__('Copy this value in a Content Tab HTML anchor field.', 'ekiline-block-collection')}
             type="string"
-            value={attributes.dataBsTarget = replaceSpecialChars(attributes.content)}
-            onChange={(dataBsTarget) => setAttributes({ dataBsTarget })}
+            value={attributes.dataBsTarget}
             readOnly
           />
         </PanelBody>
