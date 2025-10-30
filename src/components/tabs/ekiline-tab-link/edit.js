@@ -3,12 +3,17 @@ import { PanelBody, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { replaceSpecialChars } from '../../../shared/collection';
 
-export default function Edit({ attributes, setAttributes }) {
+export default function Edit({ attributes, setAttributes, isSelected }) {
   const blockProps = useBlockProps({ 
     className: 'tab-link nav-link',
     // 'data-bs-target': (attributes.dataBsTarget) ? '#' + attributes.dataBsTarget : null,
     // 'data-bs-toggle': 'tabs'
   });
+
+  // mostrar interaccionm en link con base en bootstrap isSelected.
+  if (isSelected) {
+    blockProps.className += ' active';
+  }
 
   return (
     <div {...blockProps}>

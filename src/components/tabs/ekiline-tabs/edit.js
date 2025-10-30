@@ -66,7 +66,7 @@ export default function Edit(props) {
         Array.from({ length: tabsNumber }, (_, index) => [
           'ekiline-block-collection/ekiline-tab-content',
           {
-            className: index === 0 ? 'active show' : 'active',
+            className: index === 0 ? 'active show' : '',
             anchor: replaceSpecialChars(`Tab link ${index + 1}`)
           },
           [
