@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 
 export default function Edit(props) {
   const { attributes, setAttributes, context } = props;
-  const blockProps = useBlockProps({ className: 'editor-offcanvas-header' });
+  const blockProps = useBlockProps({ className: 'editor-offcanvas-header offcanvas-header' });
 
   if (!attributes.parentId || (attributes.parentId !== context['ekiline-offcanvas/anchor'])) {
     setAttributes({ parentId: context['ekiline-offcanvas/anchor'] });
@@ -17,6 +17,7 @@ export default function Edit(props) {
         allowedBlocks={['core/heading', 'core/paragraph']}
         template={template}
       />
+      <button type='button' className='btn-close' data-bs-dismiss='offcanvas' aria-label='Close' disabled/>
     </div>
   );
 }

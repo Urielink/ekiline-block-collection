@@ -1,17 +1,18 @@
 import { __ } from '@wordpress/i18n';
+import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor';
+import{ PanelBody, SelectControl, ToggleControl } from '@wordpress/components';
+// Personalización de borde.
 import {
-  useBlockProps,
-  InnerBlocks,
-  InspectorControls,
-} from '@wordpress/block-editor';
-import {
-  PanelBody,
-  SelectControl,
-  ToggleControl
-} from '@wordpress/components';
+  BorderBoxField,
+  BorderRadiusField,
+  DEFAULT_BORDER_RADIUS,
+  getBorderStyles,
+  getRadiusWithDefaults,
+  sanitizeBorderValue,
+  sanitizeBorderRadiusValue,
+} from '../../../shared/border-box';
 
 export default function Edit({ attributes, setAttributes }) {
-  const blockProps = useBlockProps({ className: 'group-offcanvas' });
 
   const allowedBlocks = [
     'ekiline-block-collection/ekiline-offcanvas-header',
@@ -22,6 +23,57 @@ export default function Edit({ attributes, setAttributes }) {
     ['ekiline-block-collection/ekiline-offcanvas-header', { lock: { move: true, remove: false } }],
     ['ekiline-block-collection/ekiline-offcanvas-body', { lock: { move: true, remove: false } }]
   ];
+
+  // atributos para el borde.
+  const { border, borderRadius } = attributes;
+
+  // Sanitize current border so both inspector and preview always receive valid CSS values
+  // while still respecting theme palettes, defaults, and per-side overrides.
+  const normalizedBorder = sanitizeBorderValue(border);
+  const borderStyles = getBorderStyles(normalizedBorder);
+  const appliedBorderRadius = getRadiusWithDefaults(borderRadius, DEFAULT_BORDER_RADIUS);
+
+  // Persist only the sanitised border values to avoid undefined pieces after reset.
+  const onChangeBorder = (newBorder) => {
+    const sanitizedBorder = sanitizeBorderValue(newBorder);
+
+    if (JSON.stringify(sanitizedBorder) === JSON.stringify(border)) {
+      return;
+    }
+
+    setAttributes({ border: sanitizedBorder });
+  };
+
+  // Persist only the sanitized radius value to avoid undefined pieces after reset.
+  const onChangeBorderRadius = (newRadius) => {
+    const sanitizedRadius = sanitizeBorderRadiusValue(
+      newRadius,
+      true,
+      DEFAULT_BORDER_RADIUS
+    );
+
+    if (sanitizedRadius === borderRadius) {
+      return;
+    }
+
+    setAttributes({ borderRadius: sanitizedRadius });
+  };
+
+  // Block container styles.
+  const blockProps = useBlockProps({
+    className: 'group-offcanvas',
+    style:{
+      ...borderStyles,
+      borderRadius: appliedBorderRadius,
+    }
+  });
+
+  // En caso de color de texto en header.
+  if (blockProps.style.color){
+    blockProps.style = {
+      ...blockProps.style
+    }
+  }
 
   return (
     <div {...blockProps}>
@@ -63,13 +115,13 @@ export default function Edit({ attributes, setAttributes }) {
             onChange={(value) => setAttributes({ ocHeight: value })}
           />
           <SelectControl
-            label={__('Display run', 'ekiline-block-collection')}
+            label={__('Display view', 'ekiline-block-collection')}
             value={attributes.ocDisplay}
             options={[
-              { label: __('All', 'ekiline-block-collection'), value: ' offcanvas' },
-              { label: __('Small', 'ekiline-block-collection'), value: ' offcanvas-sm' },
-              { label: __('Medium', 'ekiline-block-collection'), value: ' offcanvas-md' },
-              { label: __('Large', 'ekiline-block-collection'), value: ' offcanvas-lg' }
+              { label: __('All sizes', 'ekiline-block-collection'), value: ' offcanvas' },
+              { label: __('Only small', 'ekiline-block-collection'), value: ' offcanvas-sm' },
+              { label: __('Only medium', 'ekiline-block-collection'), value: ' offcanvas-md' },
+              { label: __('Only large', 'ekiline-block-collection'), value: ' offcanvas-lg' }
             ]}
             onChange={(value) => setAttributes({ ocDisplay: value })}
           />
@@ -87,6 +139,22 @@ export default function Edit({ attributes, setAttributes }) {
               { label: __('False', 'ekiline-block-collection'), value: 'false' }
             ]}
             onChange={(value) => setAttributes({ ocBackdrop: value })}
+          />
+        </PanelBody>
+      </InspectorControls>
+      <InspectorControls group='styles'>
+        <PanelBody>
+          {/* Shared field that wraps Gutenberg's BorderBoxControl to consume theme palettes
+              and sanitize the per-side colors/styles before persisting them. */}
+          <BorderBoxField
+              label={__('Border', 'ekiline-block-collection')}
+              value={normalizedBorder}
+              onChange={onChangeBorder}
+              __experimentalIsRenderedInSidebar
+          />
+          <BorderRadiusField
+              value={borderRadius}
+              onChange={onChangeBorderRadius}
           />
         </PanelBody>
       </InspectorControls>

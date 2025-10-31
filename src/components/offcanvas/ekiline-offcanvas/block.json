@@ -10,7 +10,18 @@
   "description": "Add your content here, then invoque with a link anchor #anchor.",
   "example": {},
   "supports": {
-    "anchor": true
+    "anchor": true,
+    "color": {
+      "background": true,
+      "gradients": true,
+      "text": true
+    },
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    }
   },
   "attributes": {
     "ocPosition": { "type": "string", "default": " offcanvas-end" },
@@ -19,7 +30,19 @@
     "ocScroll": { "type": "boolean", "default": false },
     "ocBackdrop": { "type": "string", "default": "true" },
     "ocDisplay": { "type": "string", "default": " offcanvas" },
-    "parentAnchor": { "type": "string" }
+    "parentAnchor": { "type": "string" },
+    "border": {
+      "type": "object",
+      "default": {
+        "color": "#0000002e",
+        "style": "solid",
+        "width": "1px"
+      }
+    },
+    "borderRadius": {
+      "type": "string",
+      "default": "0px"
+    }
   },
   "providesContext": {
     "ekiline-offcanvas/anchor": "anchor"

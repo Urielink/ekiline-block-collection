@@ -1,6 +1,26 @@
 import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
+// Personalización de borde.
+import {
+  DEFAULT_BORDER_RADIUS,
+  getBorderStyles,
+  getRadiusWithDefaults,
+  sanitizeBorderValue,
+} from '../../../shared/border-box';
+
 
 export default function save({ attributes }) {
+
+  const { border, borderRadius } = attributes;
+
+  // Mirror the editor sanitisation so the front-end style matches exactly.
+  const normalizedBorder = sanitizeBorderValue(border);
+  const borderStyles = getBorderStyles(normalizedBorder);
+  const appliedBorderRadius = getRadiusWithDefaults(
+    borderRadius,
+    DEFAULT_BORDER_RADIUS
+  );
+
+
   const blockProps = useBlockProps.save({
     className:
       'group-offcanvas' +
@@ -9,7 +29,11 @@ export default function save({ attributes }) {
       attributes.ocWidth +
       attributes.ocHeight,
     'data-bs-backdrop': attributes.ocBackdrop,
-    'data-bs-scroll': attributes.ocScroll
+    'data-bs-scroll': attributes.ocScroll,
+    style:{
+      ...borderStyles,
+      borderRadius: appliedBorderRadius,
+    }
   });
 
   return (
