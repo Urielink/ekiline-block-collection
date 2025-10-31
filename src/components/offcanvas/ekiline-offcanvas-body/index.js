@@ -4,9 +4,15 @@ import './editor.scss';
 import edit from './edit';
 import save from './save';
 import metadata from './block.json';
+/**
+ * Imports the icons used in the block.
+ */
+import icons from '../../../shared/icons';
+const { offcanvasIcon } = icons;
 
 registerBlockType(metadata.name, {
   ...metadata,
+  icon: offcanvasIcon,
   edit,
   save,
 });
