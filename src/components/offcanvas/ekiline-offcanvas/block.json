@@ -34,7 +34,7 @@
     "border": {
       "type": "object",
       "default": {
-        "color": "#0000002e",
+        "color": "#0000000d",
         "style": "solid",
         "width": "1px"
       }

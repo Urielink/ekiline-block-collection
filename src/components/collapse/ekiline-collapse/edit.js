@@ -7,21 +7,9 @@ export default function Edit({ attributes, setAttributes }) {
   const blockProps = useBlockProps({ className: 'group-collapse' });
 
   function CollapseUserRemind() {
-    if (attributes.anchor) {
-      return (
-        <div className='editor-collapse-route has-anchor'>
-          <pre>
-            {'#' + attributes.anchor}
-            <br />
-            {__('Add this #anchor to a button and its advanced options.', 'ekiline-block-collection')}
-          </pre>
-        </div>
-      );
-    }
-
     return (
-      <div className='editor-collapse-route'>
-        {__('Do not forget to add an anchor. ', 'ekiline-block-collection')}
+      <div className='block-note'>
+        { attributes.anchor ? '#' + attributes.anchor + __(' is the anchor you should include in the advanced options of a button.', 'ekiline-block-collection') : __('Do not forget to add an #anchor. ', 'ekiline-block-collection') }
       </div>
     );
   }

@@ -10,7 +10,10 @@
   "description": "Set a collapse behavior block. You can activate from any button.",
   "example": {},
   "supports": {
-    "anchor": true
+    "anchor": true,
+    "color": {
+      "gradients": true
+    }
   },
   "attributes": {
     "horizontal": {
