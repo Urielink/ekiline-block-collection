@@ -18,15 +18,6 @@ export default function save({ attributes }) {
       <div className={dialogClass}>
         <div className='modal-content'>
           <InnerBlocks.Content />
-          {attributes.modalGrow && (
-            <button
-              type='button'
-              className='modal-resize btn btn-sm position-absolute bottom-0 mb-2 ms-1'
-              aria-label={__('play btn', 'ekiline-block-collection')}
-            >
-              <span className='dashicons dashicons-editor-expand' />
-            </button>
-          )}
         </div>
       </div>
     </div>

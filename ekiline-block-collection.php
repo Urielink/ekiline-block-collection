@@ -176,6 +176,10 @@ function ekiline_block_collection_editor_assets() {
     if ( $load_bs_js ) {
         wp_enqueue_script( $bs_script_handler );
     }
+
+    // incorporar dashicons.
+    wp_enqueue_style('dashicons');
+
 }
 add_action( 'enqueue_block_assets', 'ekiline_block_collection_editor_assets' );
 

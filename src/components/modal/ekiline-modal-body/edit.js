@@ -3,7 +3,7 @@ import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
 
 export default function Edit() {
   const blockProps = useBlockProps({
-    className: 'editor-modal-body'
+    className: 'editor-modal-body modal-body'
   });
 
   const CHILD_TEMPLATE = [["core/paragraph", {"content": "Add modal content blocks"}]];

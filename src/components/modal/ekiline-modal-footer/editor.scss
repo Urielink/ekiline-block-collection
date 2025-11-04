@@ -4,6 +4,17 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-.wp-block-create-block-prueba {
-	border: 1px dotted #f00;
+.modal-footer {
+  padding: 1rem;
+  border-top: 1px solid #0000000d;
+  border-bottom-right-radius: calc(0.5rem - 1px);
+  border-bottom-left-radius: calc(0.5rem - 1px);
+}
+
+.modal-footer > * {
+  margin: calc(0.5rem * .5);
+}
+
+.modal-resize{
+  border: none;
 }
