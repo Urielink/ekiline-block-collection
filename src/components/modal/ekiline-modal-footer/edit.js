@@ -35,8 +35,8 @@ export default function Edit(props) {
 
   return (
     <div {...blockProps}>
-      <InnerBlocks template={CHILD_TEMPLATE} />
       <HasResize show={attributes.modalGrow} />
+      <InnerBlocks template={CHILD_TEMPLATE} />
     </div>
   );
 }
