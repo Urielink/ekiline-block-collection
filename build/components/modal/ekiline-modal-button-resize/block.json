@@ -1,16 +1,19 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "ekiline-block-collection/ekiline-modal-footer",
+  "name": "ekiline-block-collection/ekiline-modal-button-resize",
   "version": "0.1.0",
   "textdomain": "ekiline-block-collection",
-  "title": "Modal footer",
+  "title": "Modal Resize Button",
   "category": "design",
   "parent": [
-    "ekiline-block-collection/ekiline-modal"
+    "ekiline-block-collection/ekiline-modal",
+    "ekiline-block-collection/ekiline-modal-header",
+    "ekiline-block-collection/ekiline-modal-body",
+    "ekiline-block-collection/ekiline-modal-footer"
   ],
-  "icon": "star",
-  "description": "Inner footer content.",
+  "icon": "button",
+  "description": "Resize button for modal block.",
   "example": {},
   "supports": {
     "html": false,

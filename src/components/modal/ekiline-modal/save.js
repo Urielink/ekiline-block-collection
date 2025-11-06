@@ -2,8 +2,9 @@ import { __ } from '@wordpress/i18n';
 import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
 
 export default function save({ attributes }) {
+  // Clases auxiliares para desplegado en temas twenty: alignfull mx-0.
   const blockProps = useBlockProps.save({
-    className: 'group-modal modal fade' + (attributes.modalShow !== 'default' ? attributes.modalShow : ''),
+    className: 'alignfull mx-0 group-modal modal fade' + (attributes.modalShow !== 'default' ? attributes.modalShow : ''),
     'data-bs-backdrop': attributes.modalBackdrop,
     'data-bs-keyboard': attributes.modalKeyboard,
     'data-ek-time': attributes.modalTime || null

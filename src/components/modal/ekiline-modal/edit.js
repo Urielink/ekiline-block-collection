@@ -17,6 +17,14 @@ export default function Edit({ attributes, setAttributes }) {
 
   const blockProps = useBlockProps({ className: 'group-modal' });
 
+  function UserRemind() {
+    return (
+      <div className='block-note'>
+        { attributes.anchor ? '#' + attributes.anchor + __(' is the anchor you should include in the advanced options of a button.', 'ekiline-block-collection') : __('Do not forget to add an #anchor. ', 'ekiline-block-collection') }
+      </div>
+    );
+  }
+
   return (
     <div {...blockProps}>
       <InspectorControls>
@@ -59,11 +67,6 @@ export default function Edit({ attributes, setAttributes }) {
             checked={attributes.modalKeyboard}
             onChange={(modalKeyboard) => setAttributes({ modalKeyboard })}
           />
-          <ToggleControl
-            label={__('Show resize modal button', 'ekiline-block-collection')}
-            checked={attributes.modalGrow}
-            onChange={(modalGrow) => setAttributes({ modalGrow })}
-          />
           <TextControl
             label={__('Show with timer', 'ekiline-block-collection')}
             type='number'
@@ -78,6 +81,7 @@ export default function Edit({ attributes, setAttributes }) {
         </PanelBody>
       </InspectorControls>
       <InnerBlocks allowedBlocks={PARENT_ALLOWED_BLOCKS} template={CHILD_TEMPLATE} />
+      <UserRemind />
     </div>
   );
 }

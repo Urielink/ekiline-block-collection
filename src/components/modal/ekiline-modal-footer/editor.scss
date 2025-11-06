@@ -11,10 +11,11 @@
   border-bottom-left-radius: calc(0.5rem - 1px);
 }
 
-.modal-footer > * {
-  margin: calc(0.5rem * .5);
+.modal-footer > .block-editor-inner-blocks{
+  flex-grow: 1;
 }
-
-.modal-resize{
-  border: none;
+.modal-footer > .block-editor-inner-blocks > .block-editor-block-list__layout{
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 25px;
 }

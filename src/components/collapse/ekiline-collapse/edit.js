@@ -6,7 +6,7 @@ export default function Edit({ attributes, setAttributes }) {
   const CHILD_TEMPLATE = [['core/paragraph', { content: __('Add your content', 'ekiline-block-collection') }]];
   const blockProps = useBlockProps({ className: 'group-collapse' });
 
-  function CollapseUserRemind() {
+  function UserRemind() {
     return (
       <div className='block-note'>
         { attributes.anchor ? '#' + attributes.anchor + __(' is the anchor you should include in the advanced options of a button.', 'ekiline-block-collection') : __('Do not forget to add an #anchor. ', 'ekiline-block-collection') }
@@ -26,7 +26,7 @@ export default function Edit({ attributes, setAttributes }) {
         </PanelBody>
       </InspectorControls>
       <InnerBlocks template={CHILD_TEMPLATE} />
-      <CollapseUserRemind />
+      <UserRemind />
     </div>
   );
 }

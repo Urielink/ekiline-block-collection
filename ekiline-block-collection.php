@@ -58,6 +58,7 @@ function ekiline_block_collection_ekiline_collection_block_init()
     register_block_type(__DIR__ . '/build/components/modal/ekiline-modal-header');
     register_block_type(__DIR__ . '/build/components/modal/ekiline-modal-body');
     register_block_type(__DIR__ . '/build/components/modal/ekiline-modal-footer');
+    register_block_type(__DIR__ . '/build/components/modal/ekiline-modal-button-resize');
     register_block_type(__DIR__ . '/build/components/offcanvas/ekiline-offcanvas');
     register_block_type(__DIR__ . '/build/components/offcanvas/ekiline-offcanvas-header');
     register_block_type(__DIR__ . '/build/components/offcanvas/ekiline-offcanvas-body');

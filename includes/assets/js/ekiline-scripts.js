@@ -50,13 +50,15 @@ ekiline_collection_js_launch_modal()
 
 // Cambiar el tamaño de modal.
 function ekiline_collection_js_modal_behavior () {
-  const modalResizeBtn = document.querySelector('.modal-resize')
-  if (modalResizeBtn) {
-    modalResizeBtn.addEventListener('click', function () {
-      const modalOpen = document.querySelector('.modal-dialog')
-      modalOpen.classList.toggle('modal-fullscreen')
-      this.firstElementChild.classList.toggle('text-success')
-    }, false)
+  const modalResizeBtn = document.querySelectorAll('.modal-resize')
+  if (modalResizeBtn.length !== 0) {
+      modalResizeBtn.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const modalOpen = document.querySelector('.modal-dialog')
+        modalOpen.classList.toggle('modal-fullscreen')
+        this.firstElementChild.classList.toggle('text-success')
+      }, false)
+    })
   }
 }
 ekiline_collection_js_modal_behavior()
