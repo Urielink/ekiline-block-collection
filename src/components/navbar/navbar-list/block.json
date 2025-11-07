@@ -22,6 +22,10 @@
       "type": "string",
       "default": ""
     },
+    "menuJson": {
+      "type": "string",
+      "default": "[]"
+    },
 		"isEditingMenu": {
       "type": "boolean",
       "default": true
