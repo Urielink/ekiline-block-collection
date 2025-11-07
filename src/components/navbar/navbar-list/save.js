@@ -31,9 +31,16 @@ const liStyleFromGutenberg = (styleObj) => {
   return Object.keys(out).length ? out : undefined;
 };
 
-const mergeClasses = (...lists) => {
+const mergeClasses = (...inputs) => {
   const set = new Set();
-  lists.filter(Boolean).join(' ').split(/\s+/).forEach(c => c && set.add(c));
+  inputs.forEach(input => {
+    if (!input) return;
+    if (Array.isArray(input)) {
+      input.forEach(c => c && set.add(c));
+    } else if (typeof input === 'string') {
+      input.split(/\s+/).forEach(c => c && set.add(c));
+    }
+  });
   return Array.from(set).join(' ');
 };
 
@@ -44,6 +51,14 @@ const renderItems = (items = [], level = 0) => {
   return (
     <ul className={ ulClass }>
       { items.map((item, idx) => {
+        // Normalize legacy string fields to arrays (back-compat)
+        if (!Array.isArray(item.liClasses) && item.liClass) {
+          item.liClasses = item.liClass.split(/\s+/).filter(Boolean);
+        }
+        if (!Array.isArray(item.aClasses) && item.aClass) {
+          item.aClasses = item.aClass.split(/\s+/).filter(Boolean);
+        }
+
         const hasChildren = Array.isArray(item.children) && item.children.length > 0;
         const isText = item.type === 'text' && !hasChildren;
 
@@ -56,13 +71,13 @@ const renderItems = (items = [], level = 0) => {
           item.fontSizeSlug ? `has-${item.fontSizeSlug}-font-size` : '',
           item.linkColorSlug ? 'has-link-color' : ''
         );
-        const liClass = mergeClasses(liBase, item.liClass, wpPresetClasses);
+        const liClass = mergeClasses(liBase, item.liClasses, wpPresetClasses);
 
         // link / text classes
         const linkBase = isRoot
           ? (hasChildren ? 'nav-link dropdown-toggle' : 'nav-link')
           : (hasChildren ? 'dropdown-item dropdown-toggle' : 'dropdown-item');
-        const linkClass = mergeClasses(linkBase, item.aClass);
+        const linkClass = mergeClasses(linkBase, item.aClasses);
 
         const liStyle = liStyleFromGutenberg(item.liStyle);
         const aStyle = styleStringToObject(item.aStyle);

@@ -1,9 +1,10 @@
 import { __ } from '@wordpress/i18n';
 import { BlockControls, InspectorControls, InnerBlocks, useBlockProps } from '@wordpress/block-editor';
-import { PanelBody, SelectControl, TextControl, Notice, Button } from '@wordpress/components';
+import { PanelBody, SelectControl, TextControl, Notice, Button, ToolbarGroup, ToolbarButton } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as blockEditorStore } from '@wordpress/block-editor';
 import { serialize, createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
+import { check, edit as editIcon } from '@wordpress/icons';
 
 // Helpers: remove Gutenberg block comments and ensure UL has a class
 const stripWPBlockComments = (html) => html
@@ -32,6 +33,12 @@ const presetVarToSlug = (val) => {
   return m ? m[1] : '';
 };
 
+// Helper to normalize class string to array of unique classes
+const classStringToArray = (cls) => {
+  if (!cls) return [];
+  return Array.from(new Set(cls.split(/\s+/).filter(Boolean)));
+};
+
 // ---- List <-> JSON mappers ----
 const htmlToTextAndUrl = (html) => {
   if (!html) return { label: '', url: '' };
@@ -48,20 +55,22 @@ const extractLinkDetails = (html) => {
   const tmp = document.createElement('div');
   tmp.innerHTML = html || '';
   const a = tmp.querySelector('a');
-  if (!a) return { href: '', aClass: '', aStyle: '', inner: '' };
+  if (!a) return { href: '', aClasses: [], aStyle: '', inner: '' };
   const href = a.getAttribute('href') || '';
   const aClass = a.getAttribute('class') || '';
+  const aClasses = classStringToArray(aClass);
   const aStyle = a.getAttribute('style') || '';
   const inner = a.innerHTML || '';
-  return { href, aClass, aStyle, inner };
+  return { href, aClasses, aStyle, inner };
 };
 
 const parseListItemBlock = (liBlock) => {
   const raw = liBlock?.attributes?.content || '';
   const { label, url } = htmlToTextAndUrl(raw);
-  const { href, aClass, aStyle, inner } = extractLinkDetails(raw);
+  const { href, aClasses, aStyle, inner } = extractLinkDetails(raw);
   const type = (url || href) ? 'link' : 'text';
   const liClass = liBlock?.attributes?.className || '';
+  const liClasses = classStringToArray(liClass);
   // Gutenberg 'style' attribute is an object; keep it to render later
   const liStyleObj = liBlock?.attributes?.style || null;
   const subList = (liBlock?.innerBlocks || []).find((b) => b.name === 'core/list');
@@ -77,9 +86,9 @@ const parseListItemBlock = (liBlock) => {
     label,
     url: url || href || '',
     raw,
-    liClass,
+    liClasses,
     liStyle: liStyleObj, // stored as object; we will translate in save()
-    aClass,
+    aClasses,
     aStyle,
     labelHtml: inner, // link inner HTML (e.g., <strong>…</strong>)
     textColorSlug,
@@ -100,13 +109,14 @@ const listBlockToJson = (listBlock) => {
 // JSON -> InnerBlocks template for re-edition
 const jsonToListTemplate = (items = []) => {
   const liToTemplate = (item) => {
+    const anchorClassAttr = (item.aClasses && item.aClasses.length) ? ` class="${ item.aClasses.join(' ') }"` : '';
     const content = item.url
-      ? `<a href="${ item.url }">${ item.label || '' }</a>`
+      ? `<a href="${ item.url }"${ anchorClassAttr }>${ item.label || '' }</a>`
       : (item.label || '');
     const children = item.children && item.children.length
       ? [[ 'core/list', {}, item.children.map(liToTemplate) ]]
       : [];
-    return [ 'core/list-item', { content }, children ];
+    return [ 'core/list-item', { content, className: (item.liClasses && item.liClasses.length) ? item.liClasses.join(' ') : undefined }, children ];
   };
   return [ [ 'core/list', {}, items.map(liToTemplate) ] ];
 };
@@ -220,24 +230,25 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 
   return (
     <div { ...blockProps }>
-      {/* De aquí surge el error */}
-      <BlockControls
-        group="block"
-        controls={[
-          {
-            icon: 'edit',
-            title: __('Editar navegación', 'ekiline'),
-            onClick: handleEditMenu,
-            isDisabled: isEditingMenu,
-          },
-          {
-            icon: 'yes',
-            title: __('Guardar menú', 'ekiline'),
-            onClick: handleSaveMenu,
-            isDisabled: !isEditingMenu,
-          },
-        ]}
-      />
+      {/* Barra superior con acciones de menú */}
+      <BlockControls>
+        <ToolbarGroup>
+          <ToolbarButton
+            icon={ editIcon }
+            label={ __('Editar navegación', 'ekiline') }
+            onClick={ handleEditMenu }
+            disabled={ isEditingMenu }
+            showTooltip
+          />
+          <ToolbarButton
+            icon={ check }
+            label={ __('Guardar menú', 'ekiline') }
+            onClick={ handleSaveMenu }
+            disabled={ !isEditingMenu }
+            showTooltip
+          />
+        </ToolbarGroup>
+      </BlockControls>
 
       <InspectorControls>
         <PanelBody title={ __( 'Comportamiento', 'ekiline' ) } initialOpen={ true }>
@@ -337,6 +348,10 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
               { (menuJson && menuJson !== '[]') ? menuJson : '(sin menú)' }
             </pre>
           </div>
+          <div style={{ height: 8 }} />
+          {/* <Button variant="primary" icon={ editIcon } onClick={ handleEditMenu }>
+            { __('Editar menú (convertir JSON → Lista)', 'ekiline') }
+          </Button> */}
         </>
       ) }
     </div>
