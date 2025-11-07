@@ -74,6 +74,8 @@ function ekiline_block_collection_ekiline_collection_block_init()
     register_block_type(__DIR__ . '/build/components/navbar/ekiline-navbar');
     register_block_type(__DIR__ . '/build/components/navbar/ekiline-navbar-toggler');
     register_block_type(__DIR__ . '/build/components/navbar/ekiline-navbar-menu-wrapper');
+    // nueva prueba de navegacion
+    register_block_type(__DIR__ . '/build/components/navbar/navbar-list');
     // Caso especial, el carrusel es un bloque hibrido.
     register_block_type(
         __DIR__ . '/build/components/carousel/ekiline-carousel',
