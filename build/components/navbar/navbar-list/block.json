@@ -1,0 +1,62 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ekiline-block-collection/navbar-list",
+  "version": "0.1.0",
+  "textdomain": "ekiline-block-collection",
+  "title": "Ekiline Navbar (por lista)",
+  "category": "design",
+  "icon": "menu",
+  "description": "Navbar Bootstrap generado a partir de un bloque Lista.",
+  "example": {},
+  "supports": {
+    "anchor": true,
+    "html": false,
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "attributes": {
+    "menuHtml": {
+      "type": "string",
+      "default": ""
+    },
+    "isEditingMenu": {
+      "type": "boolean",
+      "default": true
+    },
+    "navStyle": {
+      "type": "string",
+      "default": "collapse"
+    },
+    "navShow": {
+      "type": "string",
+      "default": " navbar-expand-lg"
+    },
+    "navPosition": {
+      "type": "string",
+      "default": ""
+    },
+    "alignItems": {
+      "type": "string",
+      "default": ""
+    },
+    "container": {
+      "type": "string",
+      "default": "container-fluid"
+    },
+    "brandText": {
+      "type": "string",
+      "default": "Navbar"
+    },
+    "targetId": {
+      "type": "string",
+      "default": "navbarNavDropdown"
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js"
+}
