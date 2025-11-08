@@ -3,161 +3,17 @@ import { BlockControls, InspectorControls, InnerBlocks, useBlockProps } from '@w
 import { PanelBody, SelectControl, TextControl, Notice, Button, ToolbarGroup, ToolbarButton } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as blockEditorStore } from '@wordpress/block-editor';
-import { serialize, createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
-import { check, edit as editIcon } from '@wordpress/icons';
+import { serialize } from '@wordpress/blocks';
+import { check, edit as editIcon, code as codeIcon } from '@wordpress/icons';
+import { useState } from '@wordpress/element';
+import {
+  stripWPBlockComments,
+  listBlockToJson,
+  jsonToListTemplate,
+  renderPreviewItems,
+  createBlocksFromInnerBlocksTemplate
+} from './menu-helpers';
 
-// Helpers: remove Gutenberg block comments and ensure UL has a class
-const stripWPBlockComments = (html) => html
-  ? html.replace(/<!--\s*\/?wp:[\s\S]*?-->/g, '').trim()
-  : '';
-
-// Helper to normalize class string to array of unique classes
-const classStringToArray = (cls) => {
-  if (!cls) return [];
-  return Array.from(new Set(cls.split(/\s+/).filter(Boolean)));
-};
-
-// ---- List <-> JSON mappers ----
-const htmlToTextAndUrl = (html) => {
-  if (!html) return { label: '', url: '' };
-  const tmp = document.createElement('div');
-  tmp.innerHTML = html;
-  const a = tmp.querySelector('a');
-  if (a) {
-    return { label: a.textContent.trim(), url: a.getAttribute('href') || '' };
-  }
-  return { label: tmp.textContent.trim(), url: '' };
-};
-
-const extractLinkDetails = (html) => {
-  const tmp = document.createElement('div');
-  tmp.innerHTML = html || '';
-  const a = tmp.querySelector('a');
-  if (!a) return { href: '', aClasses: [], aStyle: '', inner: '' };
-  const href = a.getAttribute('href') || '';
-  const aClass = a.getAttribute('class') || '';
-  const aClasses = classStringToArray(aClass);
-  const aStyle = a.getAttribute('style') || '';
-  const inner = a.innerHTML || '';
-  return { href, aClasses, aStyle, inner };
-};
-
-const parseListItemBlock = (liBlock) => {
-  const raw = liBlock?.attributes?.content || '';
-  const { label, url } = htmlToTextAndUrl(raw);
-  const { href, aClasses, aStyle, inner } = extractLinkDetails(raw);
-  const type = (url || href) ? 'link' : 'text';
-  const liClass = liBlock?.attributes?.className || '';
-  const liClasses = classStringToArray(liClass);
-  // Gutenberg 'style' attribute is an object; keep it to render later
-  const liStyleObj = liBlock?.attributes?.style || null;
-  const subList = (liBlock?.innerBlocks || []).find((b) => b.name === 'core/list');
-  const children = subList ? (subList.innerBlocks || []).filter(b => b.name === 'core/list-item').map(parseListItemBlock) : [];
-
-  const textColorSlug = liBlock?.attributes?.textColor || '';
-  const fontSizeSlug = liBlock?.attributes?.fontSize || '';
-  // Helper to extract preset slug from WP preset CSS var
-  const linkColorVar = liStyleObj?.elements?.link?.color?.text || '';
-  const presetVarToSlug = (val) => {
-    if (!val || typeof val !== 'string') return '';
-    return (val.match(/var:preset\|(?:color|font-size)\|([^|\s]+)/) || [])[1] || '';
-  };
-  const linkColorSlug = presetVarToSlug(linkColorVar) || '';
-
-  const node = {
-    type,
-    label,
-    url: url || href || '',
-    raw,
-    liClasses,
-    liStyle: liStyleObj, // stored as object; we will translate in save()
-    aClasses,
-    aStyle,
-    labelHtml: inner, // link inner HTML (e.g., <strong>…</strong>)
-    textColorSlug,
-    fontSizeSlug,
-    linkColorSlug,
-  };
-  if (children.length) node.children = children;
-  return node;
-};
-
-const listBlockToJson = (listBlock) => {
-  if (!listBlock) return [];
-  return (listBlock.innerBlocks || [])
-    .filter((b) => b.name === 'core/list-item')
-    .map(parseListItemBlock);
-};
-
-// Helper to convert slug to WP preset var for rehydration
-const slugToPresetVar = (slug) => slug ? `var:preset|color|${slug}` : '';
-
-// JSON -> InnerBlocks template for re-edition (restores styles/classes)
-const jsonToListTemplate = (items = []) => {
-  const liToTemplate = (item) => {
-    // Build list item block attributes
-    const liAttrs = {};
-    // classes (from array)
-    if (item.liClasses && item.liClasses.length) {
-      liAttrs.className = item.liClasses.join(' ');
-    }
-    // restore WP preset attributes
-    if (item.textColorSlug) {
-      liAttrs.textColor = item.textColorSlug;
-    }
-    if (item.fontSizeSlug) {
-      liAttrs.fontSize = item.fontSizeSlug;
-    }
-    // merge style from saved liStyle (object) with link color preset if present
-    const styleObj = item.liStyle ? { ...item.liStyle } : {};
-    if (!styleObj.elements) styleObj.elements = {};
-    if (!styleObj.elements.link) styleObj.elements.link = {};
-    if (!styleObj.elements.link.color) styleObj.elements.link.color = {};
-    if (item.linkColorSlug) {
-      styleObj.elements.link.color.text = slugToPresetVar(item.linkColorSlug);
-    }
-    // Only assign if there is something meaningful
-    if (JSON.stringify(styleObj) !== JSON.stringify({ elements: { link: { color: {} } } })) {
-      liAttrs.style = styleObj;
-    }
-
-    // Anchor classes/styles
-    const anchorClassAttr = (item.aClasses && item.aClasses.length)
-      ? ` class="${ item.aClasses.join(' ') }"`
-      : '';
-    const anchorStyleAttr = (item.aStyle && item.aStyle.trim())
-      ? ` style="${ item.aStyle.replace(/"/g, '&quot;') }"`
-      : '';
-
-    // Content: prefer raw/labelHtml to preserve formatting (strong/em/spans)
-    let content;
-    if (item.url) {
-      const inner = (item.labelHtml && item.labelHtml.trim())
-        ? item.labelHtml
-        : (item.raw && item.raw.trim())
-          ? item.raw
-          : (item.label || '');
-      content = `<a href="${ item.url }"${ anchorClassAttr }${ anchorStyleAttr }>${ inner }</a>`;
-    } else {
-      // text item without URL
-      if (item.raw && item.raw.trim()) {
-        content = item.raw;
-      } else if (item.labelHtml && item.labelHtml.trim()) {
-        content = item.labelHtml;
-      } else {
-        content = (item.label || '');
-      }
-    }
-
-    const children = (item.children && item.children.length)
-      ? [[ 'core/list', {}, item.children.map(liToTemplate) ]]
-      : [];
-
-    return [ 'core/list-item', { ...liAttrs, content }, children ];
-  };
-
-  return [ [ 'core/list', {}, items.map(liToTemplate) ] ];
-};
 
 const LIST_TEMPLATE = [
   [ 'core/list', {}, [
@@ -184,6 +40,8 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
   } = attributes;
 
   const blockProps = useBlockProps();
+
+  const [showJsonPreview, setShowJsonPreview] = useState(false);
 
   // Obtener los innerBlocks para poder serializar la lista cuando el usuario da "Guardar menú".
   const { getBlocks } = useSelect( ( select ) => {
@@ -293,6 +151,13 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
             disabled={ !isEditingMenu }
             showTooltip
           />
+          <ToolbarButton
+            icon={ codeIcon }
+            label={ __('Toggle JSON preview', 'ekiline-block-collection') }
+            onClick={ () => setShowJsonPreview( (v) => !v ) }
+            isPressed={ showJsonPreview }
+            showTooltip
+          />
         </ToolbarGroup>
       </BlockControls>
 
@@ -388,14 +253,42 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
         </>
       ) : (
         <>
-          <p style={{opacity:.7, marginBottom:'8px'}}>
-            {__('Preview of the saved menu data. Use the toolbar icon to edit the navigation.', 'ekiline-block-collection')}
-          </p>
-          <div style={{border:'1px dashed #ccc', padding:'8px', borderRadius:'8px', maxHeight: 220, overflow: 'auto' }}>
-            <pre style={{whiteSpace:'pre-wrap', margin:0}}>
-              { (menuJson && menuJson !== '[]') ? menuJson : `(${__('No menu saved yet', 'ekiline-block-collection')})` }
-            </pre>
+          <div
+            className="ekiline-navbar-preview-wrapper"
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
+            onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); }}
+            onKeyDown={(e) => { e.preventDefault(); e.stopPropagation(); }}
+            role="presentation"
+          >
+            <div style={{ fontSize: 12, opacity: .65, marginTop: 6 }}>
+              {__('(Preview disabled: Clicks are blocked. Use the toolbar icon to edit the navigation.)', 'ekiline-block-collection')}
+            </div>
+            <nav className={`navbar${navPosition || ''}${navShow || ''} bg-body-tertiary`} style={{ opacity: 0.95 }}>
+              <div className={ container || 'container-fluid' }>
+                <div className="navbar-brand">{ brandText || 'Navbar' }</div>
+                <button className="navbar-toggler" type="button" aria-label="Toggle navigation" aria-expanded="false">
+                  <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className={ navStyle === 'offcanvas' ? 'offcanvas offcanvas-end show' : 'collapse navbar-collapse show' }>
+                  { (menuJson && menuJson !== '[]')
+                    ? renderPreviewItems(JSON.parse(menuJson), 0)
+                    : <ul className="navbar-nav"></ul> }
+                </div>
+              </div>
+            </nav>
           </div>
+          { showJsonPreview && (
+            <>
+              <p style={{opacity:.7, marginBottom:'8px'}}>
+                {__('Showing saved menu data.', 'ekiline-block-collection')}
+              </p>
+              <div style={{border:'1px dashed #ccc', padding:'8px', borderRadius:'8px', maxHeight: 220, overflow: 'auto' }}>
+                <pre style={{whiteSpace:'pre-wrap', margin:0}}>
+                  { (menuJson && menuJson !== '[]') ? menuJson : `(${__('No menu saved yet', 'ekiline-block-collection')})` }
+                </pre>
+              </div>
+            </>
+          ) }
         </>
       ) }
     </div>
