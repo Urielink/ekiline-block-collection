@@ -10,28 +10,6 @@ import { check, edit as editIcon } from '@wordpress/icons';
 const stripWPBlockComments = (html) => html
   ? html.replace(/<!--\s*\/?wp:[\s\S]*?-->/g, '').trim()
   : '';
-const ensureUlHasClass = (html, className) => {
-  if (!html) return html;
-  return html.replace(/<ul([^>]*)>/, (match, attrs) => {
-    const classMatch = attrs.match(/class\s*=\s*["']([^"']*)["']/i);
-    if (classMatch) {
-      const current = classMatch[1].split(/\s+/).filter(Boolean);
-      if (!current.includes(className)) current.push(className);
-      const newCls = current.join(' ');
-      const newAttrs = attrs.replace(/class\s*=\s*["'][^"']*["']/i, `class="${newCls}"`);
-      return `<ul${newAttrs}>`;
-    }
-    return `<ul${attrs} class="${className}">`;
-  });
-};
-
-// Helper to extract preset slug from WP preset CSS var
-const presetVarToSlug = (val) => {
-  // e.g. "var:preset|color|vivid-purple" -> "vivid-purple"
-  if (!val || typeof val !== 'string') return '';
-  const m = val.match(/var:preset\|(?:color|font-size)\|([^|\s]+)/);
-  return m ? m[1] : '';
-};
 
 // Helper to normalize class string to array of unique classes
 const classStringToArray = (cls) => {
@@ -78,7 +56,12 @@ const parseListItemBlock = (liBlock) => {
 
   const textColorSlug = liBlock?.attributes?.textColor || '';
   const fontSizeSlug = liBlock?.attributes?.fontSize || '';
+  // Helper to extract preset slug from WP preset CSS var
   const linkColorVar = liStyleObj?.elements?.link?.color?.text || '';
+  const presetVarToSlug = (val) => {
+    if (!val || typeof val !== 'string') return '';
+    return (val.match(/var:preset\|(?:color|font-size)\|([^|\s]+)/) || [])[1] || '';
+  };
   const linkColorSlug = presetVarToSlug(linkColorVar) || '';
 
   const node = {
@@ -274,12 +257,20 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
   const handleEditMenu = () => {
     setAttributes( { isEditingMenu: true } );
     try {
-      const items = JSON.parse(attributes.menuJson || '[]');
+      const items = JSON.parse(menuJson || '[]');
       const template = jsonToListTemplate(items);
       const blocks = createBlocksFromInnerBlocksTemplate( template );
       replaceInnerBlocks( clientId, blocks, false );
     } catch(e) {
-      // if JSON invalid, leave template default
+      // eslint-disable-next-line no-console
+      console.error('Error parsing menuJson:', e);
+      // Si el JSON es inválido, notifica al usuario y carga la plantilla por defecto.
+      const defaultBlocks = createBlocksFromInnerBlocksTemplate( LIST_TEMPLATE );
+      replaceInnerBlocks( clientId, defaultBlocks, false );
+      // Opcional: notificar al usuario en la UI.
+      // wp.data.dispatch('core/notices').createNotice('error', __('El JSON del menú es inválido y no se pudo cargar.', 'ekiline-block-collection'), {
+      //   isDismissible: true,
+      // });
     }
   };
 
@@ -290,14 +281,14 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
         <ToolbarGroup>
           <ToolbarButton
             icon={ editIcon }
-            label={ __('Editar navegación', 'ekiline') }
+            label={ __('Edit navigation', 'ekiline-block-collection') }
             onClick={ handleEditMenu }
             disabled={ isEditingMenu }
             showTooltip
           />
           <ToolbarButton
             icon={ check }
-            label={ __('Guardar menú', 'ekiline') }
+            label={ __('Save menu', 'ekiline-block-collection') }
             onClick={ handleSaveMenu }
             disabled={ !isEditingMenu }
             showTooltip
@@ -306,24 +297,24 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
       </BlockControls>
 
       <InspectorControls>
-        <PanelBody title={ __( 'Comportamiento', 'ekiline' ) } initialOpen={ true }>
+        <PanelBody title={ __( 'Behavior', 'ekiline-block-collection' ) } initialOpen={ true }>
           <SelectControl
-            label="Estilo"
+            label={__('Style', 'ekiline-block-collection')}
             value={ navStyle }
             options={[
-              { label: 'Colapsable', value: 'collapse' },
-              { label: 'Offcanvas', value: 'offcanvas' },
+              { label: __('Collapsible', 'ekiline-block-collection'), value: 'collapse' },
+              { label: __('Offcanvas', 'ekiline-block-collection'), value: 'offcanvas' },
             ]}
             onChange={ (v)=> setAttributes({ navStyle: v }) }
           />
           <SelectControl
-            label="Breakpoint"
+            label={__('Breakpoint', 'ekiline-block-collection')}
             value={ navShow }
             options={[
-              { label: 'Expand LG', value: ' navbar-expand-lg' },
-              { label: 'Expand MD', value: ' navbar-expand-md' },
-              { label: 'Expand SM', value: ' navbar-expand-sm' },
-              { label: 'Siempre colapsado', value: '' },
+              { label: __('Expand on large screens (lg)', 'ekiline-block-collection'), value: ' navbar-expand-lg' },
+              { label: __('Expand on medium screens (md)', 'ekiline-block-collection'), value: ' navbar-expand-md' },
+              { label: __('Expand on small screens (sm)', 'ekiline-block-collection'), value: ' navbar-expand-sm' },
+              { label: __('Always collapsed', 'ekiline-block-collection'), value: '' },
             ]}
             onChange={ (v)=> setAttributes({ navShow: v }) }
           />
@@ -331,49 +322,51 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
             label={__('Align nav items', 'ekiline-block-collection')}
             value={alignItems}
             options={[
-              { label: __('Default', 'ekiline-block-collection'), value: '' },
-              { label: __('Center', 'ekiline-block-collection'), value: ' justify-content-md-center' }
+              { label: __('Start (default)', 'ekiline-block-collection'), value: '' },
+              { label: __('Center', 'ekiline-block-collection'), value: ' justify-content-center' },
+              { label: __('End', 'ekiline-block-collection'), value: ' justify-content-end' }
             ]}
             onChange={(v) => setAttributes({ alignItems: v })}
           />
           <SelectControl
-            label="Posición"
+            label={__('Position', 'ekiline-block-collection')}
             value={ navPosition }
             options={[
-              { label: 'Normal', value: '' },
-              { label: 'Fija arriba', value: ' fixed-top' },
-              { label: 'Fija abajo', value: ' fixed-bottom' },
-              { label: 'Sticky top', value: ' sticky-top' },
+              { label: __('Default', 'ekiline-block-collection'), value: '' },
+              { label: __('Fixed top', 'ekiline-block-collection'), value: ' fixed-top' },
+              { label: __('Fixed bottom', 'ekiline-block-collection'), value: ' fixed-bottom' },
+              { label: __('Sticky top', 'ekiline-block-collection'), value: ' sticky-top' },
             ]}
             onChange={ (v)=> setAttributes({ navPosition: v }) }
           />
           <SelectControl
-            label="Container"
+            label={__('Container', 'ekiline-block-collection')}
             value={ container }
             options={[
-              { label: 'container-fluid', value: 'container-fluid' },
-              { label: 'container', value: 'container' },
-              { label: 'sin contenedor', value: '' },
+              { label: __('Fluid (full-width)', 'ekiline-block-collection'), value: 'container-fluid' },
+              { label: __('Fixed-width', 'ekiline-block-collection'), value: 'container' },
+              { label: __('No container', 'ekiline-block-collection'), value: '' },
             ]}
             onChange={ (v)=> setAttributes({ container: v }) }
           />
           <TextControl
-            label="Texto de marca"
+            label={__('Brand text', 'ekiline-block-collection')}
             value={ brandText }
             onChange={ (v)=> setAttributes({ brandText: v }) }
           />
           <TextControl
-            label="ID del target (collapse/offcanvas)"
+            label={__('Target ID (for collapse/offcanvas)', 'ekiline-block-collection')}
             value={ targetId }
             onChange={ (v)=> setAttributes({ targetId: v }) }
-            help="Debe ser único en la página."
+            help={__('Must be a unique ID on the page.', 'ekiline-block-collection')}
           />
         </PanelBody>
-        <PanelBody title={ __( 'Estado', 'ekiline' ) } initialOpen={ false }>
+        <PanelBody title={ __( 'Status', 'ekiline-block-collection' ) } initialOpen={ false }>
           <Notice status="info" isDismissible={ false }>
             { isEditingMenu
-              ? 'Modo edición: usa el bloque Lista para armar el menú y presiona “Guardar menú”.'
-              : 'Modo preview: así se verá tu navegación. Usa la barra para editar de nuevo.' }
+              ? __('Editing mode: Use the List block to build your menu, then click "Save menu".', 'ekiline-block-collection')
+              : __('Preview mode: This is how your navigation will look. Use the toolbar to edit again.', 'ekiline-block-collection')
+            }
           </Notice>
         </PanelBody>
       </InspectorControls>
@@ -381,32 +374,28 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
       { isEditingMenu ? (
         <>
           <p><strong>1)</strong> Crea/edita tu menú con <em>Lista</em>. Puedes anidar sublistas para dropdowns.</p>
+          <p><strong>2)</strong> Para aplicar estilos (color, tamaño de fuente, etc.), selecciónalos en cada elemento de la lista desde los controles de bloque de la derecha.</p>
           <hr className="wp-block-separator"/>
           <InnerBlocks
             allowedBlocks={ ALLOWED }
             templateLock={ false }
             template={ LIST_TEMPLATE }
-            renderAppender={ InnerBlocks.ButtonBlockAppender }
           />
           <hr className="wp-block-separator"/>
           <Button variant="primary" onClick={ handleSaveMenu }>
-            Guardar menú
+            {__('Save menu', 'ekiline-block-collection')}
           </Button>
         </>
       ) : (
         <>
           <p style={{opacity:.7, marginBottom:'8px'}}>
-            Vista previa (usa la barra superior para “Editar navegación”).
+            {__('Preview of the saved menu data. Use the toolbar icon to edit the navigation.', 'ekiline-block-collection')}
           </p>
           <div style={{border:'1px dashed #ccc', padding:'8px', borderRadius:'8px', maxHeight: 220, overflow: 'auto' }}>
             <pre style={{whiteSpace:'pre-wrap', margin:0}}>
-              { (menuJson && menuJson !== '[]') ? menuJson : '(sin menú)' }
+              { (menuJson && menuJson !== '[]') ? menuJson : `(${__('No menu saved yet', 'ekiline-block-collection')})` }
             </pre>
           </div>
-          {/* <div style={{ height: 8 }} /> */}
-          {/* <Button variant="primary" icon={ editIcon } onClick={ handleEditMenu }>
-            { __('Editar menú (convertir JSON → Lista)', 'ekiline') }
-          </Button> */}
         </>
       ) }
     </div>
