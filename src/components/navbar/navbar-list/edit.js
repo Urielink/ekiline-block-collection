@@ -106,18 +106,73 @@ const listBlockToJson = (listBlock) => {
     .map(parseListItemBlock);
 };
 
-// JSON -> InnerBlocks template for re-edition
+// Helper to convert slug to WP preset var for rehydration
+const slugToPresetVar = (slug) => slug ? `var:preset|color|${slug}` : '';
+
+// JSON -> InnerBlocks template for re-edition (restores styles/classes)
 const jsonToListTemplate = (items = []) => {
   const liToTemplate = (item) => {
-    const anchorClassAttr = (item.aClasses && item.aClasses.length) ? ` class="${ item.aClasses.join(' ') }"` : '';
-    const content = item.url
-      ? `<a href="${ item.url }"${ anchorClassAttr }>${ item.label || '' }</a>`
-      : (item.label || '');
-    const children = item.children && item.children.length
+    // Build list item block attributes
+    const liAttrs = {};
+    // classes (from array)
+    if (item.liClasses && item.liClasses.length) {
+      liAttrs.className = item.liClasses.join(' ');
+    }
+    // restore WP preset attributes
+    if (item.textColorSlug) {
+      liAttrs.textColor = item.textColorSlug;
+    }
+    if (item.fontSizeSlug) {
+      liAttrs.fontSize = item.fontSizeSlug;
+    }
+    // merge style from saved liStyle (object) with link color preset if present
+    const styleObj = item.liStyle ? { ...item.liStyle } : {};
+    if (!styleObj.elements) styleObj.elements = {};
+    if (!styleObj.elements.link) styleObj.elements.link = {};
+    if (!styleObj.elements.link.color) styleObj.elements.link.color = {};
+    if (item.linkColorSlug) {
+      styleObj.elements.link.color.text = slugToPresetVar(item.linkColorSlug);
+    }
+    // Only assign if there is something meaningful
+    if (JSON.stringify(styleObj) !== JSON.stringify({ elements: { link: { color: {} } } })) {
+      liAttrs.style = styleObj;
+    }
+
+    // Anchor classes/styles
+    const anchorClassAttr = (item.aClasses && item.aClasses.length)
+      ? ` class="${ item.aClasses.join(' ') }"`
+      : '';
+    const anchorStyleAttr = (item.aStyle && item.aStyle.trim())
+      ? ` style="${ item.aStyle.replace(/"/g, '&quot;') }"`
+      : '';
+
+    // Content: prefer raw/labelHtml to preserve formatting (strong/em/spans)
+    let content;
+    if (item.url) {
+      const inner = (item.labelHtml && item.labelHtml.trim())
+        ? item.labelHtml
+        : (item.raw && item.raw.trim())
+          ? item.raw
+          : (item.label || '');
+      content = `<a href="${ item.url }"${ anchorClassAttr }${ anchorStyleAttr }>${ inner }</a>`;
+    } else {
+      // text item without URL
+      if (item.raw && item.raw.trim()) {
+        content = item.raw;
+      } else if (item.labelHtml && item.labelHtml.trim()) {
+        content = item.labelHtml;
+      } else {
+        content = (item.label || '');
+      }
+    }
+
+    const children = (item.children && item.children.length)
       ? [[ 'core/list', {}, item.children.map(liToTemplate) ]]
       : [];
-    return [ 'core/list-item', { content, className: (item.liClasses && item.liClasses.length) ? item.liClasses.join(' ') : undefined }, children ];
+
+    return [ 'core/list-item', { ...liAttrs, content }, children ];
   };
+
   return [ [ 'core/list', {}, items.map(liToTemplate) ] ];
 };
 
@@ -348,7 +403,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
               { (menuJson && menuJson !== '[]') ? menuJson : '(sin menú)' }
             </pre>
           </div>
-          <div style={{ height: 8 }} />
+          {/* <div style={{ height: 8 }} /> */}
           {/* <Button variant="primary" icon={ editIcon } onClick={ handleEditMenu }>
             { __('Editar menú (convertir JSON → Lista)', 'ekiline') }
           </Button> */}
