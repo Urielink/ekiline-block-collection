@@ -87,7 +87,7 @@ const renderItems = (items = [], level = 0) => {
           if (isRoot) {
             return (
               <li className={ liClass } style={ liStyle } key={ idx }>
-                <span className="navbar-text">{ item.raw ? <RawHTML>{ item.raw }</RawHTML> : (item.label || '') }</span>
+                <span className="nav-link navbar-text">{ item.raw ? <RawHTML>{ item.raw }</RawHTML> : (item.label || '') }</span>
               </li>
             );
           }
@@ -102,6 +102,8 @@ const renderItems = (items = [], level = 0) => {
         const linkProps = {
           className: linkClass,
           href: item.url || '#',
+          rel: item.rel || undefined,
+          target: item.target || undefined,
         };
         if (hasChildren) {
           linkProps['data-bs-toggle'] = 'dropdown';

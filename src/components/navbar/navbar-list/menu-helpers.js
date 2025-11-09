@@ -25,12 +25,14 @@ export const extractLinkDetails = (html) => {
   const tmp = document.createElement('div');
   tmp.innerHTML = html || '';
   const a = tmp.querySelector('a');
-  if (!a) return { href: '', aClasses: [], aStyle: '', inner: '' };
+  if (!a) return { href: '', aClasses: [], aStyle: '', inner: '', rel: '', target: '' };
   const href = a.getAttribute('href') || '';
   const aClasses = classStringToArray(a.getAttribute('class') || '');
   const aStyle = a.getAttribute('style') || '';
   const inner = a.innerHTML || '';
-  return { href, aClasses, aStyle, inner };
+  const rel = a.getAttribute('rel') || '';
+  const target = a.getAttribute('target') || '';
+  return { href, aClasses, aStyle, inner, rel, target };
 };
 
 const presetVarToSlug = (val) =>
@@ -45,7 +47,7 @@ export const slugToPresetVar = (slug) => (slug ? `var:preset|color|${slug}` : ''
 export const parseListItemBlock = (liBlock) => {
   const raw = liBlock?.attributes?.content || '';
   const { label, url } = htmlToTextAndUrl(raw);
-  const { href, aClasses, aStyle, inner } = extractLinkDetails(raw);
+  const { href, aClasses, aStyle, inner, rel, target } = extractLinkDetails(raw);
   const type = (url || href) ? 'link' : 'text';
 
   // Gutenberg 'style' & 'classnames' attribute is an object; keep it to render later
@@ -75,6 +77,8 @@ export const parseListItemBlock = (liBlock) => {
     aClasses,
     aStyle,
     labelHtml: inner, // link inner HTML (e.g., <strong>…</strong>)
+    rel,
+    target,
     textColorSlug,
     fontSizeSlug,
     linkColorSlug,
@@ -115,6 +119,8 @@ export const jsonToListTemplate = (items = []) => {
     const anchorStyleAttr = (item.aStyle && item.aStyle.trim())
       ? ` style="${ item.aStyle.replace(/"/g, '&quot;') }"`
       : '';
+    const anchorTargetAttr = (item.target && item.target.trim()) ? ` target="${ item.target }"` : '';
+    const anchorRelAttr = (item.rel && item.rel.trim()) ? ` rel="${ item.rel }"` : '';
 
     // Content: prefer raw/labelHtml to preserve formatting (strong/em/spans)
     let content;
@@ -122,7 +128,7 @@ export const jsonToListTemplate = (items = []) => {
       const inner = item.labelHtml?.trim()
         ? item.labelHtml
         : (item.raw?.trim() ? item.raw : (item.label || ''));
-      content = `<a href="${item.url}"${anchorClassAttr}${anchorStyleAttr}>${inner}</a>`;
+      content = `<a href="${item.url}"${anchorClassAttr}${anchorStyleAttr}${anchorTargetAttr}${anchorRelAttr}>${inner}</a>`;
     } else {
       content = item.raw?.trim()
         ? item.raw
@@ -178,7 +184,7 @@ export const renderPreviewItems = (items = [], level = 0) => {
         if (isText) {
           return (
             <li className={ liClass } style={ liStyle } key={ idx }>
-              <span className={ isRoot ? 'navbar-text' : 'dropdown-item-text' }>
+              <span className={ isRoot ? 'nav-link navbar-text' : 'dropdown-item-text' }>
                 { item.raw
                   ? <span dangerouslySetInnerHTML={{ __html: item.raw }} />
                   : (item.label || '') }
@@ -193,6 +199,8 @@ export const renderPreviewItems = (items = [], level = 0) => {
               className={ linkClass }
               href={ item.url || '#' }
               style={ aStyleObj }
+              rel={ item.rel || undefined }
+              target={ item.target || undefined }
               { ...(hasChildren ? { 'data-bs-toggle':'dropdown', role:'button', 'aria-expanded':'false' } : {}) }
             >
               { item.labelHtml

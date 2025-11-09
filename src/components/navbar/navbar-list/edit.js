@@ -74,6 +74,8 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
           const a = li.querySelector('a');
           const label = a ? a.textContent.trim() : li.textContent.trim();
           const url = a ? (a.getAttribute('href') || '') : '';
+          const rel = a ? (a.getAttribute('rel') || '') : '';
+          const target = a ? (a.getAttribute('target') || '') : '';
           const subLis = Array.from(li.querySelectorAll(':scope > ul > li'));
           const children = subLis.map(sub => {
             const a2 = sub.querySelector('a');
@@ -82,7 +84,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
               url: a2 ? (a2.getAttribute('href') || '') : '',
             };
           });
-          const node = { label, url };
+          const node = { label, url, rel, target };
           if (children.length) node.children = children;
           return node;
         });
