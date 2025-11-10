@@ -34,6 +34,26 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
   } = attributes;
 
   const blockProps = useBlockProps();
+  // Mirror block supports (color, background, border, spacing) onto the preview <nav>
+  // and aggregate all navbar class fragments into a single className.
+  // Only add Bootstrap fallback bg if no WP preset classes (has-*) and no inline color/backgroundColor.
+  const hasPresetClass = /\bhas-[\w-]+/.test(blockProps?.className || '');
+  const hasInlineColor = !!(blockProps?.style && (blockProps.style.color || blockProps.style.backgroundColor));
+  const addBgTertiary = !(hasPresetClass || hasInlineColor);
+  
+  const navProps = {
+    className: [
+      blockProps?.className,
+      'navbar',
+      navPosition || '',
+      navShow || '',
+      addBgTertiary ? 'bg-body-tertiary' : '',
+    ].filter(Boolean).join(' ').replace(/\s+/g, ' '),
+    style: {
+      ...(blockProps?.style || {}),
+      opacity: 0.95,
+    },
+  };
 
   // Helper to generate a unique, user-friendly target ID
   const genTargetId = () => `ek-nav-${ clientId.slice(0,8) }-${ Math.random().toString(36).slice(2,6) }`;
@@ -425,7 +445,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
             <div style={{ fontSize: 12, opacity: .65, marginTop: 6 }}>
               {__('(Preview disabled: Clicks are blocked. Use the toolbar icon to edit the navigation.)', 'ekiline-block-collection')}
             </div>
-            <nav className={`navbar${navPosition || ''}${navShow || ''} bg-body-tertiary`} style={{ opacity: 0.95 }}>
+            <nav { ...navProps }>
               <div className={ container || 'container-fluid' }>
                 { ( (attributes.brandMode !== 'none') && ( (attributes.brandMode === 'logo') || brandText ) ) && (
                   <div className="navbar-brand">

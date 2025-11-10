@@ -81,14 +81,38 @@
 			"type": "string",
 			"default": ""
 		},
-		"brandLogoMode": { "type": "string", "default": "auto" },
-		"brandLogoId": { "type": "number", "default": 0 },
-		"brandLogoUrl": { "type": "string", "default": "" },
-		"brandLogoWidth": { "type": "number", "default": 0 },
-		"brandLogoHeight": { "type": "number", "default": 0 },
-		"brandLogoAlt": { "type": "string", "default": "" },
-		"brandLogoLinkHome": { "type": "boolean", "default": true },
-		"brandHomeUrl": { "type": "string", "default": "" }
+		"brandLogoMode": {
+			"type": "string",
+			"default": "auto"
+		},
+		"brandLogoId": {
+			"type": "number",
+			"default": 0
+		},
+		"brandLogoUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"brandLogoWidth": {
+			"type": "number",
+			"default": 0
+		},
+		"brandLogoHeight": {
+			"type": "number",
+			"default": 0
+		},
+		"brandLogoAlt": {
+			"type": "string",
+			"default": ""
+		},
+		"brandLogoLinkHome": {
+			"type": "boolean",
+			"default": true
+		},
+		"brandHomeUrl": {
+			"type": "string",
+			"default": ""
+		}
 	},
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",

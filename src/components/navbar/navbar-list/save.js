@@ -132,14 +132,30 @@ export default function save( { attributes } ) {
 
   const blockProps = useBlockProps.save();
 
-  const navClasses = `navbar${navPosition || ''}${navShow || ''}${alignItems || ''} bg-body-tertiary`.trim();
+  // Aggregate classes/styles from block supports and only add Bootstrap bg fallback
+  // when there are no WP preset classes (has-*) and no inline color/backgroundColor.
+  const hasPresetClass = /\bhas-[\w-]+/.test(blockProps?.className || '');
+  const hasInlineColor = !!(blockProps?.style && (blockProps.style.color || blockProps.style.backgroundColor));
+  const addBgTertiary = !(hasPresetClass || hasInlineColor);
+
+  const mergedClassName = [
+    blockProps?.className,
+    'navbar',
+    navPosition || '',
+    navShow || '',
+    alignItems || '',
+    addBgTertiary ? 'bg-body-tertiary' : '',
+  ].filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
+
+  const mergedStyle = blockProps?.style || undefined;
+
   const wrapperCls = container || 'container-fluid';
   const menuWrapperCls = navStyle === 'offcanvas'
     ? 'offcanvas offcanvas-end'
     : 'collapse navbar-collapse';
 
   return (
-    <nav { ...blockProps } className={ (blockProps?.className ? (blockProps.className + ' ') : '') + navClasses }>
+    <nav { ...blockProps } className={ mergedClassName } style={ mergedStyle }>
       <div className={ wrapperCls }>
         { (attributes.brandMode !== 'none') && ( (attributes.brandMode === 'logo') || brandText ) && (
           <div className="navbar-brand">
