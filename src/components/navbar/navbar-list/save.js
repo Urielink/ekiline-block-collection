@@ -1,4 +1,5 @@
 import { RawHTML } from '@wordpress/element';
+import { useBlockProps } from '@wordpress/block-editor';
 
 const styleStringToObject = (str) => {
   if (!str) return undefined;
@@ -129,6 +130,8 @@ export default function save( { attributes } ) {
     menuHtml, menuJson, navStyle, navShow, navPosition, alignItems, container, brandText, targetId
   } = attributes;
 
+  const blockProps = useBlockProps.save();
+
   const navClasses = `navbar${navPosition || ''}${navShow || ''}${alignItems || ''} bg-body-tertiary`.trim();
   const wrapperCls = container || 'container-fluid';
   const menuWrapperCls = navStyle === 'offcanvas'
@@ -136,21 +139,45 @@ export default function save( { attributes } ) {
     : 'collapse navbar-collapse';
 
   return (
-    <nav className={ navClasses }>
+    <nav { ...blockProps } className={ (blockProps?.className ? (blockProps.className + ' ') : '') + navClasses }>
       <div className={ wrapperCls }>
-        <div className="navbar-brand">{ brandText || 'Navbar' }</div>
+        { (attributes.brandMode !== 'none') && ( (attributes.brandMode === 'logo') || brandText ) && (
+          <div className="navbar-brand">
+            {/* Logo rendering */}
+            { (attributes.brandMode === 'logo' || attributes.brandMode === 'both') && (
+              attributes.brandLogoUrl
+                ? (() => {
+                    const img = (
+                      <img
+                        src={ attributes.brandLogoUrl }
+                        width={ attributes.brandLogoWidth || undefined }
+                        height={ attributes.brandLogoHeight || undefined }
+                        alt={ attributes.brandLogoAlt || 'Site logo' }
+                        className="d-inline-block align-text-top"
+                      />
+                    );
+                    return attributes.brandLogoLinkHome && (attributes.brandHomeUrl)
+                      ? <a href={ attributes.brandHomeUrl }>{ img }</a>
+                      : img;
+                  })()
+                : <span className="site-logo-placeholder" aria-hidden="true"></span>
+            ) }
+            { (attributes.brandMode === 'text' || attributes.brandMode === 'both') && brandText ? <span>{ brandText }</span> : null }
+            { attributes.showTagline && attributes.taglineText ? <span className="navbar-text ms-2">{ attributes.taglineText }</span> : null }
+          </div>
+        ) }
 
         <button className="navbar-toggler"
           type="button"
           data-bs-toggle={ navStyle === 'offcanvas' ? 'offcanvas' : 'collapse' }
-          data-bs-target={ `#${ targetId }` }
-          aria-controls={ targetId }
+          data-bs-target={ `#${ targetId || 'ek-nav' }` }
+          aria-controls={ targetId || 'ek-nav' }
           aria-expanded="false"
           aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div id={ targetId } className={ menuWrapperCls }>
+        <div id={ targetId || 'ek-nav' } className={ menuWrapperCls }>
           {/* Inyectamos el UL que el usuario compuso con core/list */}
           { (menuJson && menuJson !== '[]')
             ? renderItems(JSON.parse(menuJson), 0)

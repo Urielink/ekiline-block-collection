@@ -145,12 +145,17 @@ export const jsonToListTemplate = (items = []) => {
   return [ [ 'core/list', {}, items.map(liToTemplate) ] ];
 };
 
-/** Preview (editor) — render recursivo como navbar Bootstrap (clics deshabilitados en el contenedor) **/
+/** Preview (editor) — render recursivo como navbar Bootstrap (clics deshabilitados en el <ul>) **/
 export const renderPreviewItems = (items = [], level = 0) => {
   const isRoot = level === 0;
   const ulClass = isRoot ? 'navbar-nav' : 'dropdown-menu';
   return (
-    <ul className={ ulClass }>
+    <ul className={ ulClass }
+        onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
+        onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); }}
+        onKeyDown={(e) => { e.preventDefault(); e.stopPropagation(); }}
+        role="presentation"
+    >
       { items.map((item, idx) => {
         const hasChildren = Array.isArray(item.children) && item.children.length > 0;
         const isText = item.type === 'text' && !hasChildren;

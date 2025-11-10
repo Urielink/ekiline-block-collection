@@ -1,19 +1,13 @@
 import { __ } from '@wordpress/i18n';
-import { BlockControls, InspectorControls, InnerBlocks, useBlockProps } from '@wordpress/block-editor';
+import { BlockControls, InspectorControls, InnerBlocks, useBlockProps, MediaUpload } from '@wordpress/block-editor';
 import { PanelBody, SelectControl, TextControl, Notice, Button, ToolbarGroup, ToolbarButton } from '@wordpress/components';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useSelect, useDispatch, select as dataSelect } from '@wordpress/data';
 import { store as blockEditorStore } from '@wordpress/block-editor';
 import { serialize } from '@wordpress/blocks';
 import { check, edit as editIcon, code as codeIcon } from '@wordpress/icons';
-import { useState } from '@wordpress/element';
-import {
-  stripWPBlockComments,
-  listBlockToJson,
-  jsonToListTemplate,
-  renderPreviewItems,
-  createBlocksFromInnerBlocksTemplate
-} from './menu-helpers';
-
+import { useState, useEffect } from '@wordpress/element';
+import { stripWPBlockComments, listBlockToJson, jsonToListTemplate, renderPreviewItems, createBlocksFromInnerBlocksTemplate } from './menu-helpers';
+import { useSiteBrandSources, useSyncBrandFromSite, brandImgAlt } from './brand-helpers';
 
 const LIST_TEMPLATE = [
   [ 'core/list', {}, [
@@ -40,6 +34,22 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
   } = attributes;
 
   const blockProps = useBlockProps();
+
+  // Helper to generate a unique, user-friendly target ID
+  const genTargetId = () => `ek-nav-${ clientId.slice(0,8) }-${ Math.random().toString(36).slice(2,6) }`;
+
+  // Brand helpers: site meta/logo, sync, and alt
+  const brandSources = useSiteBrandSources();
+  useSyncBrandFromSite(attributes, setAttributes, brandSources);
+  const { siteTitle } = brandSources;
+
+  // Ensure a default, unique targetId (supports multiple navbars on same page)
+  useEffect(() => {
+    if ( !attributes.targetId || attributes.targetId.trim() === '' ) {
+      setAttributes({ targetId: genTargetId() });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [showJsonPreview, setShowJsonPreview] = useState(false);
 
@@ -221,11 +231,167 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
             value={ brandText }
             onChange={ (v)=> setAttributes({ brandText: v }) }
           />
+          <SelectControl
+            label={__('Brand mode', 'ekiline-block-collection')}
+            value={ attributes.brandMode || 'text' }
+            options={[
+              { label: __('Hidden', 'ekiline-block-collection'), value: 'none' },
+              { label: __('Text only', 'ekiline-block-collection'), value: 'text' },
+              { label: __('Logo only', 'ekiline-block-collection'), value: 'logo' },
+              { label: __('Logo + Text', 'ekiline-block-collection'), value: 'both' },
+            ]}
+            onChange={ (v)=> setAttributes({ brandMode: v }) }
+            help={ __('Logo uses site logo (requires theme support). Text uses the Brand text field.', 'ekiline-block-collection') }
+          />
+          { (attributes.brandMode === 'logo' || attributes.brandMode === 'both') && (
+            <>
+                  <SelectControl
+                    label={ __('Logo source', 'ekiline-block-collection') }
+                    value={ attributes.brandLogoMode || 'auto' }
+                    options={[
+                      { label: __('Auto (site logo)', 'ekiline-block-collection'), value: 'auto' },
+                      { label: __('Custom (media library)', 'ekiline-block-collection'), value: 'custom' },
+                    ]}
+                    onChange={ (v) => {
+                      setAttributes({ brandLogoMode: v });
+                    } }
+                  />
+              { (attributes.brandLogoMode === 'custom') && (
+                <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                  <MediaUpload
+                    onSelect={ (media) => {
+                      const url = media?.sizes?.medium?.url || media?.sizes?.full?.url || media?.url || '';
+                      const w = media?.sizes?.medium?.width || media?.media_details?.width || 0;
+                      const h = media?.sizes?.medium?.height || media?.media_details?.height || 0;
+                      setAttributes({
+                        brandLogoId: media?.id || 0,
+                        brandLogoUrl: url,
+                        brandLogoWidth: w,
+                        brandLogoHeight: h,
+                        brandLogoAlt: media?.alt || media?.title || ''
+                      });
+                    } }
+                    allowedTypes={ ['image'] }
+                    value={ attributes.brandLogoId || 0 }
+                    render={ ({ open }) => (
+                      <Button variant="secondary" onClick={ open }>
+                        { attributes.brandLogoUrl ? __('Replace image', 'ekiline-block-collection') : __('Select image', 'ekiline-block-collection') }
+                      </Button>
+                    ) }
+                  />
+                  { attributes.brandLogoUrl && (
+                    <span style={{ fontSize: 12, opacity: .7, overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 180 }}>
+                      { attributes.brandLogoUrl }
+                    </span>
+                  ) }
+                </div>
+              ) }
+              <div style={{ display: 'flex', gap: 8 }}>
+                <TextControl
+                  label={ __('Logo width (px)', 'ekiline-block-collection') }
+                  type="number"
+                  min={ 0 }
+                  value={ attributes.brandLogoWidth === 0 ? '' : attributes.brandLogoWidth }
+                  onChange={ (v)=> {
+                    if (v === '' || v === null || typeof v === 'undefined') {
+                      setAttributes({ brandLogoWidth: 0 }); // 0 => omit width attr (natural proportions)
+                    } else {
+                      const n = parseInt(v, 10);
+                      setAttributes({ brandLogoWidth: isNaN(n) ? 0 : Math.max(0, n) });
+                    }
+                  } }
+                  placeholder={ __('auto', 'ekiline-block-collection') }
+                />
+                <TextControl
+                  label={ __('Logo height (px)', 'ekiline-block-collection') }
+                  type="number"
+                  min={ 0 }
+                  value={ attributes.brandLogoHeight === 0 ? '' : attributes.brandLogoHeight }
+                  onChange={ (v)=> {
+                    if (v === '' || v === null || typeof v === 'undefined') {
+                      setAttributes({ brandLogoHeight: 0 }); // 0 => omit height attr (natural proportions)
+                    } else {
+                      const n = parseInt(v, 10);
+                      setAttributes({ brandLogoHeight: isNaN(n) ? 0 : Math.max(0, n) });
+                    }
+                  } }
+                  placeholder={ __('auto', 'ekiline-block-collection') }
+                />
+              </div>
+              <TextControl
+                label={ __('Logo alt text', 'ekiline-block-collection') }
+                value={ attributes.brandLogoAlt || '' }
+                onChange={ (v)=> setAttributes({ brandLogoAlt: v }) }
+                help={ __('Used for accessibility. If empty, site title will be used.', 'ekiline-block-collection') }
+              />
+              <SelectControl
+                label={ __('Link logo to Home', 'ekiline-block-collection') }
+                value={ attributes.brandLogoLinkHome ? 'yes' : 'no' }
+                options={[
+                  { label: __('Yes', 'ekiline-block-collection'), value: 'yes' },
+                  { label: __('No', 'ekiline-block-collection'), value: 'no' },
+                ]}
+                onChange={ (v)=> setAttributes({ brandLogoLinkHome: v === 'yes' }) }
+              />
+            </>
+          ) }
+          <SelectControl
+            label={__('Tagline', 'ekiline-block-collection')}
+            value={ attributes.showTagline ? 'show' : 'hide' }
+            options={[
+              { label: __('Hide', 'ekiline-block-collection'), value: 'hide' },
+              { label: __('Show (site tagline)', 'ekiline-block-collection'), value: 'show' },
+            ]}
+            onChange={ (v)=> {
+              const show = v === 'show';
+              setAttributes({ showTagline: show });
+              // If turning on and we don't have a cached tagline, fetch it once.
+              if ( show && !attributes.taglineText ) {
+                const site = dataSelect('core').getEntityRecord('root','site');
+                const tagline = site?.description || '';
+                if (tagline) setAttributes({ taglineText: tagline });
+              }
+            } }
+            help={ __('Shows the WordPress site tagline next to the brand.', 'ekiline-block-collection') }
+          />
+          { attributes.showTagline && (
+            <>
+              <TextControl
+                label={ __('Custom tagline (override)', 'ekiline-block-collection') }
+                value={ attributes.taglineText || '' }
+                onChange={ (v) => setAttributes({ taglineText: (v || '').toString() }) }
+                help={ __('This only affects this navbar block. It does not change the site tagline.', 'ekiline-block-collection') }
+              />
+              <div style={{ display: 'flex', gap: 8 }}>
+                <Button
+                  variant="secondary"
+                  onClick={ () => {
+                    const site = dataSelect('core').getEntityRecord('root','site');
+                    const tagline = site?.description || '';
+                    setAttributes({ taglineText: tagline });
+                  } }
+                >
+                  { __('Reset to site tagline', 'ekiline-block-collection') }
+                </Button>
+              </div>
+            </>
+          ) }
           <TextControl
             label={__('Target ID (for collapse/offcanvas)', 'ekiline-block-collection')}
             value={ targetId }
-            onChange={ (v)=> setAttributes({ targetId: v }) }
-            help={__('Must be a unique ID on the page.', 'ekiline-block-collection')}
+            onChange={ (v)=> {
+              const raw = (v ?? '').toString();
+              const trimmed = raw.trim();
+              if (!trimmed) {
+                // If user clears the field, immediately regenerate a fresh unique id
+                setAttributes({ targetId: genTargetId() });
+                return;
+              }
+              // Sanitize: allow letters, numbers, underscore and hyphen only
+              const sanitized = trimmed.replace(/[^A-Za-z0-9_-]/g, '');
+              setAttributes({ targetId: sanitized });
+            } }
+            help={__('Must be unique. Leave empty to auto-generate.', 'ekiline-block-collection')}
           />
         </PanelBody>
         <PanelBody title={ __( 'Status', 'ekiline-block-collection' ) } initialOpen={ false }>
@@ -255,19 +421,38 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
         </>
       ) : (
         <>
-          <div
-            className="ekiline-navbar-preview-wrapper"
-            onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
-            onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); }}
-            onKeyDown={(e) => { e.preventDefault(); e.stopPropagation(); }}
-            role="presentation"
-          >
+          <div className="ekiline-navbar-preview-wrapper">
             <div style={{ fontSize: 12, opacity: .65, marginTop: 6 }}>
               {__('(Preview disabled: Clicks are blocked. Use the toolbar icon to edit the navigation.)', 'ekiline-block-collection')}
             </div>
             <nav className={`navbar${navPosition || ''}${navShow || ''} bg-body-tertiary`} style={{ opacity: 0.95 }}>
               <div className={ container || 'container-fluid' }>
-                <div className="navbar-brand">{ brandText || 'Navbar' }</div>
+                { ( (attributes.brandMode !== 'none') && ( (attributes.brandMode === 'logo') || brandText ) ) && (
+                  <div className="navbar-brand">
+                    {/* Logo rendering */}
+                    { (attributes.brandMode === 'logo' || attributes.brandMode === 'both') && (
+                      attributes.brandLogoUrl
+                        ? (() => {
+                            const img = (
+                              <img
+                                src={ attributes.brandLogoUrl }
+                                width={ attributes.brandLogoWidth || undefined }
+                                height={ attributes.brandLogoHeight || undefined }
+                                alt={ brandImgAlt(attributes, siteTitle) }
+                                className="d-inline-block align-text-top"
+                                style={{ verticalAlign:'middle', marginRight: brandText ? 8 : 0 }}
+                              />
+                            );
+                            return attributes.brandLogoLinkHome && (attributes.brandHomeUrl)
+                              ? <a href={ attributes.brandHomeUrl } onClick={(e)=>e.preventDefault()}>{ img }</a>
+                              : img;
+                          })()
+                        : <span className="site-logo-placeholder" style={{display:'inline-block', width: 28, height: 28, borderRadius: '50%', background: '#ccc', verticalAlign:'middle', marginRight: brandText ? 8 : 0}} aria-hidden="true"></span>
+                    ) }
+                    { (attributes.brandMode === 'text' || attributes.brandMode === 'both') && brandText ? <span>{ brandText }</span> : null }
+                    { attributes.showTagline && attributes.taglineText ? <span className="navbar-text ms-2">{ attributes.taglineText }</span> : null }
+                  </div>
+                ) }
                 <button className="navbar-toggler" type="button" aria-label="Toggle navigation" aria-expanded="false">
                   <span className="navbar-toggler-icon"></span>
                 </button>
