@@ -8,6 +8,12 @@ import { check, edit as editIcon, code as codeIcon } from '@wordpress/icons';
 import { useState, useEffect } from '@wordpress/element';
 import { stripWPBlockComments, listBlockToJson, jsonToListTemplate, renderPreviewItems, createBlocksFromInnerBlocksTemplate } from './menu-helpers';
 import { useSiteBrandSources, useSyncBrandFromSite, brandImgAlt } from './brand-helpers';
+/**
+ * Imports the icons used in the block.
+ */
+import icons from '../../../shared/icons';
+const { tabsIcon } = icons;
+
 
 const LIST_TEMPLATE = [
   [ 'core/list', {}, [
@@ -54,6 +60,15 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
       opacity: 0.95,
     },
   };
+
+  // Visibilidad de container.
+  // Helper: wrap with container only if a class is provided; otherwise render children directly
+  const wrapperCls = container || '';
+  const ContainerWrapper = ({ className, children }) => (
+    className
+      ? <div className={ className }>{ children }</div>
+      : <>{ children }</>
+  );
 
   // Helper to generate a unique, user-friendly target ID
   const genTargetId = () => `ek-nav-${ clientId.slice(0,8) }-${ Math.random().toString(36).slice(2,6) }`;
@@ -414,11 +429,11 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
             help={__('Must be unique. Leave empty to auto-generate.', 'ekiline-block-collection')}
           />
         </PanelBody>
-        <PanelBody title={ __( 'Status', 'ekiline-block-collection' ) } initialOpen={ false }>
+        <PanelBody title={ __( 'Status', 'ekiline-block-collection' ) } initialOpen={ true }>
           <Notice status="info" isDismissible={ false }>
             { isEditingMenu
               ? __('Editing mode: Use the List block to build your menu, then click "Save menu".', 'ekiline-block-collection')
-              : __('Preview mode: This is how your navigation will look. Use the toolbar to edit again.', 'ekiline-block-collection')
+              : __('Preview mode: This is how your navigation will look. Use the toolbar to edit. Clicks are blocked.', 'ekiline-block-collection')
             }
           </Notice>
         </PanelBody>
@@ -426,27 +441,31 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 
       { isEditingMenu ? (
         <>
-          <p><strong>1)</strong> Crea/edita tu menú con <em>Lista</em>. Puedes anidar sublistas para dropdowns.</p>
-          <p><strong>2)</strong> Para aplicar estilos (color, tamaño de fuente, etc.), selecciónalos en cada elemento de la lista desde los controles de bloque de la derecha.</p>
-          <hr className="wp-block-separator"/>
-          <InnerBlocks
-            allowedBlocks={ ALLOWED }
-            templateLock={ false }
-            template={ LIST_TEMPLATE }
-          />
-          <hr className="wp-block-separator"/>
-          <Button variant="primary" onClick={ handleSaveMenu }>
-            {__('Save menu', 'ekiline-block-collection')}
-          </Button>
+          <div className="ekiline-navbar-setup-wrapper">
+            <div className="components-placeholder__label">
+              {tabsIcon}
+              <label>{__('Navbar', 'ekiline-block-collection')}</label>
+            </div>
+            <div class="components-placeholder__instructions">
+              {__('1. Create/edit your menu with Lista. You can nest sublists for dropdowns.', 'ekiline-block-collection') }
+              <br/>
+              {__('2. Customize the styles from the controls (color, font size, etc.).', 'ekiline-block-collection')}
+            </div>
+            <InnerBlocks
+              allowedBlocks={ ALLOWED }
+              templateLock={ false }
+              template={ LIST_TEMPLATE }
+            />
+            <Button variant="primary" onClick={ handleSaveMenu }>
+              {__('Save menu', 'ekiline-block-collection')}
+            </Button>
+          </div>
         </>
       ) : (
         <>
           <div className="ekiline-navbar-preview-wrapper">
-            <div style={{ fontSize: 12, opacity: .65, marginTop: 6 }}>
-              {__('(Preview disabled: Clicks are blocked. Use the toolbar icon to edit the navigation.)', 'ekiline-block-collection')}
-            </div>
             <nav { ...navProps }>
-              <div className={ container || 'container-fluid' }>
+              <ContainerWrapper className={ wrapperCls }>
                 { ( (attributes.brandMode !== 'none') && ( (attributes.brandMode === 'logo') || brandText ) ) && (
                   <div className="navbar-brand">
                     {/* Logo rendering */}
@@ -481,15 +500,15 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                     ? renderPreviewItems(JSON.parse(menuJson), 0)
                     : <ul className="navbar-nav"></ul> }
                 </div>
-              </div>
+              </ContainerWrapper>
             </nav>
           </div>
           { showJsonPreview && (
             <>
-              <p style={{opacity:.7, marginBottom:'8px'}}>
-                {__('Showing saved menu data.', 'ekiline-block-collection')}
-              </p>
-              <div style={{border:'1px dashed #ccc', padding:'8px', borderRadius:'8px', maxHeight: 220, overflow: 'auto' }}>
+              <div className="ekiline-navbar-code-wrapper">
+                <p class="components-placeholder__instructions">
+                  {__('Showing saved menu data.', 'ekiline-block-collection')}
+                </p>
                 <pre style={{whiteSpace:'pre-wrap', margin:0}}>
                   { (menuJson && menuJson !== '[]') ? menuJson : `(${__('No menu saved yet', 'ekiline-block-collection')})` }
                 </pre>

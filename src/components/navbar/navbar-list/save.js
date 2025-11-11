@@ -149,14 +149,22 @@ export default function save( { attributes } ) {
 
   const mergedStyle = blockProps?.style || undefined;
 
-  const wrapperCls = container || 'container-fluid';
+  const wrapperCls = container || '';
   const menuWrapperCls = navStyle === 'offcanvas'
     ? 'offcanvas offcanvas-end'
     : 'collapse navbar-collapse';
 
+  // Helper: wrap with container only if a class is provided; otherwise render children directly
+  const ContainerWrapper = ({ className, children }) => (
+    className
+      ? <div className={ className }>{ children }</div>
+      : <>{ children }</>
+  );
+
   return (
     <nav { ...blockProps } className={ mergedClassName } style={ mergedStyle }>
-      <div className={ wrapperCls }>
+      <ContainerWrapper className={ wrapperCls }>
+
         { (attributes.brandMode !== 'none') && ( (attributes.brandMode === 'logo') || brandText ) && (
           <div className="navbar-brand">
             {/* Logo rendering */}
@@ -199,7 +207,8 @@ export default function save( { attributes } ) {
             ? renderItems(JSON.parse(menuJson), 0)
             : (menuHtml ? <RawHTML>{ menuHtml }</RawHTML> : <ul className="navbar-nav"></ul>) }
         </div>
-      </div>
+        
+      </ContainerWrapper>
     </nav>
   );
 }
