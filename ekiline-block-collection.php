@@ -42,36 +42,42 @@ add_filter('plugin_action_links', 'ekiline_block_collection_settings_links', 25,
  * @link https://developer.wordpress.org/cli/commands/i18n/make-json/
  * El manual indica que hagas un registro del script con dependencias.
  * Pero, también es posible abstraerlo, se requiere saber el handler del script.
+ * Registrar un solo bloque.
+ * register_block_type(__DIR__ . '/build');
  */
 function ekiline_block_collection_ekiline_collection_block_init()
 {
-    // Collection script.
-    // register_block_type(__DIR__ . '/build');
-
     // Colección de bloques.
-    register_block_type(__DIR__ . '/build/components/accordion/ekiline-accordion');
-    register_block_type(__DIR__ . '/build/components/accordion/ekiline-accordion-item');
-    register_block_type(__DIR__ . '/build/components/accordion/ekiline-accordion-item-header');
-    register_block_type(__DIR__ . '/build/components/accordion/ekiline-accordion-item-body');
-    register_block_type(__DIR__ . '/build/components/collapse/ekiline-collapse');
-    register_block_type(__DIR__ . '/build/components/modal/ekiline-modal');
-    register_block_type(__DIR__ . '/build/components/modal/ekiline-modal-header');
-    register_block_type(__DIR__ . '/build/components/modal/ekiline-modal-body');
-    register_block_type(__DIR__ . '/build/components/modal/ekiline-modal-footer');
-    register_block_type(__DIR__ . '/build/components/modal/ekiline-modal-button-resize');
-    register_block_type(__DIR__ . '/build/components/offcanvas/ekiline-offcanvas');
-    register_block_type(__DIR__ . '/build/components/offcanvas/ekiline-offcanvas-header');
-    register_block_type(__DIR__ . '/build/components/offcanvas/ekiline-offcanvas-body');
-    register_block_type(__DIR__ . '/build/components/tabs/ekiline-tabs');
-    register_block_type(__DIR__ . '/build/components/tabs/ekiline-tabs-container');
-    register_block_type(__DIR__ . '/build/components/tabs/ekiline-tabs-navbar');
-    register_block_type(__DIR__ . '/build/components/tabs/ekiline-tab-link');
-    register_block_type(__DIR__ . '/build/components/tabs/ekiline-tab-content');
-    register_block_type(__DIR__ . '/build/components/toast/ekiline-toast');
-    register_block_type(__DIR__ . '/build/components/toast/ekiline-toast-item');
-    register_block_type(__DIR__ . '/build/components/progress/ekiline-progress');
-    register_block_type(__DIR__ . '/build/components/progress/ekiline-progress-item');
-    register_block_type(__DIR__ . '/build/components/navbar/navbar-list');
+    $blocks = array(
+        'accordion/ekiline-accordion',
+        'accordion/ekiline-accordion-item',
+        'accordion/ekiline-accordion-item-header',
+        'accordion/ekiline-accordion-item-body',
+        'collapse/ekiline-collapse',
+        'modal/ekiline-modal',
+        'modal/ekiline-modal-header',
+        'modal/ekiline-modal-body',
+        'modal/ekiline-modal-footer',
+        'modal/ekiline-modal-button-resize',
+        'offcanvas/ekiline-offcanvas',
+        'offcanvas/ekiline-offcanvas-header',
+        'offcanvas/ekiline-offcanvas-body',
+        'tabs/ekiline-tabs',
+        'tabs/ekiline-tabs-container',
+        'tabs/ekiline-tabs-navbar',
+        'tabs/ekiline-tab-link',
+        'tabs/ekiline-tab-content',
+        'toast/ekiline-toast',
+        'toast/ekiline-toast-item',
+        'progress/ekiline-progress',
+        'progress/ekiline-progress-item',
+        'navbar/navbar-list'
+    );
+
+    foreach ( $blocks as $block ) {
+        register_block_type( __DIR__ . '/build/components/' . $block );
+    }
+
     // Caso especial, el carrusel es un bloque hibrido.
     register_block_type(
         __DIR__ . '/build/components/carousel/ekiline-carousel',
