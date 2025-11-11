@@ -474,22 +474,8 @@
 }
 
 /**
- * Estilos pendientes de ajuste. navbar
+ * Navbar offcanvas
  */
- .dropdown-toggle::after{content:none !important;display:none !important;}
-.navbar-nav.wp-block-navigation ul li{padding:.5rem;border-radius:var(--bs-border-radius);}
-.navbar-collapse.collapsing .navbar-nav *,.navbar-collapse.collapse.show .navbar-nav *{width:80%;border:0px;}
-.navbar-collapse.collapsing .navbar-nav li li,.navbar-collapse.collapse.show .navbar-nav li li{width:90%;padding-left:.25rem;border-left:1px solid #00000026;}
-.navbar-collapse.collapsing button.nav-link.dropdown-toggle,.navbar-collapse.collapse.show button.nav-link.dropdown-toggle{min-height:40px;width:40px;}
-.navbar-collapse.collapsing .nav-item.dropdown,.navbar-collapse.collapse.show .nav-item.dropdown{flex-wrap:wrap;}
-@media only screen and (min-width:992px){.dropdown-menu{min-width:100%;}
-.wp-block-navigation .dropup .wp-block-navigation__submenu-icon svg{transform:rotate(180deg);}
-}
-/*wp vars*/
-.navbar-collapse.collapsing .navbar-nav *,.navbar-collapse.collapse.show .navbar-nav *{width:100%;position:relative;border:0px;}
-.navbar-collapse.collapsing .navbar-nav li li,.navbar-collapse.collapse.show .navbar-nav li li{width:100%;}
-.navbar-collapse.collapsing button.nav-link.dropdown-toggle,.navbar-collapse.collapse.show button.nav-link.dropdown-toggle{min-height:40px;width:40px;position:absolute;right:0;top:0;}
-/* offcanvas estilos */
 @media only screen and (max-width:991px){
 .offcanvas .dropdown-menu{min-width:100%;}
 .offcanvas .navbar-nav.wp-block-navigation ul li{padding:.5rem;border-radius:var(--bs-border-radius);width:100%;}

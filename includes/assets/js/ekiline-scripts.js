@@ -360,18 +360,3 @@ function ekiline_collection_js_close_navbar_window_resize () {
   }
 }
 ekiline_collection_js_close_navbar_window_resize()
-
-/**
- * Cerra navbar en caso de click en un enlace interno.
- */
-function ekiline_collection_js_close_navbar () {
-  const navbar = document.querySelector('.navbar-collapse')
-  if (navbar) {
-    navbar.addEventListener('click', function (e) {
-      if (e.target.classList.contains('nav-link')) {
-        navbar.classList.remove('show')
-      }
-    })
-  }
-}
-ekiline_collection_js_close_navbar()

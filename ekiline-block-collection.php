@@ -134,7 +134,7 @@ function ekiline_block_collection_required_scripts() {
 
     // Estilos y scripts personalizados que dependen de Bootstrap.
     wp_register_style( $ebc_style_handler, plugin_dir_url(__FILE__) . 'includes/assets/css/ekiline-styles.css', $style_deps, '1.0', 'all' );
-    wp_register_script( $ebc_script_handler, plugin_dir_url(__FILE__) . 'includes/assets/js/ekiline-scripts.min.js', $script_deps, '1.0', true );
+    wp_register_script( $ebc_script_handler, plugin_dir_url(__FILE__) . 'includes/assets/js/ekiline-scripts.js', $script_deps, '1.0', true );
 
     // Encolar estilos y scripts personalizados.
     wp_enqueue_style( $ebc_style_handler );
