@@ -446,7 +446,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
               {tabsIcon}
               <label>{__('Navbar', 'ekiline-block-collection')}</label>
             </div>
-            <div class="components-placeholder__instructions">
+            <div className="components-placeholder__instructions">
               {__('1. Create/edit your menu with Lista. You can nest sublists for dropdowns.', 'ekiline-block-collection') }
               <br/>
               {__('2. Customize the styles from the controls (color, font size, etc.).', 'ekiline-block-collection')}
@@ -495,7 +495,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                 <button className="navbar-toggler" type="button" aria-label="Toggle navigation" aria-expanded="false">
                   <span className="navbar-toggler-icon"></span>
                 </button>
-                <div className={ navStyle === 'offcanvas' ? 'offcanvas offcanvas-end show' : 'collapse navbar-collapse show' }>
+                <div className={ (navStyle === 'offcanvas' ? 'offcanvas offcanvas-end show' : 'collapse navbar-collapse show') + (alignItems || '') }>
                   { (menuJson && menuJson !== '[]')
                     ? renderPreviewItems(JSON.parse(menuJson), 0)
                     : <ul className="navbar-nav"></ul> }

@@ -201,13 +201,13 @@ export default function save( { attributes } ) {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div id={ targetId || 'ek-nav' } className={ menuWrapperCls }>
+        <div id={ targetId || 'ek-nav' } className={ menuWrapperCls + (alignItems || '') }>
           {/* Inyectamos el UL que el usuario compuso con core/list */}
           { (menuJson && menuJson !== '[]')
             ? renderItems(JSON.parse(menuJson), 0)
             : (menuHtml ? <RawHTML>{ menuHtml }</RawHTML> : <ul className="navbar-nav"></ul>) }
         </div>
-        
+
       </ContainerWrapper>
     </nav>
   );

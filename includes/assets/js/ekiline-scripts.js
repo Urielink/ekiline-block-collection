@@ -329,59 +329,6 @@ function ekiline_collection_js_offcanvas_has_video () {
 ekiline_collection_js_offcanvas_has_video()
 
 /**
- * Configurar navegación desde frontend.
- * - Eficaz por la compatibilidad con REACT y el filtrado con PHP.
- */
-function ekiline_collection_js_navbar () {
-  const navbar = document.querySelectorAll('.wp-block-ekiline-block-collection-ekiline-navbar')
-  if (navbar.length !== 0) {
-    navbar.forEach(function (navbarItem) {
-      navbarItem.classList.add('navbar')
-
-      const navbarUl = navbarItem.querySelector('ul')
-      navbarUl.classList.add('navbar-nav')
-
-      const navbarLi = navbarItem.querySelectorAll('li')
-      navbarLi.forEach(function (navbarLiItem) {
-        navbarLiItem.classList.add('nav-item')
-      })
-
-      const navbarA = navbarItem.querySelectorAll('a')
-      navbarA.forEach(function (navbarAItem) {
-        navbarAItem.classList.add('nav-link')
-      })
-
-      const navbarSubmenus = navbarItem.querySelectorAll('.wp-block-navigation-submenu')
-
-      navbarSubmenus.forEach(function (navbarSubmenusItem) {
-        // Si navbar tiene la clase fixed-bottom ó  sticky-bottom cambia de .dropdown a .dropup
-        if (navbarItem.classList.contains('fixed-bottom') || navbarItem.classList.contains('sticky-bottom')) {
-          navbarSubmenusItem.classList.add('dropup')
-        }
-        navbarSubmenusItem.classList.add('nav-item', 'dropdown')
-        navbarSubmenusItem.classList.remove('has-child')
-
-        const navbarSubmenusA = navbarSubmenusItem.querySelectorAll('a, button')
-        navbarSubmenusA.forEach(function (navbarSubmenusAItem) {
-          navbarSubmenusAItem.classList.add('nav-link', 'dropdown-toggle')
-        })
-
-        const navbarSubmenusButton = navbarSubmenusItem.querySelectorAll('button')
-        navbarSubmenusButton.forEach(function (navbarSubmenusButtonItem) {
-          navbarSubmenusButtonItem.setAttribute('data-bs-toggle', 'dropdown')
-          navbarSubmenusButtonItem.setAttribute('aria-expanded', 'false')
-        })
-        const navbarSubmenusUl = navbarSubmenusItem.querySelectorAll('ul')
-        navbarSubmenusUl.forEach(function (navbarSubmenusUlItem) {
-          navbarSubmenusUlItem.classList.add('dropdown-menu')
-        })
-      })
-    })
-  }
-}
-ekiline_collection_js_navbar()
-
-/**
  * Dropdown anidados en navbar.
  */
 function ekiline_extend_bootstrap_init_bundle_items () {
@@ -427,4 +374,4 @@ function ekiline_collection_js_close_navbar () {
     })
   }
 }
-// ekiline_collection_js_close_navbar()
+ekiline_collection_js_close_navbar()
