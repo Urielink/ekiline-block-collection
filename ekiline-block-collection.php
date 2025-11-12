@@ -71,7 +71,7 @@ function ekiline_block_collection_ekiline_collection_block_init()
         'toast/ekiline-toast-item',
         'progress/ekiline-progress',
         'progress/ekiline-progress-item',
-        'navbar/navbar-list'
+        'navbar/ekiline-navbar'
     );
 
     foreach ( $blocks as $block ) {

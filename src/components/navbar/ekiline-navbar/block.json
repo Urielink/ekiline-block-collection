@@ -1,10 +1,10 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "ekiline-block-collection/navbar-list",
+	"name": "ekiline-block-collection/ekiline-navbar",
 	"version": "0.1.0",
 	"textdomain": "ekiline-block-collection",
-	"title": "Ekiline Navbar (por lista)",
+	"title": "Navbar",
 	"category": "design",
 	"icon": "menu",
 	"description": "Navbar Bootstrap generado a partir de un bloque Lista.",

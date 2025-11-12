@@ -49,7 +49,6 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
   // Brand helpers: site meta/logo, sync, and alt
   const brandSources = useSiteBrandSources();
   useSyncBrandFromSite(attributes, setAttributes, brandSources);
-  const { siteTitle } = brandSources;
 
   // Ensure a default, unique targetId (supports multiple navbars on same page)
   useEffect(() => {
