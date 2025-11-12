@@ -32,7 +32,6 @@ export const renderNavbar = ({
     'navbar',
     navPosition || '',
     navShow || '',
-    (mode === 'save' ? (alignItems || '') : ''), // alignItems va en wrapper del menú; en preview se añade show abajo
     addBgTertiary ? 'bg-body-tertiary' : '',
   ].filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
   const mergedStyle = blockProps?.style || undefined;

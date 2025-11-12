@@ -448,7 +448,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
           { showJsonPreview && (
             <>
               <div className="ekiline-navbar-code-wrapper">
-                <p class="components-placeholder__instructions">
+                <p className="components-placeholder__instructions">
                   {__('Showing saved menu data.', 'ekiline-block-collection')}
                 </p>
                 <pre style={{whiteSpace:'pre-wrap', margin:0}}>
