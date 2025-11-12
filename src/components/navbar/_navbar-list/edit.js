@@ -6,10 +6,8 @@ import { store as blockEditorStore } from '@wordpress/block-editor';
 import { serialize } from '@wordpress/blocks';
 import { check, edit as editIcon, code as codeIcon } from '@wordpress/icons';
 import { useState, useEffect } from '@wordpress/element';
-import { stripWPBlockComments, listBlockToJson, jsonToListTemplate, createBlocksFromInnerBlocksTemplate } from './menu-helpers';
-import { useSiteBrandSources, useSyncBrandFromSite } from './brand-helpers';
-import { renderNavbar } from './renderers/navbar-render';
-
+import { stripWPBlockComments, listBlockToJson, jsonToListTemplate, renderPreviewItems, createBlocksFromInnerBlocksTemplate } from './menu-helpers';
+import { useSiteBrandSources, useSyncBrandFromSite, brandImgAlt } from './brand-helpers';
 /**
  * Imports the icons used in the block.
  */
@@ -42,6 +40,35 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
   } = attributes;
 
   const blockProps = useBlockProps();
+  // Mirror block supports (color, background, border, spacing) onto the preview <nav>
+  // and aggregate all navbar class fragments into a single className.
+  // Only add Bootstrap fallback bg if no WP preset classes (has-*) and no inline color/backgroundColor.
+  const hasPresetClass = /\bhas-[\w-]+/.test(blockProps?.className || '');
+  const hasInlineColor = !!(blockProps?.style && (blockProps.style.color || blockProps.style.backgroundColor));
+  const addBgTertiary = !(hasPresetClass || hasInlineColor);
+  
+  const navProps = {
+    className: [
+      blockProps?.className,
+      'navbar',
+      navPosition || '',
+      navShow || '',
+      addBgTertiary ? 'bg-body-tertiary' : '',
+    ].filter(Boolean).join(' ').replace(/\s+/g, ' '),
+    style: {
+      ...(blockProps?.style || {}),
+      opacity: 0.95,
+    },
+  };
+
+  // Visibilidad de container.
+  // Helper: wrap with container only if a class is provided; otherwise render children directly
+  const wrapperCls = container || '';
+  const ContainerWrapper = ({ className, children }) => (
+    className
+      ? <div className={ className }>{ children }</div>
+      : <>{ children }</>
+  );
 
   // Helper to generate a unique, user-friendly target ID
   const genTargetId = () => `ek-nav-${ clientId.slice(0,8) }-${ Math.random().toString(36).slice(2,6) }`;
@@ -437,13 +464,44 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
       ) : (
         <>
           <div className="ekiline-navbar-preview-wrapper">
-            { renderNavbar({
-                attributes,
-                blockProps,
-                mode: 'preview',
-                ui: { preventClicks: true, forceShowCollapse: true },
-                brandSources
-              }) }
+            <nav { ...navProps }>
+              <ContainerWrapper className={ wrapperCls }>
+                { ( (attributes.brandMode !== 'none') && ( (attributes.brandMode === 'logo') || brandText ) ) && (
+                  <div className="navbar-brand">
+                    {/* Logo rendering */}
+                    { (attributes.brandMode === 'logo' || attributes.brandMode === 'both') && (
+                      attributes.brandLogoUrl
+                        ? (() => {
+                            const img = (
+                              <img
+                                src={ attributes.brandLogoUrl }
+                                width={ attributes.brandLogoWidth || undefined }
+                                height={ attributes.brandLogoHeight || undefined }
+                                alt={ brandImgAlt(attributes, siteTitle) }
+                                className="d-inline-block align-text-top"
+                                style={{ verticalAlign:'middle', marginRight: brandText ? 8 : 0 }}
+                              />
+                            );
+                            return attributes.brandLogoLinkHome && (attributes.brandHomeUrl)
+                              ? <a href={ attributes.brandHomeUrl } onClick={(e)=>e.preventDefault()}>{ img }</a>
+                              : img;
+                          })()
+                        : <span className="site-logo-placeholder" style={{display:'inline-block', width: 28, height: 28, borderRadius: '50%', background: '#ccc', verticalAlign:'middle', marginRight: brandText ? 8 : 0}} aria-hidden="true"></span>
+                    ) }
+                    { (attributes.brandMode === 'text' || attributes.brandMode === 'both') && brandText ? <span>{ brandText }</span> : null }
+                    { attributes.showTagline && attributes.taglineText ? <span className="navbar-text ms-2">{ attributes.taglineText }</span> : null }
+                  </div>
+                ) }
+                <button className="navbar-toggler" type="button" aria-label="Toggle navigation" aria-expanded="false">
+                  <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className={ (navStyle === 'offcanvas' ? 'offcanvas offcanvas-end show' : 'collapse navbar-collapse show') + (alignItems || '') }>
+                  { (menuJson && menuJson !== '[]')
+                    ? renderPreviewItems(JSON.parse(menuJson), 0)
+                    : <ul className="navbar-nav"></ul> }
+                </div>
+              </ContainerWrapper>
+            </nav>
           </div>
           { showJsonPreview && (
             <>
