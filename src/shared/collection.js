@@ -17,7 +17,7 @@ export const registerEkilineCollection = (icon) => {
  * @param {*} max 
  * @returns número aleatorio entre min y max.
  * 
- * import { getRandomArbitrary } from '../../../shared/collection';
+ * import { getRandomArbitrary } from '../../shared/collection';
  * 
  * if (!attributes.anchor) {
  *  setAttributes({ anchor: 'accordion' + getRandomArbitrary(10, 150) });
@@ -34,7 +34,7 @@ export function getRandomArbitrary(min, max) {
  * @param {*} alpha
  * @returns
  *
- * import { hexToRgb } from '../../../shared/collection';
+ * import { hexToRgb } from '../../shared/collection';
  */
 export function hexToRgb(hex, alpha) {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);

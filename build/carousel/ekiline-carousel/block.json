@@ -1,0 +1,138 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ekiline-block-collection/ekiline-carousel",
+  "version": "0.1.0",
+  "textdomain": "ekiline-block-collection",
+  "title": "Ekiline Carousel",
+  "category": "design",
+  "icon": "star",
+  "description": "A flexible and extensible carousel block.",
+  "example": {},
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "color": {
+      "background": true,
+      "text": true,
+      "link": true
+    }
+  },
+  "attributes": {
+    "anchor": {
+      "type": "string",
+      "default": ""
+    },
+    "carouselId": {
+      "type": "string",
+      "default": ""
+    },
+    "carouselClass": {
+      "type": "string",
+      "default": ""
+    },
+    "carouselStyle": {
+      "type": "string",
+      "default": ""
+    },
+    "carouselItems": {
+      "type": "array",
+      "default": []
+    },
+    "carouselOptions": {
+      "type": "object",
+      "default": {}
+    },
+    "ChooseType": {
+      "type": "string",
+      "default": "manual"
+    },
+    "SetColumns": {
+      "type": "number",
+      "default": 1
+    },
+    "AddControls": {
+      "type": "boolean",
+      "default": true
+    },
+    "AddIndicators": {
+      "type": "boolean",
+      "default": true
+    },
+    "SetAuto": {
+      "type": "boolean",
+      "default": true
+    },
+    "SetTime": {
+      "type": "number",
+      "default": 5000
+    },
+    "SetAnimation": {
+      "type": "string",
+      "default": ""
+    },
+    "SetHeight": {
+      "type": "string",
+      "default": "540px"
+    },
+    "GalleryImagesIds": {
+      "type": "array",
+      "default": []
+    },
+    "GalleryImages": {
+      "type": "array",
+      "default": []
+    },
+    "contentPostType": {
+      "type": "string",
+      "default": "post"
+    },
+    "contentCategory": {
+      "type": "array",
+      "default": []
+    },
+    "contentPostsPerPage": {
+      "type": "number",
+      "default": 6
+    },
+    "contentOrder": {
+      "type": "string",
+      "default": "desc"
+    },
+    "contentOrderBy": {
+      "type": "string",
+      "default": "date"
+    },
+    "contentIsDynamic": {
+      "type": "boolean",
+      "default": false
+    },
+    "contentPosts": {
+      "type": "array",
+      "default": []
+    },
+    "contentSelectedIds": {
+      "type": "array",
+      "default": []
+    },
+    "contentLinkSlide": {
+      "type": "boolean",
+      "default": false
+    },
+    "slidesCount": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js",
+  "providesContext": {
+    "ekiline-carousel/SetHeight": "SetHeight"
+  }
+}

@@ -75,15 +75,15 @@ function ekiline_block_collection_ekiline_collection_block_init()
     );
 
     foreach ( $blocks as $block ) {
-        register_block_type( __DIR__ . '/build/components/' . $block );
+        register_block_type( __DIR__ . '/build/' . $block );
     }
 
     // Caso especial, el carrusel es un bloque hibrido.
     register_block_type(
-        __DIR__ . '/build/components/carousel/ekiline-carousel',
+        __DIR__ . '/build/carousel/ekiline-carousel',
         array('render_callback' => 'ekiline_carousel_dynamic_render')
     );
-    register_block_type(__DIR__ . '/build/components/carousel/ekiline-carousel-slide');
+    register_block_type(__DIR__ . '/build/carousel/ekiline-carousel-slide');
 
     // // Language plugin for PHP.
     // load_plugin_textdomain('ekiline-block-collection', false, basename(dirname(__FILE__)) . '/languages/');
