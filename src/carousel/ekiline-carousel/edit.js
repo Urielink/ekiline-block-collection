@@ -241,7 +241,7 @@ export default function Edit ({ attributes, setAttributes }) {
           />
 
           <FontSizePicker
-            label={__('Carrusel: Altura', 'ekiline-block-collection')}
+            label={__('Carousel height', 'ekiline-block-collection')}
             fontSizes={[
               { name: 'Default', slug: 'default', size: '540px' },
               { name: 'Medio', slug: 'medium', size: '720px' },

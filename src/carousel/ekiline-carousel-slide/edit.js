@@ -52,7 +52,22 @@ export default function Edit(props) {
 				template={ [
 					[
 						'core/cover',
-						{},
+						{
+							"dimRatio":30,
+							"overlayColor":"black",
+							"isUserOverlayColor":true,
+							"isDark":false,
+							"style":{
+								"elements":{
+									"link":{
+										"color":{
+											"text":"var:preset|color|black"
+										}
+									}
+								}
+							},
+							"textColor":"black"
+						},
 						[
 							[ 'core/image' ],
 							[ 'core/heading', { placeholder: __('Slide title', 'ekiline-block-collection') } ],

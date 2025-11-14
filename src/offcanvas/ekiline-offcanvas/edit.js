@@ -75,6 +75,14 @@ export default function Edit({ attributes, setAttributes }) {
     }
   }
 
+  function UserRemind() {
+    return (
+      <div className='block-note'>
+        { attributes.anchor ? '#' + attributes.anchor + __(' is the anchor you should include in the advanced options of a button.', 'ekiline-block-collection') : __('Do not forget to add an #anchor. ', 'ekiline-block-collection') }
+      </div>
+    );
+  }
+
   return (
     <div {...blockProps}>
       <InspectorControls>
@@ -159,6 +167,7 @@ export default function Edit({ attributes, setAttributes }) {
         </PanelBody>
       </InspectorControls>
       <InnerBlocks allowedBlocks={allowedBlocks} template={template} />
+      <UserRemind />
     </div>
   );
 }

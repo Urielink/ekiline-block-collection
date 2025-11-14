@@ -56,15 +56,21 @@ export function GalleryEdit({ attributes, setAttributes }) {
 
   // Efecto para actualizar los atributos del bloque si las imágenes ricas cambian.
   useEffect(() => {
+    if (!richImages.length && GalleryImages.length) {
+      // limpiar atributo si ya no hay imágenes
+      setAttributes({ GalleryImages: [] })
+      return
+    }
+
     if (richImages.length && JSON.stringify(richImages) !== JSON.stringify(GalleryImages)) {
       setAttributes({ GalleryImages: richImages })
     }
-  }, [richImages])
+  }, [richImages, GalleryImages])
 
   return (
     <div {...blockProps}>
       {/* Miniaturas encapsuladas */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', paddingLeft: '5px' }}>
+      <div className='setup-gallery'>
         <MediaUploadCheck>
           <MediaUpload
             onSelect={onSelectImages}
@@ -81,23 +87,29 @@ export function GalleryEdit({ attributes, setAttributes }) {
             )}
           />
         </MediaUploadCheck>
-        <div className="gallery-preview">
-          {richImages && richImages.map((img, i) => (
-            <img
-              key={i}
-              src={img.featuredImageSizes.thumbnail?.source_url || img.featuredImage}
-              alt={img.alt}
-              style={{ maxWidth: '40px', margin: '4px' }}
-            />
-          ))}
-        </div>
+        {richImages.length > 0 ? (
+            <div className="gallery-preview">
+              { richImages.map((img, i) => (
+                <img
+                  key={i}
+                  src={img.featuredImageSizes.thumbnail?.source_url || img.featuredImage}
+                  alt={img.alt}
+                  style={{ maxWidth: '40px', margin: '4px' }}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="components-placeholder__instructions">
+            {__('Waiting images…', 'ekiline-block-collection')}
+            </div> 
+        )}
       </div>
       {/* previsualizar encapsulado. */}
       <div style={{ position: 'relative' }}>
         {
           richImages && richImages.length > 0
           ? <CarouselMarkup attributes={attributes} posts={richImages} disabledControls={true} />
-          : <p>{__('Waiting images…', 'ekiline-block-collection')}</p>
+          : <></>
         }
       </div>
     </div>
