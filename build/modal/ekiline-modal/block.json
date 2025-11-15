@@ -10,7 +10,12 @@
   "description": "Add your content here, then invoke with a link anchor #anchor.",
   "example": {},
   "supports": {
-    "anchor": true
+    "anchor": true,
+    "color": {
+      "background": true,
+      "gradients": true,
+      "text": true
+    }
   },
   "attributes": {
     "modalShow": {
@@ -36,6 +41,35 @@
     "modalTime": {
       "type": "number",
       "default": 0
+    },
+    "border": {
+      "type": "object",
+      "default": {
+        "top": {
+          "color": "#dee2e6",
+          "style": "solid",
+          "width": "1px"
+        },
+        "right": {
+          "color": "#dee2e6",
+          "style": "solid",
+          "width": "1px"
+        },
+        "bottom": {
+          "color": "#dee2e6",
+          "style": "solid",
+          "width": "1px"
+        },
+        "left": {
+          "color": "#dee2e6",
+          "style": "solid",
+          "width": "1px"
+        }
+      }
+    },
+    "borderRadius": {
+      "type": "string",
+      "default": "0.375rem"
     }
   },
   "editorScript": "file:./index.js",

@@ -63,6 +63,24 @@ function ekiline_collection_js_modal_behavior () {
 }
 ekiline_collection_js_modal_behavior()
 
+// Modal: detectar click y error de no abrir modal.
+function ekiline_collection_js_modal_error_detect () {
+  const modalTriggers = document.querySelectorAll('[data-bs-toggle="modal"]')
+  if (modalTriggers.length !== 0) {
+    modalTriggers.forEach(function (trigger) {
+      trigger.addEventListener('click', function (ev) {
+        const modalTarget = document.querySelector(trigger.dataset.bsTarget)
+        if (!modalTarget) {
+          console.error('No se encontró el modal objetivo:', trigger.dataset.bsTarget)
+          alert('No se encontró el modal objetivo: ' + trigger.dataset.bsTarget)
+        }
+      })
+    })
+  }
+}
+// ekiline_collection_js_modal_error_detect()
+
+
 /**
  * Popover.
  */

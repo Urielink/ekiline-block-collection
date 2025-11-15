@@ -3,14 +3,11 @@ import { useBlockProps, InspectorControls, InnerBlocks, RichText } from '@wordpr
 import { PanelBody, TextControl, ToggleControl } from '@wordpress/components';
 
 import {
-  BorderBoxField,
-  BorderRadiusField,
   DEFAULT_BORDER_RADIUS,
   getBorderStyles,
   getHeaderBorderBottom,
   getRadiusWithDefaults,
   sanitizeBorderValue,
-  sanitizeBorderRadiusValue,
 } from '../../shared/border-box';
 
 import { hexToRgb } from '../../shared/collection';
@@ -26,43 +23,13 @@ export default function Edit({ attributes, setAttributes }) {
   const headerBorderBottom = getHeaderBorderBottom(borderStyles);
   const appliedBorderRadius = getRadiusWithDefaults(borderRadius, DEFAULT_BORDER_RADIUS);
 
-  // Persist only the sanitised border values to avoid undefined pieces after reset.
-  const onChangeBorder = (newBorder) => {
-    const sanitizedBorder = sanitizeBorderValue(newBorder);
-
-    if (JSON.stringify(sanitizedBorder) === JSON.stringify(border)) {
-      return;
-    }
-
-    setAttributes({ border: sanitizedBorder });
-  };
-
-  // Persist only the sanitized radius value to avoid undefined pieces after reset.
-  const onChangeBorderRadius = (newRadius) => {
-    const sanitizedRadius = sanitizeBorderRadiusValue(
-      newRadius,
-      true,
-      DEFAULT_BORDER_RADIUS
-    );
-
-    if (sanitizedRadius === borderRadius) {
-      return;
-    }
-
-    setAttributes({ borderRadius: sanitizedRadius });
-  };
-
   // Block container styles.
   const blockProps = useBlockProps({
     className: 'toast-item toast',
-    style:{
-      ...borderStyles,
-      borderRadius: appliedBorderRadius,
-    }
   });
 
   // En caso de color de texto en header.
-  if (blockProps.style.color){
+  if (blockProps.style && blockProps.style.color){
     blockProps.style = {
       ...blockProps.style,
       '--bs-toast-header-color': blockProps.style.color
@@ -81,7 +48,7 @@ export default function Edit({ attributes, setAttributes }) {
     borderBottom: headerBorderBottom,
     borderTopLeftRadius: appliedBorderRadius,
     borderTopRightRadius: appliedBorderRadius,
-    backgroundColor: hexToRgb(border.color, 0.20)
+    backgroundColor: hexToRgb(normalizedBorder.color, 0.20)
   };
 
   // Child block template.
@@ -111,22 +78,6 @@ export default function Edit({ attributes, setAttributes }) {
             label={__('Run at end of page scroll.', 'ekiline-block-collection')}
             checked={attributes.toastScroll}
             onChange={(toastScroll) => setAttributes({ toastScroll })}
-          />
-        </PanelBody>
-      </InspectorControls>
-      <InspectorControls group='styles'>
-        <PanelBody>
-          {/* Shared field that wraps Gutenberg's BorderBoxControl to consume theme palettes
-              and sanitize the per-side colors/styles before persisting them. */}
-          <BorderBoxField
-              label={__('Border', 'ekiline-block-collection')}
-              value={normalizedBorder}
-              onChange={onChangeBorder}
-              __experimentalIsRenderedInSidebar
-          />
-          <BorderRadiusField
-              value={borderRadius}
-              onChange={onChangeBorderRadius}
           />
         </PanelBody>
       </InspectorControls>

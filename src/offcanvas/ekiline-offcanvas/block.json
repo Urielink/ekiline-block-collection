@@ -15,12 +15,6 @@
       "background": true,
       "gradients": true,
       "text": true
-    },
-    "border": {
-      "color": true,
-      "radius": true,
-      "style": true,
-      "width": true
     }
   },
   "attributes": {
@@ -30,19 +24,7 @@
     "ocScroll": { "type": "boolean", "default": false },
     "ocBackdrop": { "type": "string", "default": "true" },
     "ocDisplay": { "type": "string", "default": " offcanvas" },
-    "parentAnchor": { "type": "string" },
-    "border": {
-      "type": "object",
-      "default": {
-        "color": "#0000000d",
-        "style": "solid",
-        "width": "1px"
-      }
-    },
-    "borderRadius": {
-      "type": "string",
-      "default": "0px"
-    }
+    "parentAnchor": { "type": "string" }
   },
   "providesContext": {
     "ekiline-offcanvas/anchor": "anchor"

@@ -20,12 +20,6 @@
       "background": true,
       "gradients": true,
       "text": true
-    },
-    "border": {
-      "color": true,
-      "radius": true,
-      "style": true,
-      "width": true
     }
   },
   "attributes": {
@@ -41,18 +35,6 @@
     "toastScroll": {
       "type": "boolean",
       "default": false
-    },
-    "border": {
-      "type": "object",
-      "default": {
-        "color": "#000000",
-        "style": "solid",
-        "width": "1px"
-      }
-    },
-    "borderRadius": {
-      "type": "string",
-      "default": ".375rem"
     }
   },
   "editorScript": "file:./index.js",

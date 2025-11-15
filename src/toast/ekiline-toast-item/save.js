@@ -29,10 +29,6 @@ export default function save({ attributes }) {
       (attributes.toastScroll ? ' launch-scroll hide' : '') +
       (attributes.toastTime !== 0 ? ' launch-time hide' : ''),
     'data-ek-launch-time': attributes.toastTime || null,
-    style:{
-      ...borderStyles,
-      borderRadius: appliedBorderRadius,
-    }
   });
 
   // En caso de color de texto en header.
@@ -48,7 +44,7 @@ export default function save({ attributes }) {
     borderBottom: headerBorderBottom,
     borderTopLeftRadius: appliedBorderRadius,
     borderTopRightRadius: appliedBorderRadius,
-    backgroundColor: hexToRgb(border.color, 0.20)
+    backgroundColor: hexToRgb(normalizedBorder.color, 0.20)
   };
 
   // Función para pintar el color del texto en header. Filtrar clases por tipo 'has-'.

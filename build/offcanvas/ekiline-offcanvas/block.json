@@ -15,12 +15,6 @@
       "background": true,
       "gradients": true,
       "text": true
-    },
-    "border": {
-      "color": true,
-      "radius": true,
-      "style": true,
-      "width": true
     }
   },
   "attributes": {
@@ -50,18 +44,6 @@
     },
     "parentAnchor": {
       "type": "string"
-    },
-    "border": {
-      "type": "object",
-      "default": {
-        "color": "#0000000d",
-        "style": "solid",
-        "width": "1px"
-      }
-    },
-    "borderRadius": {
-      "type": "string",
-      "default": "0px"
     }
   },
   "providesContext": {

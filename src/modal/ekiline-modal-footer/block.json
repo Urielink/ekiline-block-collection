@@ -15,6 +15,21 @@
     "reusable": false,
     "inserter": true
   },
+  "attributes": {
+    "border":{
+      "type":"object",
+      "default":{
+        "top":{"color":"#dee2e6","style":"solid","width":"1px"},
+        "right":{"color":"#dee2e6","style":"none","width":"0px"},
+        "bottom":{"color":"#dee2e6","style":"none","width":"0px"},
+        "left":{"color":"#dee2e6","style":"none","width":"0px"}
+      }
+    },
+    "borderRadius":{
+      "type":"string",
+      "default":"0rem"
+    }
+  },
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
