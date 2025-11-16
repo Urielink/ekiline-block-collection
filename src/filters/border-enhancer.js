@@ -26,7 +26,8 @@ const BORDER_ENABLED_BLOCKS = [
   'ekiline-block-collection/ekiline-modal',
   'ekiline-block-collection/ekiline-modal-header',
   'ekiline-block-collection/ekiline-modal-body',
-  'ekiline-block-collection/ekiline-modal-footer'
+  'ekiline-block-collection/ekiline-modal-footer',
+  'ekiline-block-collection/ekiline-collapse',
 ];
 
 export const isBorderEnabledBlock = ( blockName ) =>
