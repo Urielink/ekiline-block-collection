@@ -1,18 +1,29 @@
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, RichText } from '@wordpress/block-editor';
 
 export default function save({ attributes }) {
+  const { progRange, progLabel, progStripes, progAnimation, content, textAlign } = attributes;
+
   const blockProps = useBlockProps.save({
     className: 'progress-bar' +
-      (attributes.progAnimation ? ' progress-bar-animated' : '') +
-      (attributes.progStripes ? ' progress-bar-striped' : ''),
+      (progAnimation ? ' progress-bar-animated' : '') +
+      (progStripes ? ' progress-bar-striped' : ''),
     style: {
-      width: attributes.progRange + '%'
+      width: progRange + '%'
     }
   });
 
   return (
     <div {...blockProps}>
-      {!attributes.progLabel ? attributes.progRange : null}
+      {
+        !progLabel && (
+          <RichText.Content
+            tagName="p"
+            value={ content || `${progRange}%` }
+            className="my-0"
+            style={{ textAlign }}
+          />
+        )
+      }
     </div>
   );
 }

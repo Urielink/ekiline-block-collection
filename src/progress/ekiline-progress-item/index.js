@@ -4,7 +4,6 @@ import './editor.scss';
 import edit from './edit';
 import save from './save';
 import metadata from './block.json';
-import applyProgressItemWrapper from './progress-item-wrapper';
 /**
  * Imports the icons used in the block.
  */
@@ -16,5 +15,3 @@ registerBlockType(metadata.name, {
   edit,
   save,
 });
-
-applyProgressItemWrapper();
