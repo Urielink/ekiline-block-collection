@@ -5,8 +5,48 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-.wp-block-create-block-prueba {
-	background-color: #21759b;
-	color: #fff;
-	padding: 2px;
+// Bordes en caso de que navbar se situe al final, en la parte baja del bloque.
+ .tabs-wrapper:not(.d-flex) .nav-tabs:last-child{
+  border-bottom: inherit;
+  border-top: var(--bs-nav-tabs-border-width) solid var(--bs-nav-tabs-border-color);
+ }
+.tabs-wrapper:not(.d-flex) .nav-tabs:last-child .nav-link {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: var(--bs-nav-tabs-border-radius);
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: var(--bs-nav-tabs-border-radius);
+  --bs-nav-tabs-link-active-border-color: var(--bs-body-bg) var(--bs-border-color) var(--bs-border-color) var(--bs-border-color);
+}
+.tabs-wrapper:not(.d-flex) .nav-tabs:last-child .nav-link {
+  margin-top: calc(-1 * var(--bs-nav-tabs-border-width));
+  border-top: var(--bs-nav-tabs-border-width) solid transparent;
+}
+
+// Bordes en caso de que navbar se ejecute vertical.
+.tabs-wrapper.d-flex .nav-tabs .nav-link {
+  margin-bottom: initial;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: var(--bs-nav-tabs-border-radius);
+  --bs-nav-tabs-link-active-border-color: var(--bs-border-color) var(--bs-body-bg) var(--bs-border-color) var(--bs-border-color);
+  margin-right: calc(-1 * var(--bs-nav-tabs-border-width));
+}
+
+// Bordes en caso de que navbar se ejecute vertical, al final del bloque.
+.tabs-wrapper.d-flex .nav-tabs:last-child .nav-link {
+  border-top-right-radius: var(--bs-nav-tabs-border-radius);
+  border-bottom-right-radius: var(--bs-nav-tabs-border-radius);
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  --bs-nav-tabs-link-active-border-color: var(--bs-border-color) var(--bs-border-color) var(--bs-border-color) var(--bs-body-bg);
+  margin-left: calc(-1 * var(--bs-nav-tabs-border-width));
+}
+
+.tabs-wrapper.d-flex .nav-tabs {
+  border-bottom: inherit;
+  border-right: var(--bs-nav-tabs-border-width) solid var(--bs-nav-tabs-border-color);
+}
+.tabs-wrapper.d-flex .nav-tabs:last-child {
+  border-bottom: inherit;
+  border-right: inherit;
+  border-left: var(--bs-nav-tabs-border-width) solid var(--bs-nav-tabs-border-color);
 }

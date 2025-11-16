@@ -16,10 +16,7 @@
       "wide",
       "full"
     ],
-    "html": false,
-    "color": {
-      "background": true
-    }
+    "html": false
   },
   "attributes": {
     "tabsNumber": {

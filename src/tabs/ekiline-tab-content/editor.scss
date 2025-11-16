@@ -13,10 +13,8 @@
   display: none;
   margin-bottom: 1rem;
   padding: .5rem 1rem;
-  border: 1px solid var(--bs-border-color);
-  border-bottom-left-radius: 0.375rem;;
-  border-bottom-right-radius: 0.375rem;;
-  border-top-color: transparent;
+  border: 1px dashed var(--bs-border-color);
+  border-radius: 0.375rem;;
 }
 
 .tab-content .active {

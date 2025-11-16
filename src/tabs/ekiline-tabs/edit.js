@@ -172,6 +172,9 @@ export default function Edit(props) {
       <InnerBlocks
         allowedBlocks={allowedBlocks}
         template={resolvedTemplate}
+        orientation={
+          attributes.tabsDesign === 'd-flex align-items-start' ? 'horizontal' : null
+        }
         // Opcional: bloquea estructura base
         // templateLock="all"
       />
