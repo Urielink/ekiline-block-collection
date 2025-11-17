@@ -21,6 +21,7 @@ import {
 // 🔧 Bloques que soportarán el panel global de bordes.
 // Agrega aquí todos los bloques donde quieras activar esta característica.
 const BORDER_ENABLED_BLOCKS = [
+  'ekiline-block-collection/ekiline-accordion',
   'ekiline-block-collection/ekiline-toast-item',
   'ekiline-block-collection/ekiline-offcanvas',
   'ekiline-block-collection/ekiline-modal',
