@@ -16,7 +16,7 @@ import {
   sanitizeBorderRadiusValue,
   getBorderStyles,
   getRadiusWithDefaults,
-} from '../shared/border-box';
+} from '../border-box';
 
 // 🔧 Bloques que soportarán el panel global de bordes.
 // Agrega aquí todos los bloques donde quieras activar esta característica.

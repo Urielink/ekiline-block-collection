@@ -1,4 +1,4 @@
-import './filters/buttons';
-import './filters/images';
-import './filters/popovers';
-import './filters/border-enhancer';
+import './shared/filters/buttons';
+import './shared/filters/images';
+import './shared/filters/popovers';
+import './shared/filters/border-enhancer';
