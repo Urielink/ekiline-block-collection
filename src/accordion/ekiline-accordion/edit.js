@@ -23,7 +23,6 @@ export default function Edit({ attributes, setAttributes }) {
 
   // obtener valores de borde.
   if (attributes.useBorder){
-    console.log('border', attributes.border);
     //retrieve border and border radius values
     const border = attributes.border;
     const borderRadius = attributes.borderRadius;
