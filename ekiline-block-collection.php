@@ -4,7 +4,7 @@
  * Description:       Actions and blocks based on bootstrap 5 (carousel, collapse and more). Includes Bootstrap library. Support this project to add new features and expand a customer service branch.
  * Requires at least: 5.8
  * Requires PHP:      7.0
- * Version:           2.1.1
+ * Version:           3.0.0
  * Author:            Uri Lazcano (Urielink)
  * Author URI:        https://ekiline.com/ekiline-block-collection/
  * License:           GPL-2.0-or-later
@@ -85,10 +85,10 @@ function ekiline_block_collection_ekiline_collection_block_init()
     );
     register_block_type(__DIR__ . '/build/carousel/ekiline-carousel-slide');
 
-    // // Language plugin for PHP.
-    // load_plugin_textdomain('ekiline-block-collection', false, basename(dirname(__FILE__)) . '/languages/');
-    // // Language plugin for JS Blocks.
-    // wp_set_script_translations('ekiline-block-collection-ekiline-block-collection-editor-script', 'ekiline-block-collection', plugin_dir_path(__FILE__) . 'languages');
+    // Language plugin for PHP.
+    load_plugin_textdomain('ekiline-block-collection', false, basename(dirname(__FILE__)) . '/languages/');
+    // Language plugin for JS Blocks.
+    wp_set_script_translations('ekiline-block-collection-ekiline-block-collection-editor-script', 'ekiline-block-collection', plugin_dir_path(__FILE__) . 'languages');
 }
 add_action('init', 'ekiline_block_collection_ekiline_collection_block_init');
 

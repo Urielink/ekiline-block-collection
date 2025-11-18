@@ -4,7 +4,7 @@ Requires at least: 5.8
 Tags:              block, collection, bootstrap
 Tested up to:      6.9
 Requires PHP:      7.0
-Stable tag:        2.1.1
+Stable tag:        3.0.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/license-list.html#GPLv2
 Donate link:       https://www.paypal.com/paypalme/urielink
@@ -70,24 +70,9 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 * Cambios mayores, nuevo planteamiento de uso de bootstrap.
 * Optimización de vista de bloques en el editor y frontend.
 
-## 📦 Compilación de filtros JavaScript (`addFilter`) con @wordpress/scripts
-Este plugin utiliza el sistema de hooks de WordPress (`@wordpress/hooks`) para extender bloques existentes como `core/button`, sin necesidad de registrar nuevos bloques personalizados.
-
-### 📌 Contexto
-Cuando usas funciones como `addFilter()` para modificar bloques existentes (por ejemplo, para agregar atributos o cambiar su comportamiento), estos scripts no se asocian directamente a un `block.json`. Por tanto, **no se compilan automáticamente** mediante `wp-scripts build` como lo hacen los bloques tradicionales.
-
-### ✅ Solución
-Para compilar estos scripts personalizados, se debe crear un archivo de entrada (por ejemplo, `src/index.js`) que importe los filtros deseados:
-
-```js
-// src/index.js
-import './filters/core-button-mods.js';
-
-
 = 2.1.1 =
 * Check new wordpress version (6.8).
 * Bootstrap update (v5.3.5)
-
 
 = 2.1.0 =
 * New Navbar Block
@@ -184,87 +169,3 @@ As well as to maintain this development and incorporate new features in each new
 
 “I have created this plugin to provide a better web development service to my clients, from a trusted source such as WordPress.”
 Uri Lazcano.
-
-DevIm: [node v19.1.0, npm 8.19.3, nvm 0.39.3]
-
-
-
-
-### prueba de crear bloques independientes
-
-referencias:
-- https://wordpress.stackexchange.com/questions/407748/how-to-register-two-blocks-in-the-same-plugin
-- https://developer.wordpress.org/news/2024/09/how-to-build-a-multi-block-plugin/
-* https://developer.wordpress.org/news/2024/05/setting-up-a-multi-block-using-inner-blocks-and-post-meta/
-* https://github.com/WordPress/gutenberg/blob/trunk/packages/blocks/README.md
-
-# Actulizar node
-
-Error: Wanted node version >=20.10.0 (>=20.10.0)
-Error: Wanted npm version >=10.2.3 (>=10.2.3)
-
-# Registrar bloques.
-
-1. Organizar carpeta contendora para esta coleccion
- - layout
- - components
-
-2. generar cada nuevo bloque.
-
-npx @wordpress/create-block@latest accordion --no-plugin
-  npx @wordpress/create-block@latest accordion-item --no-plugin
-
-npx @wordpress/create-block@latest collapse --no-plugin
-npx @wordpress/create-block@latest progress --no-plugin
-npx @wordpress/create-block@latest toast --no-plugin
-npx @wordpress/create-block@latest tabs --no-plugin
-npx @wordpress/create-block@latest modal --no-plugin
-npx @wordpress/create-block@latest carousel --no-plugin
-npx @wordpress/create-block@latest carousel-extra --no-plugin
-npx @wordpress/create-block@latest carousel-blocks --no-plugin
-  npx @wordpress/create-block@latest ekiline-carousel-slide --no-plugin
-
-
-npx @wordpress/create-block@latest offcanvas --no-plugin
-npx @wordpress/create-block@latest hooks --no-plugin
-npx @wordpress/create-block@latest popovers --no-plugin
-npx @wordpress/create-block@latest navigation --no-plugin
-
-
-3. registrar cada bloque en index.php
-
-`register_block_type(__DIR__ . '/build/components/accordion')`
-
-
-#### pendientes:
-Los scripts funcionan en el editor sin problema.
-Averiguar la separación de tareas.
-
-
-### prompt para separar plugin.
-
-🧩 Tengo un plugin de bloques para WordPress. Cada bloque está registrado en un solo archivo grande, pero quiero separar cada uno en su carpeta con archivos index.js, edit.js, save.js y block.json.
-
-Aquí está el nombre del bloque (como está registrado):
-	•	'ekiline-block-collection/ekiline-accordion-item-header'
-
-Su código fuente actual está en formato completo con registerBlockType(...).
-
-Quiero que:
-	1.	Separes ese bloque en su propia carpeta llamada accordion-item-header/.
-	2.	Generes los 4 archivos (index.js, edit.js, save.js, block.json) con el contenido correspondiente.
-	3.	Empaquetes todos los archivos generados en un .zip descargable.
-
-
-### Prompt v2
-
-Tengo un plugin de bloques para WordPress. Cada bloque está registrado en un solo archivo grande, pero quiero separar cada uno en su carpeta con archivos index.js, edit.js, save.js y block.json.
-
-Aquí está el nombre del bloque (como está registrado):
-ekiline-block-collection/ekiline-NOMBRE_DEL_BLOQUE
-
-Quiero que:
-	1.	Crees una carpeta con el nombre que aparece después de la diagonal, por ejemplo ekiline-accordion-item → carpeta accordion-item.
-	2.	Genere dentro de esa carpeta los archivos: index.js, edit.js, save.js y block.json.
-	3.	En el archivo block.json, usa "apiVersion": 3 en lugar del 2.
-	4.	Empaqueta los archivos en un .zip descargable.
