@@ -2,30 +2,30 @@
  * Asignar colección.
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-import { registerBlockCollection } from '@wordpress/blocks';
+import { registerBlockCollection } from '@wordpress/blocks'
 
 export const registerEkilineCollection = (icon) => {
-	registerBlockCollection('ekiline-block-collection', {
-		title: 'Ekiline Block Collection',
-		icon: icon,
-	});
-};
+  registerBlockCollection('ekiline-block-collection', {
+    title: 'Ekiline Block Collection',
+    icon
+  })
+}
 
 /**
- * 
- * @param {*} min 
- * @param {*} max 
+ *
+ * @param {*} min
+ * @param {*} max
  * @returns número aleatorio entre min y max.
- * 
+ *
  * import { getRandomArbitrary } from '../../shared/collection';
- * 
+ *
  * if (!attributes.anchor) {
  *  setAttributes({ anchor: 'accordion' + getRandomArbitrary(10, 150) });
  * }
- * 
+ *
  */
-export function getRandomArbitrary(min, max) {
-  return Math.floor(Math.random() * (max - min) + min);
+export function getRandomArbitrary (min, max) {
+  return Math.floor(Math.random() * (max - min) + min)
 }
 
 /**
@@ -36,8 +36,8 @@ export function getRandomArbitrary(min, max) {
  *
  * import { hexToRgb } from '../../shared/collection';
  */
-export function hexToRgb(hex, alpha) {
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+export function hexToRgb (hex, alpha) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
   return result
     ? 'rgba(' +
         parseInt(result[1], 16) +
@@ -48,7 +48,7 @@ export function hexToRgb(hex, alpha) {
         ', ' +
         alpha +
         ')'
-    : null;
+    : null
 }
 
 /**
@@ -60,5 +60,5 @@ export const replaceSpecialChars = (str) => {
     .replace(/([^\w]+|\s+)/g, '-')
     .replace(/\-\-+/g, '-')
     .replace(/(^-+|-+$)/, '')
-    .toLowerCase();
-};
+    .toLowerCase()
+}

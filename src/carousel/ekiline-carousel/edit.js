@@ -12,7 +12,6 @@ import { GalleryEdit } from './variations/gallery'
 import { ContentEdit } from './variations/content'
 import { useSelect } from '@wordpress/data'
 
-
 // Random function for IDs.
 import { getRandomArbitrary } from '../../shared/collection'
 
@@ -39,17 +38,16 @@ export default function Edit ({ attributes, setAttributes }) {
 
   // Render function for category selector
   const RenderCategorySelector = () => {
-
     // Get allCategories using useSelect hook.
-      const allCategories = useSelect(
-        (select) => {
-          if (ChooseType === 'content' && attributes.contentPostType === 'post') {
-            return select('core').getEntityRecords('taxonomy', 'category', { per_page: -1 }) || []
-          }
-          return []
-        },
-        [ChooseType, attributes.contentPostType, attributes.contentCategory] // ⬅ Aquí se incluye
-      )
+    const allCategories = useSelect(
+      (select) => {
+        if (ChooseType === 'content' && attributes.contentPostType === 'post') {
+          return select('core').getEntityRecords('taxonomy', 'category', { per_page: -1 }) || []
+        }
+        return []
+      },
+      [ChooseType, attributes.contentPostType, attributes.contentCategory] // ⬅ Aquí se incluye
+    )
 
     return (
       <FormTokenField
@@ -132,7 +130,7 @@ export default function Edit ({ attributes, setAttributes }) {
     <>
       <InspectorControls>
         {/* Seleccionar tipo de carrusel: */}
-        <PanelBody title={__('Carousel Type', 'ekiline-block-collection')} initialOpen={true}>
+        <PanelBody title={__('Carousel Type', 'ekiline-block-collection')} initialOpen>
           <SelectControl
             label={__('Choose the carousel mode', 'ekiline-block-collection')}
             value={ChooseType}
@@ -147,7 +145,7 @@ export default function Edit ({ attributes, setAttributes }) {
 
         {/* Atributos adicionales para carrusel de contenido */}
         {ChooseType === 'content' && (
-          <PanelBody title={__('Content Query Settings', 'ekiline-block-collection')} initialOpen={true}>
+          <PanelBody title={__('Content Query Settings', 'ekiline-block-collection')} initialOpen>
             <SelectControl
               label={__('Post type', 'ekiline-block-collection')}
               value={attributes.contentPostType}
@@ -161,7 +159,7 @@ export default function Edit ({ attributes, setAttributes }) {
             />
 
             {attributes.contentPostType === 'post' && (
-              <RenderCategorySelector/>
+              <RenderCategorySelector />
             )}
 
             {attributes.contentPostType !== 'search' && (
@@ -182,7 +180,7 @@ export default function Edit ({ attributes, setAttributes }) {
                   value={attributes.contentOrder}
                   options={[
                     { label: __('Descending', 'ekiline-block-collection'), value: 'desc' },
-                    { label: __('Ascending',  'ekiline-block-collection'), value: 'asc' }
+                    { label: __('Ascending', 'ekiline-block-collection'), value: 'asc' }
                   ]}
                   onChange={(value) => setAttributes({ contentOrder: value })}
                 />
@@ -197,7 +195,7 @@ export default function Edit ({ attributes, setAttributes }) {
             )}
 
             {attributes.contentPostType === 'search' && (
-              <RenderPostsSearch/>
+              <RenderPostsSearch />
             )}
 
             <ToggleControl
@@ -218,7 +216,7 @@ export default function Edit ({ attributes, setAttributes }) {
         )}
 
         {/* Atributos de look */}
-        <PanelBody title={__('Carousel Look', 'ekiline-block-collection')} initialOpen={true}>
+        <PanelBody title={__('Carousel Look', 'ekiline-block-collection')} initialOpen>
 
           <ToggleControl
             label={__('Show controls', 'ekiline-block-collection')}
@@ -247,10 +245,10 @@ export default function Edit ({ attributes, setAttributes }) {
               { name: 'Medio', slug: 'medium', size: '720px' },
               { name: 'Full', slug: 'full', size: '100vh' }
             ]}
-            fallbackFontSize={ parseInt(attributes.SetHeight) || 540 }
-            units={[ 'px', 'vh', '%' ]}
-            value={ attributes.SetHeight }
-            onChange={( newSize ) => {
+            fallbackFontSize={parseInt(attributes.SetHeight) || 540}
+            units={['px', 'vh', '%']}
+            value={attributes.SetHeight}
+            onChange={(newSize) => {
               setAttributes({ SetHeight: newSize || '540px' })
             }}
             withSlider

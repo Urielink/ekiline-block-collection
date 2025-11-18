@@ -1,7 +1,6 @@
-import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
+import { useBlockProps, InnerBlocks } from '@wordpress/block-editor'
 
-export default function save({ attributes }) {
-
+export default function save ({ attributes }) {
   const blockProps = useBlockProps.save({
     className:
       'group-offcanvas' +
@@ -11,7 +10,7 @@ export default function save({ attributes }) {
       attributes.ocHeight,
     'data-bs-backdrop': attributes.ocBackdrop,
     'data-bs-scroll': attributes.ocScroll
-  });
+  })
 
   return (
     <div
@@ -22,5 +21,5 @@ export default function save({ attributes }) {
     >
       <InnerBlocks.Content />
     </div>
-  );
+  )
 }

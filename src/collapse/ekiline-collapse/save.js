@@ -1,6 +1,6 @@
-import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
+import { useBlockProps, InnerBlocks } from '@wordpress/block-editor'
 
-export default function save({ attributes }) {
+export default function save ({ attributes }) {
   const blockProps = useBlockProps.save({
     className: 'collapse' + (attributes.horizontal ? ' collapse-horizontal' : ''),
     style: {
@@ -9,22 +9,22 @@ export default function save({ attributes }) {
     contentStyle: {
       minWidth: attributes.horizontal ? '300px' : null
     }
-  });
+  })
 
-  function CollapseWrapper() {
+  function CollapseWrapper () {
     if (attributes.horizontal) {
       return (
         <div style={blockProps.contentStyle}>
           <InnerBlocks.Content />
         </div>
-      );
+      )
     }
-    return <InnerBlocks.Content />;
+    return <InnerBlocks.Content />
   }
 
   return (
     <div {...blockProps}>
       <CollapseWrapper />
     </div>
-  );
+  )
 }

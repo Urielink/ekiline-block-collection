@@ -7,7 +7,7 @@ import { useSelect } from '@wordpress/data'
 import { useEffect } from 'react'
 import CarouselMarkup from '../utils/CarouselMarkup'
 
-export function GalleryEdit({ attributes, setAttributes }) {
+export function GalleryEdit ({ attributes, setAttributes }) {
   // Al inicio del componente, todas las variables.
   const {
     GalleryImagesIds = [],
@@ -79,7 +79,7 @@ export function GalleryEdit({ attributes, setAttributes }) {
             gallery
             value={GalleryImagesIds}
             render={({ open }) => (
-              <Button onClick={open} variant="primary">
+              <Button onClick={open} variant='primary'>
                 {GalleryImagesIds.length > 0
                   ? __('Edit Gallery', 'ekiline-block-collection')
                   : __('Select Images for Gallery', 'ekiline-block-collection')}
@@ -87,9 +87,10 @@ export function GalleryEdit({ attributes, setAttributes }) {
             )}
           />
         </MediaUploadCheck>
-        {richImages.length > 0 ? (
-            <div className="gallery-preview">
-              { richImages.map((img, i) => (
+        {richImages.length > 0
+          ? (
+            <div className='gallery-preview'>
+              {richImages.map((img, i) => (
                 <img
                   key={i}
                   src={img.featuredImageSizes.thumbnail?.source_url || img.featuredImage}
@@ -98,26 +99,26 @@ export function GalleryEdit({ attributes, setAttributes }) {
                 />
               ))}
             </div>
-          ) : (
-            <div className="components-placeholder__instructions">
-            {__('Waiting images…', 'ekiline-block-collection')}
-            </div> 
-        )}
+            )
+          : (
+            <div className='components-placeholder__instructions'>
+              {__('Waiting images…', 'ekiline-block-collection')}
+            </div>
+            )}
       </div>
       {/* previsualizar encapsulado. */}
       <div style={{ position: 'relative' }}>
         {
           richImages && richImages.length > 0
-          ? <CarouselMarkup attributes={attributes} posts={richImages} disabledControls={true} />
-          : <></>
+            ? <CarouselMarkup attributes={attributes} posts={richImages} disabledControls />
+            : <></>
         }
       </div>
     </div>
   )
 }
 
-export function GallerySave({ attributes }) {
-
+export function GallerySave ({ attributes }) {
   // Al inicio del componente, todas las variables.
   const carColumns = attributes.SetColumns > 1 ? ` carousel-multiple x${attributes.SetColumns}` : ''
   const carAnimation = attributes.SetAnimation ? ` carousel-${attributes.SetAnimation}` : ''
@@ -130,7 +131,7 @@ export function GallerySave({ attributes }) {
     className: 'carousel-gallery carousel' + carColumns + carAnimation,
     'data-bs-ride': carAutoplay,
     'data-bs-interval': carInterval,
-    style: { height: minHeight },
+    style: { height: minHeight }
   })
 
   // Asignar nuevas variables de colores, color de texto para caption y selectores.

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name:       Ekiline Block Collection
  * Description:       Actions and blocks based on bootstrap 5 (carousel, collapse and more). Includes Bootstrap library. Support this project to add new features and expand a customer service branch.
@@ -18,13 +19,14 @@
 /**
  * Adds a settings link on the plugins page.
  */
-function ekiline_block_collection_settings_links($links_array, $plugin_file_name){
+function ekiline_block_collection_settings_links($links_array, $plugin_file_name)
+{
     // New link.
     $site_admin_plugin_page_url = admin_url('admin.php?page=ekiline-block-collection');
     $new_link = sprintf('<a href="%s">%s</a>', $site_admin_plugin_page_url, __('Settings', 'ekiline-block-collection'));
 
     // Add to links array.
-    if(strpos($plugin_file_name, basename(__FILE__))) {
+    if (strpos($plugin_file_name, basename(__FILE__))) {
         array_unshift($links_array, $new_link);
     }
     return $links_array;
@@ -75,8 +77,8 @@ function ekiline_block_collection_ekiline_collection_block_init()
         'navbar/ekiline-navbar'
     );
 
-    foreach ( $blocks as $block ) {
-        register_block_type( __DIR__ . '/build/' . $block );
+    foreach ($blocks as $block) {
+        register_block_type(__DIR__ . '/build/' . $block);
     }
 
     // Caso especial, el carrusel es un bloque hibrido.
@@ -99,7 +101,8 @@ add_action('init', 'ekiline_block_collection_ekiline_collection_block_init');
  * Lo mimso para scripts.
  * $script_deps[] = 'my-additional-script-handler';
  */
-function ekiline_block_collection_required_scripts() {
+function ekiline_block_collection_required_scripts()
+{
     // Nombres de los manejadores de estilos y scripts.
     $text_domain        = 'ekiline-block-collection';
     $bs_style_handler   = $text_domain . '-bootstrap-style';
@@ -108,8 +111,8 @@ function ekiline_block_collection_required_scripts() {
     $ebc_script_handler = $text_domain . '-block-scripts';
 
     // Registrar siempre, encolar condicionalmente.
-    wp_register_style( $bs_style_handler, plugin_dir_url(__FILE__) . 'includes/assets/css/bootstrap.min.css', array(), '5', 'all' );
-    wp_register_script( $bs_script_handler, plugin_dir_url(__FILE__) . 'includes/assets/js/bootstrap.bundle.min.js', array(), '5', true );
+    wp_register_style($bs_style_handler, plugin_dir_url(__FILE__) . 'includes/assets/css/bootstrap.min.css', array(), '5', 'all');
+    wp_register_script($bs_script_handler, plugin_dir_url(__FILE__) . 'includes/assets/js/bootstrap.bundle.min.js', array(), '5', true);
 
     // Obtener opciones de administracion (../wp-admin/admin.php?page=ekiline-block-collection).
     $load_bs_css = get_option('ekiline_block_collection_bootstrap_css', '1') === '1';
@@ -117,24 +120,24 @@ function ekiline_block_collection_required_scripts() {
 
     // Inicializar arrays de dependencias.
     $style_deps  = $load_bs_css ? array( $bs_style_handler ) : array();
-    $script_deps = $load_bs_js  ? array( $bs_script_handler ) : array();
+    $script_deps = $load_bs_js ? array( $bs_script_handler ) : array();
 
     // Encolar si el usuario no ha deshabilitado.
-    if ( $load_bs_css ) {
-        wp_enqueue_style( $bs_style_handler );
+    if ($load_bs_css) {
+        wp_enqueue_style($bs_style_handler);
     }
 
-    if ( $load_bs_js ) {
-        wp_enqueue_script( $bs_script_handler );
+    if ($load_bs_js) {
+        wp_enqueue_script($bs_script_handler);
     }
 
     // Estilos y scripts personalizados que dependen de Bootstrap.
-    wp_register_style( $ebc_style_handler, plugin_dir_url(__FILE__) . 'includes/assets/css/ekiline-styles.css', $style_deps, '1.0', 'all' );
-    wp_register_script( $ebc_script_handler, plugin_dir_url(__FILE__) . 'includes/assets/js/ekiline-scripts.js', $script_deps, '1.0', true );
+    wp_register_style($ebc_style_handler, plugin_dir_url(__FILE__) . 'includes/assets/css/ekiline-styles.css', $style_deps, '1.0', 'all');
+    wp_register_script($ebc_script_handler, plugin_dir_url(__FILE__) . 'includes/assets/js/ekiline-scripts.js', $script_deps, '1.0', true);
 
     // Encolar estilos y scripts personalizados.
-    wp_enqueue_style( $ebc_style_handler );
-    wp_enqueue_script( $ebc_script_handler );
+    wp_enqueue_style($ebc_style_handler);
+    wp_enqueue_script($ebc_script_handler);
 }
 add_action('wp_enqueue_scripts', 'ekiline_block_collection_required_scripts', 1);
 
@@ -146,9 +149,10 @@ add_action('wp_enqueue_scripts', 'ekiline_block_collection_required_scripts', 1)
  *
  * @see https://developer.wordpress.org/block-editor/how-to-guides/enqueueing-assets-in-the-editor/
  */
-function ekiline_block_collection_editor_assets() {
+function ekiline_block_collection_editor_assets()
+{
     // Solo cargar en el área de administración.
-    if ( ! is_admin() ) {
+    if (! is_admin()) {
         return;
     }
 
@@ -158,8 +162,8 @@ function ekiline_block_collection_editor_assets() {
     $bs_script_handler  = $text_domain . '-editor-bootstrap-script';
 
     // Registrar siempre, encolar condicionalmente.
-    wp_register_style( $bs_style_handler, plugin_dir_url(__FILE__) . 'includes/assets/css/bootstrap.min.css', array(), '5', 'all' );
-    wp_register_script( $bs_script_handler, plugin_dir_url(__FILE__) . 'includes/assets/js/bootstrap.bundle.min.js', array(), '5', true );
+    wp_register_style($bs_style_handler, plugin_dir_url(__FILE__) . 'includes/assets/css/bootstrap.min.css', array(), '5', 'all');
+    wp_register_script($bs_script_handler, plugin_dir_url(__FILE__) . 'includes/assets/js/bootstrap.bundle.min.js', array(), '5', true);
 
     // Obtener opciones de administracion (../wp-admin/admin.php?page=ekiline-block-collection).
     $load_bs_css = get_option('ekiline_block_collection_bootstrap_css_editor', '1') === '1';
@@ -167,39 +171,40 @@ function ekiline_block_collection_editor_assets() {
 
     // Inicializar arrays de dependencias.
     $style_deps  = $load_bs_css ? array( $bs_style_handler ) : array();
-    $script_deps = $load_bs_js  ? array( $bs_script_handler ) : array();
+    $script_deps = $load_bs_js ? array( $bs_script_handler ) : array();
 
     // Encolar si el usuario no ha deshabilitado.
-    if ( $load_bs_css ) {
-        wp_enqueue_style( $bs_style_handler );
+    if ($load_bs_css) {
+        wp_enqueue_style($bs_style_handler);
     }
 
-    if ( $load_bs_js ) {
-        wp_enqueue_script( $bs_script_handler );
+    if ($load_bs_js) {
+        wp_enqueue_script($bs_script_handler);
     }
 
     // incorporar dashicons.
     wp_enqueue_style('dashicons');
 
 }
-add_action( 'enqueue_block_assets', 'ekiline_block_collection_editor_assets' );
+add_action('enqueue_block_assets', 'ekiline_block_collection_editor_assets');
 
 /**
  * Enqueue block editor assets, hooks and filters.
  *
  * @see https://developer.wordpress.org/news/2024/09/how-to-build-a-multi-block-plugin/
  */
-function ekiline_block_collection_editor_filters(){
-	wp_register_script(
-		'ekiline-global-hooks',
-		plugins_url( 'build/index.js', __FILE__ ),
-		array('wp-hooks', 'wp-blocks'),
-		filemtime( plugin_dir_path( __FILE__ ) . 'build/index.js' ),
-		true
-	);
+function ekiline_block_collection_editor_filters()
+{
+    wp_register_script(
+        'ekiline-global-hooks',
+        plugins_url('build/index.js', __FILE__),
+        array('wp-hooks', 'wp-blocks'),
+        filemtime(plugin_dir_path(__FILE__) . 'build/index.js'),
+        true
+    );
     wp_enqueue_script('ekiline-global-hooks');
 }
-add_action( 'enqueue_block_editor_assets', 'ekiline_block_collection_editor_filters' );
+add_action('enqueue_block_editor_assets', 'ekiline_block_collection_editor_filters');
 
 /**
  * Other features.

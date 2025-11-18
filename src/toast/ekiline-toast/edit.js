@@ -1,17 +1,17 @@
-import { __ } from '@wordpress/i18n';
-import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, SelectControl } from '@wordpress/components';
+import { __ } from '@wordpress/i18n'
+import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor'
+import { PanelBody, SelectControl } from '@wordpress/components'
 
-export default function Edit({ attributes, setAttributes }) {
-  const blockProps = useBlockProps({ 
-    className: 'group-toast',
-  });
-  const PARENT_ALLOWED_BLOCKS = ['ekiline-block-collection/ekiline-toast-item'];
+export default function Edit ({ attributes, setAttributes }) {
+  const blockProps = useBlockProps({
+    className: 'group-toast'
+  })
+  const PARENT_ALLOWED_BLOCKS = ['ekiline-block-collection/ekiline-toast-item']
   const CHILD_TEMPLATE = [
     ['ekiline-block-collection/ekiline-toast-item', {
       lock: { remove: false, move: true }
     }]
-  ];
+  ]
 
   return (
     <div {...blockProps}>
@@ -41,5 +41,5 @@ export default function Edit({ attributes, setAttributes }) {
         <InnerBlocks allowedBlocks={PARENT_ALLOWED_BLOCKS} template={CHILD_TEMPLATE} />
       </div>
     </div>
-  );
+  )
 }
