@@ -152,9 +152,9 @@ export default function Edit ({ attributes, setAttributes }) {
               label={__('Post type', 'ekiline-block-collection')}
               value={attributes.contentPostType}
               options={[
-                { label: 'Post', value: 'post' },
-                { label: 'Page', value: 'page' },
-                { label: 'Search & Pick', value: 'search' } // nuevo modo manual
+                { label: __('Post', 'ekiline-block-collection'), value: 'post' },
+                { label: __('Page', 'ekiline-block-collection'), value: 'page' },
+                { label: __('Search & Pick', 'ekiline-block-collection'), value: 'search' } // nuevo modo manual
                 // Puedes agregar más post types si están registrados
               ]}
               onChange={(value) => setAttributes({ contentPostType: value })}
@@ -170,9 +170,9 @@ export default function Edit ({ attributes, setAttributes }) {
                   label={__('Order by', 'ekiline-block-collection')}
                   value={attributes.contentOrderBy}
                   options={[
-                    { label: 'Date', value: 'date' },
-                    { label: 'Title', value: 'title' },
-                    { label: 'Random', value: 'rand' }
+                    { label: __('Date', 'ekiline-block-collection'), value: 'date' },
+                    { label: __('Title', 'ekiline-block-collection'), value: 'title' },
+                    { label: __('Random', 'ekiline-block-collection'), value: 'rand' }
                   ]}
                   onChange={(value) => setAttributes({ contentOrderBy: value })}
                 />
@@ -181,8 +181,8 @@ export default function Edit ({ attributes, setAttributes }) {
                   label={__('Order', 'ekiline-block-collection')}
                   value={attributes.contentOrder}
                   options={[
-                    { label: 'Descending', value: 'desc' },
-                    { label: 'Ascending', value: 'asc' }
+                    { label: __('Descending', 'ekiline-block-collection'), value: 'desc' },
+                    { label: __('Ascending',  'ekiline-block-collection'), value: 'asc' }
                   ]}
                   onChange={(value) => setAttributes({ contentOrder: value })}
                 />
