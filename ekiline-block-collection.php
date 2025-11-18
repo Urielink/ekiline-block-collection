@@ -85,10 +85,10 @@ function ekiline_block_collection_ekiline_collection_block_init()
     );
     register_block_type(__DIR__ . '/build/carousel/ekiline-carousel-slide');
 
-    // Language plugin for PHP.
-    load_plugin_textdomain('ekiline-block-collection', false, basename(dirname(__FILE__)) . '/languages/');
-    // Language plugin for JS Blocks.
-    wp_set_script_translations('ekiline-block-collection-ekiline-block-collection-editor-script', 'ekiline-block-collection', plugin_dir_path(__FILE__) . 'languages');
+    // // Language plugin for PHP.
+    // load_plugin_textdomain('ekiline-block-collection', false, basename(dirname(__FILE__)) . '/languages/');
+    // // Language plugin for JS Blocks.
+    // wp_set_script_translations('ekiline-block-collection-ekiline-block-collection-editor-script', 'ekiline-block-collection', plugin_dir_path(__FILE__) . 'languages');
 }
 add_action('init', 'ekiline_block_collection_ekiline_collection_block_init');
 
