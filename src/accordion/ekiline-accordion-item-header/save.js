@@ -1,17 +1,17 @@
-import { useBlockProps, RichText } from '@wordpress/block-editor';
-import { hexToRgb } from '../../shared/collection';
+import { useBlockProps, RichText } from '@wordpress/block-editor'
+import { hexToRgb } from '../../shared/collection'
 
-export default function save({ attributes }) {
+export default function save ({ attributes }) {
   const blockProps = useBlockProps.save({
     className: 'accordion-header'
-  });
+  })
 
   const buttonClasses = blockProps.className.replace(
     'wp-block-ekiline-block-collection-ekiline-accordion-item-header accordion-header',
     'accordion-button'
-  );
+  )
 
-  // En caso de color de fondo en boton: 
+  // En caso de color de fondo en boton:
   // obtener backgroundColor de blockProps.style y sobreescribir el valor --bs-accordion-btn-focus-box-shadow.
   if (blockProps.style && blockProps.style.backgroundColor) {
     blockProps.style = {
@@ -32,5 +32,5 @@ export default function save({ attributes }) {
         style={blockProps.style || null}
       />
     </div>
-  );
+  )
 }

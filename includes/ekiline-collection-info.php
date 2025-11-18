@@ -24,93 +24,96 @@
 /**
  * Nuevo menu de opciones.
  */
-function ekiline_block_collection_menu(){
-	// pagina de opciones.
-	add_menu_page(
-		__('Ekiline BC Options', 'ekiline-block-collection'),		// page_title
-		__('Ekiline BC', 'ekiline-block-collection'),				// menu_title
-		'manage_options', 											// capability
-		'ekiline-block-collection', 								// menu_slug
-		'ekiline_block_collection_options', 						// function
-		'dashicons-block-default', 										// icon_url
-		100 														// position
-	);
+function ekiline_block_collection_menu()
+{
+    // pagina de opciones.
+    add_menu_page(
+        __('Ekiline BC Options', 'ekiline-block-collection'),		// page_title
+        __('Ekiline BC', 'ekiline-block-collection'),				// menu_title
+        'manage_options', 											// capability
+        'ekiline-block-collection', 								// menu_slug
+        'ekiline_block_collection_options', 						// function
+        'dashicons-block-default', 										// icon_url
+        100 														// position
+    );
 
-	// subpagina de informacion.
-	add_submenu_page(
-		'ekiline-block-collection',							// parent_slug
-		__('About', 'ekiline-block-collection'),			// page_title
-		__('About', 'ekiline-block-collection'),			// menu_title
-		'manage_options',									// capability
-		'ekiline-block-collection-about',					// menu_slug
-		'ekiline_block_collection_about'					// function
-	);
+    // subpagina de informacion.
+    add_submenu_page(
+        'ekiline-block-collection',							// parent_slug
+        __('About', 'ekiline-block-collection'),			// page_title
+        __('About', 'ekiline-block-collection'),			// menu_title
+        'manage_options',									// capability
+        'ekiline-block-collection-about',					// menu_slug
+        'ekiline_block_collection_about'					// function
+    );
 
-	// ocultar opciones de manera provisional
-	// remove_menu_page('ekiline-block-collection');
+    // ocultar opciones de manera provisional
+    // remove_menu_page('ekiline-block-collection');
 }
 add_action('admin_menu', 'ekiline_block_collection_menu');
 
 /**
  * Opciones.
  */
-function ekiline_block_collection_register_settings(){
-	// Verificar el nonce antes de proceder.
-	if (isset($_POST['ekiline_block_collection_nonce']) && !empty($_POST['ekiline_block_collection_nonce'])) {
-		// Deshacer las barras invertidas antes de la verificación y validar.
-		$nonce = sanitize_key(wp_unslash($_POST['ekiline_block_collection_nonce']));
-		if (!wp_verify_nonce($nonce, 'ekiline_block_collection_nonce_action')) {
-			// scape the message to prevent XSS attacks
-			die(esc_html(__('Unauthorized, invalid nonce.', 'ekiline-block-collection')));
-		}
-	}
+function ekiline_block_collection_register_settings()
+{
+    // Verificar el nonce antes de proceder.
+    if (isset($_POST['ekiline_block_collection_nonce']) && !empty($_POST['ekiline_block_collection_nonce'])) {
+        // Deshacer las barras invertidas antes de la verificación y validar.
+        $nonce = sanitize_key(wp_unslash($_POST['ekiline_block_collection_nonce']));
+        if (!wp_verify_nonce($nonce, 'ekiline_block_collection_nonce_action')) {
+            // scape the message to prevent XSS attacks
+            die(esc_html(__('Unauthorized, invalid nonce.', 'ekiline-block-collection')));
+        }
+    }
 
-	//Poner en cola estilos de administración y scripts para las páginas de Ekiline Block Collection.
-	$allowed_pages = array('ekiline-block-collection', 'ekiline-block-collection-about');
-	$current_page  = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
+    //Poner en cola estilos de administración y scripts para las páginas de Ekiline Block Collection.
+    $allowed_pages = array('ekiline-block-collection', 'ekiline-block-collection-about');
+    $current_page  = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
 
-	// Solo para las páginas de Ekiline Block Collection.
-	if (in_array($current_page, $allowed_pages)) {
-		add_action('admin_print_styles', 'ekiline_collection_options_css', 100);
-		add_action('admin_print_scripts', 'ekiline_collection_options_js', 100);
-	}
+    // Solo para las páginas de Ekiline Block Collection.
+    if (in_array($current_page, $allowed_pages)) {
+        add_action('admin_print_styles', 'ekiline_collection_options_css', 100);
+        add_action('admin_print_scripts', 'ekiline_collection_options_js', 100);
+    }
 
-	// Argumentos para ekiline_block_collection_bootstrap_css
-	$args_ekiline_block_collection_bootstrap_css = array(
-		'type' 				=> 'string',
-		'sanitize_callback' => 'sanitize_text_field',
-		'default' 			=> '1'
-	);
-	// Argumentos para ekiline_block_collection_bootstrap_js
-	$args_ekiline_block_collection_bootstrap_js = array(
-		'type' 				=> 'string',
-		'sanitize_callback' => 'sanitize_text_field',
-		'default' 			=> '1'
-	);
-	// Argumentos para ekiline_block_collection_bootstrap_css_editor
-	$args_ekiline_block_collection_bootstrap_css_editor = array(
-		'type' 				=> 'string',
-		'sanitize_callback' => 'sanitize_text_field',
-		'default' 			=> '1'
-	);
-	// Argumentos para ekiline_block_collection_bootstrap_js_editor
-	$args_ekiline_block_collection_bootstrap_js_editor = array(
-		'type' 				=> 'string',
-		'sanitize_callback' => 'sanitize_text_field',
-		'default' 			=> '1'
-	);
+    // Argumentos para ekiline_block_collection_bootstrap_css
+    $args_ekiline_block_collection_bootstrap_css = array(
+        'type' 				=> 'string',
+        'sanitize_callback' => 'sanitize_text_field',
+        'default' 			=> '1'
+    );
+    // Argumentos para ekiline_block_collection_bootstrap_js
+    $args_ekiline_block_collection_bootstrap_js = array(
+        'type' 				=> 'string',
+        'sanitize_callback' => 'sanitize_text_field',
+        'default' 			=> '1'
+    );
+    // Argumentos para ekiline_block_collection_bootstrap_css_editor
+    $args_ekiline_block_collection_bootstrap_css_editor = array(
+        'type' 				=> 'string',
+        'sanitize_callback' => 'sanitize_text_field',
+        'default' 			=> '1'
+    );
+    // Argumentos para ekiline_block_collection_bootstrap_js_editor
+    $args_ekiline_block_collection_bootstrap_js_editor = array(
+        'type' 				=> 'string',
+        'sanitize_callback' => 'sanitize_text_field',
+        'default' 			=> '1'
+    );
 
-	//register our settings
-	register_setting('ekiline-block-collection-settings-group-frontend', 'ekiline_block_collection_bootstrap_css', $args_ekiline_block_collection_bootstrap_css);
-	register_setting('ekiline-block-collection-settings-group-frontend', 'ekiline_block_collection_bootstrap_js', $args_ekiline_block_collection_bootstrap_js);
-	register_setting('ekiline-block-collection-settings-group-editor', 'ekiline_block_collection_bootstrap_css_editor', $args_ekiline_block_collection_bootstrap_css_editor);
-	register_setting('ekiline-block-collection-settings-group-editor', 'ekiline_block_collection_bootstrap_js_editor', $args_ekiline_block_collection_bootstrap_js_editor);
+    //register our settings
+    register_setting('ekiline-block-collection-settings-group-frontend', 'ekiline_block_collection_bootstrap_css', $args_ekiline_block_collection_bootstrap_css);
+    register_setting('ekiline-block-collection-settings-group-frontend', 'ekiline_block_collection_bootstrap_js', $args_ekiline_block_collection_bootstrap_js);
+    register_setting('ekiline-block-collection-settings-group-editor', 'ekiline_block_collection_bootstrap_css_editor', $args_ekiline_block_collection_bootstrap_css_editor);
+    register_setting('ekiline-block-collection-settings-group-editor', 'ekiline_block_collection_bootstrap_js_editor', $args_ekiline_block_collection_bootstrap_js_editor);
 }
 add_action('admin_init', 'ekiline_block_collection_register_settings');
 
 
-function ekiline_block_collection_options(){
-	?>
+function ekiline_block_collection_options()
+{
+    ?>
 <div class="wrap">
 	<h1>
 		<span class="dashicons dashicons-layout" aria-hidden="true"></span>
@@ -143,23 +146,23 @@ function ekiline_block_collection_options(){
 							<?php esc_html_e('Sometimes your site may experience duplication due to the use of similar resources included in themes or plugins. If you notice this on the frontend, you can disable the Bootstrap resources included in this plugin.', 'ekiline-block-collection'); ?>
 						</p>
 						<?php
-							/**
-							 * Formulario de opciones.
-							 * https://codex.wordpress.org/index.php?title=Creating_Options_Pages&oldid=97268
-							 */
-						?>
+                            /**
+                             * Formulario de opciones.
+                             * https://codex.wordpress.org/index.php?title=Creating_Options_Pages&oldid=97268
+                             */
+    ?>
 						<form method="post" action="options.php">
 							<?php
-							// Agregar el nonce de seguridad
-							wp_nonce_field('ekiline_block_collection_nonce_action', 'ekiline_block_collection_nonce');
-							settings_fields('ekiline-block-collection-settings-group-frontend');
-							?>
+        // Agregar el nonce de seguridad
+        wp_nonce_field('ekiline_block_collection_nonce_action', 'ekiline_block_collection_nonce');
+    settings_fields('ekiline-block-collection-settings-group-frontend');
+    ?>
 							<label>
 								<span><?php esc_html_e('Styles', 'ekiline-block-collection'); ?></span>
 								<?php
-									$option_name_one = 'ekiline_block_collection_bootstrap_css';
-									$current_value_one = get_option($option_name_one, '1');
-								?>
+            $option_name_one = 'ekiline_block_collection_bootstrap_css';
+    $current_value_one = get_option($option_name_one, '1');
+    ?>
 								<select name="<?php echo esc_attr($option_name_one); ?>">
 									<option value="1" <?php selected($current_value_one, '1'); ?>><?php esc_html_e('Activate CSS', 'ekiline-block-collection'); ?></option>
 									<option value="0" <?php selected($current_value_one, '0'); ?>><?php esc_html_e('Deactivate CSS', 'ekiline-block-collection'); ?></option>
@@ -169,9 +172,9 @@ function ekiline_block_collection_options(){
 							<label>
 								<span><?php esc_html_e('Scripts', 'ekiline-block-collection'); ?></span>
 								<?php
-									$option_name_two = 'ekiline_block_collection_bootstrap_js';
-									$current_value_two = get_option($option_name_two, '1');
-								?>
+        $option_name_two = 'ekiline_block_collection_bootstrap_js';
+    $current_value_two = get_option($option_name_two, '1');
+    ?>
 								<select name="<?php echo esc_attr($option_name_two); ?>">
 									<option value="1" <?php selected($current_value_two, '1'); ?>><?php esc_html_e('Activate JS', 'ekiline-block-collection'); ?></option>
 									<option value="0" <?php selected($current_value_two, '0'); ?>><?php esc_html_e('Deactivate JS', 'ekiline-block-collection'); ?></option>
@@ -191,23 +194,23 @@ function ekiline_block_collection_options(){
 						</h3>
 						<p><?php esc_html_e('This block collection also incorporates Bootstrap resources into the WordPress editor, allowing for a better user experience (UX) when managing blocks. You can disable this plugin if necessary.', 'ekiline-block-collection'); ?></p>
 						<?php
-							/**
-							 * Formulario de opciones.
-							 * https://codex.wordpress.org/index.php?title=Creating_Options_Pages&oldid=97268
-							 */
-						?>
+                            /**
+                             * Formulario de opciones.
+                             * https://codex.wordpress.org/index.php?title=Creating_Options_Pages&oldid=97268
+                             */
+    ?>
 						<form method="post" action="options.php">
 							<?php
-							// Agregar el nonce de seguridad
-							wp_nonce_field('ekiline_block_collection_nonce_action', 'ekiline_block_collection_nonce');
-							settings_fields('ekiline-block-collection-settings-group-editor');
-							?>
+        // Agregar el nonce de seguridad
+        wp_nonce_field('ekiline_block_collection_nonce_action', 'ekiline_block_collection_nonce');
+    settings_fields('ekiline-block-collection-settings-group-editor');
+    ?>
 							<label>
 								<span><?php esc_html_e('Styles', 'ekiline-block-collection'); ?></span>
 								<?php
-									$option_name_one = 'ekiline_block_collection_bootstrap_css_editor';
-									$current_value_one = get_option($option_name_one, '1');
-								?>
+            $option_name_one = 'ekiline_block_collection_bootstrap_css_editor';
+    $current_value_one = get_option($option_name_one, '1');
+    ?>
 								<select name="<?php echo esc_attr($option_name_one); ?>">
 									<option value="1" <?php selected($current_value_one, '1'); ?>><?php esc_html_e('Activate CSS', 'ekiline-block-collection'); ?></option>
 									<option value="0" <?php selected($current_value_one, '0'); ?>><?php esc_html_e('Deactivate CSS', 'ekiline-block-collection'); ?></option>
@@ -217,9 +220,9 @@ function ekiline_block_collection_options(){
 							<label>
 								<span><?php esc_html_e('Scripts', 'ekiline-block-collection'); ?></span>
 								<?php
-									$option_name_two = 'ekiline_block_collection_bootstrap_js_editor';
-									$current_value_two = get_option($option_name_two, '1');
-								?>
+        $option_name_two = 'ekiline_block_collection_bootstrap_js_editor';
+    $current_value_two = get_option($option_name_two, '1');
+    ?>
 								<select name="<?php echo esc_attr($option_name_two); ?>">
 									<option value="1" <?php selected($current_value_two, '1'); ?>><?php esc_html_e('Activate JS', 'ekiline-block-collection'); ?></option>
 									<option value="0" <?php selected($current_value_two, '0'); ?>><?php esc_html_e('Deactivate JS', 'ekiline-block-collection'); ?></option>
@@ -258,8 +261,9 @@ function ekiline_block_collection_options(){
 /**
  * Ekiline, info.
  */
-function ekiline_block_collection_about(){ 
-	?>
+function ekiline_block_collection_about()
+{
+    ?>
 <div class="wrap">
 	<h1>
 		<span class="dashicons dashicons-layout" aria-hidden="true"></span>
@@ -297,14 +301,14 @@ function ekiline_block_collection_about(){
 						</p>
 						<p>
 							<?php
-							printf(
-								/* translators: %1$s is replaced with links data */
-								esc_html__('%1$s with Ekiline and %2$s, %3$s.', 'ekiline-block-collection'),
-								'<a href="' . esc_url('https://ekiline.com/gana/') . '" target="_blank" rel="noopener">' . esc_html__('Make money', 'ekiline-block-collection') . '</a>',
-								'<a href="' . esc_url('https://ekiline.com/fondeo/') . '" target="_blank" rel="noopener">' . esc_html__('fund its development', 'ekiline-block-collection') . '</a>',
-								'<a href="' . esc_url('https://ekiline.com/') . '" target="_blank" rel="noopener">' . esc_html__('discover how', 'ekiline-block-collection') . '</a>'
-							);
-							?>
+                            printf(
+                                /* translators: %1$s is replaced with links data */
+                                esc_html__('%1$s with Ekiline and %2$s, %3$s.', 'ekiline-block-collection'),
+                                '<a href="' . esc_url('https://ekiline.com/gana/') . '" target="_blank" rel="noopener">' . esc_html__('Make money', 'ekiline-block-collection') . '</a>',
+                                '<a href="' . esc_url('https://ekiline.com/fondeo/') . '" target="_blank" rel="noopener">' . esc_html__('fund its development', 'ekiline-block-collection') . '</a>',
+                                '<a href="' . esc_url('https://ekiline.com/') . '" target="_blank" rel="noopener">' . esc_html__('discover how', 'ekiline-block-collection') . '</a>'
+                            );
+    ?>
 						</p>
 					</div>
 				</div>
@@ -340,23 +344,23 @@ function ekiline_block_collection_about(){
 						</ul>
 
 						<?php
-						/**
-						 * Widget RSS reader.
-						 */
-						$rss_instance = array(
-							'title' => 'Ekiline Tips:',
-							'url'   => 'http://ekiline.com/feed/',
-							'items' => 5,
-											);
-						$rss_args     = array(
-							'before_widget' => '<div class="ekiline-notice widget %s">',
-							'after_widget'  => '</div>',
-							'before_title'  => '<h4 class="widgettitle">',
-							'after_title'   => '</h4>',
-							'target'        => '_blank',
-						);
-						the_widget('WP_Widget_RSS', $rss_instance, $rss_args);
-						?>
+                        /**
+                         * Widget RSS reader.
+                         */
+                        $rss_instance = array(
+    'title' => 'Ekiline Tips:',
+    'url'   => 'http://ekiline.com/feed/',
+    'items' => 5,
+                    );
+    $rss_args     = array(
+        'before_widget' => '<div class="ekiline-notice widget %s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4 class="widgettitle">',
+        'after_title'   => '</h4>',
+        'target'        => '_blank',
+    );
+    the_widget('WP_Widget_RSS', $rss_instance, $rss_args);
+    ?>
 
 						<p><small><strong><?php esc_html_e('Limited liability:', 'ekiline-block-collection'); ?></strong>
 						<?php esc_html_e('As a courtesy, we provide information on how to use certain third-party products, but we do not directly support their use and we are not responsible for the functions, reliability or compatibility of such products. The names, trademarks and logos of third parties are registered trademarks of their respective owners.', 'ekiline-block-collection'); ?></small></p>
@@ -370,11 +374,11 @@ function ekiline_block_collection_about(){
 	<p style="text-align: right;">
 		<small>
 			<?php
-				/* translators: %1$s is replaced with date data */
-				printf(esc_html__('&copy; Copyright %1$s Ekiline', 'ekiline-block-collection'), esc_attr(gmdate('Y')));
-				esc_html_e('All rights reserved. Ekiline developed by', 'ekiline-block-collection');
-				printf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://bixnia.com/'), esc_html__('BIXNIA', 'ekiline-block-collection'));
-			?>
+                /* translators: %1$s is replaced with date data */
+                printf(esc_html__('&copy; Copyright %1$s Ekiline', 'ekiline-block-collection'), esc_attr(gmdate('Y')));
+    esc_html_e('All rights reserved. Ekiline developed by', 'ekiline-block-collection');
+    printf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://bixnia.com/'), esc_html__('BIXNIA', 'ekiline-block-collection'));
+    ?>
 		</small>
 	</p>
 </div>
@@ -384,8 +388,9 @@ function ekiline_block_collection_about(){
 /**
  * Estilos para esta página.
  */
-function ekiline_collection_options_css(){
-	$css = '
+function ekiline_collection_options_css()
+{
+    $css = '
 		.ekiline-notice, .ekiline-notice h4, .ekiline-notice ul, .ekiline-notice ul li{ margin:0px 5px 0px 0px !important; padding-bottom:0px !important; display: inline-block; }
 		.ekiline-notice ul li, .welcome-panel::before{ display:none;}
 		.welcome-panel-header{box-sizing:border-box;margin-left:auto;margin-right:auto;max-width:1500px;width:100%;padding:40px;}
@@ -395,17 +400,18 @@ function ekiline_collection_options_css(){
 		.welcome-panel-column form select {width: 60%;}
 		.button {width: 100%; text-align:center;}
 	';
-	echo '<style id="ekiline-block-collection-settings-css">' . esc_html($css) . '</style>';
+    echo '<style id="ekiline-block-collection-settings-css">' . esc_html($css) . '</style>';
 }
 /**
  * Scripts para esta página.
  */
-function ekiline_collection_options_js(){
-	$js = '
+function ekiline_collection_options_js()
+{
+    $js = '
 	jQuery(document).ready(function($){
 		var random = Math.floor(Math.random() * 5) + 1;
 		$(\'.ekiline-notice ul li:nth-child(\' + random + \')\').delay(2000).show(100);
 	});
 	';
-	echo '<script type="text/javascript" id="ekiline-block-collection-settings-js">' . esc_js($js) . '</script>';
+    echo '<script type="text/javascript" id="ekiline-block-collection-settings-js">' . esc_js($js) . '</script>';
 }

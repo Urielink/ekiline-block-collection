@@ -4,7 +4,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
+import { useBlockProps, InnerBlocks } from '@wordpress/block-editor'
 
 /**
  * The save function defines the way in which the different attributes should
@@ -15,19 +15,18 @@ import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
  *
  * @return {Element} Element to render.
  */
-export default function save({attributes}) {
+export default function save ({ attributes }) {
+  // Clases y atributos auxiliares, incluir save.
+  const blockProps = useBlockProps.save({
+    className: 'carousel-slide carousel-item'
+  })
 
-    // Clases y atributos auxiliares, incluir save.
-    const blockProps = useBlockProps.save({
-      className: 'carousel-slide carousel-item'
-    })
+  // Add inline style.
+  blockProps.style = { height: attributes.parentSetHeight }
 
-	// Add inline style.
-	blockProps.style = { height: attributes.parentSetHeight };
-
-	return (
-		<div { ...blockProps }>
-			<InnerBlocks.Content />
-		</div>
-	);
+  return (
+    <div {...blockProps}>
+      <InnerBlocks.Content />
+    </div>
+  )
 }

@@ -1,9 +1,8 @@
-import { useBlockProps } from '@wordpress/block-editor';
-import { renderNavbar } from './renderers/navbar-render';
+import { useBlockProps } from '@wordpress/block-editor'
+import { renderNavbar } from './renderers/navbar-render'
 
-export default function save( { attributes } ) {
-
-  const blockProps = useBlockProps.save();
+export default function save ({ attributes }) {
+  const blockProps = useBlockProps.save()
 
   // Asignar nuevas variables de colores, color de texto y brand.
   const textColorNav = attributes.textColor
@@ -21,8 +20,7 @@ export default function save( { attributes } ) {
 
   return renderNavbar({
     attributes,
-    blockProps: blockProps,
+    blockProps,
     mode: 'save'
-  });
-
+  })
 }
