@@ -1,11 +1,12 @@
 # Copyright (C) 2025 Uri Lazcano (Urielink)
 # This file is distributed under the GPL-2.0-or-later.
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Ekiline Block Collection 2.1.1\n"
+"Project-Id-Version: Ekiline Block Collection 3.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ekiline-block-collection\n"
-"POT-Creation-Date: 2025-11-18T04:56:39+00:00\n"
-"PO-Revision-Date: 2025-11-17 23:29-0600\n"
+"POT-Creation-Date: 2025-11-18 01:30-0600\n"
+"PO-Revision-Date: 2025-11-18 01:34-0600\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
