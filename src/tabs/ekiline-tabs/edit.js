@@ -1,33 +1,33 @@
-import { __ } from '@wordpress/i18n';
-import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor';
-import { replaceSpecialChars } from '../../shared/collection';
-import { TextControl, Button, PanelBody, SelectControl } from '@wordpress/components';
+import { __ } from '@wordpress/i18n'
+import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor'
+import { replaceSpecialChars } from '../../shared/collection'
+import { TextControl, Button, PanelBody, SelectControl } from '@wordpress/components'
 
 /**
  * Imports the icons used in the block.
  */
-import icons from '../../shared/icons';
-const { tabsIcon } = icons;
+import icons from '../../shared/icons'
+const { tabsIcon } = icons
 
-export default function Edit(props) {
-  const { attributes, setAttributes } = props;
+export default function Edit (props) {
+  const { attributes, setAttributes } = props
 
   // variables predeterminadas.
-  const { tabsNumber = 3, template, isConfigured = false } = attributes;
+  const { tabsNumber = 3, template, isConfigured = false } = attributes
   // clase de envoltorio.
   const addClassNames = [
     'tabs-wrapper',
     attributes.tabsDesign
-  ].filter(Boolean).join(' ');
+  ].filter(Boolean).join(' ')
 
   const blockProps = useBlockProps({
     className: addClassNames
-  });
+  })
   // bloques permitidos.
   const allowedBlocks = [
     'ekiline-block-collection/ekiline-tabs-navbar',
     'ekiline-block-collection/ekiline-tabs-container'
-  ];
+  ]
 
   // Auxiliar, resuelve la plantilla desde attributes.template
   const resolvedTemplate = Array.isArray(template)
@@ -35,19 +35,19 @@ export default function Edit(props) {
     : (() => {
         if (typeof template === 'string' && template.trim()) {
           try {
-            const parsedTemplate = JSON.parse(template);
-            return Array.isArray(parsedTemplate) ? parsedTemplate : [];
+            const parsedTemplate = JSON.parse(template)
+            return Array.isArray(parsedTemplate) ? parsedTemplate : []
           } catch (error) {
-            return [];
+            return []
           }
         }
-        return [];
-      })();
+        return []
+      })()
 
   // Función para crear la plantilla dinámica.
   // Devuelve un arreglo de contenidos.
   // Se guarda en attributes.template
-  function createTemplate(tabsNumber) {
+  function createTemplate (tabsNumber) {
     const newTemplate = [
       [
         'ekiline-block-collection/ekiline-tabs-navbar',
@@ -79,8 +79,8 @@ export default function Edit(props) {
           ]
         ])
       ]
-    ];
-    return newTemplate;
+    ]
+    return newTemplate
   }
 
   // Estado inicial: si no hay plantilla, mostrar controles
@@ -88,34 +88,34 @@ export default function Edit(props) {
     return (
       <div {...blockProps}>
         <div className='setup-tabs'>
-          <div className="components-placeholder__label">
+          <div className='components-placeholder__label'>
             {tabsIcon}
             <label>{__('Tabs', 'ekiline-block-collection')}</label>
           </div>
-          <div className="components-placeholder__instructions">
+          <div className='components-placeholder__instructions'>
             {__('Displays content in tab format.', 'ekiline-block-collection')}
           </div>
           <div className='tabs-form'>
             <TextControl
               label={__('Number of tabs', 'ekiline-block-collection')}
-              type="number"
+              type='number'
               min={2}
               max={30}
               value={tabsNumber}
               onChange={(val) => setAttributes({ tabsNumber: parseInt(val) || 1 })}
-              className="number-tabs"
+              className='number-tabs'
             />
             <Button
-              variant="primary"
+              variant='primary'
               onClick={() => {
-                const newTemplate = createTemplate(tabsNumber);
+                const newTemplate = createTemplate(tabsNumber)
                 setAttributes({
                   template: newTemplate,
                   isConfigured: true
-                });
+                })
               }}
               disabled={tabsNumber < 2 || tabsNumber > 30}
-              className="create-tabs"
+              className='create-tabs'
             >
               {__('Create tabs', 'ekiline-block-collection')}
             </Button>
@@ -129,7 +129,7 @@ export default function Edit(props) {
           </label>
         </div>
       </div>
-    );
+    )
   }
 
   // Si ya está configurado, mostrar el contenido real
@@ -143,7 +143,7 @@ export default function Edit(props) {
             options={[
               { label: __('Tabs', 'ekiline-block-collection'), value: 'nav-tabs' },
               { label: __('Pills', 'ekiline-block-collection'), value: 'nav-pills' },
-              { label: __('Underline', 'ekiline-block-collection'), value: 'nav-underline' },
+              { label: __('Underline', 'ekiline-block-collection'), value: 'nav-underline' }
             ]}
             onChange={(tabsStyle) => setAttributes({ tabsStyle })}
           />
@@ -154,7 +154,7 @@ export default function Edit(props) {
               { label: __('Select', 'ekiline-block-collection'), value: '' },
               { label: __('Justify center', 'ekiline-block-collection'), value: 'justify-content-center' },
               { label: __('Justify end', 'ekiline-block-collection'), value: 'justify-content-end' },
-              { label: __('Nav fill', 'ekiline-block-collection'), value: 'nav-fill' },
+              { label: __('Nav fill', 'ekiline-block-collection'), value: 'nav-fill' }
             ]}
             onChange={(tabsAlign) => setAttributes({ tabsAlign })}
           />
@@ -163,7 +163,7 @@ export default function Edit(props) {
             value={attributes.tabsDesign}
             options={[
               { label: __('Select', 'ekiline-block-collection'), value: '' },
-              { label: __('Vertical', 'ekiline-block-collection'), value: 'd-flex align-items-start' },
+              { label: __('Vertical', 'ekiline-block-collection'), value: 'd-flex align-items-start' }
             ]}
             onChange={(tabsDesign) => setAttributes({ tabsDesign })}
           />
@@ -179,5 +179,5 @@ export default function Edit(props) {
         // templateLock="all"
       />
     </div>
-  );
+  )
 }

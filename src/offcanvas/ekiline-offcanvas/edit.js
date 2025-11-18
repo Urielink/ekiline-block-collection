@@ -1,37 +1,36 @@
-import { __ } from '@wordpress/i18n';
-import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor';
-import{ PanelBody, SelectControl, ToggleControl } from '@wordpress/components';
+import { __ } from '@wordpress/i18n'
+import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor'
+import { PanelBody, SelectControl, ToggleControl } from '@wordpress/components'
 
-export default function Edit({ attributes, setAttributes }) {
-
+export default function Edit ({ attributes, setAttributes }) {
   const allowedBlocks = [
     'ekiline-block-collection/ekiline-offcanvas-header',
     'ekiline-block-collection/ekiline-offcanvas-body'
-  ];
+  ]
 
   const template = [
     ['ekiline-block-collection/ekiline-offcanvas-header', { lock: { move: true, remove: false } }],
     ['ekiline-block-collection/ekiline-offcanvas-body', { lock: { move: true, remove: false } }]
-  ];
+  ]
 
   // Block container styles.
   const blockProps = useBlockProps({
     className: 'group-offcanvas'
-  });
+  })
 
   // En caso de color de texto en header.
-  if (blockProps.style.color){
+  if (blockProps.style.color) {
     blockProps.style = {
       ...blockProps.style
     }
   }
 
-  function UserRemind() {
+  function UserRemind () {
     return (
       <div className='block-note'>
-        { attributes.anchor ? '#' + attributes.anchor + __(' is the anchor you should include in the advanced options of a button.', 'ekiline-block-collection') : __('Do not forget to add an #anchor. ', 'ekiline-block-collection') }
+        {attributes.anchor ? '#' + attributes.anchor + __(' is the anchor you should include in the advanced options of a button.', 'ekiline-block-collection') : __('Do not forget to add an #anchor. ', 'ekiline-block-collection')}
       </div>
-    );
+    )
   }
 
   return (
@@ -104,5 +103,5 @@ export default function Edit({ attributes, setAttributes }) {
       <InnerBlocks allowedBlocks={allowedBlocks} template={template} />
       <UserRemind />
     </div>
-  );
+  )
 }

@@ -1,7 +1,7 @@
-import { BorderBoxControl } from '@wordpress/components';
-import { useSelect } from '@wordpress/data';
+import { BorderBoxControl } from '@wordpress/components'
+import { useSelect } from '@wordpress/data'
 
-import { sanitizeBorderValue } from './utils';
+import { sanitizeBorderValue } from './utils'
 
 /**
  * Wrapper around Gutenberg's BorderBoxControl that guarantees sanitised values.
@@ -21,42 +21,40 @@ const BorderBoxField = ({
       if (!withThemeColors) {
         return {
           themeColors: undefined,
-          themeDisableCustomColors: undefined,
-        };
+          themeDisableCustomColors: undefined
+        }
       }
 
-      const settings = select('core/block-editor').getSettings?.() || {};
+      const settings = select('core/block-editor').getSettings?.() || {}
 
       return {
         themeColors: settings.colors || [],
-        themeDisableCustomColors: settings.disableCustomColors,
-      };
+        themeDisableCustomColors: settings.disableCustomColors
+      }
     },
     [withThemeColors]
-  );
+  )
 
-  const resolvedColors = colorsProp ?? themeColors;
+  const resolvedColors = colorsProp ?? themeColors
   const resolvedDisableCustomColors =
     typeof disableCustomColorsProp !== 'undefined'
       ? disableCustomColorsProp
-      : themeDisableCustomColors;
+      : themeDisableCustomColors
   const resolvedEnableAlpha =
     typeof enableAlphaProp !== 'undefined'
       ? enableAlphaProp
-      : resolvedDisableCustomColors
-      ? false
-      : true;
+      : !resolvedDisableCustomColors
 
-  const normalizedValue = sanitizeBorderValue(value, defaultBorder);
+  const normalizedValue = sanitizeBorderValue(value, defaultBorder)
 
   const handleChange = (nextValue) => {
     if (typeof onChange !== 'function') {
-      return;
+      return
     }
 
-    const sanitized = sanitizeBorderValue(nextValue, defaultBorder);
-    onChange(sanitized);
-  };
+    const sanitized = sanitizeBorderValue(nextValue, defaultBorder)
+    onChange(sanitized)
+  }
 
   return (
     <BorderBoxControl
@@ -67,7 +65,7 @@ const BorderBoxField = ({
       enableAlpha={resolvedEnableAlpha}
       {...props}
     />
-  );
-};
+  )
+}
 
-export default BorderBoxField;
+export default BorderBoxField
