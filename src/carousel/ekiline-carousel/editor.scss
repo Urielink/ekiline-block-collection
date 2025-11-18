@@ -1,0 +1,74 @@
+/****
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-ekiline-block-collection-ekiline-carousel{
+	background-color: #fbfbfb;
+}
+
+.carousel-manual > .block-editor-inner-blocks > .block-editor-block-list__layout {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  overflow-x: scroll;
+  scrollbar-width: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  gap: 1rem;
+  padding-bottom: 3rem;
+
+  &::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f0f0f0;
+  }
+}
+
+  .carousel-manual > .block-editor-inner-blocks >.block-editor-block-list__layout > .block-list-appender {
+    top: 100%;
+    width: 32px;
+    height: 32px;
+    position: sticky;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px 0px 0px 0px;
+    margin-bottom: -3rem;
+  }
+
+.carousel-manual .wp-block-group.preview-carousel-item {
+  width: 100%;
+  scroll-snap-align: start;
+  border: 1px dashed #ccc;
+  padding: 1rem;
+}
+
+.setup-gallery {
+  align-items: center;
+  box-sizing: border-box;
+  color: #1e1e1e;
+  display: flex;
+  font-size: 13px;
+  gap: 16px;
+  margin: 0;
+  padding: 24px;
+  position: relative;
+  text-align: left;
+  width: 100%;
+  -moz-font-smoothing: subpixel-antialiased;
+  -webkit-font-smoothing: subpixel-antialiased;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px #1e1e1e;
+  outline: 1px solid transparent;
+  align-content: center;
+}

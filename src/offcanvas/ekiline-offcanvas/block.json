@@ -1,0 +1,35 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ekiline-block-collection/ekiline-offcanvas",
+  "version": "0.1.0",
+  "textdomain": "ekiline-block-collection",
+  "title": "Offcanvas",
+  "category": "design",
+  "icon": "star",
+  "description": "Add your content here, then invoque with a link anchor #anchor.",
+  "example": {},
+  "supports": {
+    "anchor": true,
+    "color": {
+      "background": true,
+      "gradients": true,
+      "text": true
+    }
+  },
+  "attributes": {
+    "ocPosition": { "type": "string", "default": " offcanvas-end" },
+    "ocWidth": { "type": "string", "default": "" },
+    "ocHeight": { "type": "string", "default": "" },
+    "ocScroll": { "type": "boolean", "default": false },
+    "ocBackdrop": { "type": "string", "default": "true" },
+    "ocDisplay": { "type": "string", "default": " offcanvas" },
+    "parentAnchor": { "type": "string" }
+  },
+  "providesContext": {
+    "ekiline-offcanvas/anchor": "anchor"
+  },
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

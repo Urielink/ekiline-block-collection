@@ -1,0 +1,48 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ekiline-block-collection/ekiline-accordion-item",
+	"version": "0.1.0",
+	"textdomain": "ekiline-block-collection",
+  "title": "Accordion item",
+  "category": "design",
+  "parent": ["ekiline-block-collection/ekiline-accordion"],
+	"icon": "star",
+  "description": "Set title and content in your accordion container.",
+	"example": {},
+  "supports": {
+    "anchor": true,
+    "html": false,
+    "reusable": false
+  },
+  "attributes": {
+    "showDefault": {
+      "type": "boolean",
+      "default": false
+    },
+    "keepOpen": {
+      "type": "boolean",
+      "default": true
+    },
+    "itemTarget": {
+      "type": "string",
+      "default": ""
+    },
+    "content": {
+      "type": "string",
+      "source": "html",
+      "selector": "button",
+      "default": "Item title."
+    }
+  },
+  "usesContext": ["ekiline-accordion/anchor"],
+  "providesContext": {
+    "ekiline-accordion-item/anchor": "anchor",
+    "ekiline-accordion-item/itemTarget": "itemTarget",
+    "ekiline-accordion-item/showDefault": "showDefault",
+    "ekiline-accordion-item/keepOpen": "keepOpen"
+  },
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

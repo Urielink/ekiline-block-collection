@@ -1,0 +1,1360 @@
+# Copyright (C) 2025 Uri Lazcano (Urielink)
+# This file is distributed under the GPL-2.0-or-later.
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ekiline Block Collection 3.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ekiline-block-collection\n"
+"POT-Creation-Date: 2025-11-18 01:30-0600\n"
+"PO-Revision-Date: 2025-11-18 01:34-0600\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es_MX\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+"X-Domain: ekiline-block-collection\n"
+
+#. Plugin Name of the plugin
+#: ekiline-block-collection.php includes/ekiline-collection-info.php:117
+msgid "Ekiline Block Collection"
+msgstr "Ekiline Colección de Bloques"
+
+#. Description of the plugin
+#: ekiline-block-collection.php
+msgid "Actions and blocks based on bootstrap 5 (carousel, collapse and more). Includes Bootstrap library. Support this project to add new features and expand a customer service branch."
+msgstr "Acciones y bloques basados ​​en bootstrap 5 (carrusel, colapso y más). Incluye la librería Bootstrap. Apoya este proyecto para agregar nuevas funciones y expandir una rama de servicio al cliente."
+
+#. Author of the plugin
+#: ekiline-block-collection.php
+msgid "Uri Lazcano (Urielink)"
+msgstr "Uri Lazcano (Urielink)"
+
+#. Author URI of the plugin
+#: ekiline-block-collection.php
+msgid "https://ekiline.com/ekiline-block-collection/"
+msgstr "https://ekiline.com/ekiline-block-collection/"
+
+#: ekiline-block-collection.php:23 includes/ekiline-collection-info.php:125
+msgid "Settings"
+msgstr "Configuración"
+
+#: includes/ekiline-carousel-dynamic-render.php:7
+msgid "Previous"
+msgstr "Anterior"
+
+#: includes/ekiline-carousel-dynamic-render.php:8
+msgid "Next"
+msgstr "Siguiente"
+
+#: includes/ekiline-carousel-dynamic-render.php:63
+msgid "No content found for carousel."
+msgstr "No se encontró contenido para el carrusel."
+
+#: includes/ekiline-carousel-dynamic-render.php:136 includes/ekiline-carousel-dynamic-render.php:138 build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/utils/CarouselMarkup.js:75 src/carousel/ekiline-carousel/utils/CarouselMarkup.js:80
+msgid "Read more"
+msgstr "Leer más"
+
+#: includes/ekiline-collection-info.php:30
+msgid "Ekiline BC Options"
+msgstr "Opciones de Ekiline BC"
+
+#: includes/ekiline-collection-info.php:31
+msgid "Ekiline BC"
+msgstr "Ekiline BC"
+
+#: includes/ekiline-collection-info.php:42 includes/ekiline-collection-info.php:43
+msgid "About"
+msgstr "Acerca de"
+
+#: includes/ekiline-collection-info.php:64
+msgid "Unauthorized, invalid nonce."
+msgstr "No autorizado, nonce inválido."
+
+#: includes/ekiline-collection-info.php:129
+msgid "Handling styles and scripts of this plugin."
+msgstr "Administración de estilos y scripts de este plugin."
+
+#: includes/ekiline-collection-info.php:140
+msgid "Bootstrap in Frontend"
+msgstr "Bootstrap en el frontend"
+
+#: includes/ekiline-collection-info.php:143
+msgid "Sometimes your site may experience duplication due to the use of similar resources included in themes or plugins. If you notice this on the frontend, you can disable the Bootstrap resources included in this plugin."
+msgstr "A veces tu sitio puede experimentar duplicación debido al uso de recursos similares incluidos en temas o plugins. Si lo notas en el frontend, puedes desactivar los recursos de Bootstrap incluidos en este plugin."
+
+#: includes/ekiline-collection-info.php:158 includes/ekiline-collection-info.php:206
+msgid "Styles"
+msgstr "Estilos"
+
+#: includes/ekiline-collection-info.php:164 includes/ekiline-collection-info.php:212
+msgid "Activate CSS"
+msgstr "Activar CSS"
+
+#: includes/ekiline-collection-info.php:165 includes/ekiline-collection-info.php:213
+msgid "Deactivate CSS"
+msgstr "Desactivar CSS"
+
+#: includes/ekiline-collection-info.php:170 includes/ekiline-collection-info.php:218
+msgid "Scripts"
+msgstr "Scripts"
+
+#: includes/ekiline-collection-info.php:176 includes/ekiline-collection-info.php:224
+msgid "Activate JS"
+msgstr "Activar JS"
+
+#: includes/ekiline-collection-info.php:177 includes/ekiline-collection-info.php:225
+msgid "Deactivate JS"
+msgstr "Desactivar JS"
+
+#: includes/ekiline-collection-info.php:180
+msgid "Save Frontend Settings"
+msgstr "Guardar ajustes del frontend"
+
+#: includes/ekiline-collection-info.php:190
+msgid "Bootstrap in WordPress Editor."
+msgstr "Bootstrap en el editor de WordPress."
+
+#: includes/ekiline-collection-info.php:192
+msgid "This block collection also incorporates Bootstrap resources into the WordPress editor, allowing for a better user experience (UX) when managing blocks. You can disable this plugin if necessary."
+msgstr "Esta colección de bloques también incorpora recursos de Bootstrap en el editor de WordPress, lo que permite una mejor experiencia de usuario (UX) al gestionar bloques. Puedes desactivar este plugin si es necesario."
+
+#: includes/ekiline-collection-info.php:228
+msgid "Save Editor Settings"
+msgstr "Guardar ajustes del editor"
+
+#: includes/ekiline-collection-info.php:236 includes/ekiline-collection-info.php:242
+msgid "Docs"
+msgstr "Documentación"
+
+#: includes/ekiline-collection-info.php:239
+msgid "About this plugin"
+msgstr "Acerca de este plugin"
+
+#: includes/ekiline-collection-info.php:245
+msgid "Website"
+msgstr "Sitio web"
+
+#: includes/ekiline-collection-info.php:266
+msgid "About Ekiline Block Collection"
+msgstr "Acerca de Ekiline Block Collection"
+
+#: includes/ekiline-collection-info.php:274
+msgid "Thanks for using this plugin!"
+msgstr "¡Gracias por usar este plugin!"
+
+#: includes/ekiline-collection-info.php:276
+msgid "Find more information to improve your skills when use it."
+msgstr "Encuentra más información para mejorar tus habilidades al utilizarlo."
+
+#: includes/ekiline-collection-info.php:283
+msgid "Add an extra to the creation and delivery of your projects."
+msgstr "Agrega un extra a la creación y entrega de tus proyectos."
+
+#: includes/ekiline-collection-info.php:286
+msgid "Quick use guide in Keynote or Powerpoint to freely customize and deliver to your clients."
+msgstr "Guía rápida de uso en Keynote o Powerpoint para personalizar y entregar libremente a tus clientes."
+
+#: includes/ekiline-collection-info.php:288
+msgid "More design elements, CSS, HTML and JS available to grow your project."
+msgstr "Más elementos de diseño, CSS, HTML y JS disponibles para hacer crecer tu proyecto."
+
+#: includes/ekiline-collection-info.php:290
+msgid "Ekiline Blocks, plugin with carousel and more options in page editor."
+msgstr "Ekiline Blocks, plugin con carrusel y más opciones en editor de páginas."
+
+#: includes/ekiline-collection-info.php:292
+msgid "Complete clean theme, no warnings or messages."
+msgstr "Tema completamente limpio, sin advertencias ni mensajes."
+
+#: includes/ekiline-collection-info.php:295
+msgid "Buy and download"
+msgstr "Compra y descarga"
+
+#: includes/ekiline-collection-info.php:296
+msgid "FundMe"
+msgstr "Fondeo"
+
+#. translators: %1$s is replaced with links data
+#: includes/ekiline-collection-info.php:302
+msgid "%1$s with Ekiline and %2$s, %3$s."
+msgstr "%1$s con Ekiline y %2$s, %3$s."
+
+#: includes/ekiline-collection-info.php:303
+msgid "Make money"
+msgstr "Gana dinero"
+
+#: includes/ekiline-collection-info.php:304
+msgid "fund its development"
+msgstr "financia su desarrollo"
+
+#: includes/ekiline-collection-info.php:305
+msgid "discover how"
+msgstr "descubre cómo"
+
+#: includes/ekiline-collection-info.php:313
+msgid "About Ekiline"
+msgstr "Acerca de Ekiline"
+
+#: includes/ekiline-collection-info.php:314
+msgid "Ekiline simplifies the creation of a website with WordPress, it is a working method that brings together the standard practices of the internet industry, to facilitate the tasks of planning, design, development and optimization. For more information visit ekiline.com"
+msgstr "Ekiline simplifica la creación de un sitio web con WordPress, es un método de trabajo que reúne las prácticas estándar de la industria de internet, para facilitar las tareas de planeación, diseño, desarrollo y optimización. Para más información visita ekiline.com"
+
+#: includes/ekiline-collection-info.php:315
+msgid "About Uri Lazcano"
+msgstr "Acerca de Uri Lazcano"
+
+#: includes/ekiline-collection-info.php:318
+msgid "Frontend designer established in Mexico City. 10 years developing websites and 10 more years of experience in graphic design for advertising. Check my career and work."
+msgstr "Diseñador frontend establecido en la Ciudad de México. 10 años desarrollando sitios web y 10 años más de experiencia en diseño gráfico para publicidad. Consulta mi trayectoria y trabajo."
+
+#: includes/ekiline-collection-info.php:321
+msgid "WordPress"
+msgstr "WordPress"
+
+#: includes/ekiline-collection-info.php:322
+msgid "Github"
+msgstr "Github"
+
+#: includes/ekiline-collection-info.php:323
+msgid "Linkedin"
+msgstr "Linkedin"
+
+#: includes/ekiline-collection-info.php:324
+msgid "Behance"
+msgstr "Behance"
+
+#: includes/ekiline-collection-info.php:325
+msgid "B I X N I A"
+msgstr "B I X N I A"
+
+#: includes/ekiline-collection-info.php:333
+msgid "Ekiline docs"
+msgstr "Documentación de Ekiline"
+
+#: includes/ekiline-collection-info.php:336
+msgid "Install"
+msgstr "Instalar"
+
+#: includes/ekiline-collection-info.php:337
+msgid "Customize"
+msgstr "Personalizar"
+
+#: includes/ekiline-collection-info.php:338
+msgid "Elements and blocks"
+msgstr "Elementos y bloques"
+
+#: includes/ekiline-collection-info.php:339
+msgid "Compatibility"
+msgstr "Compatibilidad"
+
+#: includes/ekiline-collection-info.php:361
+msgid "Limited liability:"
+msgstr "Responsabilidad limitada:"
+
+#: includes/ekiline-collection-info.php:362
+msgid "As a courtesy, we provide information on how to use certain third-party products, but we do not directly support their use and we are not responsible for the functions, reliability or compatibility of such products. The names, trademarks and logos of third parties are registered trademarks of their respective owners."
+msgstr "Como cortesía, proporcionamos información sobre cómo usar ciertos productos de terceros, pero no brindamos soporte directo para su uso ni somos responsables de las funciones, la fiabilidad o la compatibilidad de dichos productos. Los nombres, marcas y logotipos de terceros son marcas registradas de sus respectivos propietarios."
+
+#. translators: %1$s is replaced with date data
+#: includes/ekiline-collection-info.php:374
+msgid "&copy; Copyright %1$s Ekiline"
+msgstr "&copy; Derechos de autor %1$s Ekiline"
+
+#: includes/ekiline-collection-info.php:375
+msgid "All rights reserved. Ekiline developed by"
+msgstr "Todos los derechos reservados. Ekiline desarrollado por"
+
+#: includes/ekiline-collection-info.php:376
+msgid "BIXNIA"
+msgstr "BIXNIA"
+
+#: build/accordion/ekiline-accordion-item-body/index.js:1 src/accordion/ekiline-accordion-item-body/edit.js:6
+msgid "Item content."
+msgstr "Contenido del elemento."
+
+#: build/accordion/ekiline-accordion-item/index.js:1 src/accordion/ekiline-accordion-item/edit.js:34
+msgid "Accordion Item Params"
+msgstr "Parámetros del elemento del acordeón"
+
+#: build/accordion/ekiline-accordion-item/index.js:1 src/accordion/ekiline-accordion-item/edit.js:36
+msgid "Show element by default."
+msgstr "Mostrar el elemento por defecto."
+
+#: build/accordion/ekiline-accordion-item/index.js:1 src/accordion/ekiline-accordion-item/edit.js:41
+msgid "Toggle."
+msgstr "Alternar."
+
+#: build/accordion/ekiline-accordion-item/index.js:1 src/accordion/ekiline-accordion-item/edit.js:44
+msgid "Close previously active accordion elements."
+msgstr "Cerrar los elementos del acordeón activos anteriormente."
+
+#: build/accordion/ekiline-accordion/index.js:1 src/accordion/ekiline-accordion/edit.js:49
+msgid "Accordion Settings"
+msgstr "Ajustes del acordeón"
+
+#: build/accordion/ekiline-accordion/index.js:1 src/accordion/ekiline-accordion/edit.js:51
+msgid "Use default borders."
+msgstr "Usar bordes predeterminados."
+
+#: build/carousel/ekiline-carousel-slide/index.js:1 src/carousel/ekiline-carousel-slide/edit.js:73
+msgid "Slide title"
+msgstr "Título de la diapositiva"
+
+#: build/carousel/ekiline-carousel-slide/index.js:1 src/carousel/ekiline-carousel-slide/edit.js:74
+msgid "Slide description"
+msgstr "Descripción de la diapositiva"
+
+#: build/carousel/ekiline-carousel-slide/index.js:1 src/carousel/ekiline-carousel-slide/edit.js:77
+msgid "Slide Button"
+msgstr "Botón de la diapositiva"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/variations/gallery.js:84
+msgid "Edit Gallery"
+msgstr "Editar galería"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/variations/gallery.js:85
+msgid "Select Images for Gallery"
+msgstr "Seleccionar imágenes para la galería"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/variations/gallery.js:103
+msgid "Waiting images…"
+msgstr "Esperando imágenes…"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/variations/gallery.js:154
+msgid "No images available."
+msgstr "No hay imágenes disponibles."
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/variations/content.js:95
+msgid "Loading preview…"
+msgstr "Cargando vista previa…"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/variations/content.js:136
+msgid "No posts available."
+msgstr "No hay entradas disponibles."
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:56
+msgid "Categories"
+msgstr "Categorías"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:86 src/carousel/ekiline-carousel/edit.js:104
+msgid "(no title)"
+msgstr "(sin título)"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:110
+msgid "Search & Pick (posts/pages)"
+msgstr "Buscar y elegir (entradas/páginas)"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:135
+msgid "Carousel Type"
+msgstr "Tipo de carrusel"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:137
+msgid "Choose the carousel mode"
+msgstr "Elige el modo del carrusel"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:140
+msgid "Manual (free design)"
+msgstr "Manual (diseño libre)"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:141
+msgid "Gallery"
+msgstr "Galería"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:142
+msgid "Content"
+msgstr "Contenido"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:150
+msgid "Content Query Settings"
+msgstr "Ajustes de consulta de contenido"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:152
+msgid "Post type"
+msgstr "Tipo de contenido"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:155
+msgid "Post"
+msgstr "Entrada"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:156
+msgid "Page"
+msgstr "Página"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:157
+msgid "Search & Pick"
+msgstr "Buscar y elegir"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:170
+msgid "Order by"
+msgstr "Ordenar por"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:173
+msgid "Date"
+msgstr "Fecha"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:174
+msgid "Title"
+msgstr "Título"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:175
+msgid "Random"
+msgstr "Aleatorio"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:181
+msgid "Order"
+msgstr "Orden"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:184
+msgid "Descending"
+msgstr "Descendente"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:185
+msgid "Ascending"
+msgstr "Ascendente"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:191
+msgid "Number of posts"
+msgstr "Número de entradas"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:204
+msgid "Use dynamic loading (PHP)"
+msgstr "Usar carga dinámica (PHP)"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:208
+msgid "Select at least one item"
+msgstr "Selecciona al menos un elemento"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:212
+msgid "Link full slide"
+msgstr "Enlazar la diapositiva completa"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:221
+msgid "Carousel Look"
+msgstr "Aspecto del carrusel"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:224
+msgid "Show controls"
+msgstr "Mostrar controles"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:231
+msgid "Show indicators"
+msgstr "Mostrar indicadores"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:238
+msgid "Auto Play"
+msgstr "Reproducción automática"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:244
+msgid "Carousel height"
+msgstr "Altura del carrusel"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:260
+msgid "Transition in milliseconds"
+msgstr "Transición en milisegundos"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:268
+msgid "Animation type"
+msgstr "Tipo de animación"
+
+#: build/carousel/ekiline-carousel/index.js:1 build/modal/ekiline-modal/index.js:1 build/navbar/ekiline-navbar/index.js:1 build/offcanvas/ekiline-offcanvas/index.js:1 src/carousel/ekiline-carousel/edit.js:271 src/modal/ekiline-modal/edit.js:36 src/modal/ekiline-modal/edit.js:47 src/navbar/ekiline-navbar/edit.js:233
+#: src/offcanvas/ekiline-offcanvas/edit.js:56 src/offcanvas/ekiline-offcanvas/edit.js:68 src/offcanvas/ekiline-offcanvas/edit.js:96
+msgid "Default"
+msgstr "Predeterminado"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:272
+msgid "Fade"
+msgstr "Desvanecer"
+
+#: build/carousel/ekiline-carousel/index.js:1 build/tabs/ekiline-tabs/index.js:1 src/carousel/ekiline-carousel/edit.js:273 src/tabs/ekiline-tabs/edit.js:166
+msgid "Vertical"
+msgstr "Vertical"
+
+#: build/carousel/ekiline-carousel/index.js:1 src/carousel/ekiline-carousel/edit.js:281
+msgid "Columns"
+msgstr "Columnas"
+
+#: build/collapse/ekiline-collapse/index.js:1 src/collapse/ekiline-collapse/edit.js:6
+msgid "Add your content"
+msgstr "Añade tu contenido"
+
+#: build/collapse/ekiline-collapse/index.js:1 build/modal/ekiline-modal/index.js:1 build/offcanvas/ekiline-offcanvas/index.js:1 src/collapse/ekiline-collapse/edit.js:12 src/modal/ekiline-modal/edit.js:23 src/offcanvas/ekiline-offcanvas/edit.js:32
+msgid " is the anchor you should include in the advanced options of a button."
+msgstr " es el ancla que debes incluir en las opciones avanzadas de un botón."
+
+#: build/collapse/ekiline-collapse/index.js:1 build/modal/ekiline-modal/index.js:1 build/offcanvas/ekiline-offcanvas/index.js:1 src/collapse/ekiline-collapse/edit.js:12 src/modal/ekiline-modal/edit.js:23 src/offcanvas/ekiline-offcanvas/edit.js:32
+msgid "Do not forget to add an #anchor. "
+msgstr "No olvide agregar un #ancla. "
+
+#: build/collapse/ekiline-collapse/index.js:1 src/collapse/ekiline-collapse/edit.js:20
+msgid "Collapse Params"
+msgstr "Parámetros de Collapse"
+
+#: build/collapse/ekiline-collapse/index.js:1 src/collapse/ekiline-collapse/edit.js:22
+msgid "Horizontal collapse"
+msgstr "Collapse horizontal"
+
+#: build/index.js:1 src/shared/filters/buttons.js:32
+msgid "Link to Block (Ekiline)"
+msgstr "Enlace a bloque (Ekiline)"
+
+#: build/index.js:1 src/shared/filters/buttons.js:34 src/shared/filters/images.js:34
+msgid "Anchor block name"
+msgstr "Nombre de ancla del bloque"
+
+#: build/index.js:1 src/shared/filters/buttons.js:39 src/shared/filters/images.js:39
+msgid "Choose block"
+msgstr "Elegir bloque"
+
+#: build/index.js:1 src/shared/filters/buttons.js:42 src/shared/filters/images.js:42
+msgid "None"
+msgstr "Ninguno"
+
+#: build/index.js:1 src/shared/filters/buttons.js:43 src/shared/filters/images.js:43
+msgid "Collapse"
+msgstr "Collapse"
+
+#: build/index.js:1 src/shared/filters/buttons.js:44 src/shared/filters/images.js:44
+msgid "Modal"
+msgstr "Modal"
+
+#: build/index.js:1 build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:204 src/shared/filters/buttons.js:45 src/shared/filters/images.js:45
+msgid "Offcanvas"
+msgstr "Offcanvas"
+
+#: build/index.js:1 src/shared/filters/buttons.js:50 src/shared/filters/images.js:50
+msgid "Is close button?"
+msgstr "¿Es botón de cierre?"
+
+#: build/index.js:1 src/shared/filters/buttons.js:53 src/shared/filters/images.js:53
+msgid "No."
+msgstr "No."
+
+#: build/index.js:1 src/shared/filters/buttons.js:53 src/shared/filters/images.js:53
+msgid "Yes."
+msgstr "Sí."
+
+#: build/index.js:1 src/shared/filters/images.js:32
+msgid "Link to Ekiline Block"
+msgstr "Enlace a bloque de Ekiline"
+
+#: build/index.js:1 src/shared/filters/popovers.js:43
+msgid "Button to Popover (Ekiline)"
+msgstr "Botón para Popover (Ekiline)"
+
+#: build/index.js:1 src/shared/filters/popovers.js:45
+msgid "Popover text to show."
+msgstr "Texto del popover a mostrar."
+
+#: build/index.js:1 src/shared/filters/popovers.js:50
+msgid "Popover position"
+msgstr "Posición de popover"
+
+#: build/index.js:1 src/shared/filters/popovers.js:53
+msgid "Auto"
+msgstr "Automático"
+
+#: build/index.js:1 build/offcanvas/ekiline-offcanvas/index.js:1 src/offcanvas/ekiline-offcanvas/edit.js:48 src/shared/filters/popovers.js:54
+msgid "Top"
+msgstr "Superior"
+
+#: build/index.js:1 build/modal/ekiline-modal/index.js:1 build/offcanvas/ekiline-offcanvas/index.js:1 src/modal/ekiline-modal/edit.js:37 src/offcanvas/ekiline-offcanvas/edit.js:45 src/shared/filters/popovers.js:55
+msgid "Right"
+msgstr "Derecha"
+
+#: build/index.js:1 build/modal/ekiline-modal/index.js:1 build/offcanvas/ekiline-offcanvas/index.js:1 src/modal/ekiline-modal/edit.js:38 src/offcanvas/ekiline-offcanvas/edit.js:46 src/shared/filters/popovers.js:56
+msgid "Bottom"
+msgstr "Inferior"
+
+#: build/index.js:1 build/modal/ekiline-modal/index.js:1 build/offcanvas/ekiline-offcanvas/index.js:1 src/modal/ekiline-modal/edit.js:39 src/offcanvas/ekiline-offcanvas/edit.js:47 src/shared/filters/popovers.js:57
+msgid "Left"
+msgstr "Izquierda"
+
+#: build/index.js:1 src/shared/filters/popovers.js:62
+msgid "Is tooltip"
+msgstr "Es tooltip"
+
+#: build/index.js:1 src/shared/border-box/border-radius-control.js:23
+msgid "Border radius"
+msgstr "Radio del borde"
+
+#: build/index.js:1 src/shared/filters/border-enhancer.js:134 src/shared/filters/border-enhancer.js:138
+msgid "Border"
+msgstr "Borde"
+
+#: build/modal/ekiline-modal-button-resize/index.js:1 src/modal/ekiline-modal-button-resize/edit.js:14 src/modal/ekiline-modal-button-resize/save.js:14
+msgid "Resize button"
+msgstr "Botón reajustable"
+
+#: build/modal/ekiline-modal/index.js:1 src/modal/ekiline-modal/edit.js:31
+msgid "Modal Params"
+msgstr "Parámetros del modal"
+
+#: build/modal/ekiline-modal/index.js:1 src/modal/ekiline-modal/edit.js:33
+msgid "Rise modal"
+msgstr "Ascenso de Modal"
+
+#: build/modal/ekiline-modal/index.js:1 src/modal/ekiline-modal/edit.js:44
+msgid "Size modal"
+msgstr "Tamaño de modal"
+
+#: build/modal/ekiline-modal/index.js:1 build/offcanvas/ekiline-offcanvas/index.js:1 src/modal/ekiline-modal/edit.js:48 src/offcanvas/ekiline-offcanvas/edit.js:57 src/offcanvas/ekiline-offcanvas/edit.js:69
+msgid "Small"
+msgstr "Pequeño"
+
+#: build/modal/ekiline-modal/index.js:1 build/offcanvas/ekiline-offcanvas/index.js:1 src/modal/ekiline-modal/edit.js:49 src/offcanvas/ekiline-offcanvas/edit.js:59 src/offcanvas/ekiline-offcanvas/edit.js:71
+msgid "Large"
+msgstr "Grande"
+
+#: build/modal/ekiline-modal/index.js:1 src/modal/ekiline-modal/edit.js:50
+msgid "Extra Large"
+msgstr "Extra grande"
+
+#: build/modal/ekiline-modal/index.js:1 build/offcanvas/ekiline-offcanvas/index.js:1 src/modal/ekiline-modal/edit.js:51 src/offcanvas/ekiline-offcanvas/edit.js:60 src/offcanvas/ekiline-offcanvas/edit.js:72
+msgid "Full window"
+msgstr "Ventana completa"
+
+#: build/modal/ekiline-modal/index.js:1 src/modal/ekiline-modal/edit.js:56
+msgid "Center in window"
+msgstr "Centrar en la ventana"
+
+#: build/modal/ekiline-modal/index.js:1 src/modal/ekiline-modal/edit.js:61
+msgid "Enable background click to close"
+msgstr "Permitir cerrar al hacer clic en el fondo"
+
+#: build/modal/ekiline-modal/index.js:1 src/modal/ekiline-modal/edit.js:66
+msgid "Enable ESC key to close"
+msgstr "Permitir cerrar con la tecla ESC"
+
+#: build/modal/ekiline-modal/index.js:1 src/modal/ekiline-modal/edit.js:71
+msgid "Show with timer"
+msgstr "Mostrar con temporizador"
+
+#: build/modal/ekiline-modal/index.js:1 build/toast/ekiline-toast-item/index.js:1 src/modal/ekiline-modal/edit.js:77 src/toast/ekiline-toast-item/edit.js:72
+msgid "Run after page load "
+msgstr "Ejecutar después de cargar la página "
+
+#: build/modal/ekiline-modal/index.js:1 build/toast/ekiline-toast-item/index.js:1 src/modal/ekiline-modal/edit.js:77 src/toast/ekiline-toast-item/edit.js:72
+msgid " milliseconds."
+msgstr " milisegundos."
+
+#: build/modal/ekiline-modal/index.js:1 src/modal/ekiline-modal/edit.js:78
+msgid "Set 0 to disable timer."
+msgstr "Establece 0 para desactivar el temporizador."
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:175
+msgid "Edit navigation"
+msgstr "Editar navegación"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:182 src/navbar/ekiline-navbar/edit.js:446
+msgid "Save menu"
+msgstr "Guardar menú"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:189
+msgid "Toggle JSON preview"
+msgstr "Alternar vista previa JSON"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:198
+msgid "Behavior"
+msgstr "Comportamiento"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:200
+msgid "Style"
+msgstr "Estilo"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:203
+msgid "Collapsible"
+msgstr "Plegable"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:209
+msgid "Breakpoint"
+msgstr "Punto de quiebre"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:212
+msgid "Expand on large screens (lg)"
+msgstr "Expandir en pantallas grandes (lg)"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:213
+msgid "Expand on medium screens (md)"
+msgstr "Expandir en pantallas medianas (md)"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:214
+msgid "Expand on small screens (sm)"
+msgstr "Expandir en pantallas pequeñas (sm)"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:215
+msgid "Always collapsed"
+msgstr "Siempre colapsado"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:220
+msgid "Align nav items"
+msgstr "Alinear elementos de navegación"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:223
+msgid "Start (default)"
+msgstr "Inicio (predeterminado)"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:224
+msgid "Center"
+msgstr "Centro"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:225
+msgid "End"
+msgstr "Final"
+
+#: build/navbar/ekiline-navbar/index.js:1 build/offcanvas/ekiline-offcanvas/index.js:1 src/navbar/ekiline-navbar/edit.js:230 src/offcanvas/ekiline-offcanvas/edit.js:42
+msgid "Position"
+msgstr "Posición"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:234
+msgid "Fixed top"
+msgstr "Fijo superior"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:235
+msgid "Fixed bottom"
+msgstr "Fijo Inferior"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:236
+msgid "Sticky top"
+msgstr "Sticky superior"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:241
+msgid "Container"
+msgstr "Contenedor"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:244
+msgid "Fluid (full-width)"
+msgstr "Fluido (ancho completo)"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:245
+msgid "Fixed-width"
+msgstr "Ancho fijo"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:246
+msgid "No container"
+msgstr "Sin contenedor"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:251
+msgid "Brand text"
+msgstr "Texto de la marca"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:256
+msgid "Brand mode"
+msgstr "Modo de marca"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:259
+msgid "Hidden"
+msgstr "Oculto"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:260
+msgid "Text only"
+msgstr "Solo texto"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:261
+msgid "Logo only"
+msgstr "Solo logotipo"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:262
+msgid "Logo + Text"
+msgstr "Logotipo + texto"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:265
+msgid "Logo uses site logo (requires theme support). Text uses the Brand text field."
+msgstr "El logotipo usa el logo del sitio (requiere soporte del tema). El texto usa el campo Texto de la marca."
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:270
+msgid "Logo source"
+msgstr "Origen del logotipo"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:273
+msgid "Auto (site logo)"
+msgstr "Auto (logo del sitio)"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:274
+msgid "Custom (media library)"
+msgstr "Personalizado (biblioteca de medios)"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:299
+msgid "Replace image"
+msgstr "Reemplazar imagen"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:299
+msgid "Select image"
+msgstr "Seleccionar imagen"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:312
+msgid "Logo width (px)"
+msgstr "Ancho del logotipo (px)"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:324 src/navbar/ekiline-navbar/edit.js:339
+msgid "auto"
+msgstr "auto"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:327
+msgid "Logo height (px)"
+msgstr "Alto del logotipo (px)"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:343
+msgid "Logo alt text"
+msgstr "Texto alternativo del logotipo"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:346
+msgid "Used for accessibility. If empty, site title will be used."
+msgstr "Se usa para accesibilidad. Si queda vacío, se usará el título del sitio."
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:349
+msgid "Link logo to Home"
+msgstr "Enlazar el logotipo a Inicio"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:352
+msgid "Yes"
+msgstr "Sí"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:353
+msgid "No"
+msgstr "No"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:360
+msgid "Tagline"
+msgstr "Lema"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:363
+msgid "Hide"
+msgstr "Ocultar"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:364
+msgid "Show (site tagline)"
+msgstr "Mostrar (lema del sitio)"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:376
+msgid "Shows the WordPress site tagline next to the brand."
+msgstr "Muestra el lema del sitio de WordPress junto a la marca."
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:381
+msgid "Custom tagline (override)"
+msgstr "Lema personalizado (sobrescribir)"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:384
+msgid "This only affects this navbar block. It does not change the site tagline."
+msgstr "Esto solo afecta este bloque de barra de navegación. No cambia el lema del sitio."
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:395
+msgid "Reset to site tagline"
+msgstr "Restablecer al lema del sitio"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:401
+msgid "Target ID (for collapse/offcanvas)"
+msgstr "ID de destino (para collapse/offcanvas)"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:415
+msgid "Must be unique. Leave empty to auto-generate."
+msgstr "Debe ser único. Déjalo vacío para generarlo automáticamente."
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:418
+msgid "Status"
+msgstr "Estado"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:421
+msgid "Editing mode: Use the List block to build your menu, then click \"Save menu\"."
+msgstr "Modo de edición: usa el bloque Lista para crear tu menú y luego haz clic en \"Guardar menú\"."
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:422
+msgid "Preview mode: This is how your navigation will look. Use the toolbar to edit. Clicks are blocked."
+msgstr "Modo de vista previa: así se verá tu navegación. Usa la barra de herramientas para editar. Los clics están bloqueados."
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:433
+msgid "Navbar"
+msgstr "Barra de navegación"
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:436
+msgid "1. Create/edit your menu with Lista. You can nest sublists for dropdowns."
+msgstr "1. Crea/edita tu menú con Lista. Puedes anidar sublistas para los desplegables."
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:438
+msgid "2. Customize the styles from the controls (color, font size, etc.)."
+msgstr "2. Personaliza los estilos desde los controles (color, tamaño de fuente, etc.)."
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:465
+msgid "Showing saved menu data."
+msgstr "Mostrando los datos del menú guardado."
+
+#: build/navbar/ekiline-navbar/index.js:1 src/navbar/ekiline-navbar/edit.js:468
+msgid "No menu saved yet"
+msgstr "Todavía no hay un menú guardado"
+
+#: build/offcanvas/ekiline-offcanvas-body/index.js:1 src/offcanvas/ekiline-offcanvas-body/edit.js:8
+msgid "Add offcanvas content blocks"
+msgstr "Agrega bloques de contenido para el offcanvas"
+
+#: build/offcanvas/ekiline-offcanvas-header/index.js:1 src/offcanvas/ekiline-offcanvas-header/edit.js:12
+msgid "Add offcanvas title"
+msgstr "Agrega un título para el offcanvas"
+
+#: build/offcanvas/ekiline-offcanvas/index.js:1 src/offcanvas/ekiline-offcanvas/edit.js:40
+msgid "Offcanvas Params"
+msgstr "Parámetros del offcanvas"
+
+#: build/offcanvas/ekiline-offcanvas/index.js:1 src/offcanvas/ekiline-offcanvas/edit.js:53
+msgid "Width"
+msgstr "Ancho"
+
+#: build/offcanvas/ekiline-offcanvas/index.js:1 src/offcanvas/ekiline-offcanvas/edit.js:58 src/offcanvas/ekiline-offcanvas/edit.js:70
+msgid "Half"
+msgstr "Mitad"
+
+#: build/offcanvas/ekiline-offcanvas/index.js:1 src/offcanvas/ekiline-offcanvas/edit.js:65
+msgid "Height"
+msgstr "Alto"
+
+#: build/offcanvas/ekiline-offcanvas/index.js:1 src/offcanvas/ekiline-offcanvas/edit.js:77
+msgid "Display view"
+msgstr "Vista de visualización"
+
+#: build/offcanvas/ekiline-offcanvas/index.js:1 src/offcanvas/ekiline-offcanvas/edit.js:80
+msgid "All sizes"
+msgstr "Todos los tamaños"
+
+#: build/offcanvas/ekiline-offcanvas/index.js:1 src/offcanvas/ekiline-offcanvas/edit.js:81
+msgid "Only small"
+msgstr "Solo pequeño"
+
+#: build/offcanvas/ekiline-offcanvas/index.js:1 src/offcanvas/ekiline-offcanvas/edit.js:82
+msgid "Only medium"
+msgstr "Solo mediano"
+
+#: build/offcanvas/ekiline-offcanvas/index.js:1 src/offcanvas/ekiline-offcanvas/edit.js:83
+msgid "Only large"
+msgstr "Solo grande"
+
+#: build/offcanvas/ekiline-offcanvas/index.js:1 src/offcanvas/ekiline-offcanvas/edit.js:88
+msgid "Keep scroll window"
+msgstr "Mantener el desplazamiento de la ventana"
+
+#: build/offcanvas/ekiline-offcanvas/index.js:1 src/offcanvas/ekiline-offcanvas/edit.js:93
+msgid "Backdrop behavior"
+msgstr "Comportamiento del fondo"
+
+#: build/offcanvas/ekiline-offcanvas/index.js:1 src/offcanvas/ekiline-offcanvas/edit.js:97
+msgid "Static"
+msgstr "Estático"
+
+#: build/offcanvas/ekiline-offcanvas/index.js:1 src/offcanvas/ekiline-offcanvas/edit.js:98
+msgid "False"
+msgstr "Falso"
+
+#: build/progress/ekiline-progress-item/index.js:1 build/progress/ekiline-progress/index.js:1 src/progress/ekiline-progress-item/edit.js:29 src/progress/ekiline-progress/edit.js:20
+msgid "Progress bar Settings"
+msgstr "Ajustes de la barra de progreso"
+
+#: build/progress/ekiline-progress-item/index.js:1 src/progress/ekiline-progress-item/edit.js:31
+msgid "Data range min 1% max 100%"
+msgstr "Rango de datos mínimo 1% máximo 100%"
+
+#: build/progress/ekiline-progress-item/index.js:1 src/progress/ekiline-progress-item/edit.js:40
+msgid "Hide text in bar."
+msgstr "Ocultar texto en la barra."
+
+#: build/progress/ekiline-progress-item/index.js:1 src/progress/ekiline-progress-item/edit.js:45
+msgid "Show stripes over background."
+msgstr "Mostrar franjas sobre el fondo."
+
+#: build/progress/ekiline-progress-item/index.js:1 src/progress/ekiline-progress-item/edit.js:52
+msgid "Animate stripes."
+msgstr "Animar franjas."
+
+#: build/progress/ekiline-progress/index.js:1 src/progress/ekiline-progress/edit.js:22
+msgid "Height bar (pixels)"
+msgstr "Altura de barra (píxeles)"
+
+#: build/tabs/ekiline-tab-content/index.js:1 src/tabs/ekiline-tab-content/edit.js:18
+msgid "Add your content and blocks, then copy anchor name to tab content block"
+msgstr "Agrega tu contenido y bloques, luego copia el nombre del ancla en el bloque de contenido de la pestaña"
+
+#: build/tabs/ekiline-tab-link/index.js:1 src/tabs/ekiline-tab-link/edit.js:32
+msgid "Tab Link Params"
+msgstr "Parámetros del enlace de pestaña"
+
+#: build/tabs/ekiline-tab-link/index.js:1 src/tabs/ekiline-tab-link/edit.js:34
+msgid "Copy this value in a Content Tab HTML anchor field."
+msgstr "Copia este valor en el campo de ancla HTML de la pestaña de contenido."
+
+#: build/tabs/ekiline-tabs-container/index.js:1 src/tabs/ekiline-tabs-container/edit.js:14
+msgid "Tab link 1"
+msgstr "Enlace de pestaña 1"
+
+#: build/tabs/ekiline-tabs-container/index.js:1 src/tabs/ekiline-tabs-container/edit.js:17
+msgid "Tab link 2"
+msgstr "Enlace de pestaña 2"
+
+#: build/tabs/ekiline-tabs/index.js:1 src/tabs/ekiline-tabs/edit.js:139
+msgid "Tabs design"
+msgstr "Diseño de pestañas"
+
+#: build/tabs/ekiline-tabs/index.js:1 src/tabs/ekiline-tabs/edit.js:141
+msgid "Tabs style"
+msgstr "Estilo de pestañas"
+
+#: build/tabs/ekiline-tabs/index.js:1 src/tabs/ekiline-tabs/edit.js:93 src/tabs/ekiline-tabs/edit.js:144
+msgid "Tabs"
+msgstr "Pestañas"
+
+#: build/tabs/ekiline-tabs/index.js:1 src/tabs/ekiline-tabs/edit.js:145
+msgid "Pills"
+msgstr "Píldoras"
+
+#: build/tabs/ekiline-tabs/index.js:1 src/tabs/ekiline-tabs/edit.js:146
+msgid "Underline"
+msgstr "Subrayado"
+
+#: build/tabs/ekiline-tabs/index.js:1 src/tabs/ekiline-tabs/edit.js:151
+msgid "Tabs alignment"
+msgstr "Alineación de pestañas"
+
+#: build/tabs/ekiline-tabs/index.js:1 src/tabs/ekiline-tabs/edit.js:154 src/tabs/ekiline-tabs/edit.js:165
+msgid "Select"
+msgstr "Seleccionar"
+
+#: build/tabs/ekiline-tabs/index.js:1 src/tabs/ekiline-tabs/edit.js:155
+msgid "Justify center"
+msgstr "Justificar al centro"
+
+#: build/tabs/ekiline-tabs/index.js:1 src/tabs/ekiline-tabs/edit.js:156
+msgid "Justify end"
+msgstr "Justificar al final"
+
+#: build/tabs/ekiline-tabs/index.js:1 src/tabs/ekiline-tabs/edit.js:157
+msgid "Nav fill"
+msgstr "Relleno de navegación"
+
+#: build/tabs/ekiline-tabs/index.js:1 src/tabs/ekiline-tabs/edit.js:162
+msgid "Distribution"
+msgstr "Distribución"
+
+#: build/tabs/ekiline-tabs/index.js:1 src/tabs/ekiline-tabs/edit.js:96
+msgid "Displays content in tab format."
+msgstr "Muestra contenido en formato de pestañas."
+
+#: build/tabs/ekiline-tabs/index.js:1 src/tabs/ekiline-tabs/edit.js:100
+msgid "Number of tabs"
+msgstr "Número de pestañas"
+
+#: build/tabs/ekiline-tabs/index.js:1 src/tabs/ekiline-tabs/edit.js:120
+msgid "Create tabs"
+msgstr "Crear pestañas"
+
+#: build/tabs/ekiline-tabs/index.js:1 src/tabs/ekiline-tabs/edit.js:126
+msgid "Please enter a number between 2 and 30"
+msgstr "Introduce un número entre 2 y 30"
+
+#: build/tabs/ekiline-tabs/index.js:1 src/tabs/ekiline-tabs/edit.js:127
+msgid "You can change the number of tabs later by adding or removing tab link and tab content blocks."
+msgstr "Puedes cambiar el número de pestañas después añadiendo o eliminando bloques de enlace y contenido de pestaña."
+
+#: build/toast/ekiline-toast-item/index.js:1 src/toast/ekiline-toast-item/edit.js:57
+msgid "Add toast content."
+msgstr "Agrega contenido del toast."
+
+#: build/toast/ekiline-toast-item/index.js:1 src/toast/ekiline-toast-item/edit.js:64
+msgid "Toast Params"
+msgstr "Parámetros del toast"
+
+#: build/toast/ekiline-toast-item/index.js:1 src/toast/ekiline-toast-item/edit.js:66
+msgid "Run by time"
+msgstr "Ejecutar por tiempo"
+
+#: build/toast/ekiline-toast-item/index.js:1 src/toast/ekiline-toast-item/edit.js:73
+msgid " run immediately on page load."
+msgstr " ejecutar inmediatamente al cargar la página."
+
+#: build/toast/ekiline-toast-item/index.js:1 src/toast/ekiline-toast-item/edit.js:78
+msgid "Run at end of page scroll."
+msgstr "Ejecutar al finalizar el desplazamiento de la página."
+
+#: build/toast/ekiline-toast-item/index.js:1 src/toast/ekiline-toast-item/edit.js:91
+msgid "Add toast title"
+msgstr "Agrega título del toast"
+
+#: build/toast/ekiline-toast/index.js:1 src/toast/ekiline-toast/edit.js:19
+msgid "Toast group options"
+msgstr "Opciones del grupo de toasts"
+
+#: build/toast/ekiline-toast/index.js:1 src/toast/ekiline-toast/edit.js:21
+msgid "Display position"
+msgstr "Posición de visualización"
+
+#: build/toast/ekiline-toast/index.js:1 src/toast/ekiline-toast/edit.js:24
+msgid "Bottom left"
+msgstr "Abajo a la izquierda"
+
+#: build/toast/ekiline-toast/index.js:1 src/toast/ekiline-toast/edit.js:25
+msgid "Bottom center"
+msgstr "Abajo al centro"
+
+#: build/toast/ekiline-toast/index.js:1 src/toast/ekiline-toast/edit.js:26
+msgid "Bottom right"
+msgstr "Abajo a la derecha"
+
+#: build/toast/ekiline-toast/index.js:1 src/toast/ekiline-toast/edit.js:27
+msgid "Middle left"
+msgstr "Centro izquierda"
+
+#: build/toast/ekiline-toast/index.js:1 src/toast/ekiline-toast/edit.js:28
+msgid "Middle center"
+msgstr "Centro"
+
+#: build/toast/ekiline-toast/index.js:1 src/toast/ekiline-toast/edit.js:29
+msgid "Middle right"
+msgstr "Centro derecha"
+
+#: build/toast/ekiline-toast/index.js:1 src/toast/ekiline-toast/edit.js:30
+msgid "Top left"
+msgstr "Arriba a la izquierda"
+
+#: build/toast/ekiline-toast/index.js:1 src/toast/ekiline-toast/edit.js:31
+msgid "Top center"
+msgstr "Arriba al centro"
+
+#: build/toast/ekiline-toast/index.js:1 src/toast/ekiline-toast/edit.js:32
+msgid "Top right"
+msgstr "Arriba a la derecha"
+
+#: build/accordion/ekiline-accordion-item-body/block.json src/accordion/ekiline-accordion-item-body/block.json
+msgctxt "block title"
+msgid "Accordion item body"
+msgstr "Cuerpo del elemento de acordeón"
+
+#: build/accordion/ekiline-accordion-item-body/block.json build/accordion/ekiline-accordion-item-header/block.json build/accordion/ekiline-accordion-item/block.json src/accordion/ekiline-accordion-item-body/block.json src/accordion/ekiline-accordion-item-header/block.json src/accordion/ekiline-accordion-item/block.json
+msgctxt "block description"
+msgid "Set title and content in your accordion container."
+msgstr "Define el título y el contenido en tu contenedor de acordeón."
+
+#: build/accordion/ekiline-accordion-item-header/block.json src/accordion/ekiline-accordion-item-header/block.json
+msgctxt "block title"
+msgid "Accordion item header"
+msgstr "Encabezado del elemento de acordeón"
+
+#: build/accordion/ekiline-accordion-item/block.json src/accordion/ekiline-accordion-item/block.json
+msgctxt "block title"
+msgid "Accordion item"
+msgstr "Elemento de acordeón"
+
+#: build/accordion/ekiline-accordion/block.json src/accordion/ekiline-accordion/block.json
+msgctxt "block title"
+msgid "Accordion"
+msgstr "Acordeón"
+
+#: build/accordion/ekiline-accordion/block.json src/accordion/ekiline-accordion/block.json
+msgctxt "block description"
+msgid "Show your content as an accordion."
+msgstr "Muestra tu contenido como un acordeón."
+
+#: build/carousel/ekiline-carousel-slide/block.json src/carousel/ekiline-carousel-slide/block.json
+msgctxt "block title"
+msgid "Ekiline Carousel Slide"
+msgstr "Diapositiva del carrusel de Ekiline"
+
+#: build/carousel/ekiline-carousel-slide/block.json src/carousel/ekiline-carousel-slide/block.json
+msgctxt "block description"
+msgid "Slide template for Ekiline Carousel."
+msgstr "Plantilla de diapositiva para Ekiline Carousel."
+
+#: build/carousel/ekiline-carousel/block.json src/carousel/ekiline-carousel/block.json
+msgctxt "block title"
+msgid "Ekiline Carousel"
+msgstr "Carrusel de Ekiline"
+
+#: build/carousel/ekiline-carousel/block.json src/carousel/ekiline-carousel/block.json
+msgctxt "block description"
+msgid "A flexible and extensible carousel block."
+msgstr "Un bloque de carrusel flexible y extensible."
+
+#: build/collapse/ekiline-collapse/block.json src/collapse/ekiline-collapse/block.json
+msgctxt "block title"
+msgid "Collapse"
+msgstr "Collapse"
+
+#: build/collapse/ekiline-collapse/block.json src/collapse/ekiline-collapse/block.json
+msgctxt "block description"
+msgid "Set a collapse behavior block. You can activate from any button."
+msgstr "Configura un bloque con comportamiento de colapso. Puedes activarlo desde cualquier botón."
+
+#: build/modal/ekiline-modal-body/block.json src/modal/ekiline-modal-body/block.json
+msgctxt "block title"
+msgid "Modal body content"
+msgstr "Contenido del cuerpo del modal"
+
+#: build/modal/ekiline-modal-body/block.json src/modal/ekiline-modal-body/block.json
+msgctxt "block description"
+msgid "Modal body content."
+msgstr "Contenido del cuerpo del modal."
+
+#: build/modal/ekiline-modal-button-resize/block.json src/modal/ekiline-modal-button-resize/block.json
+msgctxt "block title"
+msgid "Modal Resize Button"
+msgstr "Botón para redimensionar el modal"
+
+#: build/modal/ekiline-modal-button-resize/block.json src/modal/ekiline-modal-button-resize/block.json
+msgctxt "block description"
+msgid "Resize button for modal block."
+msgstr "Botón de redimensionado para el bloque modal."
+
+#: build/modal/ekiline-modal-footer/block.json src/modal/ekiline-modal-footer/block.json
+msgctxt "block title"
+msgid "Modal footer"
+msgstr "Pie del modal"
+
+#: build/modal/ekiline-modal-footer/block.json src/modal/ekiline-modal-footer/block.json
+msgctxt "block description"
+msgid "Inner footer content."
+msgstr "Contenido interno del pie."
+
+#: build/modal/ekiline-modal-header/block.json src/modal/ekiline-modal-header/block.json
+msgctxt "block title"
+msgid "Modal header"
+msgstr "Encabezado de modal"
+
+#: build/modal/ekiline-modal-header/block.json src/modal/ekiline-modal-header/block.json
+msgctxt "block description"
+msgid "Modal header content."
+msgstr "Contenido del encabezado del modal."
+
+#: build/modal/ekiline-modal/block.json src/modal/ekiline-modal/block.json
+msgctxt "block title"
+msgid "Modal"
+msgstr "Modal"
+
+#: build/modal/ekiline-modal/block.json src/modal/ekiline-modal/block.json
+msgctxt "block description"
+msgid "Add your content here, then invoke with a link anchor #anchor."
+msgstr "Agrega tu contenido aquí y luego invócalo con un enlace #ancla."
+
+#: build/navbar/ekiline-navbar/block.json src/navbar/ekiline-navbar/block.json
+msgctxt "block title"
+msgid "Navbar"
+msgstr "Barra de navegación"
+
+#: build/navbar/ekiline-navbar/block.json src/navbar/ekiline-navbar/block.json
+msgctxt "block description"
+msgid "Navbar Bootstrap generado a partir de un bloque Lista."
+msgstr "Barra de navegación Bootstrap generada a partir de un bloque Lista."
+
+#: build/offcanvas/ekiline-offcanvas-body/block.json src/offcanvas/ekiline-offcanvas-body/block.json
+msgctxt "block title"
+msgid "Offcanvas body content"
+msgstr "Contenido del cuerpo del offcanvas"
+
+#: build/offcanvas/ekiline-offcanvas-body/block.json src/offcanvas/ekiline-offcanvas-body/block.json
+msgctxt "block description"
+msgid "Offcanvas body content."
+msgstr "Contenido del cuerpo del offcanvas."
+
+#: build/offcanvas/ekiline-offcanvas-header/block.json src/offcanvas/ekiline-offcanvas-header/block.json
+msgctxt "block title"
+msgid "Offcanvas header"
+msgstr "Encabezado del offcanvas"
+
+#: build/offcanvas/ekiline-offcanvas-header/block.json src/offcanvas/ekiline-offcanvas-header/block.json
+msgctxt "block description"
+msgid "Offcanvas header content."
+msgstr "Contenido del encabezado del offcanvas."
+
+#: build/offcanvas/ekiline-offcanvas/block.json src/offcanvas/ekiline-offcanvas/block.json
+msgctxt "block title"
+msgid "Offcanvas"
+msgstr "Offcanvas"
+
+#: build/offcanvas/ekiline-offcanvas/block.json src/offcanvas/ekiline-offcanvas/block.json
+msgctxt "block description"
+msgid "Add your content here, then invoque with a link anchor #anchor."
+msgstr "Agrega tu contenido aquí y luego invócalo con un enlace #ancla."
+
+#: build/progress/ekiline-progress-item/block.json src/progress/ekiline-progress-item/block.json
+msgctxt "block title"
+msgid "Progress data bar"
+msgstr "Datos de barra de progreso"
+
+#: build/progress/ekiline-progress-item/block.json src/progress/ekiline-progress-item/block.json
+msgctxt "block description"
+msgid "Progress data, could be multiple bars between 1 to 100."
+msgstr "Datos de progreso, pueden ser varias barras entre 1 y 100."
+
+#: build/progress/ekiline-progress/block.json src/progress/ekiline-progress/block.json
+msgctxt "block title"
+msgid "Progress"
+msgstr "Progreso"
+
+#: build/progress/ekiline-progress/block.json src/progress/ekiline-progress/block.json
+msgctxt "block description"
+msgid "Show a bootstrap progress bar for your data."
+msgstr "Muestra una barra de progreso de Bootstrap para tus datos."
+
+#: build/tabs/ekiline-tab-content/block.json src/tabs/ekiline-tab-content/block.json
+msgctxt "block title"
+msgid "Tab Content"
+msgstr "Contenido de pestaña"
+
+#: build/tabs/ekiline-tab-content/block.json src/tabs/ekiline-tab-content/block.json
+msgctxt "block description"
+msgid "Inner tab content. Find Tab Link anchor text, and paste on Anchor field."
+msgstr "Contenido interno de la pestaña. Busca el texto del ancla del enlace de pestaña y pégalo en el campo Ancla."
+
+#: build/tabs/ekiline-tab-link/block.json src/tabs/ekiline-tab-link/block.json
+msgctxt "block title"
+msgid "Tab Link"
+msgstr "Enlace de pestaña"
+
+#: build/tabs/ekiline-tab-link/block.json src/tabs/ekiline-tab-link/block.json
+msgctxt "block description"
+msgid "Tab button link. Copy Anchor text and paste on Tab Content Anchor field."
+msgstr "Enlace del botón de pestaña. Copia el texto del ancla y pégalo en el campo Ancla del contenido de pestaña."
+
+#: build/tabs/ekiline-tabs-container/block.json src/tabs/ekiline-tabs-container/block.json
+msgctxt "block title"
+msgid "Tabs container"
+msgstr "Contenedor de pestañas"
+
+#: build/tabs/ekiline-tabs-container/block.json src/tabs/ekiline-tabs-container/block.json
+msgctxt "block description"
+msgid "All tabs add here."
+msgstr "Todas las pestañas se agregan aquí."
+
+#: build/tabs/ekiline-tabs-navbar/block.json src/tabs/ekiline-tabs-navbar/block.json
+msgctxt "block title"
+msgid "Tabs Nav Bar"
+msgstr "Barra de navegación de pestañas"
+
+#: build/tabs/ekiline-tabs-navbar/block.json src/tabs/ekiline-tabs-navbar/block.json
+msgctxt "block description"
+msgid "Tab navigation, add your links."
+msgstr "Navegación de pestañas, agrega tus enlaces."
+
+#: build/tabs/ekiline-tabs/block.json src/tabs/ekiline-tabs/block.json
+msgctxt "block title"
+msgid "Tabs"
+msgstr "Pestañas"
+
+#: build/tabs/ekiline-tabs/block.json src/tabs/ekiline-tabs/block.json
+msgctxt "block description"
+msgid "Add a tabs for your posts, full control."
+msgstr "Añade pestañas para tus entradas, con control total."
+
+#: build/toast/ekiline-toast-item/block.json src/toast/ekiline-toast-item/block.json
+msgctxt "block title"
+msgid "Ekiline toast item."
+msgstr "Elemento Toast Ekiline."
+
+#: build/toast/ekiline-toast-item/block.json src/toast/ekiline-toast-item/block.json
+msgctxt "block description"
+msgid "Each toast can be executed by time, at the end of scrolling, or with the cursor outside the window. You can stack as many as you need."
+msgstr "Cada toast puede ejecutarse por tiempo, al final del desplazamiento o con el cursor fuera de la ventana. Puedes apilar los que necesites."
+
+#: build/toast/ekiline-toast/block.json src/toast/ekiline-toast/block.json
+msgctxt "block title"
+msgid "Toast"
+msgstr "Toast"
+
+#: build/toast/ekiline-toast/block.json src/toast/ekiline-toast/block.json
+msgctxt "block description"
+msgid "Show small bootstrap-style notices."
+msgstr "Muestra pequeños avisos al estilo de Bootstrap."

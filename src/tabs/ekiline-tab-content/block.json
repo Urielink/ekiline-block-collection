@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ekiline-block-collection/ekiline-tab-content",
+  "version": "0.1.0",
+	"textdomain": "ekiline-block-collection",
+  "title": "Tab Content",
+  "category": "design",
+  "parent": ["ekiline-block-collection/ekiline-tabs-container"],
+  "icon": "star",
+  "description": "Inner tab content. Find Tab Link anchor text, and paste on Anchor field.",
+	"example": {},
+  "supports": {
+    "anchor": true,
+    "html": false,
+    "reusable": false
+  },
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

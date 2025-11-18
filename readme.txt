@@ -2,9 +2,9 @@
 Contributors:      urielink
 Requires at least: 5.8
 Tags:              block, collection, bootstrap
-Tested up to:      6.8
+Tested up to:      6.9
 Requires PHP:      7.0
-Stable tag:        2.1.1
+Stable tag:        3.0.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/license-list.html#GPLv2
 Donate link:       https://www.paypal.com/paypalme/urielink
@@ -66,10 +66,13 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Changelog ==
 
+= 3.0.0 =
+* Cambios mayores, nuevo planteamiento de uso de bootstrap.
+* Optimización de vista de bloques en el editor y frontend.
+
 = 2.1.1 =
 * Check new wordpress version (6.8).
 * Bootstrap update (v5.3.5)
-
 
 = 2.1.0 =
 * New Navbar Block
@@ -166,5 +169,3 @@ As well as to maintain this development and incorporate new features in each new
 
 “I have created this plugin to provide a better web development service to my clients, from a trusted source such as WordPress.”
 Uri Lazcano.
-
-DevIm: [node v19.1.0, npm 8.19.3, nvm 0.39.3]

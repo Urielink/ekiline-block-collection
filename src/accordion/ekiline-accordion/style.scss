@@ -1,0 +1,27 @@
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.accordion:where([style*="border-width"]) {
+  border: none;
+}
+.accordion-flush{
+  border: none;
+}
+.accordion-item {
+  border-style: var(--ek-accordion-border-style) !important;
+}
+.accordion-item:first-of-type button,
+.accordion-item:first-of-type .accordion-header {
+  border-top-right-radius:calc(var(--bs-accordion-border-radius) - var(--bs-accordion-border-width)) !important;
+  border-top-left-radius:calc(var(--bs-accordion-border-radius) - var(--bs-accordion-border-width)) !important;
+}
+.accordion-item:last-of-type button,
+.accordion-item:last-of-type .accordion-header,
+.accordion-item:last-of-type button.collapsed {
+  border-bottom-right-radius:calc(var(--bs-accordion-border-radius) - var(--bs-accordion-border-width)) !important;
+  border-bottom-left-radius:calc(var(--bs-accordion-border-radius) - var(--bs-accordion-border-width)) !important;
+}

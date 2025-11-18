@@ -1,0 +1,28 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+/* Padding inferior para insertar acordeones */
+.wp-block-ekiline-block-collection-ekiline-accordion > .block-editor-inner-blocks > .block-editor-block-list__layout{
+	padding-bottom: 25px;
+}
+
+/* Estilos bootstrap adaptados a editor */
+.accordion-flush .accordion-item {
+  border-right: 0;
+  border-left: 0;
+  border-radius: 0;
+}
+.accordion-flush .accordion-item:first-child {
+  border-top: 0;
+}
+.accordion-flush .accordion-item:last-child {
+  border-bottom: 0;
+}
+.accordion-flush .accordion-item .accordion-collapse,
+.accordion-flush .accordion-item .accordion-header .accordion-button,
+.accordion-flush .accordion-item .accordion-header .accordion-button.collapsed {
+  border-radius: 0;
+}

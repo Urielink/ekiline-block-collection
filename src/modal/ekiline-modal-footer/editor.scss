@@ -1,0 +1,21 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.modal-footer {
+  padding: 1rem;
+  border-top: 1px solid #0000000d;
+  border-bottom-right-radius: calc(0.5rem - 1px);
+  border-bottom-left-radius: calc(0.5rem - 1px);
+}
+
+.modal-footer > .block-editor-inner-blocks{
+  flex-grow: 1;
+}
+.modal-footer > .block-editor-inner-blocks > .block-editor-block-list__layout{
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 25px;
+}

@@ -1,0 +1,85 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ekiline-block-collection/ekiline-progress-item",
+  "version": "0.1.0",
+  "textdomain": "ekiline-block-collection",
+  "title": "Progress data bar",
+  "category": "design",
+  "parent": [
+    "ekiline-block-collection/ekiline-progress"
+  ],
+  "icon": "star",
+  "description": "Progress data, could be multiple bars between 1 to 100.",
+  "example": {},
+  "supports": {
+    "anchor": false,
+    "color": {
+      "background": true,
+      "gradients": true,
+      "text": true
+    },
+    "typography": {
+      "fontSize": true
+    }
+  },
+  "attributes": {
+    "content": {
+      "type": "string",
+      "source": "html",
+      "selector": "p"
+    },
+    "progRange": {
+      "type": "number",
+      "default": 10
+    },
+    "progLabel": {
+      "type": "boolean",
+      "default": false
+    },
+    "progStripes": {
+      "type": "boolean",
+      "default": false
+    },
+    "progAnimation": {
+      "type": "boolean",
+      "default": false
+    },
+    "textAlign": {
+      "type": "string",
+      "default": "left"
+    },
+    "border": {
+      "type": "object",
+      "default": {
+        "top": {
+          "color": "#dee2e6",
+          "style": "none",
+          "width": "0px"
+        },
+        "right": {
+          "color": "#dee2e6",
+          "style": "none",
+          "width": "0px"
+        },
+        "bottom": {
+          "color": "#dee2e6",
+          "style": "none",
+          "width": "0px"
+        },
+        "left": {
+          "color": "#dee2e6",
+          "style": "none",
+          "width": "0px"
+        }
+      }
+    },
+    "borderRadius": {
+      "type": "string",
+      "default": "0rem"
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}

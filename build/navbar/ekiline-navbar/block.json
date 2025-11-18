@@ -1,0 +1,120 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ekiline-block-collection/ekiline-navbar",
+  "version": "0.1.0",
+  "textdomain": "ekiline-block-collection",
+  "title": "Navbar",
+  "category": "design",
+  "icon": "menu",
+  "description": "Navbar Bootstrap generado a partir de un bloque Lista.",
+  "example": {},
+  "supports": {
+    "anchor": true,
+    "html": false,
+    "spacing": {
+      "margin": true,
+      "padding": true
+    },
+    "color": {
+      "text": true,
+      "background": true,
+      "link": true
+    },
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    }
+  },
+  "attributes": {
+    "menuHtml": {
+      "type": "string",
+      "default": ""
+    },
+    "menuJson": {
+      "type": "string",
+      "default": "[]"
+    },
+    "isEditingMenu": {
+      "type": "boolean",
+      "default": true
+    },
+    "navStyle": {
+      "type": "string",
+      "default": "collapse"
+    },
+    "navShow": {
+      "type": "string",
+      "default": " navbar-expand-lg"
+    },
+    "navPosition": {
+      "type": "string",
+      "default": ""
+    },
+    "alignItems": {
+      "type": "string",
+      "default": ""
+    },
+    "container": {
+      "type": "string",
+      "default": "container-fluid"
+    },
+    "brandText": {
+      "type": "string",
+      "default": "Navbar"
+    },
+    "targetId": {
+      "type": "string",
+      "default": "navbarNavDropdown"
+    },
+    "brandMode": {
+      "type": "string",
+      "default": "text"
+    },
+    "showTagline": {
+      "type": "boolean",
+      "default": false
+    },
+    "taglineText": {
+      "type": "string",
+      "default": ""
+    },
+    "brandLogoMode": {
+      "type": "string",
+      "default": "auto"
+    },
+    "brandLogoId": {
+      "type": "number",
+      "default": 0
+    },
+    "brandLogoUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "brandLogoWidth": {
+      "type": "number",
+      "default": 0
+    },
+    "brandLogoHeight": {
+      "type": "number",
+      "default": 0
+    },
+    "brandLogoAlt": {
+      "type": "string",
+      "default": ""
+    },
+    "brandLogoLinkHome": {
+      "type": "boolean",
+      "default": true
+    },
+    "brandHomeUrl": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}
