@@ -67,8 +67,8 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 == Changelog ==
 
 = 3.0.0 =
-* Cambios mayores, nuevo planteamiento de uso de bootstrap.
-* Optimización de vista de bloques en el editor y frontend.
+* Major changes, new approach to using bootstrap.
+* Block view optimization in the editor and frontend.
 
 = 2.1.1 =
 * Check new wordpress version (6.8).
