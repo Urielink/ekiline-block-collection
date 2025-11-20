@@ -6,7 +6,7 @@
   "textdomain": "ekiline-block-collection",
   "title": "Collapse",
   "category": "design",
-	"icon": "star",
+	"icon": "dashicons-block-default",
   "description": "Set a collapse behavior block. You can activate from any button.",
   "example": {},
   "supports": {

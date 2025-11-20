@@ -7,7 +7,7 @@
   "title": "Modal header",
   "category": "design",
   "parent": ["ekiline-block-collection/ekiline-modal"],
-  "icon": "star",
+  "icon": "dashicons-block-default",
   "description": "Modal header content.",
   "example": {},
   "supports": {

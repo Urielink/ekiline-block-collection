@@ -7,7 +7,7 @@
   "title": "Tab Link",
   "category": "design",
   "parent": [ "ekiline-block-collection/ekiline-tabs-navbar" ],
-  "icon": "star",
+  "icon": "dashicons-block-default",
   "description": "Tab button link. Copy Anchor text and paste on Tab Content Anchor field.",
   "example": {},
   "supports": {

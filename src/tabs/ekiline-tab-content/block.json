@@ -7,7 +7,7 @@
   "title": "Tab Content",
   "category": "design",
   "parent": ["ekiline-block-collection/ekiline-tabs-container"],
-  "icon": "star",
+  "icon": "dashicons-block-default",
   "description": "Inner tab content. Find Tab Link anchor text, and paste on Anchor field.",
 	"example": {},
   "supports": {

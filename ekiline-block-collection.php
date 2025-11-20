@@ -4,7 +4,7 @@
  * Description:       Actions and blocks based on bootstrap 5 (carousel, collapse and more). Includes Bootstrap library. Support this project to add new features and expand a customer service branch.
  * Requires at least: 5.8
  * Requires PHP:      7.0
- * Version:           3.0.0
+ * Version:           3.0.1
  * Author:            Uri Lazcano (Urielink)
  * Author URI:        https://ekiline.com/ekiline-block-collection/
  * License:           GPL-2.0-or-later
@@ -129,8 +129,8 @@ function ekiline_block_collection_required_scripts() {
     }
 
     // Estilos y scripts personalizados que dependen de Bootstrap.
-    wp_register_style( $ebc_style_handler, plugin_dir_url(__FILE__) . 'includes/assets/css/ekiline-styles.css', $style_deps, '1.0', 'all' );
-    wp_register_script( $ebc_script_handler, plugin_dir_url(__FILE__) . 'includes/assets/js/ekiline-scripts.js', $script_deps, '1.0', true );
+    wp_register_style( $ebc_style_handler, plugin_dir_url(__FILE__) . 'includes/assets/css/ekiline-styles.min.css', $style_deps, '1.0', 'all' );
+    wp_register_script( $ebc_script_handler, plugin_dir_url(__FILE__) . 'includes/assets/js/ekiline-scripts.min.js', $script_deps, '1.0', true );
 
     // Encolar estilos y scripts personalizados.
     wp_enqueue_style( $ebc_style_handler );

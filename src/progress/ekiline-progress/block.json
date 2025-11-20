@@ -6,7 +6,7 @@
   "textdomain": "ekiline-block-collection",
   "title": "Progress",
   "category": "design",
-  "icon": "star",
+  "icon": "dashicons-block-default",
   "description": "Show a bootstrap progress bar for your data.",
   "example": {},
   "supports": {

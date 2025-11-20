@@ -4,67 +4,90 @@ Requires at least: 5.8
 Tags:              block, collection, bootstrap
 Tested up to:      6.9
 Requires PHP:      7.0
-Stable tag:        3.0.0
+Stable tag:        3.0.1
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/license-list.html#GPLv2
 Donate link:       https://www.paypal.com/paypalme/urielink
 
-Bootstrap components turned into WordPress editor blocks. Add new functionality to your project. Install and use directly in the editor.
+Bootstrap components reimagined as WordPress blocks.
+
 
 == Description ==
 
-== Made for those of us who love working with Bootstrap ==
+= Build faster. Prototype better. Design with freedom. =
 
-- **Accordion**.
-- **Collapse**.
-- **Modal**.
-- **Tabs**.
-- **Progress bar**.
-- **Pop over**.
-- **Tooltip**.
-- **Toast**.
-- **Static carousel**.
-- **Dynamic carousel**.
-- **Offcanvas**.
-- **Navigation (new!)**.
+Ekiline Block Collection transforms classic Bootstrap components into native WordPress editor blocks, giving you the flexibility of the block editor with the power of Bootstrap—all without writing a single line of code.
+
+Perfect for developers, designers, UX professionals, and anyone who loves working with Bootstrap inside WordPress.
+
+= 📦 Included Components =
+
+* Accordion
+* Collapse
+* Modal
+* Tabs
+* Progress Bar
+* Popover
+* Tooltip
+* Toast
+* Offcanvas
+* Navigation (new!)
+* Static Carousel
+* Dynamic Carousel
 
 
-HTML markup as well as classes and attributes have been respected to work with Bootstrap in its most recent version (5.2.X).
-CSS styles and JS scripts are included, maintaining the layout and behaviors.
+= 🧩 Compatibility =
 
-= Compatibility =
-Great response on new block-based themes like twenty-twenty two and the twenty-twenty one hybrid themes.
-Do you want more? Download the Ekiline theme to have more options in customizing your site.
+Ekiline Block Collection works seamlessly with modern WordPress block-based themes like:
+
+* Twenty Twenty-One (hybrid)
+* Twenty Twenty-Two
+* Twenty Twenty-Three
+* Twenty Twenty-Four
+* Twenty Twenty-Five
+
+= 🎁 Ekiline Theme =
+For even more customization options, download the Ekiline Theme, a hybrid WordPress theme built to complement this plugin.
+
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
-
-e.g.
-
-1. Upload the plugin files to the `/wp-content/plugins/ekiline-collection` directory, or install the plugin through the WordPress plugins screen directly.
-1. Activate the plugin through the 'Plugins' screen in WordPress
+1. Upload the plugin files to the /wp-content/plugins/ekiline-block-collection directory, or install the plugin through the WordPress plugins screen directly.
+2. Activate the plugin through the ‘Plugins’ screen in WordPress
 
 
 == Frequently Asked Questions ==
 
-= A question that someone might have =
+= ✨ Features =
 
-An answer to that question.
+Bootstrap components rebuilt as real WordPress blocks.
+Insert, customize, and preview everything in real time (WYSIWYG).
 
-= What about foo bar? =
+= Full design freedom =
+Customize background color, text color, borders, shadows, spacing, and more using the native design tools of the WordPress editor.
 
-Answer to foo bar dilemma.
+= Clean, reliable architecture =
+HTML markup, classes, and attributes strictly follow Bootstrap 5.3.x methodology.
+The plugin only loads the CSS/JS needed—avoiding conflicts and keeping performance high.
+
+= Admin control panel included =
+Enable or disable Bootstrap assets depending on your theme.
+Ideal for hybrid themes or block themes where Bootstrap might already be included.
+
+= Great for rapid prototyping & UX workflows =
+Build functional interfaces, dashboards, app layouts, and interactive sections in minutes.
+
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
+directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png` (or jpg, jpeg, gif).
+
 
 == Changelog ==
+
+= 3.0.1 =
+* Update Bootstrap css and js version.
 
 = 3.0.0 =
 * Major changes, new approach to using bootstrap.
@@ -157,15 +180,28 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 = 0.1.0 =
 * Release
 
+
 == Upgrade Notice ==
 
-New carousel design options!
-Link images and activate modal, offcanvas and more!
+= ⚠️ Important Upgrade Notice — Breaking Changes =
+
+This new version of Ekiline Block Collection is a major rewrite.
+Previous versions used a different block structure and markup that is no longer compatible with the new architecture.
+
+Because of this:
+* Blocks created with older versions may stop working after updating.
+* Your existing layouts may not render correctly, and some components may disappear or reset.
+* You may need to rebuild your content using the new block versions.
+* We strongly recommend creating a full backup (database + files) before updating.
+
+This update brings a cleaner, more powerful, and more future-proof block system, but it is not backward-compatible with older instances of the plugin.
+
+If you rely heavily on the old block version, consider testing the update in a staging environment first.
+
 
 == About author ==
 
-The author of this plugin will be careful to keep the code as faithful to Bootstrap.
-As well as to maintain this development and incorporate new features in each new update.
+“I created this plugin to offer a reliable and modern way to use Bootstrap inside WordPress, helping my clients—and the community—build better interfaces with less effort.”
+— Uri Lazcano
 
-“I have created this plugin to provide a better web development service to my clients, from a trusted source such as WordPress.”
-Uri Lazcano.
+I am committed to keeping this project updated, faithful to Bootstrap, and improved with each release.

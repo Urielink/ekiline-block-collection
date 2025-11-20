@@ -6,7 +6,7 @@
   "textdomain": "ekiline-block-collection",
   "title": "Offcanvas",
   "category": "design",
-  "icon": "star",
+  "icon": "dashicons-block-default",
   "description": "Add your content here, then invoque with a link anchor #anchor.",
   "example": {},
   "supports": {

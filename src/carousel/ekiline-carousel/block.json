@@ -6,7 +6,7 @@
 	"textdomain": "ekiline-block-collection",
 	"title": "Ekiline Carousel",
 	"category": "design",
-	"icon": "star",
+	"icon": "dashicons-block-default",
 	"description": "A flexible and extensible carousel block.",
 	"example": {},
 	"supports": {

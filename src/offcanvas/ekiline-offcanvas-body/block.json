@@ -7,7 +7,7 @@
   "title": "Offcanvas body content",
   "category": "design",
   "parent": [ "ekiline-block-collection/ekiline-offcanvas" ],
-  "icon": "star",
+  "icon": "dashicons-block-default",
   "description": "Offcanvas body content.",
   "example": {},
   "supports": {
