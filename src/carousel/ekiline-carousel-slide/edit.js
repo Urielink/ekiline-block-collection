@@ -3,7 +3,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n'
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -11,7 +11,7 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
+import { useBlockProps, InnerBlocks } from '@wordpress/block-editor'
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -19,12 +19,12 @@ import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './editor.scss';
+import './editor.scss'
 
 /**
  * Bloques permitidos.
  */
-const ALLOWED_BLOCKS = [ 'core/cover', 'core/group' ];
+const ALLOWED_BLOCKS = ['core/cover', 'core/group']
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -34,54 +34,54 @@ const ALLOWED_BLOCKS = [ 'core/cover', 'core/group' ];
  *
  * @return {Element} Element to render.
  */
-export default function Edit(props) {
-	const { attributes, setAttributes, context } = props;
+export default function Edit (props) {
+  const { attributes, setAttributes, context } = props
 
-    const blockProps = useBlockProps({
-      className: 'carousel-slide preview-carousel-item'
-    })
+  const blockProps = useBlockProps({
+    className: 'carousel-slide preview-carousel-item'
+  })
 
-	// Add style to block
-	setAttributes({ parentSetHeight: context['ekiline-carousel/SetHeight'] });
-	blockProps.style = { height: attributes.parentSetHeight };
+  // Add style to block
+  setAttributes({ parentSetHeight: context['ekiline-carousel/SetHeight'] })
+  blockProps.style = { height: attributes.parentSetHeight }
 
-	return (
-		<div { ...blockProps }>
-			<InnerBlocks
-				allowedBlocks={ ALLOWED_BLOCKS }
-				template={ [
-					[
-						'core/cover',
-						{
-							"dimRatio":30,
-							"overlayColor":"black",
-							"isUserOverlayColor":true,
-							"isDark":false,
-							"style":{
-								"elements":{
-									"link":{
-										"color":{
-											"text":"var:preset|color|black"
-										}
-									}
-								}
-							},
-							"textColor":"black"
-						},
-						[
-							[ 'core/image' ],
-							[ 'core/heading', { placeholder: __('Slide title', 'ekiline-block-collection') } ],
-							[ 'core/paragraph', { placeholder: __('Slide description', 'ekiline-block-collection') } ],
-							[ 'core/buttons', {},
-								[
-									[ 'core/button', { placeholder: __('Slide Button', 'ekiline-block-collection') } ]
-								]
-							]
-						]
-					]
-				] }
-				templateLock={ false }
-			/>
-		</div>
-	);
+  return (
+    <div {...blockProps}>
+      <InnerBlocks
+        allowedBlocks={ALLOWED_BLOCKS}
+        template={[
+				  [
+				    'core/cover',
+				    {
+				      dimRatio: 30,
+				      overlayColor: 'black',
+				      isUserOverlayColor: true,
+				      isDark: false,
+				      style: {
+				        elements: {
+				          link: {
+				            color: {
+				              text: 'var:preset|color|black'
+				            }
+				          }
+				        }
+				      },
+				      textColor: 'black'
+				    },
+				    [
+				      ['core/image'],
+				      ['core/heading', { placeholder: __('Slide title', 'ekiline-block-collection') }],
+				      ['core/paragraph', { placeholder: __('Slide description', 'ekiline-block-collection') }],
+				      ['core/buttons', {},
+				        [
+				          ['core/button', { placeholder: __('Slide Button', 'ekiline-block-collection') }]
+				        ]
+				      ]
+				    ]
+				  ]
+        ]}
+        templateLock={false}
+      />
+    </div>
+  )
 }

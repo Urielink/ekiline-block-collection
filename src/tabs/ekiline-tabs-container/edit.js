@@ -1,13 +1,13 @@
-import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
-import { __ } from '@wordpress/i18n';
-import { replaceSpecialChars } from '../../shared/collection';
+import { useBlockProps, InnerBlocks } from '@wordpress/block-editor'
+import { __ } from '@wordpress/i18n'
+import { replaceSpecialChars } from '../../shared/collection'
 
-export default function Edit() {
+export default function Edit () {
   const blockProps = useBlockProps({
     className: 'tabs-container tab-content'
-  });
+  })
 
-  const allowedBlocks = ['ekiline-block-collection/ekiline-tab-content'];
+  const allowedBlocks = ['ekiline-block-collection/ekiline-tab-content']
   const template = [
     ['ekiline-block-collection/ekiline-tab-content', {
       // className: 'active show',
@@ -16,7 +16,7 @@ export default function Edit() {
     ['ekiline-block-collection/ekiline-tab-content', {
       anchor: replaceSpecialChars(__('Tab link 2', 'ekiline-block-collection'))
     }]
-  ];
+  ]
 
   return (
     <div {...blockProps}>
@@ -25,5 +25,5 @@ export default function Edit() {
         template={template}
       />
     </div>
-  );
+  )
 }

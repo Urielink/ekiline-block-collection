@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n'
 import ResponsiveImage from './ResponsiveImage'
 
-export default function CarouselMarkup({ attributes = {}, posts = [], disabledControls = false }) {
+export default function CarouselMarkup ({ attributes = {}, posts = [], disabledControls = false }) {
   const {
     AddControls = true,
     AddIndicators = true,
@@ -9,9 +9,9 @@ export default function CarouselMarkup({ attributes = {}, posts = [], disabledCo
     SetHeight = '540px',
     contentLinkSlide = false,
     ChooseType
-  } = attributes;
+  } = attributes
 
-  if (!Array.isArray(posts) || posts.length === 0) return null;
+  if (!Array.isArray(posts) || posts.length === 0) return null
 
   // Bloquear el enlace cuando los controles están deshabilitados.
   const linkAttributes = disabledControls
@@ -20,9 +20,9 @@ export default function CarouselMarkup({ attributes = {}, posts = [], disabledCo
         style: { pointerEvents: 'none' },
         tabIndex: -1,
         'aria-disabled': true,
-        onClick: (e) => e.preventDefault(),
+        onClick: (e) => e.preventDefault()
       }
-    : {};
+    : {}
 
   // Utilidad: limpiar HTML a texto simple
   const toPlainText = (html) => {
@@ -32,27 +32,27 @@ export default function CarouselMarkup({ attributes = {}, posts = [], disabledCo
   }
 
   // Mostrar elementos solo en modo contenidos (no en galería)
-  const isContentMode = ChooseType === 'content';
+  const isContentMode = ChooseType === 'content'
 
   // --- Helpers estilo plantilla (tipo PHP) ---
-  const hasImage = (p) => !!p?.featuredImageSizes;
-  const hasLink  = (p) => !!p?.link;
-  const wrapWholeSlide = (p) => hasLink(p) && (contentLinkSlide || !hasImage(p));
+  const hasImage = (p) => !!p?.featuredImageSizes
+  const hasLink = (p) => !!p?.link
+  const wrapWholeSlide = (p) => hasLink(p) && (contentLinkSlide || !hasImage(p))
 
   const ImageEl = (p) => hasImage(p) && (
     <ResponsiveImage
       image={{ source_url: p.featuredImage, media_details: { sizes: p.featuredImageSizes } }}
       alt={p.title}
-      className="d-block w-100"
+      className='d-block w-100'
     />
-  );
+  )
 
   /**
    * CaptionEl - Renderiza el caption de cada slide del carrusel.
-   * 
+   *
    * @param {Object} p - Objeto del post/imagen enriquecida.
    * @returns {JSX.Element} Contenido de título, excerpt y enlace "Read more".
-   * 
+   *
    * Notas:
    * - Usa dangerouslySetInnerHTML para respetar el HTML en el título.
    * - Limpia el excerpt para mostrar solo texto plano.
@@ -61,7 +61,7 @@ export default function CarouselMarkup({ attributes = {}, posts = [], disabledCo
    * - Si no, se muestra como <a> tradicional.
    */
   const CaptionEl = (p) => (
-    <div className="carousel-caption">
+    <div className='carousel-caption'>
       <h3 dangerouslySetInnerHTML={{ __html: p.title }} />
       <p>
         {/* Texto plano del excerpt */}
@@ -71,20 +71,20 @@ export default function CarouselMarkup({ attributes = {}, posts = [], disabledCo
           wrapWholeSlide(p)
             ? (
               // Evitar anchors anidados cuando todo el slide es enlace
-              <span className="read-more as-link" aria-hidden={disabledControls ? 'true' : undefined}>
+              <span className='read-more as-link' aria-hidden={disabledControls ? 'true' : undefined}>
                 {__('Read more', 'ekiline-block-collection')}
               </span>
-            ) : (
-              hasLink(p) && (
-                <a href={p.link} {...linkAttributes}>
-                  {__('Read more', 'ekiline-block-collection')}
-                </a>
+              ) : (
+                hasLink(p) && (
+                  <a href={p.link} {...linkAttributes}>
+                    {__('Read more', 'ekiline-block-collection')}
+                  </a>
+                )
               )
-            )
         )}
       </p>
     </div>
-  );
+  )
 
   /**
    * ButtonEl
@@ -94,24 +94,24 @@ export default function CarouselMarkup({ attributes = {}, posts = [], disabledCo
   const ButtonEl = ({ direction }) => (
     <button
       className={`carousel-control-${direction}`}
-      type="button"
+      type='button'
       data-bs-target={`#${anchor}`}
       data-bs-slide={direction}
       disabled={disabledControls}
     >
-      <span className={`carousel-control-${direction}-icon`} aria-hidden="true" />
-      <span className="visually-hidden">{__( direction === 'prev' ? 'Previous' : 'Next' , 'ekiline-block-collection')}</span>
+      <span className={`carousel-control-${direction}-icon`} aria-hidden='true' />
+      <span className='visually-hidden'>{__(direction === 'prev' ? 'Previous' : 'Next', 'ekiline-block-collection')}</span>
     </button>
-  );
+  )
 
   return (
     <>
       {AddIndicators && (
-        <div className="carousel-indicators">
+        <div className='carousel-indicators'>
           {posts.map((_, i) => (
             <button
               key={i}
-              type="button"
+              type='button'
               data-bs-target={`#${anchor}`}
               data-bs-slide-to={i}
               className={i === 0 ? 'active' : ''}
@@ -123,7 +123,7 @@ export default function CarouselMarkup({ attributes = {}, posts = [], disabledCo
         </div>
       )}
 
-      <div className="carousel-inner" style={{ height: SetHeight }}>
+      <div className='carousel-inner' style={{ height: SetHeight }}>
         {posts.map((post, index) => (
           <div
             key={post.id || index}
@@ -131,17 +131,19 @@ export default function CarouselMarkup({ attributes = {}, posts = [], disabledCo
             style={{ height: SetHeight }}
           >
 
-            {wrapWholeSlide(post) ? (
-              <a href={post.link} {...linkAttributes}>
-                {ImageEl(post)}
-                {CaptionEl(post)}
-              </a>
-            ) : (
-              <>
-                {ImageEl(post)}
-                {CaptionEl(post)}
-              </>
-            )}
+            {wrapWholeSlide(post)
+              ? (
+                <a href={post.link} {...linkAttributes}>
+                  {ImageEl(post)}
+                  {CaptionEl(post)}
+                </a>
+                )
+              : (
+                <>
+                  {ImageEl(post)}
+                  {CaptionEl(post)}
+                </>
+                )}
 
           </div>
         ))}
@@ -149,8 +151,8 @@ export default function CarouselMarkup({ attributes = {}, posts = [], disabledCo
 
       {AddControls && (
         <>
-          <ButtonEl direction="prev" />
-          <ButtonEl direction="next" />
+          <ButtonEl direction='prev' />
+          <ButtonEl direction='next' />
         </>
       )}
 

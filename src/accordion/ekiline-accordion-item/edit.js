@@ -1,31 +1,31 @@
-import { __ } from '@wordpress/i18n';
-import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, ToggleControl } from '@wordpress/components';
-import { getRandomArbitrary } from '../../shared/collection';
+import { __ } from '@wordpress/i18n'
+import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor'
+import { PanelBody, ToggleControl } from '@wordpress/components'
+import { getRandomArbitrary } from '../../shared/collection'
 
-export default function Edit({ attributes, setAttributes, context }) {
+export default function Edit ({ attributes, setAttributes, context }) {
   const CHILD_TEMPLATE = [
-    ['ekiline-block-collection/ekiline-accordion-item-header', 
+    ['ekiline-block-collection/ekiline-accordion-item-header',
       {
-        "backgroundColor":"black",
-        "textColor":"white"
+        backgroundColor: 'black',
+        textColor: 'white'
       }
     ],
     ['ekiline-block-collection/ekiline-accordion-item-body']
-  ];
+  ]
 
   const blockProps = useBlockProps({
     className: 'child-accordion-item accordion-item'
-  });
+  })
 
   // generar Id anchor + item
   if (!attributes.anchor) {
-    setAttributes({ anchor: context['ekiline-accordion/anchor'] + 'item' + getRandomArbitrary(10, 150) });
+    setAttributes({ anchor: context['ekiline-accordion/anchor'] + 'item' + getRandomArbitrary(10, 150) })
   }
 
   // generar Id target + collapse
   if (!attributes.itemTarget && attributes.anchor) {
-    setAttributes({ itemTarget: attributes.anchor + 'collapse' });
+    setAttributes({ itemTarget: attributes.anchor + 'collapse' })
   }
 
   return (
@@ -47,5 +47,5 @@ export default function Edit({ attributes, setAttributes, context }) {
       </InspectorControls>
       <InnerBlocks template={CHILD_TEMPLATE} />
     </div>
-  );
+  )
 }

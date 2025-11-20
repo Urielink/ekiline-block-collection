@@ -1,19 +1,19 @@
-import { __ } from '@wordpress/i18n';
-import { useBlockProps, RichText } from '@wordpress/block-editor';
-import { hexToRgb } from '../../shared/collection';
+import { __ } from '@wordpress/i18n'
+import { useBlockProps, RichText } from '@wordpress/block-editor'
+import { hexToRgb } from '../../shared/collection'
 
-export default function Edit({ attributes, setAttributes, context }) {
+export default function Edit ({ attributes, setAttributes, context }) {
   const blockProps = useBlockProps({
     className: 'child-item-accordion-header accordion-header'
-  });
+  })
 
   // Item target reemplaza el uso de ID.
   if (!attributes.itemTarget) {
-    setAttributes({ itemTarget: context['ekiline-accordion-item/itemTarget'] });
+    setAttributes({ itemTarget: context['ekiline-accordion-item/itemTarget'] })
   }
 
   // En caso de color de fondo en boton: obtener backgroundColor de blockProps.style y sobreescribir el valor --bs-accordion-btn-focus-box-shadow.
-  if (blockProps.style.backgroundColor){
+  if (blockProps.style.backgroundColor) {
     // add boxShadow to blockProps.style
     blockProps.style = {
       ...blockProps.style,
@@ -22,10 +22,10 @@ export default function Edit({ attributes, setAttributes, context }) {
   }
 
   // Función para pintar el color del boton en el editor. Filtrar clases por tipo 'has-'.
-  function filterClassNames(string) {
-    return string.split(' ').filter(function(className) {
-      return className.startsWith('has-');
-    }).join(' ');
+  function filterClassNames (string) {
+    return string.split(' ').filter(function (className) {
+      return className.startsWith('has-')
+    }).join(' ')
   }
 
   return (
@@ -47,5 +47,5 @@ export default function Edit({ attributes, setAttributes, context }) {
         />
       </button>
     </div>
-  );
+  )
 }

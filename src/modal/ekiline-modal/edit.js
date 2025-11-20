@@ -1,28 +1,28 @@
-import { __ } from '@wordpress/i18n';
-import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, SelectControl, ToggleControl, TextControl } from '@wordpress/components';
+import { __ } from '@wordpress/i18n'
+import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor'
+import { PanelBody, SelectControl, ToggleControl, TextControl } from '@wordpress/components'
 
-export default function Edit({ attributes, setAttributes }) {
+export default function Edit ({ attributes, setAttributes }) {
   const PARENT_ALLOWED_BLOCKS = [
     'ekiline-block-collection/ekiline-modal-header',
     'ekiline-block-collection/ekiline-modal-body',
     'ekiline-block-collection/ekiline-modal-footer'
-  ];
+  ]
 
   const CHILD_TEMPLATE = [
     ['ekiline-block-collection/ekiline-modal-header', { lock: { remove: false, move: true } }],
     ['ekiline-block-collection/ekiline-modal-body', { lock: { remove: false, move: true } }],
     ['ekiline-block-collection/ekiline-modal-footer', { lock: { remove: false, move: true } }]
-  ];
+  ]
 
-  const blockProps = useBlockProps({ className: 'group-modal' });
+  const blockProps = useBlockProps({ className: 'group-modal' })
 
-  function UserRemind() {
+  function UserRemind () {
     return (
       <div className='block-note'>
-        { attributes.anchor ? '#' + attributes.anchor + __(' is the anchor you should include in the advanced options of a button.', 'ekiline-block-collection') : __('Do not forget to add an #anchor. ', 'ekiline-block-collection') }
+        {attributes.anchor ? '#' + attributes.anchor + __(' is the anchor you should include in the advanced options of a button.', 'ekiline-block-collection') : __('Do not forget to add an #anchor. ', 'ekiline-block-collection')}
       </div>
-    );
+    )
   }
 
   return (
@@ -83,5 +83,5 @@ export default function Edit({ attributes, setAttributes }) {
       <InnerBlocks allowedBlocks={PARENT_ALLOWED_BLOCKS} template={CHILD_TEMPLATE} />
       <UserRemind />
     </div>
-  );
+  )
 }

@@ -7,7 +7,7 @@ import { useEffect } from '@wordpress/element'
 import CarouselMarkup from '../utils/CarouselMarkup'
 
 // Utility function to simplify posts array
-function getSimplifiedPosts(posts) {
+function getSimplifiedPosts (posts) {
   if (!Array.isArray(posts)) return []
   return posts.map((post) => ({
     id: post.id,
@@ -19,7 +19,7 @@ function getSimplifiedPosts(posts) {
   }))
 }
 
-export function ContentEdit({ attributes, setAttributes }) {
+export function ContentEdit ({ attributes, setAttributes }) {
   const {
     contentPostType = 'post',
     contentCategory = '',
@@ -68,7 +68,7 @@ export function ContentEdit({ attributes, setAttributes }) {
         order: contentOrder,
         orderby: contentOrderBy,
         categories: contentCategory && contentCategory.length ? contentCategory : undefined,
-        _embed: true,
+        _embed: true
       })
     },
     [contentPostType, contentCategory, contentPostsPerPage, contentOrder, contentOrderBy, contentSelectedIds]
@@ -91,15 +91,14 @@ export function ContentEdit({ attributes, setAttributes }) {
     <div {...blockProps}>
       {
         posts && posts.length > 0 && attributes.contentPosts
-        ? <CarouselMarkup attributes={attributes} posts={attributes.contentPosts} disabledControls={true} />
-        : <p>{__('Loading preview…', 'ekiline-block-collection')}</p>
+          ? <CarouselMarkup attributes={attributes} posts={attributes.contentPosts} disabledControls />
+          : <p>{__('Loading preview…', 'ekiline-block-collection')}</p>
       }
     </div>
   )
 }
 
-export function ContentSave({ attributes }) {
-
+export function ContentSave ({ attributes }) {
   // Al inicio del componente, todas las variables.
   const carColumns = attributes.SetColumns > 1 ? ` carousel-multiple x${attributes.SetColumns}` : ''
   const carAnimation = attributes.SetAnimation ? ` carousel-${attributes.SetAnimation}` : ''
@@ -112,7 +111,7 @@ export function ContentSave({ attributes }) {
     className: 'carousel-content carousel' + carColumns + carAnimation,
     'data-bs-ride': carAutoplay,
     'data-bs-interval': carInterval,
-    style: { height: minHeight },
+    style: { height: minHeight }
   })
 
   // Asignar nuevas variables de colores, color de texto para caption y selectores.
