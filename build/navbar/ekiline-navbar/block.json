@@ -6,7 +6,7 @@
   "textdomain": "ekiline-block-collection",
   "title": "Navbar",
   "category": "design",
-  "icon": "menu",
+  "icon": "dashicons-block-default",
   "description": "Navbar Bootstrap generado a partir de un bloque Lista.",
   "example": {},
   "supports": {

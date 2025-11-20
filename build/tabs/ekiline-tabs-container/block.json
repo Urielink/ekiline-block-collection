@@ -9,7 +9,7 @@
   "parent": [
     "ekiline-block-collection/ekiline-tabs"
   ],
-  "icon": "star",
+  "icon": "dashicons-block-default",
   "description": "All tabs add here.",
   "example": {},
   "supports": {

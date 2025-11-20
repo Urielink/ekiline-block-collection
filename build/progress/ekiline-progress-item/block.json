@@ -9,7 +9,7 @@
   "parent": [
     "ekiline-block-collection/ekiline-progress"
   ],
-  "icon": "star",
+  "icon": "dashicons-block-default",
   "description": "Progress data, could be multiple bars between 1 to 100.",
   "example": {},
   "supports": {

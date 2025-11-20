@@ -6,7 +6,7 @@
   "textdomain": "ekiline-block-collection",
   "title": "Tabs",
   "category": "design",
-  "icon": "star",
+  "icon": "dashicons-block-default",
   "description": "Add a tabs for your posts, full control.",
   "example": {},
   "supports": {

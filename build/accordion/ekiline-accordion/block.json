@@ -6,7 +6,7 @@
   "textdomain": "ekiline-block-collection",
   "title": "Accordion",
   "category": "design",
-  "icon": "star",
+  "icon": "dashicons-block-default",
   "description": "Show your content as an accordion.",
   "example": {},
   "supports": {

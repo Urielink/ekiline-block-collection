@@ -12,7 +12,7 @@
     "ekiline-block-collection/ekiline-modal-body",
     "ekiline-block-collection/ekiline-modal-footer"
   ],
-  "icon": "button",
+  "icon": "dashicons-block-default",
   "description": "Resize button for modal block.",
   "example": {},
   "supports": {

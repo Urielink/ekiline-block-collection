@@ -6,7 +6,7 @@
   "textdomain": "ekiline-block-collection",
   "title": "Toast",
   "category": "design",
-  "icon": "lightbulb",
+  "icon": "dashicons-block-default",
   "description": "Show small bootstrap-style notices.",
   "example": {},
   "supports": {

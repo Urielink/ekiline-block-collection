@@ -9,7 +9,7 @@
   "parent": [
     "ekiline-block-collection/ekiline-offcanvas"
   ],
-  "icon": "feedback",
+  "icon": "dashicons-block-default",
   "description": "Offcanvas header content.",
   "example": {},
   "supports": {
