@@ -52,7 +52,7 @@ ekiline_collection_js_launch_modal()
 function ekiline_collection_js_modal_behavior () {
   const modalResizeBtn = document.querySelectorAll('.modal-resize')
   if (modalResizeBtn.length !== 0) {
-      modalResizeBtn.forEach(function (btn) {
+    modalResizeBtn.forEach(function (btn) {
       btn.addEventListener('click', function () {
         const modalOpen = document.querySelector('.modal-dialog')
         modalOpen.classList.toggle('modal-fullscreen')
@@ -79,7 +79,6 @@ function ekiline_collection_js_modal_error_detect () {
   }
 }
 // ekiline_collection_js_modal_error_detect()
-
 
 /**
  * Popover.
