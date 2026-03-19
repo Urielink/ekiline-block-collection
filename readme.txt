@@ -4,7 +4,7 @@ Requires at least: 5.8
 Tags:              block, collection, bootstrap
 Tested up to:      6.9
 Requires PHP:      7.0
-Stable tag:        3.0.1
+Stable tag:        3.2.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/license-list.html#GPLv2
 Donate link:       https://www.paypal.com/paypalme/urielink
@@ -85,6 +85,10 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 
 == Changelog ==
+
+= 3.2.0 =
+* Improve: Standardize Bootstrap usage by loading only minified bundle versions.
+* Security fixes to prevent direct access.
 
 = 3.0.1 =
 * Update Bootstrap css and js version.
@@ -183,20 +187,7 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Upgrade Notice ==
 
-= ⚠️ Important Upgrade Notice — Breaking Changes =
-
-This new version of Ekiline Block Collection is a major rewrite.
-Previous versions used a different block structure and markup that is no longer compatible with the new architecture.
-
-Because of this:
-* Blocks created with older versions may stop working after updating.
-* Your existing layouts may not render correctly, and some components may disappear or reset.
-* You may need to rebuild your content using the new block versions.
-* We strongly recommend creating a full backup (database + files) before updating.
-
-This update brings a cleaner, more powerful, and more future-proof block system, but it is not backward-compatible with older instances of the plugin.
-
-If you rely heavily on the old block version, consider testing the update in a staging environment first.
+⚠️ V3 Breaking Changes: Major rewrite. Old blocks are not compatible and may break layouts. Backup your site before updating. You may need to rebuild content. Test in staging if you rely on previous versions.
 
 
 == About author ==

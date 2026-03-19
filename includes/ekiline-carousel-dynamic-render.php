@@ -1,4 +1,7 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) exit; // Salir si se accede directamente.
+
 /**
  * Plantilla para botones de carrusel.
  */

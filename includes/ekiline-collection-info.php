@@ -21,6 +21,8 @@
  * @package ekiline-block-collection
  */
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Salir si se accede directamente.
+
 /**
  * Nuevo menu de opciones.
  */

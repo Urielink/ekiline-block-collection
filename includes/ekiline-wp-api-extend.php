@@ -7,6 +7,8 @@
  * Author URI:  https://codeable.io/developers/felipe-elia?ref=qGTOJ
  */
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Salir si se accede directamente.
+
 /**
  * Add support for 'orderby=rand' to REST API queries for all post types with REST enabled.
  *
