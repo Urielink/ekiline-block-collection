@@ -102,41 +102,34 @@ add_action('init', 'ekiline_block_collection_ekiline_collection_block_init');
  * $script_deps[] = 'my-additional-script-handler';
  */
 function ekiline_block_collection_required_scripts() {
-    // Nombres de los manejadores de estilos y scripts.
-    $text_domain        = 'ekiline-block-collection';
-    $bs_style_handler   = $text_domain . '-bootstrap-style';
-    $bs_script_handler  = $text_domain . '-bootstrap-script';
-    $ebc_style_handler  = $text_domain . '-block-styles';
-    $ebc_script_handler = $text_domain . '-block-scripts';
+    $text_domain       = 'ekiline-block-collection';
+    $bs_style_handler  = $text_domain . '-bootstrap-style';
+    $ebc_style_handler = $text_domain . '-block-styles';
+    $popovers_handler  = $text_domain . '-popovers';
 
-    // Registrar siempre, encolar condicionalmente.
-    wp_register_style( $bs_style_handler, plugin_dir_url(__FILE__) . 'includes/assets/css/bootstrap.min.css', array(), '5', 'all' );
-    wp_register_script( $bs_script_handler, plugin_dir_url(__FILE__) . 'includes/assets/js/bootstrap.bundle.min.js', array(), '5', true );
+    // Build CSS personalizado (solo componentes usados, ~60-80 KB vs 232 KB).
+    wp_register_style( $bs_style_handler, plugin_dir_url(__FILE__) . 'build/ekiline-bootstrap.css', array(), '5.3', 'all' );
 
-    // Obtener opciones de administracion (../wp-admin/admin.php?page=ekiline-block-collection).
+    // Obtener opciones de administración.
     $load_bs_css = get_option('ekiline_block_collection_bootstrap_css', '1') === '1';
     $load_bs_js  = get_option('ekiline_block_collection_bootstrap_js', '1') === '1';
 
-    // Inicializar arrays de dependencias.
-    $style_deps  = $load_bs_css ? array( $bs_style_handler ) : array();
-    $script_deps = $load_bs_js  ? array( $bs_script_handler ) : array();
+    $style_deps = $load_bs_css ? array( $bs_style_handler ) : array();
 
-    // Encolar si el usuario no ha deshabilitado.
     if ( $load_bs_css ) {
         wp_enqueue_style( $bs_style_handler );
     }
 
-    if ( $load_bs_js ) {
-        wp_enqueue_script( $bs_script_handler );
-    }
-
-    // Estilos y scripts personalizados que dependen de Bootstrap.
+    // Estilos personalizados del plugin.
     wp_register_style( $ebc_style_handler, plugin_dir_url(__FILE__) . 'includes/assets/css/ekiline-styles.min.css', $style_deps, '1.0', 'all' );
-    wp_register_script( $ebc_script_handler, plugin_dir_url(__FILE__) . 'includes/assets/js/ekiline-scripts.min.js', $script_deps, '1.0', true );
-
-    // Encolar estilos y scripts personalizados.
     wp_enqueue_style( $ebc_style_handler );
-    wp_enqueue_script( $ebc_script_handler );
+
+    // Script global para Tooltip y Popover (aplicados vía filtros de bloque).
+    if ( $load_bs_js ) {
+        $asset_file = include plugin_dir_path(__FILE__) . 'build/ekiline-popovers.asset.php';
+        wp_register_script( $popovers_handler, plugin_dir_url(__FILE__) . 'build/ekiline-popovers.js', $asset_file['dependencies'], $asset_file['version'], true );
+        wp_enqueue_script( $popovers_handler );
+    }
 }
 add_action('wp_enqueue_scripts', 'ekiline_block_collection_required_scripts', 1);
 
@@ -154,35 +147,19 @@ function ekiline_block_collection_editor_assets() {
         return;
     }
 
-    // Nombres de los manejadores de estilos y scripts.
-    $text_domain        = 'ekiline-block-collection';
-    $bs_style_handler   = $text_domain . '-editor-bootstrap-style';
-    $bs_script_handler  = $text_domain . '-editor-bootstrap-script';
+    $text_domain      = 'ekiline-block-collection';
+    $bs_style_handler = $text_domain . '-editor-bootstrap-style';
 
-    // Registrar siempre, encolar condicionalmente.
-    wp_register_style( $bs_style_handler, plugin_dir_url(__FILE__) . 'includes/assets/css/bootstrap.min.css', array(), '5', 'all' );
-    wp_register_script( $bs_script_handler, plugin_dir_url(__FILE__) . 'includes/assets/js/bootstrap.bundle.min.js', array(), '5', true );
+    // Build CSS personalizado para el editor.
+    wp_register_style( $bs_style_handler, plugin_dir_url(__FILE__) . 'build/ekiline-bootstrap.css', array(), '5.3', 'all' );
 
-    // Obtener opciones de administracion (../wp-admin/admin.php?page=ekiline-block-collection).
     $load_bs_css = get_option('ekiline_block_collection_bootstrap_css_editor', '1') === '1';
-    $load_bs_js  = get_option('ekiline_block_collection_bootstrap_js_editor', '1') === '1';
 
-    // Inicializar arrays de dependencias.
-    $style_deps  = $load_bs_css ? array( $bs_style_handler ) : array();
-    $script_deps = $load_bs_js  ? array( $bs_script_handler ) : array();
-
-    // Encolar si el usuario no ha deshabilitado.
     if ( $load_bs_css ) {
         wp_enqueue_style( $bs_style_handler );
     }
 
-    if ( $load_bs_js ) {
-        wp_enqueue_script( $bs_script_handler );
-    }
-
-    // incorporar dashicons.
     wp_enqueue_style('dashicons');
-
 }
 add_action( 'enqueue_block_assets', 'ekiline_block_collection_editor_assets' );
 

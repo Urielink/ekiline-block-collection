@@ -4,5 +4,7 @@ module.exports = {
     entry: {
         ...defaultConfig.entry(),
         index: './src/index.js',
+        'ekiline-bootstrap': './src/ekiline-bootstrap.scss',
+        'ekiline-popovers': './src/shared/ekiline-popovers.js',
     },
 };

@@ -21,8 +21,10 @@
 		"@wordpress/scripts": "^30.20.0"
 	},
 	"dependencies": {
+		"@popperjs/core": "^2.11.8",
 		"@wordpress/blocks": "^15.0.0",
 		"@wordpress/escape-html": "^3.9.0",
-		"@wordpress/server-side-render": "^6.3.0"
+		"@wordpress/server-side-render": "^6.3.0",
+		"bootstrap": "^5.3.3"
 	}
 }
