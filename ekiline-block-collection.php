@@ -129,6 +129,13 @@ function ekiline_block_collection_required_scripts() {
         $asset_file = include plugin_dir_path(__FILE__) . 'build/ekiline-popovers.asset.php';
         wp_register_script( $popovers_handler, plugin_dir_url(__FILE__) . 'build/ekiline-popovers.js', $asset_file['dependencies'], $asset_file['version'], true );
         wp_enqueue_script( $popovers_handler );
+
+        // Script compartido de Collapse: referenciado por ekiline-accordion y ekiline-collapse
+        // en sus block.json. Al usar el mismo handle, WordPress lo encola una sola vez
+        // aunque ambos bloques coexistan, evitando el doble registro del listener de Bootstrap.
+        $collapse_handler = $text_domain . '-collapse-init';
+        $collapse_asset   = include plugin_dir_path(__FILE__) . 'build/ekiline-collapse-init.asset.php';
+        wp_register_script( $collapse_handler, plugin_dir_url(__FILE__) . 'build/ekiline-collapse-init.js', $collapse_asset['dependencies'], $collapse_asset['version'], true );
     }
 }
 add_action('wp_enqueue_scripts', 'ekiline_block_collection_required_scripts', 1);

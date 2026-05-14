@@ -6,5 +6,6 @@ module.exports = {
         index: './src/index.js',
         'ekiline-bootstrap': './src/ekiline-bootstrap.scss',
         'ekiline-popovers': './src/shared/ekiline-popovers.js',
+        'ekiline-collapse-init': './src/shared/ekiline-collapse-init.js',
     },
 };
