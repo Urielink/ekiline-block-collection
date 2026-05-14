@@ -124,11 +124,11 @@ function ekiline_block_collection_required_scripts() {
     wp_register_style( $ebc_style_handler, plugin_dir_url(__FILE__) . 'includes/assets/css/ekiline-styles.min.css', $style_deps, '1.0', 'all' );
     wp_enqueue_style( $ebc_style_handler );
 
-    // Script global para Tooltip y Popover (aplicados vía filtros de bloque).
+    // Script para Tooltip y Popover: solo se registra aquí; se encola bajo demanda
+    // en ekiline_block_collection_enqueue_popovers_on_demand() via render_block.
     if ( $load_bs_js ) {
         $asset_file = include plugin_dir_path(__FILE__) . 'build/ekiline-popovers.asset.php';
         wp_register_script( $popovers_handler, plugin_dir_url(__FILE__) . 'build/ekiline-popovers.js', $asset_file['dependencies'], $asset_file['version'], true );
-        wp_enqueue_script( $popovers_handler );
 
         // Script compartido de Collapse: referenciado por ekiline-accordion y ekiline-collapse
         // en sus block.json. Al usar el mismo handle, WordPress lo encola una sola vez
@@ -139,6 +139,31 @@ function ekiline_block_collection_required_scripts() {
     }
 }
 add_action('wp_enqueue_scripts', 'ekiline_block_collection_required_scripts', 1);
+
+/**
+ * Encola el script de Popovers/Tooltips solo cuando el post actual contiene
+ * botones con el atributo addDataLnkPopover configurado.
+ * Lee post_content en wp_enqueue_scripts (priority 10, después de que
+ * priority 1 ya registró el handle). WordPress solo serializa addDataLnkPopover
+ * en el comentario de bloque cuando su valor difiere del default vacío.
+ */
+function ekiline_block_collection_enqueue_popovers_on_demand() {
+    $handler = 'ekiline-block-collection-popovers';
+
+    if ( ! wp_script_is( $handler, 'registered' ) ) {
+        return;
+    }
+
+    $post = get_post();
+    if ( ! $post || empty( $post->post_content ) ) {
+        return;
+    }
+
+    if ( false !== strpos( $post->post_content, '"addDataLnkPopover":' ) ) {
+        wp_enqueue_script( $handler );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'ekiline_block_collection_enqueue_popovers_on_demand', 10 );
 
 
 
