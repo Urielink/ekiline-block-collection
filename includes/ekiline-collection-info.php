@@ -27,14 +27,14 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Salir si se accede directamente.
  * Nuevo menu de opciones.
  */
 function ekiline_block_collection_menu(){
-	// pagina de opciones.
-	add_menu_page(
+	// subpagina de opciones en apariencia.
+	add_submenu_page(
+		'themes.php',												// Slug del menú padre (Apariencia)
 		__('Ekiline BC Options', 'ekiline-block-collection'),		// page_title
 		__('Ekiline BC', 'ekiline-block-collection'),				// menu_title
 		'manage_options', 											// capability
 		'ekiline-block-collection', 								// menu_slug
 		'ekiline_block_collection_options', 						// function
-		'dashicons-block-default', 										// icon_url
 		100 														// position
 	);
 
@@ -47,9 +47,6 @@ function ekiline_block_collection_menu(){
 		'ekiline-block-collection-about',					// menu_slug
 		'ekiline_block_collection_about'					// function
 	);
-
-	// ocultar opciones de manera provisional
-	// remove_menu_page('ekiline-block-collection');
 }
 add_action('admin_menu', 'ekiline_block_collection_menu');
 
@@ -74,7 +71,6 @@ function ekiline_block_collection_register_settings(){
 	// Solo para las páginas de Ekiline Block Collection.
 	if (in_array($current_page, $allowed_pages)) {
 		add_action('admin_print_styles', 'ekiline_collection_options_css', 100);
-		add_action('admin_print_scripts', 'ekiline_collection_options_js', 100);
 	}
 
 	// Argumentos para ekiline_block_collection_bootstrap_css
@@ -341,25 +337,6 @@ function ekiline_block_collection_about(){
 							<li><?php printf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://ekiline.com/compatible/'), esc_html__('Compatibility', 'ekiline-block-collection')); ?></li>
 						</ul>
 
-						<?php
-						/**
-						 * Widget RSS reader.
-						 */
-						$rss_instance = array(
-							'title' => 'Ekiline Tips:',
-							'url'   => 'http://ekiline.com/feed/',
-							'items' => 5,
-											);
-						$rss_args     = array(
-							'before_widget' => '<div class="ekiline-notice widget %s">',
-							'after_widget'  => '</div>',
-							'before_title'  => '<h4 class="widgettitle">',
-							'after_title'   => '</h4>',
-							'target'        => '_blank',
-						);
-						the_widget('WP_Widget_RSS', $rss_instance, $rss_args);
-						?>
-
 						<p><small><strong><?php esc_html_e('Limited liability:', 'ekiline-block-collection'); ?></strong>
 						<?php esc_html_e('As a courtesy, we provide information on how to use certain third-party products, but we do not directly support their use and we are not responsible for the functions, reliability or compatibility of such products. The names, trademarks and logos of third parties are registered trademarks of their respective owners.', 'ekiline-block-collection'); ?></small></p>
 					</div>
@@ -390,7 +367,7 @@ function ekiline_collection_options_css(){
 	$css = '
 		.ekiline-notice, .ekiline-notice h4, .ekiline-notice ul, .ekiline-notice ul li{ margin:0px 5px 0px 0px !important; padding-bottom:0px !important; display: inline-block; }
 		.ekiline-notice ul li, .welcome-panel::before{ display:none;}
-		.welcome-panel-header{box-sizing:border-box;margin-left:auto;margin-right:auto;max-width:1500px;width:100%;padding:40px;}
+		.welcome-panel-header{box-sizing:border-box;margin-left:auto;margin-right:auto;max-width:1500px;width:100%;padding:40px;background:#000;}
 		.welcome-panel-column {display: block;}
 		.welcome-panel .welcome-panel-column-container {margin-top: 0px;}
 		.welcome-panel-column form label {display: flex; justify-content:space-between}
@@ -398,16 +375,4 @@ function ekiline_collection_options_css(){
 		.button {width: 100%; text-align:center;}
 	';
 	echo '<style id="ekiline-block-collection-settings-css">' . esc_html($css) . '</style>';
-}
-/**
- * Scripts para esta página.
- */
-function ekiline_collection_options_js(){
-	$js = '
-	jQuery(document).ready(function($){
-		var random = Math.floor(Math.random() * 5) + 1;
-		$(\'.ekiline-notice ul li:nth-child(\' + random + \')\').delay(2000).show(100);
-	});
-	';
-	echo '<script type="text/javascript" id="ekiline-block-collection-settings-js">' . esc_js($js) . '</script>';
 }
