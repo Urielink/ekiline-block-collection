@@ -89,6 +89,7 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 = 3.2.0 =
 * Improve: Standardize Bootstrap usage by loading only minified bundle versions.
 * Security fixes to prevent direct access.
+* Admin page and options page updated information.
 
 = 3.0.1 =
 * Update Bootstrap css and js version.

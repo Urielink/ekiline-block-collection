@@ -290,8 +290,8 @@ function ekiline_block_collection_about(){
 								<?php esc_html_e('Complete clean theme, no warnings or messages.', 'ekiline-block-collection'); ?></li>
 						</ul>
 						<p>
+							<?php printf('<a class="button button-primary button-hero gold" href="%1$s" target="_blank"><span class="dashicons dashicons-carrot"></span> %2$s</a>', esc_url('https://www.paypal.com/paypalme/urielink/5usd'), esc_html__('FundMe', 'ekiline-block-collection')); ?>
 							<?php printf('<a class="button button-primary button-hero" href="%1$s" target="_blank"><span class="dashicons dashicons-cart"></span> %2$s</a>', esc_url('https://ekiline.com/compra/'), esc_html__('Buy and download', 'ekiline-block-collection')); ?>
-							<?php printf('<a class="button button-primary button-hero gold" href="%1$s" target="_blank"><span class="dashicons dashicons-carrot"></span> %2$s</a>', esc_url('https://ekiline.com/fondeo/'), esc_html__('FundMe', 'ekiline-block-collection')); ?>
 						</p>
 						<p>
 							<?php
@@ -318,7 +318,7 @@ function ekiline_block_collection_about(){
 						<p>
 							<?php printf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://profiles.wordpress.org/urielink/'), esc_html__('WordPress', 'ekiline-block-collection')); ?>
 							| <?php printf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://github.com/Urielink'), esc_html__('Github', 'ekiline-block-collection')); ?>
-							| <?php printf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://www.linkedin.com/in/urielink/'), esc_html__('Linkedin', 'ekiline-block-collection')); ?>
+							| <?php printf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://mx.linkedin.com/in/urielink'), esc_html__('Linkedin', 'ekiline-block-collection')); ?>
 							| <?php printf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://www.behance.net/Urielink'), esc_html__('Behance', 'ekiline-block-collection')); ?>
 							| <?php printf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://bixnia.com'), esc_html__('B I X N I A', 'ekiline-block-collection')); ?>
 						</p>
@@ -373,6 +373,7 @@ function ekiline_collection_options_css(){
 		.welcome-panel-column form label {display: flex; justify-content:space-between}
 		.welcome-panel-column form select {width: 60%;}
 		.button {width: 100%; text-align:center;}
+		.wp-core-ui .button.button-hero .dashicons{line-height:1.3;}
 	';
 	echo '<style id="ekiline-block-collection-settings-css">' . esc_html($css) . '</style>';
 }
