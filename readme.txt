@@ -4,7 +4,7 @@ Requires at least: 5.8
 Tags:              block, collection, bootstrap
 Tested up to:      6.9
 Requires PHP:      7.0
-Stable tag:        3.2.0
+Stable tag:        3.2.1
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/license-list.html#GPLv2
 Donate link:       https://www.paypal.com/paypalme/urielink
@@ -85,6 +85,9 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 
 == Changelog ==
+
+= 3.2.1 =
+* Version bump to 3.2.1
 
 = 3.2.0 =
 * Improve: Standardize Bootstrap usage by loading only minified bundle versions.
