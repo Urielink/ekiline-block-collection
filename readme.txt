@@ -87,7 +87,7 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 == Changelog ==
 
 = 3.2.1 =
-* Version bump to 3.2.1
+* Fix version check to 3.2.1
 
 = 3.2.0 =
 * Improve: Standardize Bootstrap usage by loading only minified bundle versions.
