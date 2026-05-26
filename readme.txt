@@ -2,8 +2,8 @@
 Contributors:      urielink
 Requires at least: 5.8
 Tags:              block, collection, bootstrap
-Tested up to:      6.9
-Requires PHP:      7.0
+Tested up to:      7.0
+Requires PHP:      7.4
 Stable tag:        3.2.3
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/license-list.html#GPLv2
@@ -88,6 +88,7 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 = 3.2.3 =
 * Fix version check to 3.2.3
+* Tested compatibility with WordPress 7.0.
 
 = 3.2.0 =
 * Improve: Standardize Bootstrap usage by loading only minified bundle versions.
