@@ -4,7 +4,7 @@
  * Description:       Actions and blocks based on bootstrap 5 (carousel, collapse and more). Includes Bootstrap library. Support this project to add new features and expand a customer service branch.
  * Requires at least: 5.8
  * Requires PHP:      7.4
- * Version:           3.2.3
+ * Version:           3.3.0
  * Author:            Uri Lazcano (Urielink)
  * Author URI:        https://ekiline.com/ekiline-block-collection/
  * License:           GPL-2.0-or-later

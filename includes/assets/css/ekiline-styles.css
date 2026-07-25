@@ -159,104 +159,80 @@
 }
 
 /* variable por 2 thumbs (col-sm-6) || 2 thumbs */
-.carousel-multiple.x2 .carousel-inner .active.carousel-item-start {
+.carousel-multiple.x2 .carousel-inner .active.carousel-item-start,
+.carousel-multiple.x2 .carousel-inner .carousel-item-prev {
 	-webkit-transform: translate3d(-50%, 0, 0);
 	-moz-transform: translate3d(-50%, 0, 0);
 	-ms-transform: translate3d(-50%, 0, 0);
 	transform: translate3d(-50%, 0, 0);
 }
 
-.carousel-multiple.x2 .carousel-inner .active.carousel-item-end {
+.carousel-multiple.x2 .carousel-inner .active.carousel-item-end,
+.carousel-multiple.x2 .carousel-inner .carousel-item-next {
 	-webkit-transform: translate3d(50%, 0, 0);
 	-moz-transform: translate3d(50%, 0, 0);
 	-ms-transform: translate3d(50%, 0, 0);
 	transform: translate3d(50%, 0, 0);
 }
 
-.carousel-multiple.x2 .carousel-inner .carousel-item-prev {
-	left: -50%;
-}
-
-.carousel-multiple.x2 .carousel-inner .carousel-item-next {
-	left: 50%;
-}
-
 /* variable por 3 thumbs (col-sm-4) || 3 thumbs */
-.carousel-multiple.x3 .carousel-inner .active.carousel-item-start {
+.carousel-multiple.x3 .carousel-inner .active.carousel-item-start,
+.carousel-multiple.x3 .carousel-inner .carousel-item-prev {
 	-webkit-transform: translate3d(-33.33333333%, 0, 0);
 	-moz-transform: translate3d(-33.33333333%, 0, 0);
 	-ms-transform: translate3d(-33.33333333%, 0, 0);
 	transform: translate3d(-33.33333333%, 0, 0);
 }
 
-.carousel-multiple.x3 .carousel-inner .active.carousel-item-end {
+.carousel-multiple.x3 .carousel-inner .active.carousel-item-end,
+.carousel-multiple.x3 .carousel-inner .carousel-item-next {
 	-webkit-transform: translate3d(33.33333333%, 0, 0);
 	-moz-transform: translate3d(33.33333333%, 0, 0);
 	-ms-transform: translate3d(33.33333333%, 0, 0);
 	transform: translate3d(33.33333333%, 0, 0);
 }
 
-.carousel-multiple.x3 .carousel-inner .carousel-item-prev {
-	left: -33.33333333%;
-}
-
-.carousel-multiple.x3 .carousel-inner .carousel-item-next {
-	left: 33.33333333%;
-}
-
 /* variable por 4 thumbs (col-sm-3) || 4 thumbs */
-.carousel-multiple.x4 .carousel-inner .active.carousel-item-start {
+.carousel-multiple.x4 .carousel-inner .active.carousel-item-start,
+.carousel-multiple.x4 .carousel-inner .carousel-item-prev {
 	-webkit-transform: translate3d(-25%, 0, 0);
 	-moz-transform: translate3d(-25%, 0, 0);
 	-ms-transform: translate3d(-25%, 0, 0);
 	transform: translate3d(-25%, 0, 0);
 }
 
-.carousel-multiple.x4 .carousel-inner .active.carousel-item-end {
+.carousel-multiple.x4 .carousel-inner .active.carousel-item-end,
+.carousel-multiple.x4 .carousel-inner .carousel-item-next {
 	-webkit-transform: translate3d(25%, 0, 0);
 	-moz-transform: translate3d(25%, 0, 0);
 	-ms-transform: translate3d(25%, 0, 0);
 	transform: translate3d(25%, 0, 0);
 }
 
-.carousel-multiple.x4 .carousel-inner .carousel-item-prev {
-	left: -25%;
-}
-
-.carousel-multiple.x4 .carousel-inner .carousel-item-next {
-	left: 25%;
-}
-
 /* variable por 6 thumbs (col-sm-2) || 6 thumbs */
-.carousel-multiple.x6 .carousel-inner .active.carousel-item-start {
+.carousel-multiple.x6 .carousel-inner .active.carousel-item-start,
+.carousel-multiple.x6 .carousel-inner .carousel-item-prev {
 	-webkit-transform: translate3d(-16.66666667%, 0, 0);
 	-moz-transform: translate3d(-16.66666667%, 0, 0);
 	-ms-transform: translate3d(-16.66666667%, 0, 0);
 	transform: translate3d(-16.66666667%, 0, 0);
 }
 
-.carousel-multiple.x6 .carousel-inner .active.carousel-item-end {
+.carousel-multiple.x6 .carousel-inner .active.carousel-item-end,
+.carousel-multiple.x6 .carousel-inner .carousel-item-next {
 	-webkit-transform: translate3d(16.66666667%, 0, 0);
 	-moz-transform: translate3d(16.66666667%, 0, 0);
 	-ms-transform: translate3d(16.66666667%, 0, 0);
 	transform: translate3d(16.66666667%, 0, 0);
 }
 
-.carousel-multiple.x6 .carousel-inner .carousel-item-prev {
-	left: -16.66666667%;
-}
-
-.carousel-multiple.x6 .carousel-inner .carousel-item-next {
-	left: 16.66666667%;
-}
-
 /* Regla general: posición de objetos, después del clic || Objects after clic */
-.carousel-multiple .carousel-inner .carousel-item-next.carousel-item-start {
-	left: 0%;
-}
-
+.carousel-multiple .carousel-inner .carousel-item-next.carousel-item-start,
 .carousel-multiple .carousel-inner .carousel-item-prev.carousel-item-end {
-	left: 0%;
+	-webkit-transform: translate3d(0, 0, 0);
+	-moz-transform: translate3d(0, 0, 0);
+	-ms-transform: translate3d(0, 0, 0);
+	transform: translate3d(0, 0, 0);
 }
 
 .carousel-multiple .carousel-inner .carousel-item-next.carousel-item-start>* {
