@@ -152,10 +152,9 @@
 }
 
 .carousel-multiple .carousel-inner .carousel-item>* {
-	float: left;
-	position: relative;
 	margin-bottom: 0px;
 	overflow: hidden;
+	flex-grow: 1;
 }
 
 /* variable por 2 thumbs (col-sm-6) || 2 thumbs */
