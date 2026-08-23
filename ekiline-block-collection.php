@@ -91,28 +91,28 @@ function ekiline_block_collection_ekiline_collection_block_init()
 add_action('init', 'ekiline_block_collection_ekiline_collection_block_init');
 
 /**
- * Scripts and styles in the front end.
+ * Styles in the front end.
+ *
+ * Se ejecuta en prioridad 0 para respetar el orden de los estilos en línea
+ * que los temas de bloques de WordPress agregan (p. ej. styles=root), ya que
+ * estos se imprimen según el orden de encolado de wp_enqueue_scripts.
  *
  * @link https://developer.wordpress.org/reference/functions/wp_script_is/
  *
  * Intervenir $style_deps[] para agregar dependencias adicionales.
  * Por ejemplo, si se requiere un estilo adicional.
  * $style_deps[] = 'my-additional-style-handler';
- * Lo mimso para scripts.
- * $script_deps[] = 'my-additional-script-handler';
  */
-function ekiline_block_collection_required_scripts() {
+function ekiline_block_collection_required_styles() {
     $text_domain       = 'ekiline-block-collection';
     $bs_style_handler  = $text_domain . '-bootstrap-style';
     $ebc_style_handler = $text_domain . '-block-styles';
-    $popovers_handler  = $text_domain . '-popovers';
 
     // Build CSS personalizado (solo componentes usados, ~60-80 KB vs 232 KB).
     wp_register_style( $bs_style_handler, plugin_dir_url(__FILE__) . 'build/ekiline-bootstrap.css', array(), '5.3', 'all' );
 
     // Obtener opciones de administración.
     $load_bs_css = get_option('ekiline_block_collection_bootstrap_css', '1') === '1';
-    $load_bs_js  = get_option('ekiline_block_collection_bootstrap_js', '1') === '1';
 
     $style_deps = $load_bs_css ? array( $bs_style_handler ) : array();
 
@@ -123,6 +123,21 @@ function ekiline_block_collection_required_scripts() {
     // Estilos personalizados del plugin.
     wp_register_style( $ebc_style_handler, plugin_dir_url(__FILE__) . 'includes/assets/css/ekiline-styles.min.css', $style_deps, '1.0', 'all' );
     wp_enqueue_style( $ebc_style_handler );
+}
+add_action('wp_enqueue_scripts', 'ekiline_block_collection_required_styles', 0);
+
+/**
+ * Scripts in the front end.
+ *
+ * Intervenir $script_deps[] para agregar dependencias adicionales.
+ * $script_deps[] = 'my-additional-script-handler';
+ */
+function ekiline_block_collection_required_scripts() {
+    $text_domain      = 'ekiline-block-collection';
+    $popovers_handler = $text_domain . '-popovers';
+
+    // Obtener opciones de administración.
+    $load_bs_js = get_option('ekiline_block_collection_bootstrap_js', '1') === '1';
 
     // Script para Tooltip y Popover: solo se registra aquí; se encola bajo demanda
     // en ekiline_block_collection_enqueue_popovers_on_demand() via render_block.
@@ -138,14 +153,16 @@ function ekiline_block_collection_required_scripts() {
         wp_register_script( $collapse_handler, plugin_dir_url(__FILE__) . 'build/ekiline-collapse-init.js', $collapse_asset['dependencies'], $collapse_asset['version'], true );
     }
 }
-add_action('wp_enqueue_scripts', 'ekiline_block_collection_required_scripts', 1);
+add_action('wp_enqueue_scripts', 'ekiline_block_collection_required_scripts', 10);
 
 /**
  * Encola el script de Popovers/Tooltips solo cuando el post actual contiene
  * botones con el atributo addDataLnkPopover configurado.
- * Lee post_content en wp_enqueue_scripts (priority 10, después de que
- * priority 1 ya registró el handle). WordPress solo serializa addDataLnkPopover
- * en el comentario de bloque cuando su valor difiere del default vacío.
+ * Lee post_content en wp_enqueue_scripts (priority 10), después de que
+ * ekiline_block_collection_required_scripts() (también priority 10, pero
+ * enganchada antes) ya registró el handle. WordPress solo serializa
+ * addDataLnkPopover en el comentario de bloque cuando su valor difiere del
+ * default vacío.
  */
 function ekiline_block_collection_enqueue_popovers_on_demand() {
     $handler = 'ekiline-block-collection-popovers';
